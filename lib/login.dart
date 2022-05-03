@@ -4,40 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'SignUpPage.dart';
 import 'package:page_transition/page_transition.dart';
-
-Future<http.Response> createAlbum(String emailid, String password) {
-  return http.post(
-    Uri.parse('https://ardentsportsapis.herokuapp.com/userLogin'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'loginid': emailid,
-      'pwd': password,
-    }),
-  );
-}
-
-class Album {
-  final int id;
-  final String title;
-
-  const Album({required this.id, required this.title});
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      id: json['id'],
-      title: json['title'],
-    );
-  }
-}
+import 'UserDetails.dart';
 
 class login extends StatelessWidget {
   final emaild = TextEditingController();
   final password = TextEditingController();
-  Future<Album>? _futureAlbum;
 
   @override
   Widget build(BuildContext context) {
@@ -135,9 +109,30 @@ class login extends StatelessWidget {
                                   "Login",
                                   style: TextStyle(fontSize: 20),
                                 ),
-                                onPressed: () {
-                                  createAlbum(emaild.text.toString(),
-                                      password.text.toString());
+                                onPressed: () async {
+                                  if (emaild.text.isNotEmpty &&
+                                      password.text.isNotEmpty) {
+                                    final logindetails = LoginDetails(
+                                        EmailId: emaild.text.toString(),
+                                        Password: password.text.toString());
+                                    final logindetailsmap =
+                                        logindetails.toMap();
+                                    final json = jsonEncode(logindetailsmap);
+                                    var url =
+                                        "https://ardentsportsapis.herokuapp.com/userLogin";
+                                    var response = await post(Uri.parse(url),
+                                        headers: {
+                                          "Accept": "application/json",
+                                          "Content-Type": "application/json"
+                                        },
+                                        body: json,
+                                        encoding: Encoding.getByName("utf-8"));
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content:
+                                          Text(response.statusCode.toString()),
+                                    ));
+                                  }
                                 },
                                 color: Color(0xffcf253c),
                                 textColor: Colors.white,

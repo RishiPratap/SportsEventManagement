@@ -1,3 +1,4 @@
+import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:flutter/material.dart';
 import 'SignUpPage.dart';
 import 'login.dart';
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'User Details App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: login(),
+      home: LiveMaintainer(),
     );
   }
 }

@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'package:ardent_sports/UserDetails.dart';
-import 'package:ardent_sports/api.dart';
 import 'package:ardent_sports/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'login.dart';
 import 'package:page_transition/page_transition.dart';
-
-final Details = new UserDetails();
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -16,13 +14,14 @@ class SignUpPage extends StatefulWidget {
   _SignUpPage createState() => _SignUpPage();
 }
 
+TextEditingController passController = TextEditingController();
+TextEditingController repassController = TextEditingController();
+TextEditingController emailController = TextEditingController();
+TextEditingController nameController = TextEditingController();
+TextEditingController mobileController = TextEditingController();
+
 class _SignUpPage extends State<SignUpPage> {
   bool isChecked = false;
-  TextEditingController passController = TextEditingController();
-  TextEditingController repassController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
 
   // _signUp() async {
   //   var data = {
@@ -255,13 +254,6 @@ class _SignUpPage extends State<SignUpPage> {
                                           if (passController.text.toString() ==
                                               repassController.text
                                                   .toString()) {
-                                            Details.EMAIL =
-                                                emailController.text.toString();
-                                            Details.PHONE = mobileController
-                                                .text
-                                                .toString();
-                                            Details.PWD =
-                                                passController.text.toString();
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -348,6 +340,7 @@ class SubmitPage extends StatelessWidget {
   final city = TextEditingController();
   final Academy = TextEditingController();
   final Intersted_Sports = TextEditingController();
+  final gender = TextEditingController();
   SubmitPage({Key? key}) : super(key: key);
 
   @override
@@ -546,6 +539,33 @@ class SubmitPage extends StatelessWidget {
                                 child: Container(
                                   height: 50.0,
                                   child: TextFormField(
+                                    controller: gender,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(40.0)),
+                                      hintText: '  Gender',
+                                      hintStyle: TextStyle(
+                                          color: Colors.white.withOpacity(0.5)),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              child: Expanded(
+                                child: Container(
+                                  height: 50.0,
+                                  child: TextFormField(
                                     controller: Academy,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
@@ -601,26 +621,44 @@ class SubmitPage extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                       child: Center(
                         child: RaisedButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(Details.EMAIL.toString()),
-                            ));
+                          onPressed: () async {
                             if (first_name.text.isNotEmpty &&
                                 last_name.text.isNotEmpty &&
                                 date_of_birth.text.isNotEmpty &&
                                 state.text.isNotEmpty &&
                                 city.text.isNotEmpty &&
+                                gender.text.isNotEmpty &&
                                 Academy.text.isNotEmpty &&
                                 Intersted_Sports.text.isNotEmpty) {
-                              Details.NAME = first_name.text.toString() +
-                                  " " +
-                                  last_name.text.toString();
-                              Details.DOB = date_of_birth.text.toString();
-                              Details.STATE = state.text.toString();
-                              Details.CITY = city.text.toString();
-                              Details.SPORTS_ACADEMY = Academy.text.toString();
-                              Details.INTERESTED_SPORTS =
-                                  Intersted_Sports.text.toString();
+                              final Details = UserDetails(
+                                  USERID: emailController.text.toString(),
+                                  PHONE: mobileController.text.toString(),
+                                  NAME: nameController.text.toString(),
+                                  EMAIL: emailController.text.toString(),
+                                  PWD: passController.text.toString(),
+                                  GENDER: gender.text.toString(),
+                                  DOB: date_of_birth.text.toString(),
+                                  CITY: city.text.toString(),
+                                  STATE: state.text.toString(),
+                                  SPORTS_ACADEMY: Academy.text.toString(),
+                                  PROFILE_ID: emailController.text.toString(),
+                                  INTERESTED_SPORTS:
+                                      Intersted_Sports.text.toString());
+                              final DetailMap = Details.toMap();
+                              final json = jsonEncode(DetailMap);
+                              var url =
+                                  "https://ardentsportsapis.herokuapp.com/createUser";
+                              var response = await post(Uri.parse(url),
+                                  headers: {
+                                    "Accept": "application/json",
+                                    "Content-Type": "application/json"
+                                  },
+                                  body: json,
+                                  encoding: Encoding.getByName("utf-8"));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(response.statusCode.toString()),
+                              ));
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
