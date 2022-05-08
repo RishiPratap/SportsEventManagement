@@ -305,7 +305,7 @@ class _PaymentState extends State<Payment> {
       });
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Payment Successful')));
+          .showSnackBar(SnackBar(content: Text('Payment Successful...')));
     } on StripeException catch (e) {
       print(e.toString());
       showDialog(
