@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socket_io_client/socket_io_client.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 var update_score_1_first = 0;
 var update_score_1_second = 0;
@@ -24,42 +24,17 @@ class LiveMaintainer extends StatefulWidget {
 }
 
 class LiveMaintainer1 extends State<LiveMaintainer> {
-  // Socket socket = IO.io(
-  //     'https://ardentsportsapis.herokuapp.com',
-  //     IO.OptionBuilder()
-  //         .setTransports(['websocket']) // for Flutter or Dart VM
-  //         .disableAutoConnect() // disable auto-connection
-  //         .build()) as Socket;
+  late IO.Socket socket;
 
   @override
   void connect() {
-    // Socket socket = io(
-    //     'https://ardentsportsapis.herokuapp.com',
-    //     OptionBuilder()
-    //         .setTransports(['websocket']) // for Flutter or Dart VM
-    //         .disableAutoConnect() // disable auto-connection
-    //         .build());
-    // socket.connect();
-    // socket.onConnect((data) => print("Connected"));
-    // print(socket.connected);
-    Socket socket = io('https://ardentsportsapis.herokuapp.com');
-    socket.onConnect((_) {
-      print('connect');
-      socket.emit('msg', 'test');
+    socket = IO.io('https://ardentsportsapis.herokuapp.com', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
     });
+    socket.connect();
+    socket.onConnect((data) => print("Connected"));
     print(socket.connected);
-    socket.on('event', (data) => print(data));
-    socket.onDisconnect((_) => print('disconnect'));
-    socket.on('fromServer', (_) => print(_));
-
-    // Socket socket =
-    //     io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
-    //   "transports": ["websocket"],
-    //   "autoConnect": false,
-    // });
-    // socket.connect();
-    // socket.onConnect((data) => print("Connected"));
-    // print(socket.connected);
   }
 
   Widget build(BuildContext context) {

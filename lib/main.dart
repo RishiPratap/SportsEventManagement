@@ -1,9 +1,20 @@
 import 'package:ardent_sports/LiveMaintainer.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'SignUpPage.dart';
 import 'login.dart';
+import 'Payment.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() async => {
+      WidgetsFlutterBinding.ensureInitialized(),
+      Stripe.publishableKey =
+          'pk_test_51Kx9oUSDyPLJYmvrp5H6rmxyMHQHAHVF38RnAiJzzWI2euD0orPuqf9SOJGpNcAf6FHLYfIOCbihzJR4lBcPrgTw00PKpqaeoy',
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      )),
+      runApp(MyApp())
+    };
 
 class MyApp extends StatelessWidget {
   @override
@@ -12,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'User Details App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: LiveMaintainer(),
+      home: Payment(),
     );
   }
 }
