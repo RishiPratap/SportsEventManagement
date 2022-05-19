@@ -36,10 +36,11 @@ class _PaymentState extends State<Payment> {
               _text(),
               _paymentContainer(),
               _upiPayments(),
+              _couponCode(),
               // _test(),
               // _otherPaymentMode(),
               //_otherText(),
-              Positioned(
+              const Positioned(
                 left: 155,
                 top: 210,
                 child: Text(
@@ -50,7 +51,7 @@ class _PaymentState extends State<Payment> {
                       color: Colors.black),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 155,
                 top: 240,
                 child: Text(
@@ -61,7 +62,7 @@ class _PaymentState extends State<Payment> {
                       color: Colors.black),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 60,
                 top: 400,
                 child: Text(
@@ -72,7 +73,7 @@ class _PaymentState extends State<Payment> {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 right: 50,
                 top: 400,
                 child: Text(
@@ -83,7 +84,7 @@ class _PaymentState extends State<Payment> {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 126,
                 top: 100,
                 child: Text(
@@ -95,27 +96,20 @@ class _PaymentState extends State<Payment> {
                 ),
               ),
               Positioned(
-                left: 24,
-                top: 50,
-                child: Text(
-                  "<",
-                  style: TextStyle(
-                      fontSize: 35,
-                      // fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
-              Positioned(
-                left: 24,
-                top: 50,
-                child: Text(
-                  "<",
-                  style: TextStyle(
-                      fontSize: 35,
-                      // fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              )
+                  left: 24,
+                  top: 50,
+                  child: TextButton(
+                    child: Text(
+                      "<",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    onPressed: () {
+                      SystemNavigator.pop();
+                    },
+                  )),
             ],
           ),
         ),
@@ -257,7 +251,7 @@ class _PaymentState extends State<Payment> {
     );
   }
 
-  _paymentContainer() {
+  _testpaymentContainer() {
     return Positioned(
       top: 510,
       left: 5,
@@ -402,7 +396,7 @@ class _PaymentState extends State<Payment> {
     );
   }
 
-  _upiPayments() {
+  _test() {
     return Positioned(
       top: 520,
       right: 15,
@@ -437,12 +431,16 @@ class _PaymentState extends State<Payment> {
           child: SizedBox(
             height: 43,
             width: MediaQuery.of(context).size.width - 30,
-            child: FlatButton(
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+            child: TextButton(
+              onPressed: () {
+                print("PRessed");
+              },
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
               child: const Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -454,9 +452,6 @@ class _PaymentState extends State<Payment> {
                   ),
                 ),
               ),
-              onPressed: () {
-                print("PRessed");
-              },
             ),
           ),
         ),
@@ -520,33 +515,247 @@ class _PaymentState extends State<Payment> {
     );
   }
 
-  _test() {
+  _upiPayments() {
     return Positioned(
-      top: 580,
+      top: 520,
       right: 15,
-      child: SizedBox(
-        height: 43,
-        width: MediaQuery.of(context).size.width - 30,
-        child: FlatButton(
-          color: Colors.black,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: const Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Google Pay",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 48,
+            width: MediaQuery.of(context).size.width - 30,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+              onPressed: () async {
+                await makePayment();
+              },
+              child: Row(
+                children: [
+                  Image(
+                    image: AssetImage('assets/BHIM.png'),
+                    filterQuality: FilterQuality.low,
+                    height: 25,
+                    width: 25,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "UPI",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          onPressed: () {
-            print("PRessed");
-          },
+          const SizedBox(
+            height: 12,
+          ),
+          //TODO: Add Google Pay
+          SizedBox(
+            height: 48,
+            width: MediaQuery.of(context).size.width - 30,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+              onPressed: () {
+                print("Pressed");
+              },
+              child: Row(
+                children: [
+                  const Image(
+                    image: AssetImage('assets/Gpay.png'),
+                    // fit: BoxFit.contain,
+                    height: 25,
+                    width: 25,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Google Pay",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(
+            height: 12,
+          ),
+
+          //TODO Add:PhonePay
+          SizedBox(
+            height: 48,
+            width: MediaQuery.of(context).size.width - 30,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+              onPressed: () {
+                print("Pressed");
+              },
+              child: Row(
+                children: [
+                  const Image(
+                    image: AssetImage('assets/PhonePay.png'),
+                    // fit: BoxFit.contain,
+                    height: 25,
+                    width: 25,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Phone Pe",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+
+          //TODO:Add:Paytm
+          SizedBox(
+            height: 48,
+            width: MediaQuery.of(context).size.width - 30,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+              onPressed: () {
+                print("Pressed");
+              },
+              child: Row(
+                children: [
+                  const Image(
+                    image: AssetImage('assets/Paytm.png'),
+                    // fit: BoxFit.contain,
+                    height: 25,
+                    width: 25,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Paytm",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _paymentContainer() {
+    return Positioned(
+      top: 510,
+      left: 5,
+      child: Container(
+        // margin: EdgeInsets.fromLTRB(75, 0, 0, 0),
+        // padding: EdgeInsets.all(15.0),
+        height: 250,
+        width: MediaQuery.of(context).size.width - 10,
+        //width: 360,
+        decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(15)),
+      ),
+    );
+  }
+
+  _couponCode() {
+    return Positioned(
+      top: 760,
+      right: -2,
+      child: TextButton(
+        onPressed: () {},
+        child: SizedBox(
+          height: 80,
+          width: 400,
+          child: TextButton(
+            onPressed: () {
+              print("Coupon Pressed");
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Apply Coupon",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 200,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        ">",
+                        style: TextStyle(
+                            color: Color(0xffD15858),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -566,7 +775,7 @@ class _PaymentState extends State<Payment> {
         applePay: true,
         googlePay: true,
         style: ThemeMode.system,
-        merchantCountryCode: 'US',
+        merchantCountryCode: 'IN',
         merchantDisplayName: 'Malhar',
       ));
 
