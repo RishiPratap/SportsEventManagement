@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -23,94 +24,100 @@ class _PaymentState extends State<Payment> {
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        height: h,
-        child: Stack(
-          children: [
-            _header(),
-            _transparentImage(),
-            _cards(),
-            _cc(),
-            _text(),
-            _paymentContainer(),
-            Positioned(
-              left: 155,
-              top: 210,
-              child: Text(
-                "PAYMENT",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+      body: SingleChildScrollView(
+        child: Container(
+          height: h,
+          child: Stack(
+            children: [
+              _header(),
+              _transparentImage(),
+              _cards(),
+              _cc(),
+              _text(),
+              _paymentContainer(),
+              _upiPayments(),
+              // _test(),
+              // _otherPaymentMode(),
+              //_otherText(),
+              Positioned(
+                left: 155,
+                top: 210,
+                child: Text(
+                  "PAYMENT",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
               ),
-            ),
-            Positioned(
-              left: 155,
-              top: 240,
-              child: Text(
-                "₹ 499",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+              Positioned(
+                left: 155,
+                top: 240,
+                child: Text(
+                  "₹ 499",
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
               ),
-            ),
-            Positioned(
-              left: 60,
-              top: 400,
-              child: Text(
-                "DEBIT CARD",
-                style: TextStyle(
-                    color: Color(0xffD15858),
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600),
+              Positioned(
+                left: 60,
+                top: 400,
+                child: Text(
+                  "DEBIT CARD",
+                  style: TextStyle(
+                      color: Color(0xffD15858),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
-            Positioned(
-              right: 50,
-              top: 400,
-              child: Text(
-                "CREDIT CARD",
-                style: TextStyle(
-                    color: Color(0xffD15858),
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600),
+              Positioned(
+                right: 50,
+                top: 400,
+                child: Text(
+                  "CREDIT CARD",
+                  style: TextStyle(
+                      color: Color(0xffD15858),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
-            Positioned(
-              left: 126,
-              top: 100,
-              child: Text(
-                "Proceed To Pay",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+              Positioned(
+                left: 126,
+                top: 100,
+                child: Text(
+                  "Proceed To Pay",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
-            ),
-            Positioned(
-              left: 24,
-              top: 50,
-              child: Text(
-                "<",
-                style: TextStyle(
-                    fontSize: 35,
-                    // fontWeight: FontWeight.bold,
-                    color: Colors.white),
+              Positioned(
+                left: 24,
+                top: 50,
+                child: Text(
+                  "<",
+                  style: TextStyle(
+                      fontSize: 35,
+                      // fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
-            ),
-            Positioned(
-              left: 24,
-              top: 50,
-              child: Text(
-                "<",
-                style: TextStyle(
-                    fontSize: 35,
-                    // fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            )
-          ],
+              Positioned(
+                left: 24,
+                top: 50,
+                child: Text(
+                  "<",
+                  style: TextStyle(
+                      fontSize: 35,
+                      // fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -265,6 +272,282 @@ class _PaymentState extends State<Payment> {
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage("assets/paymentTransparent.png"))),
+      ),
+    );
+  }
+
+  _otherPaymentMode() {
+    return Positioned(
+      top: 520,
+      right: 15,
+      child: Stack(
+        overflow: Overflow.visible,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width - 30,
+            height: 53,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.7), BlendMode.dstATop),
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/Rectangle 83.png"))),
+            // child: TextField(
+            //   decoration: InputDecoration(
+            //       filled: true,
+            //       fillColor: Colors.black,
+            //       border: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(10.0),
+            //           borderSide: BorderSide(color: Colors.black))),
+            // ),
+            // decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(10.0),
+            //     image: DecorationImage(
+            //       image: AssetImage("assets/Rectangle 83.png"),
+            //     )
+            //     ),
+          ),
+          Positioned(
+            top: 70,
+            child: Container(
+              width: MediaQuery.of(context).size.width - 30,
+              height: 53,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.7), BlendMode.dstATop),
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/Rectangle 83.png"))),
+            ),
+          ),
+          Positioned(
+            top: 140,
+            child: Container(
+              width: MediaQuery.of(context).size.width - 30,
+              height: 53,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.7), BlendMode.dstATop),
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/Rectangle 83.png"))),
+            ),
+          ),
+          Positioned(
+            top: 210,
+            child: Container(
+              width: MediaQuery.of(context).size.width - 30,
+              height: 53,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.7), BlendMode.dstATop),
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/Rectangle 83.png"))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _otherText() {
+    return Stack(
+      children: [
+        Container(
+          child: Positioned(
+              top: 530,
+              left: 60,
+              child: Text("UPI",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white))),
+        ),
+        Container(
+          child: Positioned(
+              top: 605,
+              left: 60,
+              child: Text("Google Pay",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white))),
+        ),
+        Container(
+          child: Positioned(
+              top: 675,
+              left: 60,
+              child: Text("Phone Pe",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white))),
+        ),
+        Container(
+          child: Positioned(
+              top: 745,
+              left: 60,
+              child: Text("Paytm",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white))),
+        ),
+      ],
+    );
+  }
+
+  _upiPayments() {
+    return Positioned(
+      top: 520,
+      right: 15,
+      child: Stack(clipBehavior: Clip.none, children: [
+        SizedBox(
+          height: 43,
+          width: MediaQuery.of(context).size.width - 30,
+          child: FlatButton(
+            color: Colors.black,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: const Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "UPI",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            onPressed: () {
+              print("PRessed");
+            },
+          ),
+        ),
+        Positioned(
+          top: 60,
+          child: SizedBox(
+            height: 43,
+            width: MediaQuery.of(context).size.width - 30,
+            child: FlatButton(
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Google Pay",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                print("PRessed");
+              },
+            ),
+          ),
+        ),
+        Positioned(
+          top: 120,
+          child: SizedBox(
+            height: 43,
+            width: MediaQuery.of(context).size.width - 30,
+            child: FlatButton(
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Phone Pe",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                print("PRessed");
+              },
+            ),
+          ),
+        ),
+        Positioned(
+          top: 180,
+          child: SizedBox(
+            height: 43,
+            width: MediaQuery.of(context).size.width - 30,
+            child: FlatButton(
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Paytm",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                print("PRessed");
+              },
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  _test() {
+    return Positioned(
+      top: 580,
+      right: 15,
+      child: SizedBox(
+        height: 43,
+        width: MediaQuery.of(context).size.width - 30,
+        child: FlatButton(
+          color: Colors.black,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Google Pay",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          onPressed: () {
+            print("PRessed");
+          },
+        ),
       ),
     );
   }
