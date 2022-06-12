@@ -1,3 +1,4 @@
+import 'package:ardent_sports/CricketScore.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'User Details App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: Payment(),
+      home: CricketScore(),
     );
   }
 }
