@@ -739,7 +739,7 @@ class _PaymentState extends State<Payment> {
                   const SizedBox(
                     width: 200,
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                     child: Align(
                       alignment: Alignment.centerLeft,

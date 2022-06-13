@@ -22,7 +22,7 @@ class _CricketScoreState extends State<CricketScore> {
               Positioned(
                 top: h * 0.08,
                 left: w * 0.1,
-                child: Text("<",
+                child: const Text("<",
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -37,8 +37,9 @@ class _CricketScoreState extends State<CricketScore> {
                   onPressed: () {
                     print("Match Result pressed");
                   },
-                  child: Text(
-                    "Match Results >",
+                  child: const Text(
+                    "Match Result >",
+                    // "Match Results >",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -48,16 +49,18 @@ class _CricketScoreState extends State<CricketScore> {
               ),
               _score(),
               Positioned(
-                top: h * 0.4,
+                top: h * 0.45,
                 left: w * 0.11,
-                child: Text(
+                child: const Text(
                   "Team A won the toss and elected to bat first",
                   style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),
-              )
+              ),
+              _scoreCard(),
+              _bowlerCard()
             ],
           ),
         ),
@@ -68,13 +71,14 @@ class _CricketScoreState extends State<CricketScore> {
   _header() {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.height;
+
     return Positioned(
       left: 0.08,
       right: 0.08,
       top: h * 0.15,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         const Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(20.0),
           child: Text(
             "Team A",
             style: TextStyle(
@@ -87,7 +91,7 @@ class _CricketScoreState extends State<CricketScore> {
             onPressed: () {
               print("Pressed");
             },
-            child: Icon(
+            child: const Icon(
               Icons.settings,
               color: Colors.red,
               size: 24,
@@ -108,7 +112,7 @@ class _CricketScoreState extends State<CricketScore> {
         children: [
           Container(
             alignment: Alignment.topCenter,
-            child: Text("0/0",
+            child: const Text("0/0",
                 style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.w500,
@@ -116,8 +120,8 @@ class _CricketScoreState extends State<CricketScore> {
           ),
           Container(
             margin: EdgeInsets.only(top: h * 0.02),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
+            child: const Padding(
+              padding: EdgeInsets.all(10.0),
               child: Text("(0/8)",
                   style: TextStyle(
                       fontSize: 20,
@@ -125,6 +129,76 @@ class _CricketScoreState extends State<CricketScore> {
                       color: Colors.white)),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  _scoreCard() {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    return Positioned(
+      top: h * 0.56,
+      left: h * 0.02,
+      right: 20,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        SizedBox(
+            width: w * 0.4,
+            height: h * 0.07,
+            child: ElevatedButton(
+              child: Text("Aniket Mudpe \n0(0)"),
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  primary: Color.fromRGBO(255, 255, 255, 0.4)),
+              onPressed: () {
+                print("Pressed");
+              },
+            )),
+        SizedBox(
+            width: w * 0.4,
+            height: h * 0.07,
+            child: ElevatedButton(
+              child: Text("Hiren Thacker\n0(0)"),
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  primary: Color.fromRGBO(255, 255, 255, 0.4)),
+              onPressed: () {
+                print("Pressed");
+              },
+            )),
+      ]),
+    );
+  }
+
+  _bowlerCard() {
+    double h = MediaQuery.of(context).size.height;
+    return Positioned(
+      top: h * 0.7,
+      left: h * 0.03,
+      right: 20,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Jay Pokar",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+          Text(
+            '0-0-0-0',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          )
         ],
       ),
     );
