@@ -67,7 +67,6 @@ class _CricketScoreState extends State<CricketScore> {
       ),
     );
   }
-
   _header() {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.height;
