@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'SignUpPage.dart';
 import 'login.dart';
 import 'Payment.dart';
+import 'Payment2.dart';
 import 'package:flutter/services.dart';
 
 void main() async => {
       WidgetsFlutterBinding.ensureInitialized(),
       Stripe.publishableKey =
           'pk_test_51Kx9oUSDyPLJYmvrp5H6rmxyMHQHAHVF38RnAiJzzWI2euD0orPuqf9SOJGpNcAf6FHLYfIOCbihzJR4lBcPrgTw00PKpqaeoy',
+      await Stripe.instance.applySettings(),
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       )),
@@ -21,10 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'User Details App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: Payment(),
-    );
+        title: 'User Details App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark(),
+        home: Payment2());
   }
 }
