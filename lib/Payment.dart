@@ -17,7 +17,6 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   Map<String, dynamic>? paymentIntentData;
-
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
