@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Payment2 extends StatefulWidget {
   const Payment2({Key? key}) : super(key: key);
@@ -15,11 +16,19 @@ class Payment2 extends StatefulWidget {
 }
 
 class _PaymentState2 extends State<Payment2> {
+  bool isDebitLoading = false;
+  bool isCreditLoading = false;
+  bool loading = false;
+  bool gPayLoading = false;
+  bool phonePayLoading = false;
+  bool paytmLoading = false;
+
+  var url = 'https://ardentsportsapis.herokuapp.com/makePayment';
   Future<void> initPaymentSheet(context,
       {required String email, required int amount}) async {
     try {
       final response = await http.post(
-        Uri.parse('https://ardentsportsapis.herokuapp.com/makePayment'),
+        Uri.parse(url),
         body: {
           'email': email,
           'amount': amount.toString(),
@@ -34,7 +43,7 @@ class _PaymentState2 extends State<Payment2> {
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
-        merchantDisplayName: 'Payment to Prakeerth Jane Boyapatti',
+        merchantDisplayName: 'Ardent Sports',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         style: ThemeMode.system,
@@ -51,11 +60,12 @@ class _PaymentState2 extends State<Payment2> {
       if (e is StripeException) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content:
-                  Text('Due to some issues,your ${e.error.localizedMessage}')),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              content: Text('Due to some issues, ${e.error.localizedMessage}')),
         );
       } else {
-        print(e);
+        developer.log('Error:$e');
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Error:$e')));
       }
@@ -63,12 +73,13 @@ class _PaymentState2 extends State<Payment2> {
   }
 
   Widget build(BuildContext context) {
+    var amount = 200;
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: h,
           child: Stack(
             children: [
@@ -91,11 +102,11 @@ class _PaymentState2 extends State<Payment2> {
                       color: Colors.black),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 left: 155,
                 top: 240,
                 child: Text(
-                  "₹ 499",
+                  '₹ $amount', //TODO make the amount dynamic
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -158,7 +169,7 @@ class _PaymentState2 extends State<Payment2> {
   }
 
   _header() {
-    return Container(
+    return SizedBox(
       height: 250,
       child: Stack(children: [
         _backgroundImage(),
@@ -190,7 +201,7 @@ class _PaymentState2 extends State<Payment2> {
         // padding: EdgeInsets.all(15.0),
         height: 280,
         width: MediaQuery.of(context).size.width - 10,
-        //width: 360,
+
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
             image: DecorationImage(
@@ -219,7 +230,7 @@ class _PaymentState2 extends State<Payment2> {
             ),
             //SizedBox(width: 10),
             Container(
-              height: 130,
+              height: 132,
               width: 180,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -231,6 +242,8 @@ class _PaymentState2 extends State<Payment2> {
         ));
   }
 
+  // email: 'example@gmail.com', amount: 20000
+
   _cc() {
     return Positioned(
         top: 305,
@@ -239,43 +252,68 @@ class _PaymentState2 extends State<Payment2> {
         child: Wrap(
           alignment: WrapAlignment.spaceEvenly,
           children: [
-            FlatButton(
-              onPressed: () async {
-                await initPaymentSheet(context,
-                    email: 'example@gmail.com', amount: 200000);
-              },
-              child: Container(
-                //CREDIT_CARD
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                margin: EdgeInsets.only(right: 25),
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/Credit.png"))),
-              ),
-            ),
+            isDebitLoading
+                ? CircularProgressIndicator(
+                    color: Colors.red,
+                  )
+                : TextButton(
+                    onPressed: () async {
+                      setState(() {
+                        isDebitLoading = true;
+                      });
+                      print("Before await");
+                      await initPaymentSheet(context,
+                          email: 'example@gmail.com', amount: 20000);
+
+                      setState(() {
+                        isDebitLoading = false;
+                      });
+                      print("After await");
+                    },
+                    child: Container(
+                      //DEBIT CARD
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      margin: EdgeInsets.only(right: 25),
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/Credit.png"))),
+                    ),
+                  ),
             // Spacer(),
             //SizedBox(width: 10),
-            FlatButton(
-              onPressed: () async {
-                await initPaymentSheet(context,
-                    email: 'example@gmail.com', amount: 200000);
-              },
-              child: Container(
-                //DEBITCARD
-                // margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                height: 100,
-                width: 100,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/Credit.png"))),
-              ),
-            ),
+            isCreditLoading
+                ? CircularProgressIndicator(
+                    color: Colors.red,
+                  )
+                : TextButton(
+                    onPressed: () async {
+                      setState(() {
+                        isCreditLoading = true;
+                      });
+                      developer.log('Before Await');
+                      await initPaymentSheet(context,
+                          email: 'example@gmail.com', amount: 20000);
+                      developer.log("Afeter Await");
+                      setState(() {
+                        isCreditLoading = false;
+                      });
+                    },
+                    child: Container(
+                      //CREDIT CARD
+                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      height: 100,
+                      width: 100,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/Credit.png"))),
+                    ),
+                  ),
           ],
         ));
   }
@@ -295,46 +333,66 @@ class _PaymentState2 extends State<Payment2> {
 
   _upiPayments() {
     return Positioned(
-      top: 520,
+      top: MediaQuery.of(context).size.height * 0.6,
       right: 15,
       child: Column(
         children: [
           SizedBox(
             height: 48,
             width: MediaQuery.of(context).size.width - 30,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-              onPressed: () async {
-                await initPaymentSheet(context,
-                    email: 'example@gmail.com', amount: 200000);
-              },
-              child: Row(
-                children: [
-                  Image(
-                    image: AssetImage('assets/BHIM.png'),
-                    filterQuality: FilterQuality.low,
-                    height: 25,
-                    width: 25,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "UPI",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+            child: loading
+                ? SpinKitThreeBounce(
+                    itemBuilder: ((context, index) {
+                      final colors = [Colors.green, Colors.orange];
+                      final color = colors[index % colors.length];
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                    size: 30.0,
+                  )
+                : TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () async {
+                      setState(() {
+                        loading = true;
+                      });
+                      await initPaymentSheet(context,
+                          email: 'example@gmail.com', amount: 20000);
+                      setState(() {
+                        loading = false;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Image(
+                          image: AssetImage('assets/BHIM.png'),
+                          filterQuality: FilterQuality.low,
+                          height: 25,
+                          width: 25,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "UPI",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
           ),
           const SizedBox(
             height: 12,
@@ -343,38 +401,67 @@ class _PaymentState2 extends State<Payment2> {
           SizedBox(
             height: 48,
             width: MediaQuery.of(context).size.width - 30,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-              onPressed: () {
-                print("Pressed");
-              },
-              child: Row(
-                children: [
-                  const Image(
-                    image: AssetImage('assets/Gpay.png'),
-                    // fit: BoxFit.contain,
-                    height: 25,
-                    width: 25,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Google Pay",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+            child: gPayLoading
+                ? SpinKitThreeBounce(
+                    itemBuilder: ((context, index) {
+                      final colors = [
+                        Colors.blue,
+                        Colors.green,
+                        Colors.yellow,
+                        Colors.red
+                      ];
+                      final color = colors[index % colors.length];
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                    size: 30.0,
+                  )
+                : TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () async {
+                      setState(() {
+                        gPayLoading = true;
+                      });
+                      print("Before await");
+                      await initPaymentSheet(context,
+                          email: 'example@gmail.com', amount: 20000);
+
+                      setState(() {
+                        gPayLoading = false;
+                      });
+                      print("After await");
+                    },
+                    child: Row(
+                      children: [
+                        const Image(
+                          image: AssetImage('assets/Gpay.png'),
+                          // fit: BoxFit.contain,
+                          height: 25,
+                          width: 25,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Google Pay",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
           ),
 
           const SizedBox(
@@ -385,38 +472,62 @@ class _PaymentState2 extends State<Payment2> {
           SizedBox(
             height: 48,
             width: MediaQuery.of(context).size.width - 30,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-              onPressed: () {
-                print("Pressed");
-              },
-              child: Row(
-                children: [
-                  const Image(
-                    image: AssetImage('assets/PhonePay.png'),
-                    // fit: BoxFit.contain,
-                    height: 25,
-                    width: 25,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Phone Pe",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+            child: phonePayLoading
+                ? SpinKitThreeBounce(
+                    itemBuilder: ((context, index) {
+                      final colors = [Colors.purple, Colors.white];
+                      final color = colors[index % colors.length];
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                    size: 30.0,
+                  )
+                : TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () async {
+                      setState(() {
+                        phonePayLoading = true;
+                      });
+                      print("Before await");
+                      await initPaymentSheet(context,
+                          email: 'example@gmail.com', amount: 20000);
+
+                      setState(() {
+                        phonePayLoading = false;
+                      });
+                      print("After await");
+                    },
+                    child: Row(
+                      children: [
+                        const Image(
+                          image: AssetImage('assets/PhonePay.png'),
+                          // fit: BoxFit.contain,
+                          height: 25,
+                          width: 25,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Phone Pe",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
           ),
           const SizedBox(
             height: 12,
@@ -426,38 +537,62 @@ class _PaymentState2 extends State<Payment2> {
           SizedBox(
             height: 48,
             width: MediaQuery.of(context).size.width - 30,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-              onPressed: () {
-                print("Pressed");
-              },
-              child: Row(
-                children: [
-                  const Image(
-                    image: AssetImage('assets/Paytm.png'),
-                    // fit: BoxFit.contain,
-                    height: 25,
-                    width: 25,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Paytm",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+            child: paytmLoading
+                ? SpinKitThreeBounce(
+                    itemBuilder: ((context, index) {
+                      final colors = [Colors.blue, Colors.white];
+                      final color = colors[index % colors.length];
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                    size: 30.0,
+                  )
+                : TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () async {
+                      setState(() {
+                        paytmLoading = true;
+                      });
+                      print("Before await");
+                      await initPaymentSheet(context,
+                          email: 'example@gmail.com', amount: 20000);
+
+                      setState(() {
+                        paytmLoading = false;
+                      });
+                      print("After await");
+                    },
+                    child: Row(
+                      children: [
+                        const Image(
+                          image: AssetImage('assets/Paytm.png'),
+                          // fit: BoxFit.contain,
+                          height: 25,
+                          width: 25,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Paytm",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
           )
         ],
       ),
@@ -466,7 +601,7 @@ class _PaymentState2 extends State<Payment2> {
 
   _paymentContainer() {
     return Positioned(
-      top: 510,
+      top: MediaQuery.of(context).size.height * 0.588,
       left: 5,
       child: Container(
         // margin: EdgeInsets.fromLTRB(75, 0, 0, 0),
@@ -484,13 +619,71 @@ class _PaymentState2 extends State<Payment2> {
 
   _couponCode() {
     return Positioned(
-      top: 760,
+      top: MediaQuery.of(context).size.height * 0.88,
       right: -2,
       child: TextButton(
         onPressed: () {},
         child: SizedBox(
           height: 80,
-          width: 400,
+          width: MediaQuery.of(context).size.width * 0.98,
+          child: TextButton(
+            onPressed: () {
+              print("Coupon Pressed");
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Apply Coupon",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 200,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        ">",
+                        style: TextStyle(
+                            color: Color(0xffD15858),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _couponCode2() {
+    return Positioned(
+      top: MediaQuery.of(context).size.height * 0.98,
+      right: -2,
+      child: TextButton(
+        onPressed: () {},
+        child: SizedBox(
+          height: 80,
+          width: MediaQuery.of(context).size.width * 0.98,
           child: TextButton(
             onPressed: () {
               print("Coupon Pressed");

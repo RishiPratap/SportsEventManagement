@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.4
   flutter_socket_io: ^0.6.0
   flutter_stripe: ^2.5.0
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   build_runner: ^2.0.0
