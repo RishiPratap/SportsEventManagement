@@ -26,6 +26,6 @@ class MyApp extends StatelessWidget {
         title: 'User Details App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: Payment2());
+        home: CricketScore());
   }
 }

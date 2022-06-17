@@ -30,7 +30,7 @@ class _CricketScoreState extends State<CricketScore> {
               ),
               _header(),
               Positioned(
-                top: h * 0.21,
+                top: h * 0.18,
                 left: w * 0.56,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.transparent),
@@ -49,7 +49,7 @@ class _CricketScoreState extends State<CricketScore> {
               ),
               _score(),
               Positioned(
-                top: h * 0.45,
+                top: h * 0.39,
                 left: w * 0.11,
                 child: const Text(
                   "Team A won the toss and elected to bat first",
@@ -60,21 +60,25 @@ class _CricketScoreState extends State<CricketScore> {
                 ),
               ),
               _scoreCard(),
-              _bowlerCard()
+              _bowlerCard(),
+              _keyBoard(),
+              _keyBoard2(),
+              _keyBoard3(),
+              _submit()
             ],
           ),
         ),
       ),
     );
   }
+
   _header() {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.height;
-
     return Positioned(
       left: 0.08,
       right: 0.08,
-      top: h * 0.15,
+      top: h * 0.11,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         const Padding(
           padding: EdgeInsets.all(20.0),
@@ -105,7 +109,7 @@ class _CricketScoreState extends State<CricketScore> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Positioned(
-      top: h * 0.3,
+      top: h * 0.27,
       left: w * 0.4,
       child: Row(
         children: [
@@ -137,11 +141,11 @@ class _CricketScoreState extends State<CricketScore> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Positioned(
-      top: h * 0.56,
+      top: h * 0.45,
       left: h * 0.02,
       right: 20,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        SizedBox(
+        Container(
             width: w * 0.4,
             height: h * 0.07,
             child: ElevatedButton(
@@ -155,12 +159,13 @@ class _CricketScoreState extends State<CricketScore> {
                 print("Pressed");
               },
             )),
-        SizedBox(
+        Container(
             width: w * 0.4,
             height: h * 0.07,
             child: ElevatedButton(
               child: Text("Hiren Thacker\n0(0)"),
               style: ElevatedButton.styleFrom(
+                  elevation: 5,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -176,7 +181,7 @@ class _CricketScoreState extends State<CricketScore> {
   _bowlerCard() {
     double h = MediaQuery.of(context).size.height;
     return Positioned(
-      top: h * 0.7,
+      top: h * 0.58,
       left: h * 0.03,
       right: 20,
       child: Row(
@@ -201,5 +206,267 @@ class _CricketScoreState extends State<CricketScore> {
         ],
       ),
     );
+  }
+
+  _keyBoard() {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    return Positioned(
+      top: h * 0.65,
+      left: 50,
+      right: w * 0.1,
+      child: Container(
+        // color: Colors.white.withOpacity(0.4),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("0"),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("1"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("2"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("Undo"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+        ]),
+      ),
+    );
+  }
+
+  _keyBoard2() {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    return Positioned(
+      top: h * 0.74,
+      left: 50,
+      right: w * 0.1,
+      child: Container(
+        // color: Colors.white.withOpacity(0.4),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("3"),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("4"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("6"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("5,7"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+        ]),
+      ),
+    );
+  }
+
+  _keyBoard3() {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    return Positioned(
+      top: h * 0.83,
+      left: 50,
+      right: w * 0.1,
+      child: Container(
+        // color: Colors.white.withOpacity(0.4),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("WD"),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("NB"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text("BYE"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.red),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+          Container(
+              width: 70,
+              height: 60,
+              child: ElevatedButton(
+                child: Text(
+                  "Out",
+                  style: TextStyle(color: Colors.red),
+                ),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: Colors.white),
+                onPressed: () {
+                  print("Pressed");
+                },
+              )),
+        ]),
+      ),
+    );
+  }
+
+  _submit() {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+
+    return Positioned(
+        top: h * 0.92,
+        left: w * 0.2,
+        child: Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                primary: Color(0xFFD15858)),
+            onPressed: () {},
+            child: Container(
+                width: 221,
+                height: 54,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    "Submit",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                )),
+          ),
+        ));
   }
 }
