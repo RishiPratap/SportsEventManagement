@@ -437,8 +437,8 @@ class _CricketScoreState extends State<CricketScore> {
   }
 
   _submit() {
-    double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
 
     return Positioned(
         top: h * 0.92,
