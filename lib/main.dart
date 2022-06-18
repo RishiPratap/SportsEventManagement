@@ -1,3 +1,4 @@
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/CricketScore.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'SignUpPage.dart';
 import 'login.dart';
 import 'Payment.dart';
-import 'Payment2.dart';
 import 'package:flutter/services.dart';
 
 void main() async => {
@@ -26,6 +26,6 @@ class MyApp extends StatelessWidget {
         title: 'User Details App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: CricketScore());
+        home: BadmintonSpotSelection());
   }
 }
