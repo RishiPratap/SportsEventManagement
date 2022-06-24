@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
-import 'dart:ui';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -115,7 +112,7 @@ class _PaymentState extends State<Payment> {
                 left: 155,
                 top: 240,
                 child: Text(
-                  '₹ $amount', //TODO make the amount dynamic
+                  '₹ $amount',
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -743,8 +740,7 @@ class _PaymentState extends State<Payment> {
     );
   }
 
-  var stripeApiKey =
-      "sk_test_51Kx9oUSDyPLJYmvrHGifQoOVMJTLzveCWgOMKSdYGUKOhgqEW5pDoA9XTbs5NDki9XW4mmU4wNna8uFdpoM0BanG00uedfdbjt";
+  // var stripeApiKey = "sk_test_51Kx9oUSDyPLJYmvrHGifQoOVMJTLzveCWgOMKSdYGUKOhgqEW5pDoA9XTbs5NDki9XW4mmU4wNna8uFdpoM0BanG00uedfdbjt";
 
-  var amount = '300';
+  // var amount = '300';
 }
