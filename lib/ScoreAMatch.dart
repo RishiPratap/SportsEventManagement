@@ -1,3 +1,4 @@
+import 'package:ardent_sports/Menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -55,13 +56,19 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      width: 20,
-                      height: 16,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/menu_bar.png"),
-                              fit: BoxFit.fitHeight)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Menu()));
+                      },
+                      child: Container(
+                        width: 20,
+                        height: 16,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/menu_bar.png"),
+                                fit: BoxFit.fitHeight)),
+                      ),
                     ),
                   ),
                 ],

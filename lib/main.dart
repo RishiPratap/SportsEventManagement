@@ -34,6 +34,6 @@ class MyApp extends StatelessWidget {
         title: 'Ardent Sports',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: CricketTeamDetasilsInput());
+        home: BadmintonSpotSelection());
   }
 }

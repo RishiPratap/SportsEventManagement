@@ -243,7 +243,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                   final spotNumberMap = SpotNumber.toMap();
                   final json_spotNumber = jsonEncode(spotNumberMap);
                   print("2");
-                  widget.socket.emit('confirm-booking', json_spotNumber);
+                  // widget.socket.emit('confirm-booking', json_spotNumber);
                   Navigator.push(
                       context,
                       PageTransition(
@@ -251,6 +251,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                           child: Payment(
                             Spot_Price: widget.Spot_Price,
                             Spot_Number: widget.SpotNo,
+                            socket: widget.socket,
                           )));
                 },
                 color: Color(0xffE74745),

@@ -231,13 +231,13 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     );
   }
 
+  //http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/
+
   void initState() {
-    socket = io(
-        "http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/",
-        <String, dynamic>{
-          "transports": ["websocket"],
-          "autoConnect": false,
-        });
+    socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+    });
     socket.connect();
   }
 
