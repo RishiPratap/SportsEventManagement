@@ -1,6 +1,7 @@
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/CricketMatchDetailsInput.dart';
 import 'package:ardent_sports/CricketScore.dart';
+import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
 import 'package:ardent_sports/CricketTeamDetailsInput.dart';
 import 'package:ardent_sports/CricketTossDetails.dart';
 import 'package:ardent_sports/Home.dart';
@@ -32,6 +33,6 @@ class MyApp extends StatelessWidget {
         title: 'User Details App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: CricketTossDetails());
+        home: CricketStrickerAndNonStrickerDetails());
   }
 }
