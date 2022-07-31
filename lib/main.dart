@@ -7,6 +7,7 @@ import 'SignUpPage.dart';
 import 'login.dart';
 import 'Payment.dart';
 import 'package:flutter/services.dart';
+import 'UPI.dart';
 
 void main() async => {
       WidgetsFlutterBinding.ensureInitialized(),
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'User Details App',
+        title: 'Ardent Sports',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
         home: BadmintonSpotSelection());

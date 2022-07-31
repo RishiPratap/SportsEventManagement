@@ -3,11 +3,29 @@ import 'package:flutter/material.dart';
 class CricketScore extends StatefulWidget {
   const CricketScore({Key? key}) : super(key: key);
 
+  get btnVal => "0";
   @override
   State<CricketScore> createState() => _CricketScoreState();
 }
 
 class _CricketScoreState extends State<CricketScore> {
+  final TextEditingController _searchInputControllor = TextEditingController();
+
+  void appendCharacters() {
+    String oldText = _searchInputControllor.text;
+    String newText = oldText + widget.btnVal;
+
+    var newValue = _searchInputControllor.value.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(
+        offset: newText.length,
+      ),
+      composing: TextRange.empty,
+    );
+
+    _searchInputControllor.value = newValue;
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -29,6 +47,7 @@ class _CricketScoreState extends State<CricketScore> {
                         color: Colors.white)),
               ),
               _header(),
+              // _score(),
               Positioned(
                 top: h * 0.18,
                 left: w * 0.56,
@@ -47,7 +66,20 @@ class _CricketScoreState extends State<CricketScore> {
                   ),
                 ),
               ),
-              _score(),
+
+              Expanded(
+                child: TextField(
+                  enableInteractiveSelection: false,
+                  controller: _searchInputControllor,
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 40.0),
+                      hintText: "0/0",
+                      labelText: "Score"),
+                ),
+              ), //TODO edit this
+
+              _score(), //TODO ADD SCORING PART
               Positioned(
                 top: h * 0.39,
                 left: w * 0.11,
@@ -59,12 +91,13 @@ class _CricketScoreState extends State<CricketScore> {
                       color: Colors.white),
                 ),
               ),
+              // _score(),
               _scoreCard(),
               _bowlerCard(),
               _keyBoard(),
               _keyBoard2(),
               _keyBoard3(),
-              _submit()
+              _submit(),
             ],
           ),
         ),
@@ -113,14 +146,20 @@ class _CricketScoreState extends State<CricketScore> {
       left: w * 0.4,
       child: Row(
         children: [
-          Container(
-            alignment: Alignment.topCenter,
-            child: const Text("0/0",
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white)),
-          ),
+          // Container(
+          //     alignment: Alignment.topCenter,
+          //     child: TextField(
+          //       enableInteractiveSelection: false,
+          //       controller: _searchInputControllor,
+          //       cursorColor: Colors.white,
+          //       decoration: InputDecoration(
+          //           contentPadding: EdgeInsets.symmetric(
+          //             horizontal: 16.0,
+          //             vertical: 15.0,
+          //           ),
+          //           border: InputBorder.none,
+          //           hintText: "Enter Score"),
+          //     )),
           Container(
             margin: EdgeInsets.only(top: h * 0.02),
             child: const Padding(
@@ -230,7 +269,8 @@ class _CricketScoreState extends State<CricketScore> {
                     ),
                     primary: Colors.red),
                 onPressed: () {
-                  print("Pressed");
+                  _searchInputControllor.text =
+                      _searchInputControllor.text + "0";
                 },
               )),
           Container(
@@ -245,7 +285,8 @@ class _CricketScoreState extends State<CricketScore> {
                     ),
                     primary: Colors.red),
                 onPressed: () {
-                  print("Pressed");
+                  _searchInputControllor.text =
+                      _searchInputControllor.text + "1";
                 },
               )),
           Container(
@@ -260,7 +301,8 @@ class _CricketScoreState extends State<CricketScore> {
                     ),
                     primary: Colors.red),
                 onPressed: () {
-                  print("Pressed");
+                  _searchInputControllor.text =
+                      _searchInputControllor.text + "2";
                 },
               )),
           Container(

@@ -7,6 +7,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pay/pay.dart' as google;
 
 class Payment extends StatefulWidget {
   final String Spot_Price;
@@ -24,6 +25,18 @@ class _PaymentState extends State<Payment> {
   bool gPayLoading = false;
   bool phonePayLoading = false;
   bool paytmLoading = false;
+
+  final _paymentItems = [
+    google.PaymentItem(
+      label: 'Total',
+      amount: '99.99',
+      status: google.PaymentItemStatus.final_price,
+    )
+  ];
+
+  void onGooglePayResult(paymentResult) {
+    debugPrint(paymentResult.toString());
+  }
 
   var url = 'https://ardentsportsapis.herokuapp.com/makePayment';
   Future<void> initPaymentSheet(context,
@@ -247,8 +260,6 @@ class _PaymentState extends State<Payment> {
           ],
         ));
   }
-
-  // email: 'example@gmail.com', amount: 20000
 
   _cc() {
     return Positioned(
@@ -739,8 +750,4 @@ class _PaymentState extends State<Payment> {
       ),
     );
   }
-
-  // var stripeApiKey = "sk_test_51Kx9oUSDyPLJYmvrHGifQoOVMJTLzveCWgOMKSdYGUKOhgqEW5pDoA9XTbs5NDki9XW4mmU4wNna8uFdpoM0BanG00uedfdbjt";
-
-  // var amount = '300';
 }
