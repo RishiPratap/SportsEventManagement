@@ -1,3 +1,4 @@
+import 'package:ardent_sports/ScoreAMatch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -95,7 +96,7 @@ class _MenuState extends State<Menu> {
                 TextButton(
                     onPressed: () {},
                     child: Text(
-                      "I'm a scorer",
+                      "Score a challenge",
                       style: TextStyle(color: Colors.white),
                     )),
               ],
@@ -111,14 +112,19 @@ class _MenuState extends State<Menu> {
                   height: 40,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/contacts.png"),
+                        image: AssetImage("assets/score 1.png"),
                         fit: BoxFit.cover),
                   ),
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScoreAMatch()));
+                    },
                     child: Text(
-                      "Contact Us",
+                      "Score a Match",
                       style: TextStyle(color: Colors.white),
                     )),
               ],
@@ -165,6 +171,29 @@ class _MenuState extends State<Menu> {
                     onPressed: () {},
                     child: Text(
                       "My Hosted Challenges",
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ],
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/contacts.png"),
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Contact Us",
                       style: TextStyle(color: Colors.white),
                     )),
               ],

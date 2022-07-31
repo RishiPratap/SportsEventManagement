@@ -52,26 +52,52 @@ class login extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Container(
+                            //   padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
+                            //   child: Expanded(
+                            //     child: TextFormField(
+                            //       controller: emaild,
+                            //       decoration: InputDecoration(
+                            //         border: OutlineInputBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(40.0)),
+                            //         hintText: '  Email/Mobile',
+                            //         hintStyle: TextStyle(
+                            //             color: Colors.white.withOpacity(0.5)),
+                            //         focusedBorder: OutlineInputBorder(
+                            //           borderRadius: BorderRadius.circular(30),
+                            //           borderSide: BorderSide(
+                            //             color: Colors.black,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             Container(
-                              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
-                              child: Expanded(
-                                child: TextFormField(
-                                  controller: emaild,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(40.0)),
-                                    hintText: '  Email/Mobile',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      borderSide: BorderSide(
-                                        color: Colors.black,
-                                      ),
+                              margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                              // color: Colors.black.withOpacity(0.3),
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(40))),
+                              child: TextField(
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                      borderSide: BorderSide(),
                                     ),
-                                  ),
-                                ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                      borderSide: BorderSide(),
+                                    ),
+                                    hintText: "Event Type (MS,WS,etc..)",
+                                    hintStyle: TextStyle(color: Colors.white),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    )),
                               ),
                             ),
                             Container(
@@ -134,7 +160,7 @@ class login extends StatelessWidget {
                                     ));
                                   }
                                 },
-                                color: Color(0xffcf253c),
+                                color: Color(0xffE74545),
                                 textColor: Colors.white,
                                 padding: EdgeInsets.all(10.0),
                                 splashColor: Colors.grey,
@@ -165,7 +191,7 @@ class login extends StatelessWidget {
                 Center(
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      primary: Colors.red,
+                      primary: Color(0xffE74545),
                       textStyle: const TextStyle(
                         fontSize: 15,
                       ),

@@ -1,6 +1,13 @@
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
+import 'package:ardent_sports/CricketMatchDetailsInput.dart';
 import 'package:ardent_sports/CricketScore.dart';
+import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
+import 'package:ardent_sports/CricketTeamDetailsInput.dart';
+import 'package:ardent_sports/CricketTossDetails.dart';
+import 'package:ardent_sports/Home.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
+import 'package:ardent_sports/Menu.dart';
+import 'package:ardent_sports/ScoreAMatch.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'SignUpPage.dart';
@@ -27,6 +34,6 @@ class MyApp extends StatelessWidget {
         title: 'Ardent Sports',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: BadmintonSpotSelection());
+        home: CricketTeamDetasilsInput());
   }
 }

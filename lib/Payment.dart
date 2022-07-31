@@ -232,33 +232,34 @@ class _PaymentState extends State<Payment> {
 
   _cards() {
     return Positioned(
-        top: 300,
-        left: 0,
-        right: 0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              height: 130,
-              width: 180,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/Rectangle 80.png"))),
-            ),
-            //SizedBox(width: 10),
-            Container(
-              height: 132,
-              width: 180,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/Rectangle 80.png"))),
-            ),
-          ],
-        ));
+      top: 300,
+      left: 0,
+      right: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            height: 130,
+            width: 180,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/Rectangle 80.png"))),
+          ),
+          //SizedBox(width: 10),
+          Container(
+            height: 132,
+            width: 180,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/Rectangle 80.png"))),
+          ),
+        ],
+      ),
+    );
   }
 
   _cc() {
