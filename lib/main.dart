@@ -5,6 +5,7 @@ import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
 import 'package:ardent_sports/CricketTeamDetailsInput.dart';
 import 'package:ardent_sports/CricketTossDetails.dart';
 import 'package:ardent_sports/Home.dart';
+import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:ardent_sports/Menu.dart';
 import 'package:ardent_sports/ScoreAMatch.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       title: 'User Details App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: CricketStrickerAndNonStrickerDetails(),
+      home: HomePage(),
     );
   }
 }
