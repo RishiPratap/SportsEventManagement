@@ -14,7 +14,9 @@ var count = 0;
 var array1 = [];
 
 class BadmintonSpotSelection extends StatefulWidget {
-  const BadmintonSpotSelection({Key? key}) : super(key: key);
+  const BadmintonSpotSelection({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
@@ -92,20 +94,22 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               final json_tournamentid = jsonEncode(tournament_id1Map);
               socket.emit('spot-clicked', json_tournamentid);
               Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.rightToLeftWithFade,
-                      child: SpotConfirmation(
-                        SpotNo: i.toString(),
-                        Name: "Shubham Soni",
-                        EventName: "Rapid Table Tennis Challenge",
-                        Category: "Men's Singles",
-                        Date: "21/11/21",
-                        Address: "Sports Academy,SG Highway",
-                        City: "Ahmedabad",
-                        socket: socket,
-                        Spot_Price: entryfee.toString(),
-                      )));
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: SpotConfirmation(
+                    SpotNo: i.toString(),
+                    Name: "Shubham Soni",
+                    EventName: "Rapid Table Tennis Challenge",
+                    Category: "Men's Singles",
+                    Date: "21/11/21",
+                    Address: "Sports Academy,SG Highway",
+                    City: "Ahmedabad",
+                    socket: socket,
+                    Spot_Price: entryfee.toString(),
+                  ),
+                ),
+              );
             },
             color: Color(0xff6EBC55),
             shape: RoundedRectangleBorder(

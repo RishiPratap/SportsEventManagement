@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   const CricketStrickerAndNonStrickerDetails({Key? key}) : super(key: key);
@@ -233,7 +236,40 @@ class _CricketStrickerAndNonStrickerDetailsState
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final match_details = match_Details(
+                                  matchid: "12359",
+                                  team_1: ["Doraemon"],
+                                  team_2: ["Doraemon"],
+                                  team_1_score: 0,
+                                  team_2_score: 0,
+                                  team_1_wickets: 0,
+                                  team_2_wickets: 0,
+                                  team_1_target: 10,
+                                  team_2_target: 10,
+                                  winning_team: "He",
+                                  no_of_overs: 5,
+                                  ball_type: "H",
+                                  city: "Nzb",
+                                  playing_team_size: 5,
+                                  toss_won_by: "a",
+                                  elected_to: "baT");
+                              final match_details_map = match_details.toMap();
+                              final json = jsonEncode(match_details_map);
+                              var url =
+                                  "https://ardentsportsapis.herokuapp.com/cricketMatchDetails";
+                              var response = await post(Uri.parse(url),
+                                  headers: {
+                                    "Accept": "application/json",
+                                    "Content-Type": "application/json"
+                                  },
+                                  body: json,
+                                  encoding: Encoding.getByName("utf-8"));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(response.statusCode.toString()),
+                              ));
+                            },
                             child: Text("Start Scoring"),
                             color: Color(0xffD15858),
                             shape: RoundedRectangleBorder(
@@ -250,5 +286,61 @@ class _CricketStrickerAndNonStrickerDetailsState
         ),
       ),
     );
+  }
+}
+
+class match_Details {
+  late String matchid;
+  late List<String> team_1;
+  late List<String> team_2;
+  late int team_1_score;
+  late int team_2_score;
+  late int team_1_wickets;
+  late int team_2_wickets;
+  late int team_1_target;
+  late int team_2_target;
+  late String winning_team;
+  late int no_of_overs;
+  late String ball_type;
+  late String city;
+  late int playing_team_size;
+  late String toss_won_by;
+  late String elected_to;
+  match_Details(
+      {required this.matchid,
+      required this.team_1,
+      required this.team_2,
+      required this.team_1_score,
+      required this.team_2_score,
+      required this.team_1_wickets,
+      required this.team_2_wickets,
+      required this.team_1_target,
+      required this.team_2_target,
+      required this.winning_team,
+      required this.no_of_overs,
+      required this.ball_type,
+      required this.city,
+      required this.playing_team_size,
+      required this.toss_won_by,
+      required this.elected_to});
+  Map<String, dynamic> toMap() {
+    return {
+      "matchid": this.matchid,
+      "team_1": this.team_1,
+      "team_2": this.team_2,
+      "team_1_score": this.team_1_score,
+      "team_2_score": this.team_2_score,
+      "team_1_wickets": this.team_1_wickets,
+      "team_2_wickets": this.team_2_wickets,
+      "team_1_target": this.team_1_target,
+      "team_2_target": this.team_2_target,
+      "winning_team": this.winning_team,
+      "no_of_overs": this.no_of_overs,
+      "ball_type": this.ball_type,
+      "city": this.city,
+      "playing_team_size": this.playing_team_size,
+      "toss_won_by": this.toss_won_by,
+      "elected_to": this.elected_to
+    };
   }
 }

@@ -2,7 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CricketTeamDetasilsInput extends StatefulWidget {
-  const CricketTeamDetasilsInput({Key? key}) : super(key: key);
+  final String no_of_overs;
+  final String playing_team_size;
+  final String Substitutes;
+  final String ball_type;
+  final String city;
+  final String match_name;
+  const CricketTeamDetasilsInput(
+      {Key? key,
+      required this.no_of_overs,
+      required this.playing_team_size,
+      required this.Substitutes,
+      required this.ball_type,
+      required this.city,
+      required this.match_name})
+      : super(key: key);
 
   @override
   State<CricketTeamDetasilsInput> createState() =>
@@ -10,6 +24,8 @@ class CricketTeamDetasilsInput extends StatefulWidget {
 }
 
 class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
+  List<String> teamA_Players = [];
+  List<String> teamB_Players = [];
   List<Container> buildPlayers(int count, String team_nam) {
     List<Container> totalPlayers = [];
     var team_name = Container(
@@ -31,6 +47,13 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
             color: Colors.black.withOpacity(0.4)),
         margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: TextField(
+          onChanged: (text) {
+            if (team_name == "Team A") {
+              teamA_Players.add(text);
+            } else {
+              teamB_Players.add(text);
+            }
+          },
           decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             hintText: 'Player $i',
@@ -56,7 +79,14 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
       height: 45,
       margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
       child: RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(teamA_Players[1]),
+            ),
+          );
+          Navigator.pop(context, false);
+        },
         child: Text("Submit"),
         color: Color(0xffD15858),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -319,7 +349,8 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
             color: Colors.white.withOpacity(0.2),
             child: SingleChildScrollView(
               child: Column(
-                children: buildPlayers(team_size, team_name),
+                children: buildPlayers(
+                    int.parse(widget.playing_team_size), team_name),
               ),
             ),
           ),

@@ -31,9 +31,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Ardent Sports',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
-        home: BadmintonSpotSelection());
+      title: 'User Details App',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: CricketStrickerAndNonStrickerDetails(),
+    );
   }
 }
