@@ -10,6 +10,63 @@ class CricketTeamDetasilsInput extends StatefulWidget {
 }
 
 class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
+  List<Container> buildPlayers(int count, String team_nam) {
+    List<Container> totalPlayers = [];
+    var team_name = Container(
+      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+      child: Center(
+        child: Text(
+          "$team_nam Add Players",
+          style: TextStyle(fontWeight: FontWeight.w700),
+        ),
+      ),
+    );
+    totalPlayers.add(team_name);
+    for (int i = 1; i <= count; i++) {
+      var newPlayer = Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.black.withOpacity(0.4)),
+        margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        child: TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            hintText: 'Player $i',
+            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.black.withOpacity(0.001)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Colors.black.withOpacity(0.001),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      totalPlayers.add(newPlayer);
+    }
+    var submit = Container(
+      width: MediaQuery.of(context).size.width,
+      height: 45,
+      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+      child: RaisedButton(
+        onPressed: () {},
+        child: Text("Submit"),
+        color: Color(0xffD15858),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+    );
+    totalPlayers.add(submit);
+
+    return totalPlayers;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,7 +214,13 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                   height: 35,
                                   margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
                                   child: FlatButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              leaddialog(
+                                                  context, "Team A", 11));
+                                    },
                                     child: Image.asset(
                                       "assets/edit_button.png",
                                       fit: BoxFit.fitHeight,
@@ -202,7 +265,13 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                   height: 35,
                                   margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
                                   child: FlatButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              leaddialog(
+                                                  context, "Team B", 11));
+                                    },
                                     child: Image.asset(
                                       "assets/edit_button.png",
                                       fit: BoxFit.fitHeight,
@@ -238,4 +307,22 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
       ),
     );
   }
+
+  Dialog leaddialog(BuildContext context, String team_name, int team_size) =>
+      Dialog(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height -
+              MediaQuery.of(context).size.height / 6,
+          child: Card(
+            elevation: 10,
+            color: Colors.white.withOpacity(0.2),
+            child: SingleChildScrollView(
+              child: Column(
+                children: buildPlayers(team_size, team_name),
+              ),
+            ),
+          ),
+        ),
+      );
 }

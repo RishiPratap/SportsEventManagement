@@ -33,6 +33,6 @@ class MyApp extends StatelessWidget {
         title: 'User Details App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: CricketStrickerAndNonStrickerDetails());
+        home: CricketTeamDetasilsInput());
   }
 }
