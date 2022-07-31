@@ -1,3 +1,4 @@
+import 'package:ardent_sports/CricketMatchDetailsInput.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class ScoreAMatch extends StatefulWidget {
 
 class _ScoreAMatchState extends State<ScoreAMatch> {
   @override
+  String sport_name = "Select a sport";
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -157,7 +159,7 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                           color: Colors.black.withOpacity(0.5),
                           child: Center(
                             child: Text(
-                              "Select a sport",
+                              sport_name,
                               style: TextStyle(color: Color(0xffE74545)),
                             ),
                           ),
@@ -168,7 +170,11 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                       ),
                       Center(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              sport_name = "Badminton";
+                            });
+                          },
                           child: Text(
                             "Badminton",
                             style: TextStyle(color: Colors.white),
@@ -177,7 +183,11 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                       ),
                       Center(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              sport_name = "Table Tennis";
+                            });
+                          },
                           child: Text(
                             "Table Tennis",
                             style: TextStyle(color: Colors.white),
@@ -186,7 +196,11 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                       ),
                       Center(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              sport_name = "Cricket";
+                            });
+                          },
                           child: Text(
                             "Cricket",
                             style: TextStyle(color: Colors.white),
@@ -208,7 +222,30 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                             shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (sport_name == "Badminton") {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text("Yet To be implemented"),
+                                ));
+                              } else if (sport_name == "Table Tennis") {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text("Yet To be implemented"),
+                                ));
+                              } else if (sport_name == "Cricket") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CricketMatchDetailsInput()));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text("Please Select a sport"),
+                                ));
+                              }
+                            },
                             child: Text("Ok"),
                             color: Color(0xffE74545),
                           ),
