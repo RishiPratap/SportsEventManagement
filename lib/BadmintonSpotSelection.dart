@@ -420,6 +420,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   width: 10,
                 ),
                 Text("Booked"),
+                SizedBox(
+                  width: 12,
+                ),
+                Container(
+                  width: 20,
+                  height: 20,
+                  color: Color(0xffFFFF00).withOpacity(0.8),
+                ),
+                Text("   Processing"),
               ],
             ),
             SizedBox(

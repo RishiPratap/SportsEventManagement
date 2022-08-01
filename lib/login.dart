@@ -75,29 +75,23 @@ class login extends StatelessWidget {
                             //   ),
                             // ),
                             Container(
-                              margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
-                              // color: Colors.black.withOpacity(0.3),
-                              decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.3),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40))),
-                              child: TextField(
-                                keyboardType: TextInputType.emailAddress,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(40),
-                                      borderSide: BorderSide(),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(40),
-                                      borderSide: BorderSide(),
-                                    ),
-                                    hintText: "Event Type (MS,WS,etc..)",
-                                    hintStyle: TextStyle(color: Colors.white),
+                              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
+                              child: Expanded(
+                                child: TextField(
+                                  obscureText: true,
+                                  controller: emaild,
+                                  decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(40),
-                                    )),
+                                        borderRadius:
+                                            BorderRadius.circular(40.0)),
+                                    hintText: 'Email',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             Container(
@@ -115,9 +109,6 @@ class login extends StatelessWidget {
                                         color: Colors.white.withOpacity(0.5)),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(30),
-                                      borderSide: BorderSide(
-                                        color: Colors.black,
-                                      ),
                                     ),
                                   ),
                                 ),

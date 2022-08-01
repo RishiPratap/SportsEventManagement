@@ -1,3 +1,4 @@
+import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class ticket extends StatelessWidget {
@@ -354,7 +355,7 @@ class Home extends StatelessWidget {
                         fontSize: MediaQuery.of(context).size.height * 0.03,
                         color: Color(0xFFE54545)),
                   ),
-                )
+                ),
               ],
             ),
           ),

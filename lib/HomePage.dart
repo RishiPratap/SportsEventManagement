@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:ui';
-
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'Menu.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,6 +13,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final url = 'https://ardentsportsapis.herokuapp.com/allTournaments';
+
+  void userData() async {
+    try {
+      var response = await get(Uri.parse(url));
+      var jsonData = jsonDecode(response.body) as List;
+      print(jsonData);
+      print(jsonData[0]['TOURNAMENT_NAME']);
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    userData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,66 +182,75 @@ class _HomePageState extends State<HomePage> {
                               title: Container(
                             margin: EdgeInsets.only(top: 2),
                             height: MediaQuery.of(context).size.height * 0.075,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              elevation: 20,
-                              color: Color(0xff6BB8FF),
-                              child: Container(
-                                margin: EdgeInsets.only(top: 12),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.transparent
-                                              .withOpacity(0.6),
-                                          backgroundBlendMode:
-                                              BlendMode.darken),
-                                      child: Image(
-                                        image:
-                                            AssetImage("assets/badminton.png"),
-                                        height: 20,
-                                        width: 20,
-                                        fit: BoxFit.cover,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BadmintonSpotSelection()));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                elevation: 20,
+                                color: Color(0xff6BB8FF),
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 12),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 15,
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Rapid Badminton Challenge",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.transparent
+                                                .withOpacity(0.6),
+                                            backgroundBlendMode:
+                                                BlendMode.darken),
+                                        child: Image(
+                                          image: AssetImage(
+                                              "assets/badminton.png"),
+                                          height: 20,
+                                          width: 20,
+                                          fit: BoxFit.cover,
                                         ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "GandhiNagar",
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Rapid Badminton Challenge',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            "GandhiNagar",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -251,7 +281,9 @@ class _HomePageState extends State<HomePage> {
                                               fontWeight: FontWeight.bold),
                                         )),
                                     TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          userData();
+                                        },
                                         child: Text(
                                           "V",
                                           style: TextStyle(

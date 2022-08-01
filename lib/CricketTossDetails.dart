@@ -1,3 +1,4 @@
+import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
 import 'package:flutter/material.dart';
 
 class CricketTossDetails extends StatefulWidget {
@@ -247,7 +248,14 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CricketStrickerAndNonStrickerDetails()),
+                              );
+                            },
                             child: Text("Next"),
                             color: Color(0xffD15858),
                             shape: RoundedRectangleBorder(
