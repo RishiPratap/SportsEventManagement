@@ -195,7 +195,7 @@ class _PaymentState extends State<Payment> {
                           color: Colors.white),
                     ),
                     onPressed: () {
-                      SystemNavigator.pop();
+                      Navigator.pop(context);
                     },
                   )),
             ],

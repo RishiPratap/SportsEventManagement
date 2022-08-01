@@ -77,6 +77,11 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
   }
 
   Widget SpotConfirmationCard() => Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            side: BorderSide(
+              color: Color(0xff03C289),
+            )),
         elevation: 10,
         color: Colors.white.withOpacity(0.1),
         child: Column(
@@ -106,127 +111,175 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
             SizedBox(
               height: 15,
             ),
-            Card(
-              elevation: 10,
-              color: Colors.black.withOpacity(0.3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                    width: 300,
-                    height: 40,
-                    child: Text(
-                      "Name : ${widget.Name}",
-                      textAlign: TextAlign.start,
-                    ),
-                  )
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: BorderSide(
+                      color: Color(0xff03C289),
+                    )),
+                color: Colors.black.withOpacity(0.3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
+                      width: 300,
+                      height: 40,
+                      child: Text(
+                        "Name : ${widget.Name}",
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
               height: 5,
             ),
-            Card(
-              elevation: 10,
-              color: Colors.black.withOpacity(0.3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                    width: 300,
-                    height: 40,
-                    child: Text(
-                      "Event : ${widget.EventName}",
-                      textAlign: TextAlign.start,
-                    ),
-                  )
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: BorderSide(
+                      color: Color(0xff03C289),
+                    )),
+                elevation: 10,
+                color: Colors.black.withOpacity(0.3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
+                      width: 300,
+                      height: 40,
+                      child: Text(
+                        "Event : ${widget.EventName}",
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
               height: 5,
             ),
-            Card(
-              elevation: 10,
-              color: Colors.black.withOpacity(0.3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                    width: 300,
-                    height: 40,
-                    child: Text(
-                      "Category : ${widget.Category}",
-                      textAlign: TextAlign.start,
-                    ),
-                  )
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: BorderSide(
+                      color: Color(0xff03C289),
+                    )),
+                elevation: 10,
+                color: Colors.black.withOpacity(0.3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
+                      width: 300,
+                      height: 40,
+                      child: Text(
+                        "Category : ${widget.Category}",
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
               height: 5,
             ),
-            Card(
-              elevation: 10,
-              color: Colors.black.withOpacity(0.3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                    width: 300,
-                    height: 40,
-                    child: Text(
-                      "Date: ${widget.Date}",
-                      textAlign: TextAlign.start,
-                    ),
-                  )
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: BorderSide(
+                      color: Color(0xff03C289),
+                    )),
+                elevation: 10,
+                color: Colors.black.withOpacity(0.3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
+                      width: 300,
+                      height: 40,
+                      child: Text(
+                        "Date: ${widget.Date}",
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
               height: 5,
             ),
-            Card(
-              elevation: 10,
-              color: Colors.black.withOpacity(0.3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 25, right: 10, top: 20),
-                    width: 300,
-                    height: 40,
-                    child: Text(
-                      "Address : ${widget.Address}",
-                      textAlign: TextAlign.start,
-                    ),
-                  )
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: BorderSide(
+                      color: Color(0xff03C289),
+                    )),
+                elevation: 10,
+                color: Colors.black.withOpacity(0.3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 10, top: 20),
+                      width: 300,
+                      height: 40,
+                      child: Text(
+                        "Address : ${widget.Address}",
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
               height: 5,
             ),
-            Card(
-              elevation: 10,
-              color: Colors.black.withOpacity(0.3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                    width: 300,
-                    height: 40,
-                    child: Text(
-                      "City : ${widget.City}",
-                      textAlign: TextAlign.start,
-                    ),
-                  )
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: BorderSide(
+                      color: Color(0xff03C289),
+                    )),
+                elevation: 10,
+                color: Colors.black.withOpacity(0.3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
+                      width: 300,
+                      height: 40,
+                      child: Text(
+                        "City : ${widget.City}",
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -260,7 +313,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 ),
                 child: Text(
                   "Confirm & Pay",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 17),
                 ),
               ),
             ),
