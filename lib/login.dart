@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
-
+import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,8 +9,41 @@ import 'package:http/http.dart';
 import 'SignUpPage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'UserDetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
+import 'BadmintonSpotSelection.dart';
 
-class login extends StatelessWidget {
+String? finalEmail;
+
+class login extends StatefulWidget {
+  const login({Key? key}) : super(key: key);
+
+  @override
+  State<login> createState() => _loginState();
+}
+
+class _loginState extends State<login> {
+  Future getValidationData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var obtianedEmail = prefs.getString('email');
+    setState(() {
+      finalEmail = obtianedEmail;
+    });
+    debugPrint("Email: $finalEmail");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getValidationData().whenComplete(() async {
+      if (finalEmail == null) {
+        Get.to(login());
+      } else {
+        Get.to(HomePage());
+      }
+    });
+  }
+
   final emaild = TextEditingController();
   final password = TextEditingController();
 
@@ -78,7 +112,6 @@ class login extends StatelessWidget {
                               padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
                               child: Expanded(
                                 child: TextField(
-                                  obscureText: true,
                                   controller: emaild,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -146,9 +179,17 @@ class login extends StatelessWidget {
                                         encoding: Encoding.getByName("utf-8"));
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
-                                      content:
-                                          Text(response.statusCode.toString()),
+                                      content: Text("Logged in successfully"),
                                     ));
+
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setString('email', emaild.text);
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomePage()));
                                   }
                                 },
                                 color: Color(0xffE74545),

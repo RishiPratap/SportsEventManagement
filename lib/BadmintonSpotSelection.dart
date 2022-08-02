@@ -75,6 +75,7 @@ class json_decode_confirm_clicked_return {
 class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   int totalspots = 0;
   late Socket socket;
+
   @override
   List<Container> getTotalSpots(int start, int end, List<dynamic> array) {
     List<Container> totalspots = [];
@@ -183,6 +184,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       var details = json_decode_spot_clicked_return
           .fromJson(spot_cliclked_return_details);
       String spotnumber = details.spot_number;
+
       setState(() {
         array1[int.parse(spotnumber)] = "${socket.id}";
       });
@@ -193,6 +195,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           .fromJson(booking_confirmed_details);
       String spotnumber = booking_details.spot_number;
       print(spotnumber);
+
       setState(() {
         array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
       });
@@ -210,6 +213,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           freespots = freespots + 1;
         }
       }
+
       if (count == 0) {
         setState(() {
           count++;
@@ -220,15 +224,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     print("is${array1}");
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Container(
-          margin: EdgeInsets.only(left: 25, right: 25),
+          margin: const EdgeInsets.only(left: 25, right: 25),
           child: buildSpotsAvailableCard(),
         ),
         Container(
-          margin: EdgeInsets.only(left: 25, right: 25),
+          margin: const EdgeInsets.only(left: 25, right: 25),
           child: buildAvailableSpotsCard(),
         ),
       ],

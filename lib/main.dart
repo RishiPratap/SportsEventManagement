@@ -15,6 +15,7 @@ import 'login.dart';
 import 'Payment.dart';
 import 'package:flutter/services.dart';
 import 'UPI.dart';
+import 'package:get/get.dart';
 
 void main() async => {
       WidgetsFlutterBinding.ensureInitialized(),
@@ -30,11 +31,15 @@ void main() async => {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'User Details App',
+    return GetMaterialApp(
+      title: 'Ardent Sports',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: login(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => login(),
+        '/homePage': (context) => HomePage(),
+      },
     );
   }
 }
