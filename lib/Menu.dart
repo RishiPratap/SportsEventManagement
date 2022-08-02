@@ -1,3 +1,4 @@
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/ScoreAMatch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +122,9 @@ class _MenuState extends State<Menu> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ScoreAMatch()));
+                              builder: (context) => BadmintonSpotSelection(
+                                    count: 0,
+                                  )));
                     },
                     child: Text(
                       "Score a Match",

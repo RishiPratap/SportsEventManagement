@@ -10,13 +10,12 @@ import 'package:flutter/material.dart';
 int freespots = 0;
 int entryfee = 0;
 int prizepool = 0;
-var count = 0;
 var array1 = [];
 
 class BadmintonSpotSelection extends StatefulWidget {
-  const BadmintonSpotSelection({
-    Key? key,
-  }) : super(key: key);
+  final int count;
+  const BadmintonSpotSelection({Key? key, required this.count})
+      : super(key: key);
 
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
@@ -73,6 +72,7 @@ class json_decode_confirm_clicked_return {
 }
 
 class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
+  var count = 0;
   int totalspots = 0;
   late Socket socket;
   @override
@@ -183,7 +183,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       var details = json_decode_spot_clicked_return
           .fromJson(spot_cliclked_return_details);
       String spotnumber = details.spot_number;
-      setState(() {
+      return setState(() {
+        print(spotnumber);
         array1[int.parse(spotnumber)] = "${socket.id}";
       });
     });
@@ -193,7 +194,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           .fromJson(booking_confirmed_details);
       String spotnumber = booking_details.spot_number;
       print(spotnumber);
-      setState(() {
+      return setState(() {
         array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
       });
     });
@@ -205,6 +206,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       prizepool = details.Prize_Pool;
       entryfee = details.entry_fee;
       freespots = 0;
+
       for (int i = 0; i < totalspots; i++) {
         if (array1[i] == "$i") {
           freespots = freespots + 1;
@@ -236,12 +238,10 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   }
 
   void initState() {
-    socket = io(
-        "http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/",
-        <String, dynamic>{
-          "transports": ["websocket"],
-          "autoConnect": false,
-        });
+    socket = io("https://ardentsportsapis.herokuapp.com/", <String, dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+    });
     socket.connect();
   }
 
