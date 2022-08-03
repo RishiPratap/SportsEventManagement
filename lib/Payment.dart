@@ -14,11 +14,13 @@ class Payment extends StatefulWidget {
   final String Spot_Price;
   final String Spot_Number;
   final Socket socket;
+  final String btnId;
   Payment({
     Key? key,
     required this.Spot_Price,
     required this.Spot_Number,
     required this.socket,
+    required this.btnId,
   }) : super(key: key);
   @override
   State<Payment> createState() => _PaymentState();
@@ -26,9 +28,10 @@ class Payment extends StatefulWidget {
 
 class Tourney_Id {
   late String TOURNAMENT_ID;
-  Tourney_Id({required this.TOURNAMENT_ID});
+  late String btnId;
+  Tourney_Id({required this.TOURNAMENT_ID, required this.btnId});
   Map<String, dynamic> toMap() {
-    return {"TOURNAMENT_ID": this.TOURNAMENT_ID};
+    return {"TOURNAMENT_ID": this.TOURNAMENT_ID, "btnId": this.btnId};
   }
 }
 
@@ -79,7 +82,9 @@ class _PaymentState extends State<Payment> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Payment Successful!")),
       );
-      final tourneyID = Tourney_Id(TOURNAMENT_ID: "123456");
+      final tourneyID =
+          Tourney_Id(TOURNAMENT_ID: "123456", btnId: widget.btnId);
+      print(widget.btnId);
       final tourneyID1Map = tourneyID.toMap();
       final json_tourneyid = jsonEncode(tourneyID1Map);
 

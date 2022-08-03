@@ -1,5 +1,6 @@
 import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ticket extends StatelessWidget {
   const ticket({Key? key}) : super(key: key);
@@ -21,12 +22,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomePage(),
-            ),
-          );
+          Get.to(HomePage());
         },
         child: Container(
           height: MediaQuery.of(context).size.height,

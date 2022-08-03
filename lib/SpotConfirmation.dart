@@ -30,18 +30,20 @@ class SpotConfirmation extends StatefulWidget {
   final String City;
   final Socket socket;
   final String Spot_Price;
-  SpotConfirmation({
-    Key? key,
-    required this.SpotNo,
-    required this.Name,
-    required this.EventName,
-    required this.Category,
-    required this.Date,
-    required this.Address,
-    required this.City,
-    required this.socket,
-    required this.Spot_Price,
-  }) : super(key: key);
+  final String btnId;
+  SpotConfirmation(
+      {Key? key,
+      required this.SpotNo,
+      required this.Name,
+      required this.EventName,
+      required this.Category,
+      required this.Date,
+      required this.Address,
+      required this.City,
+      required this.socket,
+      required this.Spot_Price,
+      required this.btnId})
+      : super(key: key);
 
   @override
   State<SpotConfirmation> createState() => _SpotConfirmationState();
@@ -295,8 +297,8 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       Tournamen_id: "123456");
                   final spotNumberMap = SpotNumber.toMap();
                   final json_spotNumber = jsonEncode(spotNumberMap);
-                  print("2");
-                  // widget.socket.emit('confirm-booking', json_spotNumber);
+                  // print("2");
+                  //  widget.socket.emit('confirm-booking', json_spotNumber);
                   Navigator.push(
                       context,
                       PageTransition(
@@ -305,19 +307,20 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             Spot_Price: widget.Spot_Price,
                             Spot_Number: widget.SpotNo,
                             socket: widget.socket,
+                            btnId: widget.btnId,
                           )));
                 },
-                color: Color(0xffE74745),
+                color: const Color(0xffE74745),
                 shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
+                  borderRadius: BorderRadius.circular(25.0),
                 ),
-                child: Text(
+                child: const Text(
                   "Confirm & Pay",
                   style: TextStyle(fontSize: 17),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             )
           ],

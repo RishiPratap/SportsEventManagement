@@ -1,3 +1,6 @@
+//ignore_for_file: prefer_const_constructors
+
+import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'Menu.dart';
 import 'package:get/get.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -277,14 +279,15 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 elevation: 1,
                                 color: Colors.transparent.withOpacity(0.2),
-                                child: Container(
+                                child: SizedBox(
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                          margin: EdgeInsets.only(left: 35),
-                                          child: Text(
+                                          margin:
+                                              const EdgeInsets.only(left: 35),
+                                          child: const Text(
                                             "Category",
                                             style: TextStyle(
                                                 color: Colors.white,
@@ -294,7 +297,7 @@ class _HomePageState extends State<HomePage> {
                                           onPressed: () {
                                             userData();
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             "V",
                                             style: TextStyle(
                                               fontSize: 20,
@@ -302,8 +305,9 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           )),
                                       Container(
-                                          margin: EdgeInsets.only(right: 35),
-                                          child: Text(
+                                          margin:
+                                              const EdgeInsets.only(right: 35),
+                                          child: const Text(
                                             "Spots Left",
                                             style: TextStyle(
                                                 color: Colors.white,

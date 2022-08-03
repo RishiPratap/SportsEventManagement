@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'SignUpPage.dart';
@@ -11,7 +9,6 @@ import 'package:page_transition/page_transition.dart';
 import 'UserDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'BadmintonSpotSelection.dart';
 
 String? finalEmail;
 

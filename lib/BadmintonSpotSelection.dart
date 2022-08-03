@@ -1,16 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:flutter/cupertino.dart';
+import 'HomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 int freespots = 0;
 int entryfee = 0;
 int prizepool = 0;
-var count = 0;
 var array1 = [];
 
 class BadmintonSpotSelection extends StatefulWidget {
@@ -74,6 +73,7 @@ class json_decode_confirm_clicked_return {
 
 class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   int totalspots = 0;
+  var count = 0;
   late Socket socket;
 
   @override
@@ -108,6 +108,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                     City: "Ahmedabad",
                     socket: socket,
                     Spot_Price: entryfee.toString(),
+                    btnId: (i - 1).toString(),
                   ),
                 ),
               );
@@ -130,10 +131,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           height: 25,
           child: RaisedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content:
-                    Text("Spot Already Booked Please Try To Book Another Spot"),
-              ));
+              const msg = "Spot Already Booked Please Try To Book Another Spot";
+              Fluttertoast.showToast(
+                  msg: msg,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
             },
             color: Color(0xff808080),
             shape: RoundedRectangleBorder(
@@ -153,10 +159,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           height: 25,
           child: RaisedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                    "Someone is currently booking the spot please try to book another spot or wait for some-time"),
-              ));
+              final msg =
+                  'Someone is currently booking the spot please try to book another spot or wait for some-time';
+              Fluttertoast.showToast(msg: msg);
             },
             color: Color(0xffFFFF00).withOpacity(0.8),
             shape: RoundedRectangleBorder(
@@ -194,7 +199,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       var booking_details = json_decode_confirm_clicked_return
           .fromJson(booking_confirmed_details);
       String spotnumber = booking_details.spot_number;
-      print(spotnumber);
+      debugPrint("This is the spot Number $spotnumber");
 
       setState(() {
         array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
@@ -214,10 +219,20 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         }
       }
 
+      // void _updateSpots() {
+      //   if (count == 0) {
+      //     setState(() {
+      //       count++;
+      //     });
+      //   }
+      // }
+
       if (count == 0) {
-        setState(() {
-          count++;
-        });
+        if (mounted) {
+          setState(() {
+            count++;
+          });
+        }
       }
     });
 
