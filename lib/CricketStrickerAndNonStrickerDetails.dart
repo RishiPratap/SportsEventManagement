@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ardent_sports/CricketScore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -236,40 +237,47 @@ class _CricketStrickerAndNonStrickerDetailsState
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: RaisedButton(
-                            onPressed: () async {
-                              final match_details = match_Details(
-                                  matchid: "12359",
-                                  team_1: ["Doraemon"],
-                                  team_2: ["Doraemon"],
-                                  team_1_score: 0,
-                                  team_2_score: 0,
-                                  team_1_wickets: 0,
-                                  team_2_wickets: 0,
-                                  team_1_target: 10,
-                                  team_2_target: 10,
-                                  winning_team: "He",
-                                  no_of_overs: 5,
-                                  ball_type: "H",
-                                  city: "Nzb",
-                                  playing_team_size: 5,
-                                  toss_won_by: "a",
-                                  elected_to: "baT");
-                              final match_details_map = match_details.toMap();
-                              final json = jsonEncode(match_details_map);
-                              var url =
-                                  "https://ardentsportsapis.herokuapp.com/cricketMatchDetails";
-                              var response = await post(Uri.parse(url),
-                                  headers: {
-                                    "Accept": "application/json",
-                                    "Content-Type": "application/json"
-                                  },
-                                  body: json,
-                                  encoding: Encoding.getByName("utf-8"));
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(response.statusCode.toString()),
-                              ));
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CricketScore()),
+                              );
                             },
+                            // onPressed: () async {
+                            //   final match_details = match_Details(
+                            //       matchid: "12359",
+                            //       team_1: ["Doraemon"],
+                            //       team_2: ["Doraemon"],
+                            //       team_1_score: 0,
+                            //       team_2_score: 0,
+                            //       team_1_wickets: 0,
+                            //       team_2_wickets: 0,
+                            //       team_1_target: 10,
+                            //       team_2_target: 10,
+                            //       winning_team: "He",
+                            //       no_of_overs: 5,
+                            //       ball_type: "H",
+                            //       city: "Nzb",
+                            //       playing_team_size: 5,
+                            //       toss_won_by: "a",
+                            //       elected_to: "baT");
+                            //   final match_details_map = match_details.toMap();
+                            //   final json = jsonEncode(match_details_map);
+                            //   var url =
+                            //       "https://ardentsportsapis.herokuapp.com/cricketMatchDetails";
+                            //   var response = await post(Uri.parse(url),
+                            //       headers: {
+                            //         "Accept": "application/json",
+                            //         "Content-Type": "application/json"
+                            //       },
+                            //       body: json,
+                            //       encoding: Encoding.getByName("utf-8"));
+                            //   ScaffoldMessenger.of(context)
+                            //       .showSnackBar(SnackBar(
+                            //     content: Text(response.statusCode.toString()),
+                            //   ));
+                            // },
                             child: Text("Start Scoring"),
                             color: Color(0xffD15858),
                             shape: RoundedRectangleBorder(

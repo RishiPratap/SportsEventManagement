@@ -1,3 +1,4 @@
+import 'package:ardent_sports/CricketTossDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -320,7 +321,13 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                         width: MediaQuery.of(context).size.width,
                         height: 45,
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CricketTossDetails()));
+                          },
                           child: Text("Next"),
                           color: Color(0xffD15858),
                           shape: RoundedRectangleBorder(

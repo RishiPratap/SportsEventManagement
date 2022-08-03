@@ -122,9 +122,7 @@ class _MenuState extends State<Menu> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BadmintonSpotSelection(
-                                    count: 0,
-                                  )));
+                              builder: (context) => ScoreAMatch()));
                     },
                     child: Text(
                       "Score a Match",

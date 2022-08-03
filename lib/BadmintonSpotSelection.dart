@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:flutter/cupertino.dart';
+import 'HomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 int freespots = 0;
 int entryfee = 0;
@@ -13,9 +13,9 @@ int prizepool = 0;
 var array1 = [];
 
 class BadmintonSpotSelection extends StatefulWidget {
-  final int count;
-  const BadmintonSpotSelection({Key? key, required this.count})
-      : super(key: key);
+  const BadmintonSpotSelection({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
@@ -72,9 +72,10 @@ class json_decode_confirm_clicked_return {
 }
 
 class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
-  var count = 0;
   int totalspots = 0;
+  var count = 0;
   late Socket socket;
+
   @override
   List<Container> getTotalSpots(int start, int end, List<dynamic> array) {
     List<Container> totalspots = [];
@@ -129,10 +130,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           height: 25,
           child: RaisedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content:
-                    Text("Spot Already Booked Please Try To Book Another Spot"),
-              ));
+              const msg = "Spot Already Booked Please Try To Book Another Spot";
+              Fluttertoast.showToast(
+                  msg: msg,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
             },
             color: Color(0xff808080),
             shape: RoundedRectangleBorder(
@@ -152,10 +158,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           height: 25,
           child: RaisedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                    "Someone is currently booking the spot please try to book another spot or wait for some-time"),
-              ));
+              final msg =
+                  'Someone is currently booking the spot please try to book another spot or wait for some-time';
+              Fluttertoast.showToast(msg: msg);
             },
             color: Color(0xffFFFF00).withOpacity(0.8),
             shape: RoundedRectangleBorder(
@@ -183,8 +188,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       var details = json_decode_spot_clicked_return
           .fromJson(spot_cliclked_return_details);
       String spotnumber = details.spot_number;
-      return setState(() {
-        print(spotnumber);
+
+      setState(() {
         array1[int.parse(spotnumber)] = "${socket.id}";
       });
     });
@@ -193,8 +198,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       var booking_details = json_decode_confirm_clicked_return
           .fromJson(booking_confirmed_details);
       String spotnumber = booking_details.spot_number;
-      print(spotnumber);
-      return setState(() {
+      print("okok${spotnumber}");
+      setState(() {
         array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
       });
     });
@@ -206,13 +211,22 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       prizepool = details.Prize_Pool;
       entryfee = details.entry_fee;
       freespots = 0;
-
       for (int i = 0; i < totalspots; i++) {
         if (array1[i] == "$i") {
           freespots = freespots + 1;
         }
       }
+
+      // void _updateSpots() {
+      //   if (count == 0) {
+      //     setState(() {
+      //       count++;
+      //     });
+      //   }
+      // }
+
       if (count == 0) {
+        // if (!mounted) return;
         setState(() {
           count++;
         });
@@ -222,23 +236,25 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     print("is${array1}");
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Container(
-          margin: EdgeInsets.only(left: 25, right: 25),
+          margin: const EdgeInsets.only(left: 25, right: 25),
           child: buildSpotsAvailableCard(),
         ),
         Container(
-          margin: EdgeInsets.only(left: 25, right: 25),
+          margin: const EdgeInsets.only(left: 25, right: 25),
           child: buildAvailableSpotsCard(),
         ),
       ],
     );
   }
 
+  //http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/
+
   void initState() {
-    socket = io("https://ardentsportsapis.herokuapp.com/", <String, dynamic>{
+    socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -420,6 +436,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   width: 10,
                 ),
                 Text("Booked"),
+                SizedBox(
+                  width: 12,
+                ),
+                Container(
+                  width: 20,
+                  height: 20,
+                  color: Color(0xffFFFF00).withOpacity(0.8),
+                ),
+                Text("   Processing"),
               ],
             ),
             SizedBox(

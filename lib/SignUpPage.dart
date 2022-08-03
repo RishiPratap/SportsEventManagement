@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/UserDetails.dart';
 import 'package:ardent_sports/login.dart';
 import 'package:flutter/material.dart';
@@ -630,8 +631,12 @@ class SubmitPage extends StatelessWidget {
                                   encoding: Encoding.getByName("utf-8"));
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text(response.statusCode.toString()),
+                                content: Text("Successfully Registered"),
                               ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()));
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

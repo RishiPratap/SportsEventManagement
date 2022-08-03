@@ -1,19 +1,9 @@
-import 'package:ardent_sports/BadmintonSpotSelection.dart';
-import 'package:ardent_sports/CricketMatchDetailsInput.dart';
-import 'package:ardent_sports/CricketScore.dart';
-import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
-import 'package:ardent_sports/CricketTeamDetailsInput.dart';
-import 'package:ardent_sports/CricketTossDetails.dart';
-import 'package:ardent_sports/Home.dart';
-import 'package:ardent_sports/LiveMaintainer.dart';
-import 'package:ardent_sports/Menu.dart';
-import 'package:ardent_sports/ScoreAMatch.dart';
+import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
-import 'SignUpPage.dart';
 import 'login.dart';
-import 'Payment.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 void main() async => {
       WidgetsFlutterBinding.ensureInitialized(),
@@ -29,11 +19,15 @@ void main() async => {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'User Details App',
+    return GetMaterialApp(
+      title: 'Ardent Sports',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: Menu(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => login(),
+        '/homePage': (context) => HomePage(),
+      },
     );
   }
 }

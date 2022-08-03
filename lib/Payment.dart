@@ -1,23 +1,35 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
-import 'dart:ui';
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class Payment extends StatefulWidget {
   final String Spot_Price;
   final String Spot_Number;
-  Payment({Key? key, required this.Spot_Price, required this.Spot_Number})
-      : super(key: key);
+  final Socket socket;
+  Payment({
+    Key? key,
+    required this.Spot_Price,
+    required this.Spot_Number,
+    required this.socket,
+  }) : super(key: key);
   @override
   State<Payment> createState() => _PaymentState();
+}
+
+class Tourney_Id {
+  late String TOURNAMENT_ID;
+  Tourney_Id({required this.TOURNAMENT_ID});
+  Map<String, dynamic> toMap() {
+    return {"TOURNAMENT_ID": this.TOURNAMENT_ID};
+  }
 }
 
 class _PaymentState extends State<Payment> {
@@ -28,6 +40,10 @@ class _PaymentState extends State<Payment> {
   bool phonePayLoading = false;
   bool paytmLoading = false;
 
+  void onGooglePayResult(paymentResult) {
+    debugPrint(paymentResult.toString());
+  }
+
   var url = 'https://ardentsportsapis.herokuapp.com/makePayment';
   Future<void> initPaymentSheet(context,
       {required String email, required int amount}) async {
@@ -37,13 +53,16 @@ class _PaymentState extends State<Payment> {
         body: {
           'email': email,
           'amount': amount.toString(),
+          'spot_number': widget.Spot_Number,
         },
       );
 
       debugPrint('Amount: $amount');
+      debugPrint("Spot Number: ${widget.Spot_Number}");
 
       final jsonResponse = jsonDecode(response.body);
       debugPrint('Response Logged: $jsonResponse');
+      debugPrint("Success: ${jsonResponse['success']}");
 
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
@@ -60,6 +79,15 @@ class _PaymentState extends State<Payment> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Payment Successful!")),
       );
+      final tourneyID = Tourney_Id(TOURNAMENT_ID: "123456");
+      final tourneyID1Map = tourneyID.toMap();
+      final json_tourneyid = jsonEncode(tourneyID1Map);
+
+      if (jsonResponse['success'] == 'true') {
+        widget.socket.emit('confirm-booking', json_tourneyid);
+        debugPrint("Tournamnt ID:$json_tourneyid");
+      }
+
       Navigator.push(
           context,
           PageTransition(
@@ -115,7 +143,7 @@ class _PaymentState extends State<Payment> {
                 left: 155,
                 top: 240,
                 child: Text(
-                  '₹ $amount', //TODO make the amount dynamic
+                  '₹ $amount',
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -167,7 +195,7 @@ class _PaymentState extends State<Payment> {
                           color: Colors.white),
                     ),
                     onPressed: () {
-                      SystemNavigator.pop();
+                      Navigator.pop(context);
                     },
                   )),
             ],
@@ -251,8 +279,6 @@ class _PaymentState extends State<Payment> {
       ),
     );
   }
-
-  // email: 'example@gmail.com', amount: 20000
 
   _cc() {
     return Positioned(
@@ -376,6 +402,7 @@ class _PaymentState extends State<Payment> {
                       });
                       await initPaymentSheet(context,
                           email: 'example@gmail.com', amount: 20000);
+
                       setState(() {
                         loading = false;
                       });
@@ -743,9 +770,4 @@ class _PaymentState extends State<Payment> {
       ),
     );
   }
-
-  var stripeApiKey =
-      "sk_test_51Kx9oUSDyPLJYmvrHGifQoOVMJTLzveCWgOMKSdYGUKOhgqEW5pDoA9XTbs5NDki9XW4mmU4wNna8uFdpoM0BanG00uedfdbjt";
-
-  var amount = '300';
 }
