@@ -72,7 +72,12 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScoreAMatch()));
+                    },
                     child: Text(
                       "Create Challenge",
                       style: TextStyle(color: Colors.white),
