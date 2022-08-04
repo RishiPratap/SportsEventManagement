@@ -67,15 +67,17 @@ class _CricketScoreState extends State<CricketScore> {
                 ),
               ),
 
-              Expanded(
-                child: TextField(
-                  enableInteractiveSelection: false,
-                  controller: _searchInputControllor,
-                  cursorColor: Colors.white,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 40.0),
-                      hintText: "0/0",
-                      labelText: "Score"),
+              Center(
+                child: Expanded(
+                  child: TextField(
+                    enableInteractiveSelection: false,
+                    controller: _searchInputControllor,
+                    cursorColor: Colors.white,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 40.0),
+                        hintText: "0/0",
+                        labelText: "Score"),
+                  ),
                 ),
               ), //TODO edit this
 

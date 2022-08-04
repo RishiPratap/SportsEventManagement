@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:page_transition/page_transition.dart';
@@ -20,6 +21,8 @@ class BadmintonSpotSelection extends StatefulWidget {
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
 }
+
+late Color color1 = Color(0xffFFFF00).withOpacity(0.8);
 
 class tournament_id {
   late String TOURNAMENT_ID;
@@ -71,6 +74,15 @@ class json_decode_confirm_clicked_return {
   }
 }
 
+class send_socket_number_ {
+  late String spot_number;
+  late String tourney_id;
+  send_socket_number_(this.spot_number, this.tourney_id);
+  Map<String, dynamic> toMap() {
+    return {"TOURNAMENT_ID": this.tourney_id, "SPOTID": this.spot_number};
+  }
+}
+
 class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   int totalspots = 0;
   var count = 0;
@@ -93,7 +105,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   TOURNAMENT_ID: "123456", index: (i - 1).toString());
               final tournament_id1Map = tournament_id1.toMap();
               final json_tournamentid = jsonEncode(tournament_id1Map);
+
               socket.emit('spot-clicked', json_tournamentid);
+              const msg =
+                  "The slot would be valid only for 1 min.Press Yes to Confirm";
+
               Navigator.push(
                 context,
                 PageTransition(
@@ -164,6 +180,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               Fluttertoast.showToast(msg: msg);
             },
             color: Color(0xffFFFF00).withOpacity(0.8),
+            key: Key(color1.toString()),
             shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(5.0),
             ),
@@ -184,11 +201,28 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     final tournament_id1Map = tournament_id1.toMap();
     final json_tournamentid = jsonEncode(tournament_id1Map);
     socket.emit('join-booking', json_tournamentid);
+
     socket.on('spot-clicked-return', (data) {
       Map<String, dynamic> spot_cliclked_return_details = jsonDecode(data);
       var details = json_decode_spot_clicked_return
           .fromJson(spot_cliclked_return_details);
       String spotnumber = details.spot_number;
+      var timer = 35;
+      final socket_number = send_socket_number_(spotnumber, "123456");
+      print(spotnumber);
+      final socket_number_map = socket_number.toMap();
+      final json_socket_number = jsonEncode(socket_number_map);
+      if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
+        Timer.periodic(Duration(seconds: timer), (timer) {
+          socket.emit('remove-booking', json_socket_number);
+          debugPrint("removed:$spotnumber");
+          timer.cancel();
+        });
+      }
+
+      socket.on('removed-from-waiting-list', (data) {
+        setState(() {});
+      });
 
       setState(() {
         array1[int.parse(spotnumber)] = "${socket.id}";
@@ -199,8 +233,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       var booking_details = json_decode_confirm_clicked_return
           .fromJson(booking_confirmed_details);
       String spotnumber = booking_details.spot_number;
-      debugPrint("This is the spot Number $spotnumber");
-
+      print("okok${spotnumber}");
       setState(() {
         array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
       });
@@ -219,20 +252,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         }
       }
 
-      // void _updateSpots() {
-      //   if (count == 0) {
-      //     setState(() {
-      //       count++;
-      //     });
-      //   }
-      // }
-
       if (count == 0) {
-        if (mounted) {
-          setState(() {
-            count++;
-          });
-        }
+        // if (!mounted) return;
+        setState(() {
+          count++;
+        });
       }
     });
 

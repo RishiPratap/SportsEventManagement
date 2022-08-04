@@ -1,7 +1,5 @@
-//ignore_for_file: prefer_const_constructors
-
-import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,24 +14,336 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+class UserData {
+  late String _id;
+  late String TOURNAMENT_ID;
+  late String TOURNAMENT_NAME;
+  late bool STATUS;
+  late String LOCATION;
+  late String CITY;
+  late String TYPE;
+  late String START_DATE;
+  late String END_DATE;
+  late bool CANCELLATION_STATUS;
+  late List CATEGORIES;
+  late List PARTICIPANTS;
+  late int NO_OF_KNOCKOUT_ROUNDS;
+  late List SPOT_STATUS_ARRAY;
+  late int PRIZE_POOL;
+  late int ENTRY_FEE;
+  late String REGISTRATION_CLOSE_TIME;
+  late List MATCHES;
+  late int __v;
+  late String SPORT;
+  late String COLOR;
+  UserData(
+    this._id,
+    this.TOURNAMENT_ID,
+    this.TOURNAMENT_NAME,
+    this.STATUS,
+    this.LOCATION,
+    this.CITY,
+    this.TYPE,
+    this.START_DATE,
+    this.END_DATE,
+    this.CANCELLATION_STATUS,
+    this.CATEGORIES,
+    this.PARTICIPANTS,
+    this.NO_OF_KNOCKOUT_ROUNDS,
+    this.SPOT_STATUS_ARRAY,
+    this.PRIZE_POOL,
+    this.ENTRY_FEE,
+    this.REGISTRATION_CLOSE_TIME,
+    this.MATCHES,
+    this.__v,
+    this.SPORT,
+    this.COLOR,
+  );
+  UserData.fromJson(Map<String, dynamic> json) {
+    _id = json['_id'];
+    TOURNAMENT_ID = json['TOURNAMENT_ID'];
+    TOURNAMENT_NAME = json['TOURNAMENT_NAME'];
+    STATUS = json['STATUS'];
+    LOCATION = json['LOCATION'];
+    CITY = json['CITY'];
+    TYPE = json['TYPE'];
+    START_DATE = json['START_DATE'];
+    END_DATE = json['END_DATE'];
+    CANCELLATION_STATUS = json['CANCELLATION_STATUS'];
+    CATEGORIES = json['CATEGORIES'];
+    PARTICIPANTS = json['PARTICIPANTS'];
+    NO_OF_KNOCKOUT_ROUNDS = json['NO_OF_KNOCKOUT_ROUNDS'];
+    SPOT_STATUS_ARRAY = json['SPOT_STATUS_ARRAY'];
+    PRIZE_POOL = json['PRIZE_POOL'];
+    ENTRY_FEE = json['ENTRY_FEE'];
+    REGISTRATION_CLOSE_TIME = json['REGISTRATION_CLOSE_TIME'];
+    MATCHES = json['MATCHES'];
+    __v = json['__v'];
+    SPORT = json['SPORT'];
+  }
+}
+
 class _HomePageState extends State<HomePage> {
   DateTime timeBackPressed = DateTime.now();
+  List<Container> AllTournaments = [];
+
   final url = 'https://ardentsportsapis.herokuapp.com/allTournaments';
+  List<Container> getTournaments(List<UserData> userdata, int array_length) {
+    for (int i = 0; i < array_length; i++) {
+      var container = Container(
+        height: MediaQuery.of(context).size.height * 0.3,
+        padding: EdgeInsets.all(8.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          elevation: 10,
+          color: Colors.white60.withOpacity(0.1),
+          child: Column(
+            //MAIN COLUMN
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                  title: Container(
+                margin: EdgeInsets.only(top: 2),
+                height: MediaQuery.of(context).size.height * 0.075,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BadmintonSpotSelection()));
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    elevation: 20,
+                    color: Color(0xff6BB8FF),
+                    child: Container(
+                      margin: EdgeInsets.only(top: 12),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent.withOpacity(0.6),
+                                backgroundBlendMode: BlendMode.darken),
+                            child: Image(
+                              image: AssetImage("assets/badminton.png"),
+                              height: 20,
+                              width: 20,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                userdata[i].TOURNAMENT_NAME.length >= 17
+                                    ? userdata[i]
+                                            .TOURNAMENT_NAME
+                                            .substring(0, 19) +
+                                        '...'
+                                    : userdata[i].TOURNAMENT_NAME,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                userdata[i].CITY,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )),
+              SizedBox(
+                height: 7,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 1,
+                  color: Colors.transparent.withOpacity(0.2),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: 35),
+                            child: Text(
+                              "Category",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                        TextButton(
+                            onPressed: () {
+                              userData();
+                            },
+                            child: Text(
+                              "V",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xffE74545),
+                              ),
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(right: 35),
+                            child: Text(
+                              "Spots Left",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 1,
+                  color: Colors.transparent.withOpacity(0.2),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: 35),
+                            child: Row(
+                              children: [
+                                Image(
+                                  image: AssetImage("assets/trophy 2.png"),
+                                  height: 25,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "Prize money",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(right: 35),
+                            child: RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.white),
+                                    children: <TextSpan>[
+                                  TextSpan(text: "Up to "),
+                                  TextSpan(
+                                      text: " ₹",
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      )),
+                                  TextSpan(
+                                    text: userdata[i].PRIZE_POOL.toString(),
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        color: Color(0xffE74545),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ])))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Image(
+                      image: AssetImage("assets/Location.png"),
+                    ),
+                  ),
+                  Text(
+                    userdata[i].LOCATION,
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+      AllTournaments.add(container);
+    }
+    print('boyapatti');
+    return AllTournaments;
+  }
+
+  getAllTournaments() async {
+    var response = await get(Uri.parse(url));
+    List<dynamic> jsonData = jsonDecode(response.body);
+
+    print(jsonData);
+    try {
+      List<UserData> userdata =
+          jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
+      int array_length = userdata.length;
+      print(userdata);
+      return getTournaments(userdata, array_length);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void userData() async {
     try {
       var response = await get(Uri.parse(url));
-      var jsonData = jsonDecode(response.body) as List;
+      List<dynamic> jsonData = jsonDecode(response.body);
+      print("1");
       print(jsonData);
-      print(jsonData[0]['TOURNAMENT_NAME']);
+      List<UserData> userdata =
+          jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
+      print(userdata[0].SPORT);
     } catch (err) {
+      print("error");
       print(err);
     }
   }
 
   @override
   void initState() {
-    userData();
+    // userData();
     super.initState();
   }
 
@@ -176,652 +486,23 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      padding: EdgeInsets.all(8.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 10,
-                        color: Colors.white60.withOpacity(0.1),
-                        child: Column(
-                          //MAIN COLUMN
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                                title: Container(
-                              margin: EdgeInsets.only(top: 2),
-                              height:
-                                  MediaQuery.of(context).size.height * 0.075,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              BadmintonSpotSelection()));
-                                },
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  elevation: 20,
-                                  color: Color(0xff6BB8FF),
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 12),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.transparent
-                                                  .withOpacity(0.6),
-                                              backgroundBlendMode:
-                                                  BlendMode.darken),
-                                          child: Image(
-                                            image: AssetImage(
-                                                "assets/badminton.png"),
-                                            height: 20,
-                                            width: 20,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Rapid Badminton Challenge',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              "GandhiNagar",
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )),
-                            SizedBox(
-                              height: 7,
+                    FutureBuilder(
+                      future: getAllTournaments(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.data == null) {
+                          print("In Null");
+                          return Container(
+                            child: Center(
+                              child: Text("Loading..."),
                             ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                elevation: 1,
-                                color: Colors.transparent.withOpacity(0.2),
-                                child: SizedBox(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          margin:
-                                              const EdgeInsets.only(left: 35),
-                                          child: const Text(
-                                            "Category",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      TextButton(
-                                          onPressed: () {
-                                            userData();
-                                          },
-                                          child: const Text(
-                                            "V",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Color(0xffE74545),
-                                            ),
-                                          )),
-                                      Container(
-                                          margin:
-                                              const EdgeInsets.only(right: 35),
-                                          child: const Text(
-                                            "Spots Left",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                elevation: 1,
-                                color: Colors.transparent.withOpacity(0.2),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(left: 35),
-                                          child: Row(
-                                            children: [
-                                              Image(
-                                                image: AssetImage(
-                                                    "assets/trophy 2.png"),
-                                                height: 25,
-                                              ),
-                                              SizedBox(
-                                                width: 15,
-                                              ),
-                                              Text(
-                                                "Prize money",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ],
-                                          )),
-                                      Container(
-                                          margin: EdgeInsets.only(right: 35),
-                                          child: RichText(
-                                              text: TextSpan(
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.white),
-                                                  children: <TextSpan>[
-                                                TextSpan(text: "Up to "),
-                                                TextSpan(
-                                                    text: " ₹",
-                                                    style: TextStyle(
-                                                      fontSize: 25,
-                                                    )),
-                                                TextSpan(
-                                                  text: " 15,000",
-                                                  style: TextStyle(
-                                                      fontSize: 25,
-                                                      color: Color(0xffE74545),
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ])))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Image(
-                                    image: AssetImage("assets/Location.png"),
-                                  ),
-                                ),
-                                Text(
-                                  'EDII, Bhatt circle, Near Apollo \n Hospital, Ahmedabad',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    //NEW CARD HERE //TODO MAKE IT REUSABLE
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 10,
-                        color: Colors.white60.withOpacity(0.1),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                                title: Container(
-                              margin: EdgeInsets.only(top: 2),
-                              height:
-                                  MediaQuery.of(context).size.height * 0.075,
-                              child: SingleChildScrollView(
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  elevation: 20,
-                                  color: Color(0xff03C289),
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 12),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.transparent
-                                                  .withOpacity(0.6),
-                                              backgroundBlendMode:
-                                                  BlendMode.darken),
-                                          child: Image(
-                                            image: AssetImage(
-                                                "assets/Ping Pong.png"),
-                                            height: 20,
-                                            width: 20,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Rapid Table Tennis Challenge",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              "Akola",
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )),
-                            SizedBox(
-                              height: 7,
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                elevation: 1,
-                                color: Colors.transparent.withOpacity(0.2),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(left: 35),
-                                          child: Text(
-                                            "Category",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      TextButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            "V",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Color(0xffE74545),
-                                            ),
-                                          )),
-                                      Container(
-                                          margin: EdgeInsets.only(right: 35),
-                                          child: Text(
-                                            "Spots Left",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                elevation: 1,
-                                color: Colors.transparent.withOpacity(0.2),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(left: 35),
-                                          child: Row(
-                                            children: [
-                                              Image(
-                                                image: AssetImage(
-                                                    "assets/trophy 2.png"),
-                                                height: 25,
-                                              ),
-                                              SizedBox(
-                                                width: 15,
-                                              ),
-                                              Text(
-                                                "Prize money",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ],
-                                          )),
-                                      Container(
-                                          margin: EdgeInsets.only(right: 35),
-                                          child: RichText(
-                                              text: TextSpan(
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.white),
-                                                  children: <TextSpan>[
-                                                TextSpan(text: "Up to "),
-                                                TextSpan(
-                                                    text: " ₹",
-                                                    style: TextStyle(
-                                                      fontSize: 25,
-                                                    )),
-                                                TextSpan(
-                                                  text: " 22,000",
-                                                  style: TextStyle(
-                                                      fontSize: 25,
-                                                      color: Color(0xffE74545),
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ])))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Image(
-                                    image: AssetImage("assets/Location.png"),
-                                  ),
-                                ),
-                                Text(
-                                  'IMA Hall, Akola',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                )
-                              ], //TODO ADD CALENDAR
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    //3RD CARD
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 10,
-                        color: Colors.white60.withOpacity(0.1),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                                title: Container(
-                              margin: EdgeInsets.only(top: 2),
-                              height:
-                                  MediaQuery.of(context).size.height * 0.075,
-                              child: SingleChildScrollView(
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  elevation: 20,
-                                  color: Color(0xffD15858),
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 12),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.transparent
-                                                  .withOpacity(0.6),
-                                              backgroundBlendMode:
-                                                  BlendMode.darken),
-                                          child: Image(
-                                            image: AssetImage(
-                                                "assets/Ping Pong.png"),
-                                            height: 20,
-                                            width: 20,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Box Cricket Challenge",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              "Akola",
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )),
-                            SizedBox(
-                              height: 7,
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                elevation: 1,
-                                color: Colors.transparent.withOpacity(0.2),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(left: 35),
-                                          child: Text(
-                                            "Category",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      TextButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            "V",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Color(0xffE74545),
-                                            ),
-                                          )),
-                                      Container(
-                                          margin: EdgeInsets.only(right: 35),
-                                          child: Text(
-                                            "Spots Left",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                elevation: 1,
-                                color: Colors.transparent.withOpacity(0.2),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(left: 35),
-                                          child: Row(
-                                            children: [
-                                              Image(
-                                                image: AssetImage(
-                                                    "assets/trophy 2.png"),
-                                                height: 25,
-                                              ),
-                                              SizedBox(
-                                                width: 15,
-                                              ),
-                                              Text(
-                                                "Prize money",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ],
-                                          )),
-                                      Container(
-                                          margin: EdgeInsets.only(right: 35),
-                                          child: RichText(
-                                              text: TextSpan(
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.white),
-                                                  children: <TextSpan>[
-                                                TextSpan(text: "Up to "),
-                                                TextSpan(
-                                                    text: " ₹",
-                                                    style: TextStyle(
-                                                      fontSize: 25,
-                                                    )),
-                                                TextSpan(
-                                                  text: " 22,000",
-                                                  style: TextStyle(
-                                                      fontSize: 25,
-                                                      color: Color(0xffE74545),
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ])))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Image(
-                                    image: AssetImage("assets/Location.png"),
-                                  ),
-                                ),
-                                Text(
-                                  'IMA Hall, Akola',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                )
-                              ], //TODO ADD CALENDAR
-                            )
-                          ],
-                        ),
-                      ),
+                          );
+                        } else {
+                          return Column(
+                            children: snapshot.data,
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
