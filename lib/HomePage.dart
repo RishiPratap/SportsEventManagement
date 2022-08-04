@@ -24,39 +24,39 @@ class UserData {
   late String CITY;
   late String TYPE;
   late String START_DATE;
+  late String COLOR;
   late String END_DATE;
+  late String SPORT;
   late bool CANCELLATION_STATUS;
-  late List CATEGORIES;
   late List PARTICIPANTS;
   late int NO_OF_KNOCKOUT_ROUNDS;
   late List SPOT_STATUS_ARRAY;
   late int PRIZE_POOL;
   late int ENTRY_FEE;
-  late String REGISTRATION_CLOSE_TIME;
   late List MATCHES;
   late int __v;
-  late String SPORT;
+
   UserData(
-      this._id,
-      this.TOURNAMENT_ID,
-      this.TOURNAMENT_NAME,
-      this.STATUS,
-      this.LOCATION,
-      this.CITY,
-      this.TYPE,
-      this.START_DATE,
-      this.END_DATE,
-      this.CANCELLATION_STATUS,
-      this.CATEGORIES,
-      this.PARTICIPANTS,
-      this.NO_OF_KNOCKOUT_ROUNDS,
-      this.SPOT_STATUS_ARRAY,
-      this.PRIZE_POOL,
-      this.ENTRY_FEE,
-      this.REGISTRATION_CLOSE_TIME,
-      this.MATCHES,
-      this.__v,
-      this.SPORT);
+    this._id,
+    this.TOURNAMENT_ID,
+    this.TOURNAMENT_NAME,
+    this.STATUS,
+    this.LOCATION,
+    this.CITY,
+    this.TYPE,
+    this.START_DATE,
+    this.COLOR,
+    this.END_DATE,
+    this.SPORT,
+    this.CANCELLATION_STATUS,
+    this.PARTICIPANTS,
+    this.NO_OF_KNOCKOUT_ROUNDS,
+    this.SPOT_STATUS_ARRAY,
+    this.PRIZE_POOL,
+    this.ENTRY_FEE,
+    this.MATCHES,
+    this.__v,
+  );
   UserData.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];
     TOURNAMENT_ID = json['TOURNAMENT_ID'];
@@ -66,18 +66,17 @@ class UserData {
     CITY = json['CITY'];
     TYPE = json['TYPE'];
     START_DATE = json['START_DATE'];
+    COLOR = json['COLOR'];
     END_DATE = json['END_DATE'];
+    SPORT = json['SPORT'];
     CANCELLATION_STATUS = json['CANCELLATION_STATUS'];
-    CATEGORIES = json['CATEGORIES'];
     PARTICIPANTS = json['PARTICIPANTS'];
     NO_OF_KNOCKOUT_ROUNDS = json['NO_OF_KNOCKOUT_ROUNDS'];
     SPOT_STATUS_ARRAY = json['SPOT_STATUS_ARRAY'];
     PRIZE_POOL = json['PRIZE_POOL'];
     ENTRY_FEE = json['ENTRY_FEE'];
-    REGISTRATION_CLOSE_TIME = json['REGISTRATION_CLOSE_TIME'];
     MATCHES = json['MATCHES'];
     __v = json['__v'];
-    SPORT = json['SPORT'];
   }
 }
 
