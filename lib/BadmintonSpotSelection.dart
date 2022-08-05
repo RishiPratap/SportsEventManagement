@@ -3,15 +3,16 @@ import 'dart:convert';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-import 'HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 int freespots = 0;
 int entryfee = 0;
 int prizepool = 0;
 var array1 = [];
+String? finalEmail;
 
 class BadmintonSpotSelection extends StatefulWidget {
   const BadmintonSpotSelection({
@@ -35,9 +36,16 @@ class tournament_id {
 class SpotClickedDetails {
   late String TOURNAMENT_ID;
   late String index;
-  SpotClickedDetails({required this.TOURNAMENT_ID, required this.index});
+  String? USER;
+
+  SpotClickedDetails(
+      {required this.TOURNAMENT_ID, required this.index, required this.USER});
   Map<String, dynamic> toMap() {
-    return {"TOURNAMENT_ID": this.TOURNAMENT_ID, "btnID": this.index};
+    return {
+      "TOURNAMENT_ID": this.TOURNAMENT_ID,
+      "btnID": this.index,
+      "USERID": this.USER
+    };
   }
 }
 
@@ -77,9 +85,15 @@ class json_decode_confirm_clicked_return {
 class send_socket_number_ {
   late String spot_number;
   late String tourney_id;
-  send_socket_number_(this.spot_number, this.tourney_id);
+  String? USER_ID;
+
+  send_socket_number_(this.spot_number, this.tourney_id, this.USER_ID);
   Map<String, dynamic> toMap() {
-    return {"TOURNAMENT_ID": this.tourney_id, "SPOTID": this.spot_number};
+    return {
+      "TOURNAMENT_ID": this.tourney_id,
+      "SPOTID": this.spot_number,
+      "USERID": this.USER_ID,
+    };
   }
 }
 
@@ -100,15 +114,58 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           width: 70,
           height: 25,
           child: RaisedButton(
-            onPressed: () {
+            onPressed: () async {
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+              var obtianedEmail = prefs.getString('email');
+              if (mounted) {
+                setState(() {
+                  finalEmail = obtianedEmail;
+                });
+              }
+
+              debugPrint("EmailFromSocket: $finalEmail");
               final tournament_id1 = SpotClickedDetails(
-                  TOURNAMENT_ID: "123456", index: (i - 1).toString());
+                TOURNAMENT_ID: "123456",
+                index: (i - 1).toString(),
+                USER: finalEmail,
+              );
               final tournament_id1Map = tournament_id1.toMap();
               final json_tournamentid = jsonEncode(tournament_id1Map);
-
               socket.emit('spot-clicked', json_tournamentid);
-              const msg =
-                  "The slot would be valid only for 1 min.Press Yes to Confirm";
+
+              //SOCKET ON
+              socket.on('spot-clicked-return', (data) {
+                Map<String, dynamic> spot_cliclked_return_details =
+                    jsonDecode(data);
+                var details = json_decode_spot_clicked_return
+                    .fromJson(spot_cliclked_return_details);
+                String spotnumber = details.spot_number;
+                var timer = 25;
+                final socket_number =
+                    send_socket_number_(spotnumber, "123456", finalEmail);
+                print(spotnumber);
+                final socket_number_map = socket_number.toMap();
+                final json_socket_number = jsonEncode(socket_number_map);
+                if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
+                  Timer.periodic(Duration(seconds: timer), (timer) {
+                    socket.emit('remove-booking', json_socket_number);
+                    debugPrint("removed:$spotnumber");
+                    timer.cancel();
+                  });
+                }
+
+                socket.on('removed-from-waiting-list', (data) {
+                  if (mounted) {
+                    setState(() {});
+                  }
+                });
+                if (mounted) {
+                  setState(() {
+                    array1[int.parse(spotnumber)] = "${socket.id}";
+                  });
+                }
+              });
 
               Navigator.push(
                 context,
@@ -202,41 +259,47 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     final json_tournamentid = jsonEncode(tournament_id1Map);
     socket.emit('join-booking', json_tournamentid);
 
-    socket.on('spot-clicked-return', (data) {
-      Map<String, dynamic> spot_cliclked_return_details = jsonDecode(data);
-      var details = json_decode_spot_clicked_return
-          .fromJson(spot_cliclked_return_details);
-      String spotnumber = details.spot_number;
-      var timer = 35;
-      final socket_number = send_socket_number_(spotnumber, "123456");
-      print(spotnumber);
-      final socket_number_map = socket_number.toMap();
-      final json_socket_number = jsonEncode(socket_number_map);
-      if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
-        Timer.periodic(Duration(seconds: timer), (timer) {
-          socket.emit('remove-booking', json_socket_number);
-          debugPrint("removed:$spotnumber");
-          timer.cancel();
-        });
-      }
+    // socket.on('spot-clicked-return', (data) {
+    //   Map<String, dynamic> spot_cliclked_return_details = jsonDecode(data);
+    //   var details = json_decode_spot_clicked_return
+    //       .fromJson(spot_cliclked_return_details);
+    //   String spotnumber = details.spot_number;
+    //   var timer = 25;
+    //   final socket_number =
+    //       send_socket_number_(spotnumber, "123456", finalEmail);
+    //   print(spotnumber);
+    //   final socket_number_map = socket_number.toMap();
+    //   final json_socket_number = jsonEncode(socket_number_map);
+    //   if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
+    //     Timer.periodic(Duration(seconds: timer), (timer) {
+    //       socket.emit('remove-booking', json_socket_number);
+    //       debugPrint("removed:$spotnumber");
+    //       timer.cancel();
+    //     });
+    //   }
 
-      socket.on('removed-from-waiting-list', (data) {
-        setState(() {});
-      });
-
-      setState(() {
-        array1[int.parse(spotnumber)] = "${socket.id}";
-      });
-    });
+    //   socket.on('removed-from-waiting-list', (data) {
+    //     if (mounted) {
+    //       setState(() {});
+    //     }
+    //   });
+    //   if (mounted) {
+    //     setState(() {
+    //       array1[int.parse(spotnumber)] = "${socket.id}";
+    //     });
+    //   }
+    // });
     socket.on('booking-confirmed', (data) {
       Map<String, dynamic> booking_confirmed_details = jsonDecode(data);
       var booking_details = json_decode_confirm_clicked_return
           .fromJson(booking_confirmed_details);
       String spotnumber = booking_details.spot_number;
       print("okok${spotnumber}");
-      setState(() {
-        array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
-      });
+      if (mounted) {
+        setState(() {
+          array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
+        });
+      }
     });
     socket.on('spotStatusArray', (data) {
       Map<String, dynamic> spot_details = jsonDecode(data);
@@ -253,7 +316,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       }
 
       if (count == 0) {
-        // if (!mounted) return;
         setState(() {
           count++;
         });
@@ -279,13 +341,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   }
 
   //http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/
-
+  var futures;
   void initState() {
     socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
     socket.connect();
+
+    // futures = connect();
   }
 
   Widget build(BuildContext context) {
@@ -304,7 +368,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               future: connect(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.data == null) {
-                  print("In Null");
+                  print("In Null agar hua toh mar khayega");
                   return Container(
                     child: Center(
                       child: Text("Loading..."),
