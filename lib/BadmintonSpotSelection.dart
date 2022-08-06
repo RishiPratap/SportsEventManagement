@@ -534,7 +534,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 ),
                 Text("Booked"),
                 SizedBox(
-                  width: deviceWidth * 0.06gi,
+                  width: deviceWidth * 0.06,
                 ),
                 Container(
                   width: deviceWidth * 0.04,
