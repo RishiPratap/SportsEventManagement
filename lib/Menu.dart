@@ -1,7 +1,10 @@
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
+import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:ardent_sports/ScoreAMatch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -174,7 +177,9 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(HostedChallenges());
+                    },
                     child: Text(
                       "My Hosted Challenges",
                       style: TextStyle(color: Colors.white),
