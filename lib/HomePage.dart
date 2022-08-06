@@ -155,10 +155,10 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userdata[i].TOURNAMENT_NAME.length >= 17
+                                userdata[i].TOURNAMENT_NAME.length >= 13
                                     ? userdata[i]
                                             .TOURNAMENT_NAME
-                                            .substring(0, 19) +
+                                            .substring(0, 16) +
                                         '...'
                                     : userdata[i].TOURNAMENT_NAME,
                                 textAlign: TextAlign.center,
