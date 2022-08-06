@@ -24,16 +24,6 @@ TextEditingController mobileController = TextEditingController();
 class _SignUpPage extends State<SignUpPage> {
   bool isChecked = false;
 
-  // _signUp() async {
-  //   var data = {
-  //     'name': nameController.text,
-  //     'email': emailController.text,
-  //     'pass': passController.text,
-  //   };
-
-  //   var res = await CallApi().postData(data, 'createUser');
-  // }
-
   @override
   Widget build(BuildContext context) {
     Color getColor(Set<MaterialState> states) {
@@ -629,6 +619,7 @@ class SubmitPage extends StatelessWidget {
                                   },
                                   body: json,
                                   encoding: Encoding.getByName("utf-8"));
+                              print(response.body);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: Text("Successfully Registered"),
