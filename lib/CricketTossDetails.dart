@@ -11,6 +11,8 @@ class CricketTossDetails extends StatefulWidget {
 class _CricketTossDetailsState extends State<CricketTossDetails> {
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -28,8 +30,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      width: 90,
-                      height: 50,
+                      width: deviceWidth * 0.18,
+                      height: deviceWidth * 0.1,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/AARDENT_LOGO.png"),
@@ -39,8 +41,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      width: 130,
-                      height: 40,
+                      width: deviceWidth * 0.26,
+                      height: deviceWidth * 0.08,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Ardent_Sport_Text.png"),
@@ -63,8 +65,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      width: 40,
-                      height: 40,
+                      width: deviceWidth * 0.08,
+                      height: deviceWidth * 0.08,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Profile_Image.png"),
@@ -80,8 +82,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      width: 40,
-                      height: 40,
+                      width: deviceWidth * 0.08,
+                      height: deviceWidth * 0.08,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/money_bag.png"),
@@ -95,7 +97,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.only(left: 15),
+                      margin: EdgeInsets.only(left: deviceWidth * 0.03),
                       child: Text("Shubham"),
                     ),
                   ),
@@ -108,7 +110,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.only(left: 15.0),
+                      margin: EdgeInsets.only(left: deviceWidth * 0.03),
                       child: Text("₹15,000"),
                     ),
                   ),
@@ -118,11 +120,11 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).size.height / 3,
-                margin: EdgeInsets.all(10.0),
+                margin: EdgeInsets.all(deviceWidth * 0.02),
                 child: Card(
                   elevation: 10,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.03)),
                   color: Colors.white.withOpacity(0.2),
                   child: Column(
                     children: [
@@ -145,8 +147,12 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                               flex: 1,
                               child: Container(
                                   width: MediaQuery.of(context).size.width / 2,
-                                  height: 50,
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  height: deviceWidth * 0.15,
+                                  margin: EdgeInsets.fromLTRB(
+                                      deviceWidth * 0.02,
+                                      0,
+                                      deviceWidth * 0.02,
+                                      0),
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
@@ -157,15 +163,20 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                     ),
                                   ),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.02),
                                       color: Colors.black.withOpacity(0.4))),
                             ),
                             Expanded(
                               flex: 1,
                               child: Container(
                                   width: MediaQuery.of(context).size.width / 2,
-                                  height: 50,
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  height: deviceWidth * 0.15,
+                                  margin: EdgeInsets.fromLTRB(
+                                      deviceWidth * 0.02,
+                                      0,
+                                      deviceWidth * 0.02,
+                                      0),
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
@@ -176,7 +187,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                     ),
                                   ),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.02),
                                       color: Colors.black.withOpacity(0.4))),
                             ),
                           ],
@@ -201,8 +213,12 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                               flex: 1,
                               child: Container(
                                   width: MediaQuery.of(context).size.width / 2,
-                                  height: 50,
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  height: deviceWidth * 0.15,
+                                  margin: EdgeInsets.fromLTRB(
+                                      deviceWidth * 0.02,
+                                      0,
+                                      deviceWidth * 0.02,
+                                      0),
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
@@ -213,15 +229,20 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                     ),
                                   ),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.02),
                                       color: Colors.black.withOpacity(0.4))),
                             ),
                             Expanded(
                               flex: 1,
                               child: Container(
                                   width: MediaQuery.of(context).size.width / 2,
-                                  height: 50,
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  height: deviceWidth * 0.15,
+                                  margin: EdgeInsets.fromLTRB(
+                                      deviceWidth * 0.02,
+                                      0,
+                                      deviceWidth * 0.02,
+                                      0),
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
@@ -232,7 +253,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                     ),
                                   ),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.02),
                                       color: Colors.black.withOpacity(0.4))),
                             ),
                           ],
@@ -247,6 +269,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                         flex: 1,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
+                          height: deviceWidth * 0.15,
                           child: RaisedButton(
                             onPressed: () {
                               Navigator.push(
@@ -259,7 +282,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                             child: Text("Next"),
                             color: Color(0xffD15858),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04)),
                           ),
                         ),
                       ),
