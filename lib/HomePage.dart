@@ -91,13 +91,15 @@ class _HomePageState extends State<HomePage> {
 
   final url = 'https://ardentsportsapis.herokuapp.com/allTournaments';
   List<Container> getTournaments(List<UserData> userdata, int array_length) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     for (int i = 0; i < array_length; i++) {
       var container = Container(
-        height: MediaQuery.of(context).size.height * 0.3,
-        padding: EdgeInsets.all(8.0),
+        height: deviceHeight * 0.3,
+        padding: EdgeInsets.all(deviceWidth * 0.018),
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(deviceWidth * 0.03),
           ),
           elevation: 10,
           color: Colors.white60.withOpacity(0.1),
@@ -107,7 +109,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               ListTile(
                   title: Container(
-                margin: EdgeInsets.only(top: 2),
+                margin: EdgeInsets.only(top: deviceWidth * 0.002),
                 height: MediaQuery.of(context).size.height * 0.075,
                 child: InkWell(
                   onTap: () {
@@ -120,31 +122,31 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
                     ),
                     elevation: 20,
                     color: userdata[i].SPORT == 'Badminton'
                         ? Color(0xff6BB8FF)
                         : Color(0xff03C289),
                     child: Container(
-                      margin: EdgeInsets.only(top: 12),
+                      margin: EdgeInsets.only(top: deviceWidth * 0.021),
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 15,
+                            width: deviceWidth * 0.03,
                           ),
                           Container(
                             alignment: Alignment.center,
-                            height: 40,
-                            width: 40,
+                            height: deviceWidth * 0.1,
+                            width: deviceWidth * 0.1,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.transparent.withOpacity(0.6),
                                 backgroundBlendMode: BlendMode.darken),
                             child: Image(
                               image: NetworkImage(userdata[i].IMG_URL),
-                              height: 20,
-                              width: 20,
+                              height: deviceWidth * 0.04,
+                              width: deviceWidth * 0.04,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -155,15 +157,15 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userdata[i].TOURNAMENT_NAME.length >= 10
+                                userdata[i].TOURNAMENT_NAME.length >= 13
                                     ? userdata[i]
                                             .TOURNAMENT_NAME
-                                            .substring(0, 17) +
+                                            .substring(0, 16) +
                                         '...'
                                     : userdata[i].TOURNAMENT_NAME,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black),
                               ),
@@ -194,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.04),
                   ),
                   elevation: 1,
                   color: Colors.transparent.withOpacity(0.2),
@@ -203,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            margin: EdgeInsets.only(left: 35),
+                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
                             child: Text(
                               "Category",
                               style: TextStyle(
@@ -217,12 +219,12 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               "V",
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: deviceWidth * 0.04,
                                 color: Color(0xffE74545),
                               ),
                             )),
                         Container(
-                            margin: EdgeInsets.only(right: 35),
+                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
                             child: Text(
                               "Spots Left",
                               style: TextStyle(
@@ -239,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.04),
                   ),
                   elevation: 1,
                   color: Colors.transparent.withOpacity(0.2),
@@ -248,15 +250,15 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            margin: EdgeInsets.only(left: 35),
+                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
                             child: Row(
                               children: [
                                 Image(
                                   image: AssetImage("assets/trophy 2.png"),
-                                  height: 25,
+                                  height: deviceWidth * 0.05,
                                 ),
                                 SizedBox(
-                                  width: 15,
+                                  width: deviceWidth * 0.03,
                                 ),
                                 Text(
                                   "Prize money",
@@ -267,22 +269,23 @@ class _HomePageState extends State<HomePage> {
                               ],
                             )),
                         Container(
-                            margin: EdgeInsets.only(right: 35),
+                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
                             child: RichText(
                                 text: TextSpan(
                                     style: TextStyle(
-                                        fontSize: 13, color: Colors.white),
+                                        fontSize: deviceWidth * 0.027,
+                                        color: Colors.white),
                                     children: <TextSpan>[
                                   TextSpan(text: "Up to "),
                                   TextSpan(
                                       text: " ₹",
                                       style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: deviceWidth * 0.05,
                                       )),
                                   TextSpan(
                                     text: userdata[i].PRIZE_POOL.toString(),
                                     style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: deviceWidth * 0.05,
                                         color: Color(0xffE74545),
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -295,16 +298,17 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(deviceWidth * 0.02),
                     child: Image(
                       image: AssetImage("assets/Location.png"),
                     ),
                   ),
                   Text(
-                    userdata[i].LOCATION.length > 20
-                        ? userdata[i].LOCATION.substring(0, 15) + '...'
+                    userdata[i].LOCATION.length > 15
+                        ? userdata[i].LOCATION.substring(0, 12) + '...'
                         : userdata[i].LOCATION,
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(
+                        color: Colors.white, fontSize: deviceWidth * 0.03),
                   )
                 ],
               )
@@ -358,6 +362,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
@@ -384,8 +390,8 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            width: 90,
-                            height: 50,
+                            width: deviceWidth * 0.3,
+                            height: deviceWidth * 0.1,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                               image: AssetImage('assets/AARDENT_LOGO.png'),
@@ -396,8 +402,8 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            width: 130,
-                            height: 40,
+                            width: deviceWidth * 0.6,
+                            height: deviceWidth * 0.08,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -421,8 +427,8 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) => Menu()));
                             },
                             child: Container(
-                              width: 20,
-                              height: 16,
+                              width: deviceWidth * 0.04,
+                              height: deviceWidth * 0.033,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage("assets/menu_bar.png"),
@@ -440,8 +446,8 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            width: 40,
-                            height: 40,
+                            width: deviceWidth * 0.08,
+                            height: deviceWidth * 0.08,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image:
@@ -458,8 +464,8 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            width: 40,
-                            height: 40,
+                            width: deviceWidth * 0.08,
+                            height: deviceWidth * 0.08,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage("assets/money_bag.png"),
@@ -473,7 +479,7 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            margin: EdgeInsets.only(left: 15),
+                            margin: EdgeInsets.only(left: deviceWidth * 0.03),
                             child: Text("Shubham"),
                           ),
                         ),
@@ -486,7 +492,7 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            margin: EdgeInsets.only(left: 15.0),
+                            margin: EdgeInsets.only(left: deviceWidth * 0.03),
                             child: Text("₹15,000"),
                           ),
                         ),

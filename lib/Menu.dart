@@ -18,6 +18,8 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -31,22 +33,22 @@ class _MenuState extends State<Menu> {
         child: Column(
           children: [
             Container(
-              width: 150,
-              height: 150,
+              width: deviceWidth * 0.4,
+              height: deviceWidth * 0.4,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/AARDENT.png"), fit: BoxFit.cover),
               ),
             ),
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: deviceWidth * 0.08,
+                  height: deviceWidth * 0.08,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/gear.png"),
@@ -62,14 +64,14 @@ class _MenuState extends State<Menu> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: deviceWidth * 0.08,
+                  height: deviceWidth * 0.08,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/plus.png"),
@@ -90,14 +92,14 @@ class _MenuState extends State<Menu> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: deviceWidth * 0.08,
+                  height: deviceWidth * 0.08,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/score 1.png"),
@@ -113,14 +115,14 @@ class _MenuState extends State<Menu> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: deviceWidth * 0.08,
+                  height: deviceWidth * 0.08,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/score 1.png"),
@@ -141,14 +143,14 @@ class _MenuState extends State<Menu> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 30,
-                  height: 30,
+                  width: deviceWidth * 0.06,
+                  height: deviceWidth * 0.06,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/Vector.png"),
@@ -166,14 +168,14 @@ class _MenuState extends State<Menu> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: deviceWidth * 0.08,
+                  height: deviceWidth * 0.08,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/Vecto1.png"),
@@ -191,14 +193,14 @@ class _MenuState extends State<Menu> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: deviceWidth * 0.08,
+                  height: deviceWidth * 0.08,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/contacts.png"),
