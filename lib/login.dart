@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'SignUpPage.dart';
@@ -159,19 +160,32 @@ class _loginState extends State<login> {
                                         },
                                         body: json,
                                         encoding: Encoding.getByName("utf-8"));
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text("Logged in successfully"),
-                                    ));
+                                    final jsonResponse =
+                                        jsonDecode(response.body);
+                                    if (jsonResponse['Message'] ==
+                                        "USER Verified") {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomePage()));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text("Logged in successfully"),
+                                      ));
+                                    } else if (jsonResponse['Message'] ==
+                                        'Incorrect Pwd') {
+                                      final msg = "Incorrect Password";
+                                      Fluttertoast.showToast(msg: msg);
+                                    } else if (jsonResponse['Message'] ==
+                                        "Invalid USERID") {
+                                      final msg = "Invalid UserID";
+                                      Fluttertoast.showToast(msg: msg);
+                                    }
 
                                     SharedPreferences prefs =
                                         await SharedPreferences.getInstance();
                                     prefs.setString('email', emaild.text);
-
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HomePage()));
                                   }
                                 },
                                 color: Color(0xffE74545),

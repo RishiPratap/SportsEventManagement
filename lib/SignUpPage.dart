@@ -15,6 +15,18 @@ class SignUpPage extends StatefulWidget {
   _SignUpPage createState() => _SignUpPage();
 }
 
+// class Response {
+//   late String msg;
+
+//   Response(
+//     this.msg,
+//   );
+
+//   Response.fromJson(Map<String, dynamic> json) {
+//     msg = json['Message'];
+//   }
+// }
+
 TextEditingController passController = TextEditingController();
 TextEditingController repassController = TextEditingController();
 TextEditingController emailController = TextEditingController();
@@ -619,15 +631,24 @@ class SubmitPage extends StatelessWidget {
                                   },
                                   body: json,
                                   encoding: Encoding.getByName("utf-8"));
-                              print(response.body);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text("Successfully Registered"),
-                              ));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+
+                              final jsonResponse = jsonDecode(response.body);
+                              if (jsonResponse['Message'] == "User Exists") {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Email Already Exists,please try with different email"),
+                                ));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text("Successfully Registered"),
+                                ));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()));
+                              }
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

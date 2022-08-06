@@ -2,6 +2,7 @@ import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/CreateChallenge.dart';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/HostedChallenges.dart';
+import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/ScoreAMatch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -155,7 +156,9 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(MyBookings());
+                    },
                     child: Text(
                       "My Bookings",
                       style: TextStyle(color: Colors.white),

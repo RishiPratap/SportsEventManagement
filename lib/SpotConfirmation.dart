@@ -47,7 +47,7 @@ class UserDetails {
   late String tournamentName;
   late String tournamentCity;
   late String address;
-  late int entryFee;
+  late String entryFee;
   late String category;
 
   UserDetails(
@@ -344,8 +344,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       Tournamen_id: widget.tournament_id);
                   final spotNumberMap = SpotNumber.toMap();
                   final json_spotNumber = jsonEncode(spotNumberMap);
-                  // print("2");
-                  //  widget.socket.emit('confirm-booking', json_spotNumber);
+                  print(widget.tournament_id);
                   Navigator.push(
                       context,
                       PageTransition(
@@ -355,6 +354,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             Spot_Number: widget.SpotNo,
                             socket: widget.socket,
                             btnId: widget.btnId,
+                            tourneyId: widget.tournament_id,
                           )));
                 },
                 color: const Color(0xffE74745),
