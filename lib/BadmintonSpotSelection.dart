@@ -104,18 +104,19 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   int totalspots = 0;
   var count = 0;
   late Socket socket;
-
   @override
   List<Container> getTotalSpots(int start, int end, List<dynamic> array) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     List<Container> totalspots = [];
     for (int i = start; i <= end; i++) {
       String x = array[i - 1];
       String spotname = "Spot $i";
       if (array[i - 1] == "${i - 1}") {
         var newContainer = Container(
-          margin: EdgeInsets.only(top: 10),
-          width: 70,
-          height: 25,
+          margin: EdgeInsets.only(top: deviceWidth * 0.02),
+          width: deviceWidth * 0.2,
+          height: deviceWidth * 0.07,
           child: RaisedButton(
             onPressed: () async {
               final SharedPreferences prefs =
@@ -188,20 +189,20 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             },
             color: Color(0xff6EBC55),
             shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0),
+              borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
             ),
             child: Text(
               spotname,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: deviceWidth * 0.03),
             ),
           ),
         );
         totalspots.add(newContainer);
       } else if (x.contains('confirmed')) {
         var newContainer = Container(
-          margin: EdgeInsets.only(top: 10),
-          width: 70,
-          height: 25,
+          margin: EdgeInsets.only(top: deviceWidth * 0.02),
+          width: deviceWidth * 0.2,
+          height: deviceWidth * 0.07,
           child: RaisedButton(
             onPressed: () {
               const msg = "Spot Already Booked Please Try To Book Another Spot";
@@ -212,24 +213,24 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   timeInSecForIosWeb: 1,
                   backgroundColor: Colors.red,
                   textColor: Colors.white,
-                  fontSize: 16.0);
+                  fontSize: deviceWidth * 0.033);
             },
             color: Color(0xff808080),
             shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0),
+              borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
             ),
             child: Text(
               spotname,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: deviceWidth * 0.03),
             ),
           ),
         );
         totalspots.add(newContainer);
       } else {
         var newContainer = Container(
-          margin: EdgeInsets.only(top: 10),
-          width: 70,
-          height: 25,
+          margin: EdgeInsets.only(top: deviceWidth * 0.02),
+          width: deviceWidth * 0.2,
+          height: deviceWidth * 0.07,
           child: RaisedButton(
             onPressed: () {
               final msg =
@@ -239,11 +240,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             color: Color(0xffFFFF00).withOpacity(0.8),
             key: Key(color1.toString()),
             shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0),
+              borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
             ),
             child: Text(
               spotname,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: deviceWidth * 0.03),
             ),
           ),
         );
@@ -253,7 +254,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     return totalspots;
   }
 
-  connect() async {
+  connect(double deviceWidth) async {
     final tournament_id1 = tournament_id(TOURNAMENT_ID: widget.tourneyId);
     final tournament_id1Map = tournament_id1.toMap();
     final json_tournamentid = jsonEncode(tournament_id1Map);
@@ -326,16 +327,18 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     print("is${array1}");
     return Column(
       children: [
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: deviceWidth * 0.04,
         ),
         Container(
-          margin: const EdgeInsets.only(left: 25, right: 25),
-          child: buildSpotsAvailableCard(),
+          margin: EdgeInsets.only(
+              left: deviceWidth * 0.05, right: deviceWidth * 0.05),
+          child: buildSpotsAvailableCard(deviceWidth),
         ),
         Container(
-          margin: const EdgeInsets.only(left: 25, right: 25),
-          child: buildAvailableSpotsCard(),
+          margin: EdgeInsets.only(
+              left: deviceWidth * 0.05, right: deviceWidth * 0.05),
+          child: buildAvailableSpotsCard(deviceWidth),
         ),
       ],
     );
@@ -354,6 +357,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   }
 
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -366,7 +371,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           ),
           child: SingleChildScrollView(
             child: FutureBuilder(
-              future: connect(),
+              future: connect(deviceWidth),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.data == null) {
                   print("In Null agar hua toh mar khayega");
@@ -388,13 +393,13 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     );
   }
 
-  Widget buildSpotsAvailableCard() => Card(
+  Widget buildSpotsAvailableCard(double deviceWidth) => Card(
         elevation: 10,
         color: Color(0xff03c289),
         child: Row(
           children: [
             SizedBox(
-              width: 25,
+              width: deviceWidth * 0.02,
             ),
             Column(
               children: [
@@ -404,12 +409,12 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                     color: Colors.white,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
-                    fontSize: 12.0,
+                    fontSize: deviceWidth * 0.03,
                   ),
                 ),
                 Container(
-                  width: 65,
-                  height: 30,
+                  width: deviceWidth * 0.25,
+                  height: deviceWidth * 0.07,
                   child: Card(
                     elevation: 10,
                     shape: BeveledRectangleBorder(
@@ -424,7 +429,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               ],
             ),
             SizedBox(
-              width: 25,
+              width: deviceWidth * 0.05,
             ),
             Column(
               children: [
@@ -434,7 +439,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                     color: Colors.white,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
-                    fontSize: 12.0,
+                    fontSize: deviceWidth * 0.03,
                   ),
                 ),
                 Text(
@@ -443,12 +448,12 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                     color: Colors.white,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
-                    fontSize: 12.0,
+                    fontSize: deviceWidth * 0.03,
                   ),
                 ),
                 Container(
-                  width: 60,
-                  height: 28,
+                  width: deviceWidth * 0.25,
+                  height: deviceWidth * 0.07,
                   child: Card(
                     elevation: 10,
                     shape: BeveledRectangleBorder(
@@ -463,7 +468,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               ],
             ),
             SizedBox(
-              width: 25,
+              width: deviceWidth * 0.09,
             ),
             Column(
               children: [
@@ -473,19 +478,19 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                     color: Colors.white,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
-                    fontSize: 12.0,
+                    fontSize: deviceWidth * 0.03,
                   ),
                 ),
                 Container(
-                  width: 50,
-                  height: 27,
+                  width: deviceWidth * 0.15,
+                  height: deviceWidth * 0.07,
                   child: Card(
                     elevation: 10,
                     shape: BeveledRectangleBorder(
                         borderRadius: BorderRadius.circular(1.0)),
                     color: Colors.black.withOpacity(0.25),
                     child: Text(
-                      "$entryfee",
+                      "₹$entryfee",
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -495,64 +500,64 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           ],
         ),
       );
-  Widget buildAvailableSpotsCard() => Card(
+  Widget buildAvailableSpotsCard(double deviceWidth) => Card(
         elevation: 10,
         color: Colors.white.withOpacity(0.1),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 20,
-                  height: 20,
+                  width: deviceWidth * 0.04,
+                  height: deviceWidth * 0.04,
                   color: Color(0xff6EBC55),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: deviceWidth * 0.02,
                 ),
                 Text("Vacant"),
                 SizedBox(
-                  width: 30,
+                  width: deviceWidth * 0.06,
                 ),
                 Container(
-                  width: 20,
-                  height: 20,
+                  width: deviceWidth * 0.04,
+                  height: deviceWidth * 0.04,
                   color: Color(0xff808080),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: deviceWidth * 0.02,
                 ),
                 Text("Booked"),
                 SizedBox(
-                  width: 12,
+                  width: deviceWidth * 0.06gi,
                 ),
                 Container(
-                  width: 20,
-                  height: 20,
+                  width: deviceWidth * 0.04,
+                  height: deviceWidth * 0.04,
                   color: Color(0xffFFFF00).withOpacity(0.8),
                 ),
                 Text("   Processing"),
               ],
             ),
             SizedBox(
-              height: 15,
+              height: deviceWidth * 0.03,
             ),
             Row(children: [
               SizedBox(
-                width: 25,
-                height: 30,
+                width: deviceWidth * 0.05,
+                height: deviceWidth * 0.06,
               ),
               Column(
                 children: getTotalSpots(1, (totalspots / 2).toInt(), array1),
               ),
               SizedBox(
-                width: 120,
-                height: 30,
+                width: deviceWidth * 0.4,
+                height: deviceWidth * 0.24,
               ),
               Column(
                 children: getTotalSpots(
@@ -560,37 +565,37 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               ),
             ]),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.only(left: 30),
+              margin: EdgeInsets.only(left: deviceWidth * 0.06),
               child: Text(
                 "Note :",
                 style: TextStyle(color: Color(0xffD15858)),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.only(left: 25),
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "Matches Will be played according to the draws shown above,so please select your spot accordingly",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.only(left: 25),
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "Spots Cannot be changed once selected",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
           ],
         ),
