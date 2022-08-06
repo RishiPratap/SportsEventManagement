@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       initialRoute: '/',
       routes: {
-        '/': (context) => HostedChallenges(),
-        '/homePage': (context) => HostedChallenges(),
+        '/': (context) => login(),
+        '/homePage': (context) => HomePage(),
       },
     );
   }
