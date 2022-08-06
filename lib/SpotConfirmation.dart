@@ -95,7 +95,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: mapUserResponse == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 backgroundColor: Colors.white,
               ),
@@ -104,18 +104,18 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/Homepage.png"),
                         fit: BoxFit.cover)),
                 child: SingleChildScrollView(
                     child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 25, right: 25),
+                      margin: const EdgeInsets.only(left: 25, right: 25),
                       child: SpotConfirmationCard(),
                     )
                   ],
