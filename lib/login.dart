@@ -48,7 +48,7 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHight = MediaQuery.of(context).size.height;
-    double cardheight = 340.0;
+    double cardheight = MediaQuery.of(context).size.height * 0.44;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -71,9 +71,10 @@ class _loginState extends State<login> {
                   child: Expanded(
                     child: Container(
                       height: cardheight,
-                      width: 400.0,
+                      width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      padding: EdgeInsets.fromLTRB(deviceWidth * 0.04, 0,
+                          deviceWidth * 0.04, deviceWidth * 0.04),
                       child: Card(
                         elevation: 10,
                         shape: RoundedRectangleBorder(
@@ -83,78 +84,62 @@ class _loginState extends State<login> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Container(
-                            //   padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
-                            //   child: Expanded(
-                            //     child: TextFormField(
-                            //       controller: emaild,
-                            //       decoration: InputDecoration(
-                            //         border: OutlineInputBorder(
-                            //             borderRadius:
-                            //                 BorderRadius.circular(40.0)),
-                            //         hintText: '  Email/Mobile',
-                            //         hintStyle: TextStyle(
-                            //             color: Colors.white.withOpacity(0.5)),
-                            //         focusedBorder: OutlineInputBorder(
-                            //           borderRadius: BorderRadius.circular(30),
-                            //           borderSide: BorderSide(
-                            //             color: Colors.black,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             Container(
-                              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
+                              padding: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.04, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: TextField(
                                   controller: emaild,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(40.0)),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.08)),
                                     hintText: 'Email',
                                     hintStyle: TextStyle(
                                         color: Colors.white.withOpacity(0.5)),
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0),
+                              padding: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.04, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: TextField(
                                   obscureText: true,
                                   controller: password,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(40.0)),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.08)),
                                     hintText: 'Password',
                                     hintStyle: TextStyle(
                                         color: Colors.white.withOpacity(0.5)),
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                             Container(
-                              width: 150.0,
+                              width: deviceWidth * 0.4,
                               margin: EdgeInsets.fromLTRB(
-                                  20.0, 0.05 * cardheight, 0, 0),
+                                  deviceWidth * 0.04, 0.05 * cardheight, 0, 0),
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(20.0),
+                                  borderRadius: new BorderRadius.circular(
+                                      deviceWidth * 0.04),
                                 ),
                                 child: Text(
                                   "Login",
-                                  style: TextStyle(fontSize: 20),
+                                  style:
+                                      TextStyle(fontSize: deviceWidth * 0.05),
                                 ),
                                 onPressed: () async {
                                   if (emaild.text.isNotEmpty &&
@@ -191,7 +176,7 @@ class _loginState extends State<login> {
                                 },
                                 color: Color(0xffE74545),
                                 textColor: Colors.white,
-                                padding: EdgeInsets.all(10.0),
+                                padding: EdgeInsets.all(deviceWidth * 0.03),
                                 splashColor: Colors.grey,
                               ),
                             ),
