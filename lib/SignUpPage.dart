@@ -24,18 +24,10 @@ TextEditingController mobileController = TextEditingController();
 class _SignUpPage extends State<SignUpPage> {
   bool isChecked = false;
 
-  // _signUp() async {
-  //   var data = {
-  //     'name': nameController.text,
-  //     'email': emailController.text,
-  //     'pass': passController.text,
-  //   };
-
-  //   var res = await CallApi().postData(data, 'createUser');
-  // }
-
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
@@ -69,13 +61,17 @@ class _SignUpPage extends State<SignUpPage> {
                   height: 5,
                 ),
                 Card(
-                  margin: EdgeInsets.only(left: 25, right: 25),
+                  margin: EdgeInsets.only(
+                      left: deviceWidth * 0.05, right: deviceWidth * 0.05),
                   color: Colors.white.withOpacity(0.2),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.04)),
                   child: Container(
                     margin: EdgeInsets.only(
-                        left: 15, right: 15, top: 25, bottom: 25),
+                        left: deviceWidth * 0.03,
+                        right: deviceWidth * 0.03,
+                        top: deviceWidth * 0.05,
+                        bottom: deviceWidth * 0.05),
                     child: Column(
                       children: [
                         Container(
@@ -87,13 +83,15 @@ class _SignUpPage extends State<SignUpPage> {
                                 TextStyle(color: Colors.white.withOpacity(0.5)),
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.5),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.black,
                                   ),
@@ -102,15 +100,15 @@ class _SignUpPage extends State<SignUpPage> {
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.5)),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                 )),
                           ),
                         ),
                         SizedBox(
-                          height: 30,
+                          height: deviceWidth * 0.06,
                         ),
                         Container(
-                          // padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                           child: TextField(
                             controller: mobileController,
                             keyboardType: TextInputType.number,
@@ -119,13 +117,15 @@ class _SignUpPage extends State<SignUpPage> {
                             decoration: InputDecoration(
                                 counterText: "",
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.5),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.black,
                                   ),
@@ -134,12 +134,13 @@ class _SignUpPage extends State<SignUpPage> {
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.5)),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                 )),
                           ),
                         ),
                         SizedBox(
-                          height: 30,
+                          height: deviceWidth * 0.06,
                         ),
                         Container(
                           // padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
@@ -149,13 +150,15 @@ class _SignUpPage extends State<SignUpPage> {
                             obscureText: true,
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.5),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.black,
                                   ),
@@ -164,12 +167,13 @@ class _SignUpPage extends State<SignUpPage> {
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.5)),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                 )),
                           ),
                         ),
                         SizedBox(
-                          height: 30,
+                          height: deviceWidth * 0.06,
                         ),
                         Container(
                           // padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
@@ -179,13 +183,15 @@ class _SignUpPage extends State<SignUpPage> {
                             obscureText: true,
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.white.withOpacity(0.5),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                   borderSide: BorderSide(
                                     color: Colors.black,
                                   ),
@@ -194,12 +200,13 @@ class _SignUpPage extends State<SignUpPage> {
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.5)),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                 )),
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: deviceWidth * 0.02,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -218,7 +225,7 @@ class _SignUpPage extends State<SignUpPage> {
                               'Accept Terms & Conditions',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15,
+                                  fontSize: deviceWidth * 0.045,
                                   fontWeight: FontWeight.w300),
                             ),
                           ],
@@ -230,8 +237,8 @@ class _SignUpPage extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             ButtonTheme(
-                              height: 40.0,
-                              minWidth: 200.0,
+                              height: deviceWidth * 0.1,
+                              minWidth: deviceWidth * 0.4,
                               child: RaisedButton(
                                 onPressed: () {
                                   if (emailController.text.isNotEmpty &&
@@ -266,7 +273,8 @@ class _SignUpPage extends State<SignUpPage> {
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0)),
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06)),
                               ),
                             ),
                           ],
@@ -319,6 +327,8 @@ class SubmitPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -337,15 +347,20 @@ class SubmitPage extends StatelessWidget {
                   children: [
                     Card(
                       margin: EdgeInsets.only(
-                          left: 25, right: 25, top: 70, bottom: 0),
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.05,
+                          top: deviceWidth * 0.2,
+                          bottom: 0),
                       color: Colors.white.withOpacity(0.2),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04)),
                       child: Column(
                         children: [
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.06,
+                                  deviceWidth * 0.02, deviceWidth * 0.06, 0),
                               child: Row(
                                 children: [
                                   Center(
@@ -362,7 +377,7 @@ class SubmitPage extends StatelessWidget {
                                           color: Colors.white,
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 24.0,
+                                          fontSize: 22.0,
                                         ),
                                       ),
                                     ),
@@ -373,21 +388,23 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: first_name,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText: '  First name',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -400,21 +417,23 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: last_name,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText: '  Last Name',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -427,21 +446,23 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: date_of_birth,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText: '  Date of Birth (dd-mm-yy)',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -454,21 +475,23 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: state,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText: '  State',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -481,21 +504,23 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: city,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText: '  City',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -508,21 +533,23 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: gender,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText: '  Gender',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -535,21 +562,23 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: Academy,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText: '  Academy',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -562,22 +591,27 @@ class SubmitPage extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              margin: EdgeInsets.fromLTRB(
+                                  deviceWidth * 0.04,
+                                  deviceWidth * 0.02,
+                                  deviceWidth * 0.04,
+                                  deviceWidth * 0.03),
                               child: Expanded(
                                 child: Container(
-                                  height: 50.0,
+                                  height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: Intersted_Sports,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0)),
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06)),
                                       hintText:
                                           '  Interested sports(Cricket,Football etc..)',
                                       hintStyle: TextStyle(
                                           color: Colors.white.withOpacity(0.5)),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06),
                                         borderSide: BorderSide(
                                           color: Colors.black,
                                         ),
@@ -592,7 +626,7 @@ class SubmitPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      margin: EdgeInsets.fromLTRB(0, deviceWidth * 0.05, 0, 0),
                       child: Center(
                         child: RaisedButton(
                           onPressed: () async {
@@ -650,7 +684,8 @@ class SubmitPage extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.06)),
                         ),
                       ),
                     ),

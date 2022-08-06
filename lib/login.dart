@@ -47,7 +47,7 @@ class _loginState extends State<login> {
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHight = MediaQuery.of(context).size.height;
+    double deviceHeight = MediaQuery.of(context).size.height;
     double cardheight = MediaQuery.of(context).size.height * 0.44;
     return Scaffold(
       resizeToAvoidBottomInset: false,
