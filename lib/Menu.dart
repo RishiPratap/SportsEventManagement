@@ -1,4 +1,5 @@
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
+import 'package:ardent_sports/CreateChallenge.dart';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:ardent_sports/ScoreAMatch.dart';
@@ -79,7 +80,7 @@ class _MenuState extends State<Menu> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ScoreAMatch()));
+                              builder: (context) => CreateChallenge()));
                     },
                     child: Text(
                       "Create Challenge",
