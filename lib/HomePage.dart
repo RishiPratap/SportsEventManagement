@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'Menu.dart';
+import 'dart:ui';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -32,6 +35,7 @@ class UserData {
   late List SPOT_STATUS_ARRAY;
   late int PRIZE_POOL;
   late int ENTRY_FEE;
+  late String IMG_URL;
   late List MATCHES;
   late int __v;
   UserData(
@@ -52,9 +56,11 @@ class UserData {
     this.SPOT_STATUS_ARRAY,
     this.PRIZE_POOL,
     this.ENTRY_FEE,
+    this.IMG_URL,
     this.MATCHES,
     this.__v,
   );
+
   UserData.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];
     TOURNAMENT_ID = json['TOURNAMENT_ID'];
@@ -73,6 +79,7 @@ class UserData {
     SPOT_STATUS_ARRAY = json['SPOT_STATUS_ARRAY'];
     PRIZE_POOL = json['PRIZE_POOL'];
     ENTRY_FEE = json['ENTRY_FEE'];
+    IMG_URL = json['IMG_URL'];
     MATCHES = json['MATCHES'];
     __v = json['__v'];
   }
@@ -107,7 +114,9 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BadmintonSpotSelection()));
+                            builder: (context) => BadmintonSpotSelection(
+                                  tourneyId: userdata[i].TOURNAMENT_ID,
+                                )));
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -133,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.transparent.withOpacity(0.6),
                                 backgroundBlendMode: BlendMode.darken),
                             child: Image(
-                              image: AssetImage("assets/badminton.png"),
+                              image: NetworkImage(userdata[i].IMG_URL),
                               height: 20,
                               width: 20,
                               fit: BoxFit.cover,
@@ -303,7 +312,6 @@ class _HomePageState extends State<HomePage> {
       );
       AllTournaments.add(container);
     }
-    print('boyapatti');
     return AllTournaments;
   }
 
@@ -327,7 +335,7 @@ class _HomePageState extends State<HomePage> {
     try {
       var response = await get(Uri.parse(url));
       List<dynamic> jsonData = jsonDecode(response.body);
-      print("1");
+
       print(jsonData);
       List<UserData> userdata =
           jsonData.map((dynamic item) => UserData.fromJson(item)).toList();

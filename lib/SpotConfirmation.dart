@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:ardent_sports/Payment.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -22,26 +23,18 @@ class jsonSpotNumber {
 
 class SpotConfirmation extends StatefulWidget {
   final String SpotNo;
-  final String Name;
-  final String EventName;
-  final String Category;
+  String? userEmail;
+  final String tournament_id;
   final String Date;
-  final String Address;
-  final String City;
   final Socket socket;
-  final String Spot_Price;
   final String btnId;
   SpotConfirmation(
       {Key? key,
       required this.SpotNo,
-      required this.Name,
-      required this.EventName,
-      required this.Category,
+      required this.userEmail,
+      required this.tournament_id,
       required this.Date,
-      required this.Address,
-      required this.City,
       required this.socket,
-      required this.Spot_Price,
       required this.btnId})
       : super(key: key);
 
@@ -49,32 +42,86 @@ class SpotConfirmation extends StatefulWidget {
   State<SpotConfirmation> createState() => _SpotConfirmationState();
 }
 
+class UserDetails {
+  late String name;
+  late String tournamentName;
+  late String tournamentCity;
+  late String address;
+  late int entryFee;
+  late String category;
+
+  UserDetails(
+    this.name,
+    this.tournamentName,
+    this.tournamentCity,
+    this.address,
+    this.entryFee,
+    this.category,
+  );
+
+  UserDetails.fromJson(Map<String, dynamic> json) {
+    name = json['username'];
+    tournamentName = json['tournament_name'];
+    tournamentCity = json['tournament_city'];
+    address = json['address'];
+    entryFee = json['fee'];
+    category = json['cat'];
+  }
+}
+
+Map? mapUserResponse;
+
 class _SpotConfirmationState extends State<SpotConfirmation> {
+  Future fetchUser() async {
+    http.Response response;
+    response = await http.get(Uri.parse(
+        'https://ardentsportsapis.herokuapp.com/getConfirmationDetails?USERID=${widget.userEmail}&TOURNAMENT_ID=${widget.tournament_id}'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        mapUserResponse = json.decode(response.body);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    fetchUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
-          child: SingleChildScrollView(
-              child: Column(
-            children: [
-              SizedBox(
-                height: 20,
+      body: mapUserResponse == null
+          ? Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
               ),
-              Container(
-                margin: EdgeInsets.only(left: 25, right: 25),
-                child: SpotConfirmationCard(),
-              )
-            ],
-          )),
-        ),
-      ),
+            )
+          : SafeArea(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/Homepage.png"),
+                        fit: BoxFit.cover)),
+                child: SingleChildScrollView(
+                    child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 25),
+                      child: SpotConfirmationCard(),
+                    )
+                  ],
+                )),
+              ),
+            ),
     );
   }
 
@@ -131,7 +178,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       width: 300,
                       height: 40,
                       child: Text(
-                        "Name : ${widget.Name}",
+                        "Name: ${mapUserResponse?['username']}",
                         textAlign: TextAlign.start,
                       ),
                     )
@@ -160,7 +207,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       width: 300,
                       height: 40,
                       child: Text(
-                        "Event : ${widget.EventName}",
+                        "Event : ${mapUserResponse?['tournament_name']}",
                         textAlign: TextAlign.start,
                       ),
                     )
@@ -189,7 +236,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       width: 300,
                       height: 40,
                       child: Text(
-                        "Category : ${widget.Category}",
+                        "Category : ${mapUserResponse?['cat']}",
                         textAlign: TextAlign.start,
                       ),
                     )
@@ -247,7 +294,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       width: 300,
                       height: 40,
                       child: Text(
-                        "Address : ${widget.Address}",
+                        "Address : ${mapUserResponse?['address']}",
                         textAlign: TextAlign.start,
                       ),
                     )
@@ -276,7 +323,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       width: 300,
                       height: 40,
                       child: Text(
-                        "City : ${widget.City}",
+                        "City : ${mapUserResponse?['tournament_city']}",
                         textAlign: TextAlign.start,
                       ),
                     )
@@ -294,7 +341,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 onPressed: () {
                   final SpotNumber = jsonSpotNumber(
                       spotNumber: int.parse(widget.SpotNo) - 1,
-                      Tournamen_id: "123456");
+                      Tournamen_id: widget.tournament_id);
                   final spotNumberMap = SpotNumber.toMap();
                   final json_spotNumber = jsonEncode(spotNumberMap);
                   // print("2");
@@ -304,7 +351,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       PageTransition(
                           type: PageTransitionType.rightToLeftWithFade,
                           child: Payment(
-                            Spot_Price: widget.Spot_Price,
+                            Spot_Price: mapUserResponse?['fee'],
                             Spot_Number: widget.SpotNo,
                             socket: widget.socket,
                             btnId: widget.btnId,

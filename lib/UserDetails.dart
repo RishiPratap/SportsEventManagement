@@ -1,7 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
-
 class UserDetails {
   late String USERID;
   late String PHONE;
