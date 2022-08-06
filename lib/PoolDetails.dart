@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PoolDetails extends StatefulWidget {
   final String SportName;
@@ -113,9 +114,13 @@ class _PoolDetailsState extends State<PoolDetails> {
                     height: 50,
                     child: TextButton(
                       onPressed: () async {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        var obtianedEmail = prefs.getString('email');
                         final ChallengeDetails = CreateChallengeDetails(
-                            USERID: "user2",
-                            TOURNAMENT_ID: "user2${widget.SportName}",
+                            USERID: obtianedEmail!,
+                            TOURNAMENT_ID:
+                                "${obtianedEmail}${widget.SportName}",
                             CATEGORY: widget.Category,
                             NO_OF_KNOCKOUT_ROUNDS: "32",
                             ENTRY_FEE: "500",
