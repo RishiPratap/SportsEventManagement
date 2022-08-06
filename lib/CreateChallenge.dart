@@ -21,6 +21,8 @@ class _CreateChallengeState extends State<CreateChallenge> {
   final EventTypeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -33,7 +35,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
           child: Column(
             children: [
               SizedBox(
-                height: 15,
+                height: deviceWidth * 0.2,
               ),
               Text(
                 "Create Competition",
@@ -41,13 +43,13 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   color: Colors.white,
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.w600,
-                  fontSize: 24.0,
+                  fontSize: deviceWidth * 0.05,
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: deviceWidth * 0.02,
               ),
-              buildCard(),
+              buildCard(deviceWidth),
             ],
           ),
         ),
@@ -55,21 +57,23 @@ class _CreateChallengeState extends State<CreateChallenge> {
     );
   }
 
-  Widget buildCard() => Card(
+  Widget buildCard(double deviceWidth) => Card(
         elevation: 10,
         shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(deviceWidth * 0.01),
         ),
         color: Colors.white.withOpacity(0.1),
-        margin: EdgeInsets.only(left: 25, right: 25),
+        margin: EdgeInsets.only(
+            left: deviceWidth * 0.05, right: deviceWidth * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: deviceWidth * 0.04,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
               color: Colors.black.withOpacity(0.3),
               child: TextField(
                 controller: SportNameController,
@@ -77,13 +81,13 @@ class _CreateChallengeState extends State<CreateChallenge> {
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                       borderSide: BorderSide(
                         color: Colors.white.withOpacity(0.5),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                       borderSide: BorderSide(
                         color: Colors.black,
                       ),
@@ -91,53 +95,59 @@ class _CreateChallengeState extends State<CreateChallenge> {
                     hintText: "Enter Your Sport(Badminton,TT)",
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.06),
                     )),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
               child: Text(
                 "Event Manager Detail",
                 style: TextStyle(
-                  fontSize: 23,
+                  fontSize: deviceWidth * 0.05,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
               child: Card(
                 color: Colors.black.withOpacity(0.3),
                 shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                 ),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.01,
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
                       decoration: new BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04)),
                       child: TextField(
                         controller: EventManagerNameController,
                         keyboardType: TextInputType.emailAddress,
                         style: TextStyle(color: Colors.white.withOpacity(0.5)),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04),
                               borderSide: BorderSide(
                                 color: Colors.black,
                               ),
@@ -145,28 +155,33 @@ class _CreateChallengeState extends State<CreateChallenge> {
                             hintText: "Name",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.02,
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
                       decoration: new BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04)),
                       child: TextField(
                         controller: MobileNumberController,
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04),
                               borderSide: BorderSide(
                                 color: Colors.black,
                               ),
@@ -174,19 +189,21 @@ class _CreateChallengeState extends State<CreateChallenge> {
                             hintText: "Mobile Number",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.02,
                     )
                   ],
                 ),
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.03, 10, deviceWidth * 0.03, 0),
               color: Colors.black.withOpacity(0.3),
               child: TextField(
                 controller: EventTypeController,
@@ -194,67 +211,79 @@ class _CreateChallengeState extends State<CreateChallenge> {
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                       borderSide: BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                       borderSide: BorderSide(),
                     ),
                     hintText: "Event Type (Fixed,Dynamic)",
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.03, 10, deviceWidth * 0.03, 0),
               child: Text(
                 "Event Type",
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: deviceWidth * 0.05, fontWeight: FontWeight.w600),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
               child: Card(
                 color: Colors.black.withOpacity(0.3),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.04,
                     ),
-                    Text(
-                      "  Fixed Event: Prize Money is fixed irrespective of the number of players joining the challenge.",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "  Dynamic Event:Prize money increases with increase in number of players joining the challenge.",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
+                      child: Text(
+                        "Fixed Event: Prize Money is fixed irrespective of the number of players joining the challenge.",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: deviceWidth * 0.04,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.02,
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
+                      child: Text(
+                        "Dynamic Event:Prize money increases with increase in number of players joining the challenge.",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: deviceWidth * 0.04,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    SizedBox(
+                      height: deviceWidth * 0.02,
                     ),
                   ],
                 ),
               ),
             ),
             Container(
-              width: 350,
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              width: deviceWidth * 0.8,
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
               child: RaisedButton(
                 onPressed: () {
                   Navigator.push(
@@ -275,11 +304,11 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   style: TextStyle(color: Colors.white),
                 ),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
           ],
         ),

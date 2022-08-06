@@ -27,6 +27,8 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -46,16 +48,16 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                       child: Image.asset("assets/back.png"),
                     ),
                     Container(
-                      width: 35,
-                      height: 50,
+                      width: deviceWidth * 0.07,
+                      height: deviceWidth * 0.1,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/AARDENT_LOGO.png"),
                               fit: BoxFit.fitHeight)),
                     ),
                     Container(
-                      width: 130,
-                      height: 40,
+                      width: deviceWidth * 0.26,
+                      height: deviceWidth * 0.08,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Ardent_Sport_Text.png"),
@@ -70,23 +72,27 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height -
                       MediaQuery.of(context).size.height / 3,
-                  margin: EdgeInsets.fromLTRB(10, 50, 10, 0),
+                  margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                      deviceWidth * 0.1, deviceWidth * 0.02, 0),
                   child: Card(
                       elevation: 10,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.03)),
                       color: Colors.white.withOpacity(0.2),
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: deviceWidth * 0.04,
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            height: deviceWidth * 0.15,
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                                deviceWidth * 0.02, deviceWidth * 0.02, 0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
@@ -106,17 +112,19 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                       setState(() => SelectedOver = item),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: deviceWidth * 0.02,
                                 )
                               ],
                             ),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            height: deviceWidth * 0.15,
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                                deviceWidth * 0.02, deviceWidth * 0.02, 0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
@@ -136,17 +144,19 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                       setState(() => Selectedteamsize = item),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: deviceWidth * 0.02,
                                 )
                               ],
                             ),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            height: deviceWidth * 0.15,
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                                deviceWidth * 0.02, deviceWidth * 0.02, 0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
@@ -167,17 +177,19 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                       setState(() => Selectedsubstitute = item),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: deviceWidth * 0.02,
                                 )
                               ],
                             ),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            height: deviceWidth * 0.15,
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                                deviceWidth * 0.02, deviceWidth * 0.02, 0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
@@ -198,33 +210,38 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                       setState(() => Selectedballtype = item),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: deviceWidth * 0.02,
                                 )
                               ],
                             ),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            height: deviceWidth * 0.15,
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                                deviceWidth * 0.02, deviceWidth * 0.02, 0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
                                 color: Colors.black.withOpacity(0.4)),
                             child: TextField(
                               controller: city,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02)),
                                 hintText: 'City',
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.5)),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.02),
                                   borderSide: BorderSide(
                                       color: Colors.black.withOpacity(0.001)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.02),
                                   borderSide: BorderSide(
                                     color: Colors.black.withOpacity(0.001),
                                   ),
@@ -234,26 +251,31 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            height: deviceWidth * 0.15,
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                                deviceWidth * 0.02, deviceWidth * 0.02, 0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
                                 color: Colors.black.withOpacity(0.4)),
                             child: TextField(
                               controller: match_name,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02)),
                                 hintText: 'Match Name :',
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.5)),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.02),
                                   borderSide: BorderSide(
                                       color: Colors.black.withOpacity(0.001)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.02),
                                   borderSide: BorderSide(
                                     color: Colors.black.withOpacity(0.001),
                                   ),
@@ -270,11 +292,13 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                             flex: 7,
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
-                              height: 40,
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04, 0,
+                                  deviceWidth * 0.04, deviceWidth * 0.02),
+                              height: deviceWidth * 0.08,
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(20.0),
+                                  borderRadius: new BorderRadius.circular(
+                                      deviceWidth * 0.04),
                                 ),
                                 onPressed: () {
                                   if (city.text.isEmpty) {
