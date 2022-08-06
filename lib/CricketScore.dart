@@ -40,27 +40,27 @@ class _CricketScoreState extends State<CricketScore> {
               Positioned(
                 top: h * 0.08,
                 left: w * 0.1,
-                child: const Text("<",
+                child: Text("<",
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: w * 0.06,
                         fontWeight: FontWeight.bold,
                         color: Colors.white)),
               ),
               _header(),
               // _score(),
               Positioned(
-                top: h * 0.18,
-                left: w * 0.56,
+                top: h * 0.2,
+                left: w * 0.6,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.transparent),
                   onPressed: () {
                     print("Match Result pressed");
                   },
-                  child: const Text(
+                  child: Text(
                     "Match Result >",
                     // "Match Results >",
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: w * 0.04,
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
                   ),
@@ -74,7 +74,8 @@ class _CricketScoreState extends State<CricketScore> {
                     controller: _searchInputControllor,
                     cursorColor: Colors.white,
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 40.0),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: w * 0.08),
                         hintText: "0/0",
                         labelText: "Score"),
                   ),
@@ -83,12 +84,12 @@ class _CricketScoreState extends State<CricketScore> {
 
               _score(), //TODO ADD SCORING PART
               Positioned(
-                top: h * 0.39,
+                top: h * 0.42,
                 left: w * 0.11,
-                child: const Text(
+                child: Text(
                   "Team A won the toss and elected to bat first",
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: w * 0.04,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),
@@ -115,24 +116,26 @@ class _CricketScoreState extends State<CricketScore> {
       right: 0.08,
       top: h * 0.11,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Padding(
-          padding: EdgeInsets.all(20.0),
+        Padding(
+          padding: EdgeInsets.all(w * 0.04),
           child: Text(
             "Team A",
             style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: w * 0.04,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(w * 0.04),
           child: TextButton(
             onPressed: () {
               print("Pressed");
             },
-            child: const Icon(
+            child: Icon(
               Icons.settings,
               color: Colors.red,
-              size: 24,
+              size: w * 0.05,
             ),
           ),
         ),
@@ -163,12 +166,12 @@ class _CricketScoreState extends State<CricketScore> {
           //           hintText: "Enter Score"),
           //     )),
           Container(
-            margin: EdgeInsets.only(top: h * 0.02),
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
+            margin: EdgeInsets.only(top: w * 0.02),
+            child: Padding(
+              padding: EdgeInsets.all(w * 0.02),
               child: Text("(0/8)",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
                       color: Colors.white)),
             ),
@@ -182,9 +185,9 @@ class _CricketScoreState extends State<CricketScore> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Positioned(
-      top: h * 0.45,
+      top: h * 0.48,
       left: h * 0.02,
-      right: 20,
+      right: w * 0.04,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
         Container(
             width: w * 0.4,
@@ -193,7 +196,7 @@ class _CricketScoreState extends State<CricketScore> {
               child: Text("Aniket Mudpe \n0(0)"),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(w * 0.02),
                   ),
                   primary: Color.fromRGBO(255, 255, 255, 0.4)),
               onPressed: () {
@@ -208,7 +211,7 @@ class _CricketScoreState extends State<CricketScore> {
               style: ElevatedButton.styleFrom(
                   elevation: 5,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(w * 0.02),
                   ),
                   primary: Color.fromRGBO(255, 255, 255, 0.4)),
               onPressed: () {
@@ -221,17 +224,18 @@ class _CricketScoreState extends State<CricketScore> {
 
   _bowlerCard() {
     double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Positioned(
       top: h * 0.58,
       left: h * 0.03,
-      right: 20,
+      right: w * 0.04,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             "Jay Pokar",
             style: TextStyle(
-              fontSize: 20,
+              fontSize: w * 0.04,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
@@ -239,7 +243,7 @@ class _CricketScoreState extends State<CricketScore> {
           Text(
             '0-0-0-0',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: w * 0.04,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
@@ -254,20 +258,21 @@ class _CricketScoreState extends State<CricketScore> {
     double w = MediaQuery.of(context).size.width;
     return Positioned(
       top: h * 0.65,
-      left: 50,
-      right: w * 0.1,
+      left: w * 0.01,
+      right: w * 0.01,
       child: Container(
         // color: Colors.white.withOpacity(0.4),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: ElevatedButton(
                 child: Text("0"),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -276,14 +281,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("1"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -292,14 +297,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("2"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -308,14 +313,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("Undo"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -332,20 +337,20 @@ class _CricketScoreState extends State<CricketScore> {
     double w = MediaQuery.of(context).size.width;
     return Positioned(
       top: h * 0.74,
-      left: 50,
-      right: w * 0.1,
+      left: w * 0.01,
+      right: w * 0.01,
       child: Container(
         // color: Colors.white.withOpacity(0.4),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("3"),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -353,14 +358,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("4"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -368,14 +373,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("6"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -383,14 +388,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("5,7"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -407,20 +412,20 @@ class _CricketScoreState extends State<CricketScore> {
     double w = MediaQuery.of(context).size.width;
     return Positioned(
       top: h * 0.83,
-      left: 50,
-      right: w * 0.1,
+      left: w * 0.01,
+      right: w * 0.01,
       child: Container(
         // color: Colors.white.withOpacity(0.4),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("WD"),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -428,14 +433,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("NB"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -443,14 +448,14 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text("BYE"),
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.red),
                 onPressed: () {
@@ -458,8 +463,8 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           Container(
-              width: 70,
-              height: 60,
+              width: w * 0.2,
+              height: w * 0.15,
               child: ElevatedButton(
                 child: Text(
                   "Out",
@@ -468,7 +473,7 @@ class _CricketScoreState extends State<CricketScore> {
                 style: ElevatedButton.styleFrom(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     primary: Colors.white),
                 onPressed: () {
@@ -492,21 +497,21 @@ class _CricketScoreState extends State<CricketScore> {
             style: ElevatedButton.styleFrom(
                 elevation: 5,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(w * 0.02),
                 ),
                 primary: Color(0xFFD15858)),
             onPressed: () {},
             child: Container(
-                width: 221,
-                height: 54,
+                width: w * 0.442,
+                height: w * 0.14,
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(w * 0.03),
                   child: Text(
                     "Submit",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: w * 0.05,
                     ),
                   ),
                 )),
