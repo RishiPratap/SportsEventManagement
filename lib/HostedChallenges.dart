@@ -201,7 +201,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.018),
                     ),
                     elevation: 1,
                     color: Colors.transparent.withOpacity(0.2),
@@ -384,6 +384,8 @@ class _HostedChallengesState extends State<HostedChallenges> {
                           child: Container(
                             width: deviceWidth * 0.18,
                             height: deviceWidth * 0.1,
+                            margin: EdgeInsets.fromLTRB(
+                                0, deviceWidth * 0.03, 0, 0),
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                               image: AssetImage('assets/AARDENT_LOGO.png'),
