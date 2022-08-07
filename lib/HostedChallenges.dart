@@ -93,6 +93,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     double deviceHeight = MediaQuery.of(context).size.height;
     if (array_length == 0) {
       var container = Container(
+        margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
         child: Text("You Dont Have Any Hosted Challenges"),
       );
       AllTournaments.add(container);
@@ -419,9 +420,12 @@ class _HostedChallengesState extends State<HostedChallenges> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Upcoming Hosted Challenges"),
+                        Container(
+                            margin: EdgeInsets.fromLTRB(
+                                deviceWidth * 0.03, 0, 0, 0),
+                            child: Text("Upcoming Hosted Challenges")),
                         SizedBox(
-                          height: deviceWidth * 0.1,
+                          height: deviceWidth * 0.05,
                         ),
                         FutureBuilder(
                           future: futures,
@@ -441,7 +445,11 @@ class _HostedChallengesState extends State<HostedChallenges> {
                             }
                           },
                         ),
-                        Text("Past Hosted Challenges"),
+                        Container(
+                          margin:
+                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
+                          child: Text("Past Hosted Challenges"),
+                        )
                       ],
                     )
                   ],
