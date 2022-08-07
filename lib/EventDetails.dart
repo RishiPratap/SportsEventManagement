@@ -35,6 +35,8 @@ class _EventDetailsState extends State<EventDetails> {
   TextEditingController noofcourts = TextEditingController();
   TextEditingController breaktime = TextEditingController();
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -50,9 +52,9 @@ class _EventDetailsState extends State<EventDetails> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 15,
+                      height: deviceWidth * 0.03,
                     ),
-                    buildCardEventDetails(),
+                    buildCardEventDetails(deviceWidth),
                   ],
                 ),
               ),
@@ -61,57 +63,61 @@ class _EventDetailsState extends State<EventDetails> {
         ));
   }
 
-  Widget buildCardEventDetails() => Card(
+  Widget buildCardEventDetails(double deviceWidth) => Card(
         elevation: 10,
         shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         color: Colors.white.withOpacity(0.1),
-        margin: EdgeInsets.only(left: 25, right: 25),
+        margin: EdgeInsets.only(
+            left: deviceWidth * 0.05, right: deviceWidth * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: deviceWidth * 0.04,
             ),
             Text(
               "    Event Name",
               style: TextStyle(
-                fontSize: 24.0,
+                fontSize: deviceWidth * 0.05,
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: EventName,
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                       borderSide: BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                       borderSide: BorderSide(),
                     ),
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: Row(
                 children: [
                   Flexible(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
                       child: TextField(
                         readOnly: true,
                         controller: startdateinput,
@@ -133,24 +139,28 @@ class _EventDetailsState extends State<EventDetails> {
                         },
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.01),
                               borderSide: BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                               borderSide: BorderSide(),
                             ),
                             hintText: "Start Date 📅",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
                   ),
                   Flexible(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
                       child: TextField(
                         readOnly: true,
                         controller: enddateinput,
@@ -172,17 +182,20 @@ class _EventDetailsState extends State<EventDetails> {
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.01),
                               borderSide: BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                               borderSide: BorderSide(),
                             ),
                             hintText: "End Date 📅 ",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
@@ -191,15 +204,17 @@ class _EventDetailsState extends State<EventDetails> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: Row(
                 children: [
                   Flexible(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
                       child: TextField(
                         controller: starttime,
                         readOnly: true,
@@ -222,24 +237,28 @@ class _EventDetailsState extends State<EventDetails> {
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.01),
                               borderSide: BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                               borderSide: BorderSide(),
                             ),
                             hintText: "Start Time ⏰",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
                   ),
                   Flexible(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
                       child: TextField(
                         controller: endtime,
                         readOnly: true,
@@ -262,17 +281,20 @@ class _EventDetailsState extends State<EventDetails> {
                         },
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.01),
                               borderSide: BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                               borderSide: BorderSide(),
                             ),
                             hintText: "End Time ⏰",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
@@ -281,73 +303,79 @@ class _EventDetailsState extends State<EventDetails> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: city,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                       borderSide: BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                       borderSide: BorderSide(),
                     ),
                     hintText: "City",
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: Address,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                       borderSide: BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                       borderSide: BorderSide(),
                     ),
                     hintText: "Address",
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
               child: Card(
                 color: Colors.black.withOpacity(0.3),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 20,
+                      height: deviceWidth * 0.04,
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
                       decoration: new BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04)),
                       child: TextField(
                         controller: Category,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04),
                             ),
                             // focusedBorder: OutlineInputBorder(
                             //   borderRadius: BorderRadius.circular(10),
@@ -356,25 +384,29 @@ class _EventDetailsState extends State<EventDetails> {
                             hintText: "Category",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.02,
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
                       decoration: new BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04)),
                       child: TextField(
                         controller: AgeCategory,
                         keyboardType: TextInputType.emailAddress,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04),
                             ),
                             // focusedBorder: OutlineInputBorder(
                             //   borderRadius: BorderRadius.circular(10),
@@ -383,12 +415,13 @@ class _EventDetailsState extends State<EventDetails> {
                             hintText: "Age Category",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.02,
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -403,7 +436,8 @@ class _EventDetailsState extends State<EventDetails> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.06)),
                     ),
                     Row(
                       children: [
@@ -427,17 +461,18 @@ class _EventDetailsState extends State<EventDetails> {
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: deviceWidth * 0.02,
                     )
                   ],
                 ),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: registrationclosedateinput,
                 keyboardType: TextInputType.emailAddress,
@@ -460,70 +495,79 @@ class _EventDetailsState extends State<EventDetails> {
                 },
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                       borderSide: BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                       borderSide: BorderSide(),
                     ),
                     hintText: "Registration Closes",
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: Row(
                 children: [
                   Flexible(
                       child: Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    margin: EdgeInsets.fromLTRB(
+                        deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
                     child: TextField(
                       controller: noofcourts,
                       keyboardType: TextInputType.number,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius:
+                                BorderRadius.circular(deviceWidth * 0.01),
                             borderSide: BorderSide(),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius:
+                                BorderRadius.circular(deviceWidth * 0.02),
                             borderSide: BorderSide(),
                           ),
                           hintText: "No of Courts",
                           hintStyle: TextStyle(color: Colors.white),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius:
+                                BorderRadius.circular(deviceWidth * 0.02),
                           )),
                     ),
                   )),
                   Flexible(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
                       child: TextField(
                         controller: breaktime,
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.01),
                               borderSide: BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                               borderSide: BorderSide(),
                             ),
                             hintText: "Break Time (In Minutes)",
                             hintStyle: TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
                             )),
                       ),
                     ),
@@ -532,11 +576,12 @@ class _EventDetailsState extends State<EventDetails> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: deviceWidth * 0.02,
             ),
             Container(
-              width: 350,
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              width: deviceWidth * 0.8,
+              margin: EdgeInsets.fromLTRB(
+                  deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: RaisedButton(
                 onPressed: () {
                   Navigator.push(
@@ -569,7 +614,7 @@ class _EventDetailsState extends State<EventDetails> {
                   style: TextStyle(color: Colors.white),
                 ),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
               ),
             ),
           ],
