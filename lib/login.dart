@@ -56,7 +56,7 @@ class _loginState extends State<login> {
         child: Container(
           width: deviceWidth,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/login.png"), fit: BoxFit.cover),
           ),
@@ -90,6 +90,7 @@ class _loginState extends State<login> {
                                   deviceWidth * 0.04, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: TextField(
+                                  keyboardType: TextInputType.emailAddress,
                                   controller: emaild,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(

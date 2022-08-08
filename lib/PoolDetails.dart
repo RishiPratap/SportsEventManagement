@@ -5,10 +5,10 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PoolDetails extends StatefulWidget {
-  final String SportName;
+  final String? SportName;
   final String EventManagerName;
   final String EventManagerMobileNo;
-  final String EventType;
+  final String? EventType;
   final String EventName;
   final String StartDate;
   final String EndDate;
@@ -57,7 +57,7 @@ class CreateChallengeDetails {
   late String LOCATION;
   late String START_DATE;
   late String END_DATE;
-  late String SPORT;
+  late String? SPORT;
 
   CreateChallengeDetails(
       {required this.USERID,
@@ -146,7 +146,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                           content: Text(response.body),
                         ));
                       },
-                      child: Text("Send Data to Doraemons BackEnd"),
+                      child: Text("Submit"),
                     ),
                   )
                 ],

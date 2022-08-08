@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import 'PoolDetails.dart';
 
 class EventDetails extends StatefulWidget {
-  final String SportName;
+  final String? SportName;
   final String EventManagerName;
   final String EventManagerMobileNo;
-  final String EventType;
+  final String? EventType;
   const EventDetails(
       {Key? key,
       required this.SportName,
@@ -34,6 +35,18 @@ class _EventDetailsState extends State<EventDetails> {
   TextEditingController AgeCategory = TextEditingController();
   TextEditingController noofcourts = TextEditingController();
   TextEditingController breaktime = TextEditingController();
+
+  late DateTime dateStart = DateTime.now().subtract(const Duration(days: 0));
+  late DateTime dateEnd = DateTime.now();
+
+  _validate() {
+    if (dateEnd.isBefore(dateStart)) {
+      Fluttertoast.showToast(msg: "End date should be greater than start date");
+    } else {
+      DateTime(2100);
+    }
+  }
+
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -119,16 +132,18 @@ class _EventDetailsState extends State<EventDetails> {
                       margin: EdgeInsets.fromLTRB(
                           deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
                       child: TextField(
-                        readOnly: true,
                         controller: startdateinput,
+                        readOnly: true,
                         keyboardType: TextInputType.emailAddress,
                         style: TextStyle(color: Colors.white),
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
+                              firstDate: DateTime.now()
+                                  .subtract(const Duration(days: 0)),
                               lastDate: DateTime(2100));
+
                           if (pickedDate != null) {
                             String formattedDate =
                                 DateFormat('dd-MM-yyyy').format(pickedDate);
@@ -168,8 +183,9 @@ class _EventDetailsState extends State<EventDetails> {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
+                              firstDate: dateStart,
                               lastDate: DateTime(2100));
+
                           if (pickedDate != null) {
                             String formattedDate =
                                 DateFormat('dd-MM-yyyy').format(pickedDate);

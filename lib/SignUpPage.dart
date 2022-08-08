@@ -15,18 +15,6 @@ class SignUpPage extends StatefulWidget {
   _SignUpPage createState() => _SignUpPage();
 }
 
-// class Response {
-//   late String msg;
-
-//   Response(
-//     this.msg,
-//   );
-
-//   Response.fromJson(Map<String, dynamic> json) {
-//     msg = json['Message'];
-//   }
-// }
-
 TextEditingController passController = TextEditingController();
 TextEditingController repassController = TextEditingController();
 TextEditingController emailController = TextEditingController();

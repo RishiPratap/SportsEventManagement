@@ -162,7 +162,7 @@ class _MyBookings extends State<MyBookings> {
                                   userdata[i].TOURNAMENT_NAME.length >= 17
                                       ? userdata[i]
                                               .TOURNAMENT_NAME
-                                              .substring(0, 15) +
+                                              .substring(0, 13) +
                                           '...'
                                       : userdata[i].TOURNAMENT_NAME,
                                   textAlign: TextAlign.center,
@@ -303,7 +303,9 @@ class _MyBookings extends State<MyBookings> {
                       ),
                     ),
                     Text(
-                      userdata[i].LOCATION,
+                      userdata[i].LOCATION.length > 10
+                          ? userdata[i].LOCATION.substring(0, 15) + "..."
+                          : userdata[i].LOCATION,
                       style: TextStyle(color: Colors.white, fontSize: 12),
                     )
                   ],

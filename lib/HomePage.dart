@@ -305,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     userdata[i].LOCATION.length > 15
-                        ? userdata[i].LOCATION.substring(0, 12) + '...'
+                        ? userdata[i].LOCATION.substring(0, 13) + '...'
                         : userdata[i].LOCATION,
                     style: TextStyle(
                         color: Colors.white, fontSize: deviceWidth * 0.03),
@@ -325,7 +325,6 @@ class _HomePageState extends State<HomePage> {
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
-    print(jsonData);
     try {
       List<UserData> userdata =
           jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
@@ -421,10 +420,7 @@ class _HomePageState extends State<HomePage> {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Menu()));
+                              Get.to(Menu());
                             },
                             child: Container(
                               width: deviceWidth * 0.04,
