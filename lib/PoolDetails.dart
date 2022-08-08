@@ -57,6 +57,13 @@ class CreateChallengeDetails {
   late String LOCATION;
   late String START_DATE;
   late String END_DATE;
+  late String START_TIME;
+  late String END_TIME;
+  late int REGISTRATION_CLOSES_BEFORE;
+  late String TYPE;
+  late String AGE_CATEGORY;
+  late int NO_OF_COURTS;
+  late String BREAK_TIME;
   late String SPORT;
 
   CreateChallengeDetails(
@@ -71,6 +78,13 @@ class CreateChallengeDetails {
       required this.LOCATION,
       required this.START_DATE,
       required this.END_DATE,
+      required this.START_TIME,
+      required this.END_TIME,
+      required this.REGISTRATION_CLOSES_BEFORE,
+      required this.TYPE,
+      required this.AGE_CATEGORY,
+      required this.NO_OF_COURTS,
+      required this.BREAK_TIME,
       required this.SPORT});
   Map<String, dynamic> toMap() {
     return {
@@ -85,6 +99,13 @@ class CreateChallengeDetails {
       "LOCATION": this.LOCATION,
       "START_DATE": this.START_DATE,
       "END_DATE": this.END_DATE,
+      "START_TIME": this.START_TIME,
+      "END_TIME": this.END_TIME,
+      "REGISTRATION_CLOSES_BEFORE": this.REGISTRATION_CLOSES_BEFORE,
+      "TYPE": this.TYPE,
+      "AGE_CATEGORY": this.AGE_CATEGORY,
+      "NO_OF_COURTS": this.NO_OF_COURTS,
+      "BREAK_TIME": this.BREAK_TIME,
       "SPORT": this.SPORT
     };
   }
@@ -130,6 +151,13 @@ class _PoolDetailsState extends State<PoolDetails> {
                             LOCATION: widget.Address,
                             START_DATE: widget.StartDate,
                             END_DATE: widget.EndDate,
+                            START_TIME: "14:25",
+                            END_TIME: "16:15",
+                            REGISTRATION_CLOSES_BEFORE: 6,
+                            TYPE: widget.EventType,
+                            AGE_CATEGORY: "U17",
+                            NO_OF_COURTS: int.parse(widget.NoofCourts),
+                            BREAK_TIME: widget.BreakTime,
                             SPORT: widget.SportName);
                         final DetailMap = ChallengeDetails.toMap();
                         final json = jsonEncode(DetailMap);

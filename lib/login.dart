@@ -37,7 +37,8 @@ class _loginState extends State<login> {
       if (finalEmail == null) {
         Get.to(login());
       } else {
-        Get.to(HomePage());
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
   }
@@ -49,7 +50,7 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
-    double cardheight = MediaQuery.of(context).size.height * 0.44;
+    double cardheight = MediaQuery.of(context).size.height * 0.47;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -164,7 +165,7 @@ class _loginState extends State<login> {
                                         jsonDecode(response.body);
                                     if (jsonResponse['Message'] ==
                                         "USER Verified") {
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
