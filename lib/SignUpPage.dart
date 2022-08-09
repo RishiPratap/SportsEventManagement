@@ -15,18 +15,6 @@ class SignUpPage extends StatefulWidget {
   _SignUpPage createState() => _SignUpPage();
 }
 
-// class Response {
-//   late String msg;
-
-//   Response(
-//     this.msg,
-//   );
-
-//   Response.fromJson(Map<String, dynamic> json) {
-//     msg = json['Message'];
-//   }
-// }
-
 TextEditingController passController = TextEditingController();
 TextEditingController repassController = TextEditingController();
 TextEditingController emailController = TextEditingController();
@@ -253,12 +241,14 @@ class _SignUpPage extends State<SignUpPage> {
                               minWidth: deviceWidth * 0.4,
                               child: RaisedButton(
                                 onPressed: () {
-                                  if (emailController.text.isNotEmpty &&
-                                      mobileController.text.isNotEmpty &&
-                                      passController.text.isNotEmpty &&
-                                      repassController.text.isNotEmpty) {
-                                    if (passController.text.toString() ==
-                                        repassController.text.toString()) {
+                                  if (emailController.text.trim().isNotEmpty &&
+                                      mobileController.text.trim().isNotEmpty &&
+                                      passController.text.trim().isNotEmpty &&
+                                      repassController.text.trim().isNotEmpty) {
+                                    if (passController.text.toString().trim() ==
+                                        repassController.text
+                                            .toString()
+                                            .trim()) {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -642,13 +632,13 @@ class SubmitPage extends StatelessWidget {
                       child: Center(
                         child: RaisedButton(
                           onPressed: () async {
-                            if (first_name.text.isNotEmpty &&
-                                last_name.text.isNotEmpty &&
-                                date_of_birth.text.isNotEmpty &&
-                                state.text.isNotEmpty &&
-                                city.text.isNotEmpty &&
-                                gender.text.isNotEmpty &&
-                                Academy.text.isNotEmpty &&
+                            if (first_name.text.trim().isNotEmpty ||
+                                last_name.text.trim().isNotEmpty ||
+                                date_of_birth.text.isNotEmpty ||
+                                state.text.isNotEmpty ||
+                                city.text.isNotEmpty ||
+                                gender.text.isNotEmpty ||
+                                Academy.text.isNotEmpty ||
                                 Intersted_Sports.text.isNotEmpty) {
                               final Details = UserDetails(
                                   USERID: emailController.text.toString(),

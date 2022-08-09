@@ -57,7 +57,7 @@ class _loginState extends State<login> {
         child: Container(
           width: deviceWidth,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/login.png"), fit: BoxFit.cover),
           ),
@@ -91,6 +91,7 @@ class _loginState extends State<login> {
                                   deviceWidth * 0.04, deviceWidth * 0.04, 0),
                               child: Expanded(
                                 child: TextField(
+                                  keyboardType: TextInputType.emailAddress,
                                   controller: emaild,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -144,11 +145,12 @@ class _loginState extends State<login> {
                                       TextStyle(fontSize: deviceWidth * 0.05),
                                 ),
                                 onPressed: () async {
-                                  if (emaild.text.isNotEmpty &&
-                                      password.text.isNotEmpty) {
+                                  if (emaild.text.trim().isNotEmpty ||
+                                      password.text.trim().isNotEmpty) {
                                     final logindetails = LoginDetails(
-                                        EmailId: emaild.text.toString(),
-                                        Password: password.text.toString());
+                                        EmailId: emaild.text.toString().trim(),
+                                        Password:
+                                            password.text.toString().trim());
                                     final logindetailsmap =
                                         logindetails.toMap();
                                     final json = jsonEncode(logindetailsmap);

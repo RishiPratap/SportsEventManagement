@@ -5,10 +5,10 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PoolDetails extends StatefulWidget {
-  final String SportName;
+  final String? SportName;
   final String EventManagerName;
   final String EventManagerMobileNo;
-  final String EventType;
+  final String? EventType;
   final String EventName;
   final String StartDate;
   final String EndDate;
@@ -16,8 +16,8 @@ class PoolDetails extends StatefulWidget {
   final String EndTime;
   final String City;
   final String Address;
-  final String Category;
-  final String AgeCategory;
+  final String? Category;
+  final String? AgeCategory;
   final String RegistrationCloses;
   final String NoofCourts;
   final String BreakTime;
@@ -48,23 +48,23 @@ class PoolDetails extends StatefulWidget {
 class CreateChallengeDetails {
   late String USERID;
   late String TOURNAMENT_ID;
-  late String CATEGORY;
-  late String NO_OF_KNOCKOUT_ROUNDS;
-  late String ENTRY_FEE;
-  late String PRIZE_POOL;
+  late String? CATEGORY;
+  late int NO_OF_KNOCKOUT_ROUNDS;
+  late int ENTRY_FEE;
+  late int PRIZE_POOL;
   late String TOURNAMENT_NAME;
   late String CITY;
+  late String? TYPE;
   late String LOCATION;
   late String START_DATE;
   late String END_DATE;
   late String START_TIME;
   late String END_TIME;
   late int REGISTRATION_CLOSES_BEFORE;
-  late String TYPE;
-  late String AGE_CATEGORY;
+  late String? AGE_CATEGORY;
   late int NO_OF_COURTS;
   late String BREAK_TIME;
-  late String SPORT;
+  late String? SPORT;
 
   CreateChallengeDetails(
       {required this.USERID,
@@ -75,13 +75,13 @@ class CreateChallengeDetails {
       required this.PRIZE_POOL,
       required this.TOURNAMENT_NAME,
       required this.CITY,
+      required this.TYPE,
       required this.LOCATION,
       required this.START_DATE,
       required this.END_DATE,
       required this.START_TIME,
       required this.END_TIME,
       required this.REGISTRATION_CLOSES_BEFORE,
-      required this.TYPE,
       required this.AGE_CATEGORY,
       required this.NO_OF_COURTS,
       required this.BREAK_TIME,
@@ -96,13 +96,13 @@ class CreateChallengeDetails {
       "PRIZE_POOL": this.PRIZE_POOL,
       "TOURNAMENT_NAME": this.TOURNAMENT_NAME,
       "CITY": this.CITY,
+      "TYPE": this.TYPE,
       "LOCATION": this.LOCATION,
       "START_DATE": this.START_DATE,
       "END_DATE": this.END_DATE,
       "START_TIME": this.START_TIME,
       "END_TIME": this.END_TIME,
       "REGISTRATION_CLOSES_BEFORE": this.REGISTRATION_CLOSES_BEFORE,
-      "TYPE": this.TYPE,
       "AGE_CATEGORY": this.AGE_CATEGORY,
       "NO_OF_COURTS": this.NO_OF_COURTS,
       "BREAK_TIME": this.BREAK_TIME,
@@ -135,28 +135,45 @@ class _PoolDetailsState extends State<PoolDetails> {
                     height: 50,
                     child: TextButton(
                       onPressed: () async {
+                        print(widget.AgeCategory);
+                        print(widget.Category);
+                        print(widget.RegistrationCloses);
+                        print(widget.NoofCourts);
+                        print(widget.BreakTime);
+                        print(widget.SportName);
+                        print(widget.EventManagerName);
+                        print(widget.EventManagerMobileNo);
+                        print(widget.EventType);
+                        print(widget.EventName);
+                        print(widget.StartDate);
+                        print(widget.EndDate);
+                        print(widget.StartTime);
+                        print(widget.EndTime);
+                        print(widget.City);
+                        print(widget.Address);
+
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         var obtianedEmail = prefs.getString('email');
+                        print(obtianedEmail);
                         final ChallengeDetails = CreateChallengeDetails(
-                            USERID: obtianedEmail!,
-                            TOURNAMENT_ID:
-                                "${obtianedEmail}${widget.SportName}",
+                            USERID: obtianedEmail!.trim(),
+                            TOURNAMENT_ID: "123456",
                             CATEGORY: widget.Category,
-                            NO_OF_KNOCKOUT_ROUNDS: "32",
-                            ENTRY_FEE: "500",
-                            PRIZE_POOL: "10000",
+                            NO_OF_KNOCKOUT_ROUNDS: 32,
+                            ENTRY_FEE: 500,
+                            PRIZE_POOL: 10000,
                             TOURNAMENT_NAME: widget.EventName,
                             CITY: widget.City,
+                            TYPE: widget.EventType,
                             LOCATION: widget.Address,
                             START_DATE: widget.StartDate,
                             END_DATE: widget.EndDate,
                             START_TIME: "14:25",
                             END_TIME: "16:15",
                             REGISTRATION_CLOSES_BEFORE: 6,
-                            TYPE: widget.EventType,
-                            AGE_CATEGORY: "U17",
-                            NO_OF_COURTS: int.parse(widget.NoofCourts),
+                            AGE_CATEGORY: widget.AgeCategory,
+                            NO_OF_COURTS: 5, // int.parse(widget.NoofCourts)
                             BREAK_TIME: widget.BreakTime,
                             SPORT: widget.SportName);
                         final DetailMap = ChallengeDetails.toMap();
@@ -170,11 +187,12 @@ class _PoolDetailsState extends State<PoolDetails> {
                             },
                             body: json,
                             encoding: Encoding.getByName("utf-8"));
+                        print(response.body);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(response.body),
                         ));
                       },
-                      child: Text("Send Data to Doraemons BackEnd"),
+                      child: Text("Submit"),
                     ),
                   )
                 ],

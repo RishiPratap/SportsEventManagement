@@ -85,14 +85,6 @@ class UserData {
   }
 }
 
-class CheckifBookingTimeExceeded {
-  late bool isTimeExceeded;
-  CheckifBookingTimeExceeded(this.isTimeExceeded);
-  CheckifBookingTimeExceeded.fromJson(Map<String, dynamic> json) {
-    isTimeExceeded = json['isTimeExceeded'];
-  }
-}
-
 class _HomePageState extends State<HomePage> {
   DateTime timeBackPressed = DateTime.now();
   List<Container> AllTournaments = [];
@@ -313,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     userdata[i].LOCATION.length > 15
-                        ? userdata[i].LOCATION.substring(0, 12) + '...'
+                        ? userdata[i].LOCATION.substring(0, 13) + '...'
                         : userdata[i].LOCATION,
                     style: TextStyle(
                         color: Colors.white, fontSize: deviceWidth * 0.03),
@@ -333,7 +325,6 @@ class _HomePageState extends State<HomePage> {
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
-    print(jsonData);
     try {
       List<UserData> userdata =
           jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
@@ -428,32 +419,8 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 1,
                           child: InkWell(
-                            onTap: () async {
-                              var url = "";
-                              var response = await get(Uri.parse(url));
-                              List<dynamic> jsonData =
-                                  jsonDecode(response.body);
-
-                              print(jsonData);
-                              try {
-                                List<CheckifBookingTimeExceeded>
-                                    isTimeExceeded = jsonData
-                                        .map((dynamic item) =>
-                                            CheckifBookingTimeExceeded.fromJson(
-                                                item))
-                                        .toList();
-                                if (isTimeExceeded[0].isTimeExceeded) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Menu()));
-                                } else {
-                                  print(
-                                      "Tournament Booking Time Has Been completed");
-                                }
-                              } catch (e) {
-                                print(e);
-                              }
+                            onTap: () {
+                              Get.to(Menu());
                             },
                             child: Container(
                               width: deviceWidth * 0.04,
