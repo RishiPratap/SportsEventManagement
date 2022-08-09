@@ -150,8 +150,8 @@ class _HomePageState extends State<HomePage> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          const SizedBox(
-                            width: 20,
+                          SizedBox(
+                            width: deviceWidth * 0.04,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,17 +165,17 @@ class _HomePageState extends State<HomePage> {
                                     : userdata[i].TOURNAMENT_NAME,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 13,
+                                    fontSize: deviceWidth * 0.027,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black),
                               ),
-                              const SizedBox(
-                                height: 5,
+                              SizedBox(
+                                height: deviceWidth * 0.01,
                               ),
                               Text(
                                 userdata[i].CITY,
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: deviceWidth * 0.027,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                 ),
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
               SizedBox(
-                height: 7,
+                height: deviceWidth * 0.018,
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.06,

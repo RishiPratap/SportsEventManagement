@@ -4,6 +4,7 @@ import 'package:ardent_sports/Payment.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:page_transition/page_transition.dart';
@@ -12,18 +13,23 @@ import 'package:socket_io_client/socket_io_client.dart';
 class jsonSpotNumber {
   late int spotNumber;
   late String Tournamen_id;
-  jsonSpotNumber({required this.spotNumber, required this.Tournamen_id});
+  late String User_id;
+  jsonSpotNumber(
+      {required this.spotNumber,
+      required this.Tournamen_id,
+      required this.User_id});
   Map<String, dynamic> toMap() {
     return {
-      "selectedButton": this.spotNumber,
-      "TOURNAMENT_ID": this.Tournamen_id
+      "btnId": this.spotNumber,
+      "TOURNAMENT_ID": this.Tournamen_id,
+      "USERID": this.User_id
     };
   }
 }
 
 class SpotConfirmation extends StatefulWidget {
   final String SpotNo;
-  String? userEmail;
+  final String userEmail;
   final String tournament_id;
   final String Date;
   final Socket socket;
@@ -92,42 +98,75 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: mapUserResponse == null
-          ? const Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+    return WillPopScope(
+      onWillPop: () {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text("Exit Alert"),
+            content: const Text("Are you sure you want to exit?"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  child: const Text(
+                    "NO",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ),
-            )
-          : SafeArea(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/Homepage.png"),
-                        fit: BoxFit.cover)),
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 25, right: 25),
-                      child: SpotConfirmationCard(),
-                    )
-                  ],
-                )),
+              TextButton(
+                onPressed: () {
+                  exit(0);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  child:
+                      const Text("YES", style: TextStyle(color: Colors.white)),
+                ),
               ),
-            ),
+            ],
+          ),
+        );
+        return Future.value(false);
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/Homepage.png"),
+                    fit: BoxFit.cover)),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                SizedBox(
+                  height: deviceWidth * 0.04,
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                      left: deviceWidth * 0.05, right: deviceWidth * 0.05),
+                  child: SpotConfirmationCard(deviceWidth),
+                )
+              ],
+            )),
+          ),
+        ),
+      ),
     );
   }
 
-  Widget SpotConfirmationCard() => Card(
+  Widget SpotConfirmationCard(double deviceWidth) => Card(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(deviceWidth * 0.03),
             side: BorderSide(
               color: Color(0xff03C289),
             )),
@@ -137,35 +176,35 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 30,
+              height: deviceWidth * 0.06,
             ),
             Container(
-              width: 170,
-              height: 38,
+              width: deviceWidth * 0.34,
+              height: deviceWidth * 0.08,
               child: RaisedButton(
                 onPressed: () {},
                 color: Color(0xff03C289),
                 shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
+                  borderRadius: new BorderRadius.circular(deviceWidth * 0.08),
                 ),
                 child: Text(
                   "Spot No : ${widget.SpotNo}",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: deviceWidth * 0.04,
                       color: Colors.black,
                       fontWeight: FontWeight.w600),
                 ),
               ),
             ),
             SizedBox(
-              height: 15,
+              height: deviceWidth * 0.03,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(deviceWidth * 0.02),
               child: Card(
                 elevation: 10,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
                       color: Color(0xff03C289),
                     )),
@@ -174,9 +213,12 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                      width: 300,
-                      height: 40,
+                      margin: EdgeInsets.only(
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.05,
+                          top: deviceWidth * 0.04),
+                      width: deviceWidth * 0.6,
+                      height: deviceWidth * 0.08,
                       child: Text(
                         "Name: ${mapUserResponse?['username']}",
                         textAlign: TextAlign.start,
@@ -187,13 +229,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: deviceWidth * 0.01,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(deviceWidth * 0.02),
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
                       color: Color(0xff03C289),
                     )),
@@ -203,9 +245,12 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                      width: 300,
-                      height: 40,
+                      margin: EdgeInsets.only(
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.05,
+                          top: deviceWidth * 0.04),
+                      width: deviceWidth * 0.6,
+                      height: deviceWidth * 0.08,
                       child: Text(
                         "Event : ${mapUserResponse?['tournament_name']}",
                         textAlign: TextAlign.start,
@@ -216,13 +261,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: deviceWidth * 0.01,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(deviceWidth * 0.02),
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
                       color: Color(0xff03C289),
                     )),
@@ -232,9 +277,12 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                      width: 300,
-                      height: 40,
+                      margin: EdgeInsets.only(
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.05,
+                          top: deviceWidth * 0.04),
+                      width: deviceWidth * 0.6,
+                      height: deviceWidth * 0.08,
                       child: Text(
                         "Category : ${mapUserResponse?['cat']}",
                         textAlign: TextAlign.start,
@@ -245,13 +293,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: deviceWidth * 0.01,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(deviceWidth * 0.01),
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
                       color: Color(0xff03C289),
                     )),
@@ -261,9 +309,12 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                      width: 300,
-                      height: 40,
+                      margin: EdgeInsets.only(
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.05,
+                          top: deviceWidth * 0.04),
+                      width: deviceWidth * 0.6,
+                      height: deviceWidth * 0.08,
                       child: Text(
                         "Date: ${widget.Date}",
                         textAlign: TextAlign.start,
@@ -274,13 +325,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: deviceWidth * 0.01,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(deviceWidth * 0.02),
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
                       color: Color(0xff03C289),
                     )),
@@ -290,9 +341,12 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 25, right: 10, top: 20),
-                      width: 300,
-                      height: 40,
+                      margin: EdgeInsets.only(
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.02,
+                          top: deviceWidth * 0.04),
+                      width: deviceWidth * 0.6,
+                      height: deviceWidth * 0.18,
                       child: Text(
                         "Address : ${mapUserResponse?['address']}",
                         textAlign: TextAlign.start,
@@ -303,13 +357,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: deviceWidth * 0.05,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(deviceWidth * 0.02),
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
                       color: Color(0xff03C289),
                     )),
@@ -319,9 +373,12 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-                      width: 300,
-                      height: 40,
+                      margin: EdgeInsets.only(
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.05,
+                          top: deviceWidth * 0.04),
+                      width: deviceWidth * 0.6,
+                      height: deviceWidth * 0.08,
                       child: Text(
                         "City : ${mapUserResponse?['tournament_city']}",
                         textAlign: TextAlign.start,
@@ -332,19 +389,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: deviceWidth * 0.1,
             ),
             Container(
-              width: 170,
-              height: 38,
+              width: deviceWidth * 0.6,
+              height: deviceWidth * 0.08,
               child: RaisedButton(
                 onPressed: () {
-                  final SpotNumber = jsonSpotNumber(
-                      spotNumber: int.parse(widget.SpotNo) - 1,
-                      Tournamen_id: widget.tournament_id);
-                  final spotNumberMap = SpotNumber.toMap();
-                  final json_spotNumber = jsonEncode(spotNumberMap);
-                  print(widget.tournament_id);
                   Navigator.push(
                       context,
                       PageTransition(
@@ -359,16 +410,16 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 },
                 color: const Color(0xffE74745),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0),
+                  borderRadius: BorderRadius.circular(deviceWidth * 0.05),
                 ),
-                child: const Text(
+                child: Text(
                   "Confirm & Pay",
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(fontSize: deviceWidth * 0.05),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: deviceWidth * 0.02,
             )
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:ardent_sports/CreateChallenge.dart';
 import 'package:ardent_sports/EventDetails.dart';
 import 'package:ardent_sports/HomePage.dart';
 import 'EventDetails.dart';
@@ -27,12 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       initialRoute: '/',
       routes: {
-        '/': (context) => EventDetails(
-              EventManagerMobileNo: "123456",
-              EventManagerName: "Doraemon",
-              EventType: "Doubles",
-              SportName: "Badminton",
-            ),
+        '/': (context) => login(),
         '/homePage': (context) => HomePage(),
       },
     );

@@ -85,13 +85,6 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   color: Colors.black.withOpacity(0.3),
                 ),
                 child: DropdownButtonFormField(
-                  validator: (value) {
-                    if (value == null) {
-                      Fluttertoast.showToast(msg: "Please Select Sport");
-                    } else {
-                      return null;
-                    }
-                  },
                   hint: Text("Select Sport(BD,TT,Cric)",
                       style: TextStyle(
                         color: Colors.white,
@@ -376,7 +369,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                                         EventManagerNameController.text,
                                     EventManagerMobileNo:
                                         MobileNumberController.text,
-                                    EventType: SelectedEvent,
+                                    EventType: SelectedEvent as String,
                                   )));
                       print(SelectedEvent);
                       print(SelectedSport);

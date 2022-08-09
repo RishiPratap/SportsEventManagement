@@ -22,6 +22,22 @@ class EventDetails extends StatefulWidget {
 }
 
 class _EventDetailsState extends State<EventDetails> {
+  List<String> Categories = ["Men's Single", "Women's Single"];
+  String? SelectedCategory;
+
+  List<String> AgeCategory = [
+    'U11',
+    'U12',
+    'U13',
+    'U15',
+    'U17',
+    'U19',
+    '35+',
+    '40+',
+    '50+'
+  ];
+  String? SelectedAge;
+
   @override
   TextEditingController EventName = TextEditingController();
   TextEditingController startdateinput = TextEditingController();
@@ -31,13 +47,13 @@ class _EventDetailsState extends State<EventDetails> {
   TextEditingController endtime = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController Address = TextEditingController();
-  TextEditingController Category = TextEditingController();
-  TextEditingController AgeCategory = TextEditingController();
+  // TextEditingController Category = TextEditingController();
+  // TextEditingController AgeCategory = TextEditingController();
   TextEditingController noofcourts = TextEditingController();
   TextEditingController breaktime = TextEditingController();
 
-  late DateTime dateStart = DateTime.now().subtract(const Duration(days: 0));
-  late DateTime dateEnd = DateTime.now();
+  final DateTime dateStart = DateTime.now().subtract(const Duration(days: 0));
+  final DateTime dateEnd = DateTime.now();
 
   _validate() {
     if (dateEnd.isBefore(dateStart)) {
@@ -183,7 +199,8 @@ class _EventDetailsState extends State<EventDetails> {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: dateStart,
+                              firstDate: DateTime.now()
+                                  .subtract(const Duration(days: 0)),
                               lastDate: DateTime(2100));
 
                           if (pickedDate != null) {
@@ -385,24 +402,45 @@ class _EventDetailsState extends State<EventDetails> {
                           color: Colors.black.withOpacity(0.7),
                           borderRadius:
                               BorderRadius.circular(deviceWidth * 0.04)),
-                      child: TextField(
-                        controller: Category,
-                        style: TextStyle(color: Colors.white),
+                      child: DropdownButtonFormField(
+                        hint: Text("Select Category",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontSize: deviceWidth * 0.04,
+                            )),
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.red,
+                        ),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.04),
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.3),
+                              ),
                             ),
-                            // focusedBorder: OutlineInputBorder(
-                            //   borderRadius: BorderRadius.circular(10),
-                            //   borderSide: BorderSide(),
-                            // ),
-                            hintText: "Category",
-                            hintStyle: TextStyle(color: Colors.white),
-                            border: OutlineInputBorder(
+                            focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.06),
                             )),
+                        value: SelectedCategory,
+                        items: Categories.map((value) => DropdownMenuItem(
+                              child: Text(value),
+                              value: value,
+                            )).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            SelectedCategory = value as String;
+                          });
+                        },
                       ),
                     ),
                     SizedBox(
@@ -415,25 +453,45 @@ class _EventDetailsState extends State<EventDetails> {
                           color: Colors.black.withOpacity(0.7),
                           borderRadius:
                               BorderRadius.circular(deviceWidth * 0.04)),
-                      child: TextField(
-                        controller: AgeCategory,
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(color: Colors.white),
+                      child: DropdownButtonFormField(
+                        hint: Text("Select Age Category",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontSize: deviceWidth * 0.04,
+                            )),
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.red,
+                        ),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.04),
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.3),
+                              ),
                             ),
-                            // focusedBorder: OutlineInputBorder(
-                            //   borderRadius: BorderRadius.circular(10),
-                            //   borderSide: BorderSide(),
-                            // ),
-                            hintText: "Age Category",
-                            hintStyle: TextStyle(color: Colors.white),
-                            border: OutlineInputBorder(
+                            focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.06),
                             )),
+                        value: SelectedAge,
+                        items: AgeCategory.map((value) => DropdownMenuItem(
+                              child: Text(value),
+                              value: value,
+                            )).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            SelectedAge = value as String;
+                          });
+                        },
                       ),
                     ),
                     SizedBox(
@@ -459,14 +517,16 @@ class _EventDetailsState extends State<EventDetails> {
                       children: [
                         Text("  "),
                         Image(image: AssetImage("assets/Menu.png")),
-                        Text("     MS OPEN"),
+                        SelectedCategory == null
+                            ? Text("")
+                            : Text("$SelectedCategory"),
                       ],
                     ),
                     Row(
                       children: [
                         Text("  "),
                         Image(image: AssetImage("assets/Menu.png")),
-                        Text("     WS OPEN"),
+                        SelectedAge == null ? Text("") : Text("$SelectedAge"),
                       ],
                     ),
                     Row(
@@ -600,29 +660,59 @@ class _EventDetailsState extends State<EventDetails> {
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PoolDetails(
-                                SportName: widget.SportName,
-                                EventManagerName: widget.EventManagerName,
-                                EventManagerMobileNo:
-                                    widget.EventManagerMobileNo,
-                                EventType: widget.EventType,
-                                EventName: EventName.text,
-                                StartDate: startdateinput.text,
-                                EndDate: enddateinput.text,
-                                RegistrationCloses:
-                                    registrationclosedateinput.text,
-                                StartTime: starttime.text,
-                                EndTime: endtime.text,
-                                City: city.text,
-                                Address: Address.text,
-                                Category: Category.text,
-                                AgeCategory: AgeCategory.text,
-                                NoofCourts: noofcourts.text,
-                                BreakTime: breaktime.text,
-                              )));
+                  if (EventName.text.isNotEmpty ||
+                      startdateinput.text.isNotEmpty ||
+                      enddateinput.text.isNotEmpty ||
+                      registrationclosedateinput.text.isNotEmpty ||
+                      starttime.text.isNotEmpty ||
+                      endtime.text.isNotEmpty ||
+                      city.text.isNotEmpty ||
+                      Address.text.isNotEmpty ||
+                      SelectedAge.toString().isNotEmpty ||
+                      SelectedCategory.toString().isNotEmpty ||
+                      noofcourts.text.isNotEmpty ||
+                      breaktime.text.isNotEmpty) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PoolDetails(
+                                  SportName: widget.SportName,
+                                  EventManagerName: widget.EventManagerName,
+                                  EventManagerMobileNo:
+                                      widget.EventManagerMobileNo,
+                                  EventType: widget.EventType,
+                                  EventName: EventName.text,
+                                  StartDate: startdateinput.text,
+                                  EndDate: enddateinput.text,
+                                  RegistrationCloses:
+                                      registrationclosedateinput.text,
+                                  StartTime: starttime.text,
+                                  EndTime: endtime.text,
+                                  City: city.text,
+                                  Address: Address.text,
+                                  Category: SelectedCategory,
+                                  AgeCategory: SelectedAge,
+                                  NoofCourts: noofcourts.text,
+                                  BreakTime: breaktime.text,
+                                )));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content: Text("Please fill all the fields"),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+                          );
+                        });
+                  }
                 },
                 color: Colors.red,
                 child: Text(

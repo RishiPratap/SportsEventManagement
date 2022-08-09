@@ -30,192 +30,195 @@ class _MenuState extends State<Menu> {
           image: DecorationImage(
               image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
         ),
-        child: Column(
-          children: [
-            Container(
-              width: deviceWidth * 0.4,
-              height: deviceWidth * 0.4,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/AARDENT.png"), fit: BoxFit.cover),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: deviceWidth * 0.4,
+                height: deviceWidth * 0.4,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/AARDENT.png"),
+                      fit: BoxFit.cover),
+                ),
               ),
-            ),
-            SizedBox(
-              height: deviceWidth * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: deviceWidth * 0.08,
-                  height: deviceWidth * 0.08,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/gear.png"),
-                        fit: BoxFit.cover),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.08,
+                    height: deviceWidth * 0.08,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/gear.png"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Settings",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: deviceWidth * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: deviceWidth * 0.08,
-                  height: deviceWidth * 0.08,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/plus.png"),
-                        fit: BoxFit.cover),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Settings",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.08,
+                    height: deviceWidth * 0.08,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/plus.png"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CreateChallenge()));
-                    },
-                    child: Text(
-                      "Create Challenge",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: deviceWidth * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: deviceWidth * 0.08,
-                  height: deviceWidth * 0.08,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/score 1.png"),
-                        fit: BoxFit.cover),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateChallenge()));
+                      },
+                      child: Text(
+                        "Create Challenge",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.08,
+                    height: deviceWidth * 0.08,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/score 1.png"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Score a challenge",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: deviceWidth * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: deviceWidth * 0.08,
-                  height: deviceWidth * 0.08,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/score 1.png"),
-                        fit: BoxFit.cover),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Score a challenge",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.08,
+                    height: deviceWidth * 0.08,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/score 1.png"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ScoreAMatch()));
-                    },
-                    child: Text(
-                      "Score a Match",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: deviceWidth * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: deviceWidth * 0.06,
-                  height: deviceWidth * 0.06,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/Vector.png"),
-                        fit: BoxFit.cover),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ScoreAMatch()));
+                      },
+                      child: Text(
+                        "Score a Match",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.06,
+                    height: deviceWidth * 0.06,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/Vector.png"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Get.to(MyBookings());
-                    },
-                    child: Text(
-                      "My Bookings",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: deviceWidth * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: deviceWidth * 0.08,
-                  height: deviceWidth * 0.08,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/Vecto1.png"),
-                        fit: BoxFit.cover),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(MyBookings());
+                      },
+                      child: Text(
+                        "My Bookings",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.08,
+                    height: deviceWidth * 0.08,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/Vecto1.png"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Get.to(HostedChallenges());
-                    },
-                    child: Text(
-                      "My Hosted Challenges",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: deviceWidth * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: deviceWidth * 0.08,
-                  height: deviceWidth * 0.08,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/contacts.png"),
-                        fit: BoxFit.cover),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(HostedChallenges());
+                      },
+                      child: Text(
+                        "My Hosted Challenges",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.08,
+                    height: deviceWidth * 0.08,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/contacts.png"),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Contact Us",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-          ],
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Contact Us",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+            ],
+          ),
         ),
       )),
     );
