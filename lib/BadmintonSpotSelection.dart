@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -104,6 +105,7 @@ class send_socket_number_ {
 class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   int totalspots = 0;
   var count = 0;
+  var isTournamentBooked = false;
   late Socket socket;
   @override
   List<Container> getTotalSpots(int start, int end, List<dynamic> array) {
@@ -134,7 +136,62 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               final tournament_id1Map = tournament_id1.toMap();
               final json_tournamentid = jsonEncode(tournament_id1Map);
 
-              socket.emit('spot-clicked', json_tournamentid);
+              if (!isTournamentBooked) {
+                socket.emit('spot-clicked', json_tournamentid);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: SpotConfirmation(
+                      SpotNo: i.toString(),
+                      Date: "21/11/21",
+                      socket: socket,
+                      btnId: (i - 1).toString(),
+                      tournament_id: widget.tourneyId,
+                      userEmail: obtianedEmail!,
+                    ),
+                  ),
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title:
+                        const Text("You Have Already Booked this Tournament"),
+                    content: const Text("Do you want to go to my booking?"),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "NO",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+                      //one min
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                  child: MyBookings()));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(14),
+                          child: const Text("YES",
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
 
               //SOCKET ON
               // socket.on('spot-clicked-return', (data) {
@@ -168,21 +225,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               //     });
               //   }
               // });
-
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.rightToLeftWithFade,
-                  child: SpotConfirmation(
-                    SpotNo: i.toString(),
-                    Date: "21/11/21",
-                    socket: socket,
-                    btnId: (i - 1).toString(),
-                    tournament_id: widget.tourneyId,
-                    userEmail: obtianedEmail!,
-                  ),
-                ),
-              );
             },
             color: Color(0xff6EBC55),
             shape: RoundedRectangleBorder(
@@ -252,6 +294,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   }
 
   connect(double deviceWidth) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var obtianedEmail = prefs.getString('email');
+    bool isBooked = false;
     socket.on('spot-clicked-return', (data) {
       Map<String, dynamic> spot_cliclked_return_details = jsonDecode(data);
       var details = json_decode_spot_clicked_return
@@ -305,7 +350,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       prizepool = details.Prize_Pool;
       entryfee = details.entry_fee;
       freespots = 0;
+      bool isBooked = false;
       for (int i = 0; i < totalspots; i++) {
+        if (array1[i] == "confirmed-$obtianedEmail") {
+          isBooked = true;
+        }
         if (array1[i] == "$i") {
           freespots = freespots + 1;
         }
@@ -314,6 +363,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         if (mounted) {
           setState(() {
             count = 1;
+            isTournamentBooked = isBooked;
             super.deactivate();
           });
         }
