@@ -112,13 +112,25 @@ class _HomePageState extends State<HomePage> {
                 margin: EdgeInsets.only(top: deviceWidth * 0.002),
                 height: MediaQuery.of(context).size.height * 0.075,
                 child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BadmintonSpotSelection(
-                                  tourneyId: userdata[i].TOURNAMENT_ID,
-                                )));
+                  onTap: () async {
+                    var url =
+                        "https://ardentsportsapis.herokuapp.com/isTimeExceeded?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                    var response = await get(Uri.parse(url));
+                    Map<String, dynamic> jsonData = jsonDecode(response.body);
+                    try {
+                      if (jsonData['Message'] == "false") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BadmintonSpotSelection(
+                                      tourneyId: userdata[i].TOURNAMENT_ID,
+                                    )));
+                      } else {
+                        print("Time Exceeded");
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
