@@ -333,6 +333,11 @@ class _MyBookings extends State<MyBookings> {
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print("Didn't Receive");
+    }
     print(jsonData);
     try {
       List<UserData> userdata =
