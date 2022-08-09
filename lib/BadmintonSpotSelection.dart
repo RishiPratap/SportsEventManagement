@@ -193,38 +193,38 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 );
               }
 
-              //SOCKET ON
-              // socket.on('spot-clicked-return', (data) {
-              //   Map<String, dynamic> spot_cliclked_return_details =
-              //       jsonDecode(data);
-              //   var details = json_decode_spot_clicked_return
-              //       .fromJson(spot_cliclked_return_details);
-              //   String spotnumber = details.spot_number;
-              //   var timer = 25;
-              //   final socket_number =
-              //       send_socket_number_(spotnumber, "123456", finalEmail);
-              //   print(spotnumber);
-              //   final socket_number_map = socket_number.toMap();
-              //   final json_socket_number = jsonEncode(socket_number_map);
-              //   if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
-              //     Timer.periodic(Duration(seconds: timer), (timer) {
-              //       socket.emit('remove-booking', json_socket_number);
-              //       debugPrint("removed:$spotnumber");
-              //       timer.cancel();
-              //     });
-              //   }
+              // SOCKET ON
+              socket.on('spot-clicked-return', (data) {
+                Map<String, dynamic> spot_cliclked_return_details =
+                    jsonDecode(data);
+                var details = json_decode_spot_clicked_return
+                    .fromJson(spot_cliclked_return_details);
+                String spotnumber = details.spot_number;
+                var timer = 25;
+                final socket_number =
+                    send_socket_number_(spotnumber, "123456", finalEmail);
+                print(spotnumber);
+                final socket_number_map = socket_number.toMap();
+                final json_socket_number = jsonEncode(socket_number_map);
+                if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
+                  Timer.periodic(Duration(seconds: timer), (timer) {
+                    socket.emit('remove-booking', json_socket_number);
+                    debugPrint("removed:$spotnumber");
+                    timer.cancel();
+                  });
+                }
 
-              //   socket.on('removed-from-waiting-list', (data) {
-              //     if (mounted) {
-              //       setState(() {});
-              //     }
-              //   });
-              //   if (mounted) {
-              //     setState(() {
-              //       array1[int.parse(spotnumber)] = "${socket.id}";
-              //     });
-              //   }
-              // });
+                socket.on('removed-from-waiting-list', (data) {
+                  if (mounted) {
+                    setState(() {});
+                  }
+                });
+                if (mounted) {
+                  setState(() {
+                    array1[int.parse(spotnumber)] = "${socket.id}";
+                  });
+                }
+              });
             },
             color: Color(0xff6EBC55),
             shape: RoundedRectangleBorder(
@@ -302,7 +302,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       var details = json_decode_spot_clicked_return
           .fromJson(spot_cliclked_return_details);
       String spotnumber = details.spot_number;
-      var timer = 25;
+      var timer = 30;
       final socket_number =
           send_socket_number_(spotnumber, widget.tourneyId, finalEmail);
       print(spotnumber);
@@ -315,13 +315,13 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       //     timer.cancel();
       //   });
       // }
-
-      socket.on('removed-from-waiting-list', (data) {
-        if (mounted) {
-          setState(() {});
-          super.deactivate();
-        }
-      });
+      //
+      // socket.on('removed-from-waiting-list', (data) {
+      //   if (mounted) {
+      //     setState(() {});
+      //     super.deactivate();
+      //   }
+      // });
       if (mounted) {
         setState(() {
           array1[int.parse(spotnumber)] = "${socket.id}";
