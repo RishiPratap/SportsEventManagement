@@ -1,12 +1,14 @@
-import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/CreateChallenge.dart';
-import 'package:ardent_sports/HomePage.dart';
+
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/ScoreAMatch.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'login.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -213,6 +215,33 @@ class _MenuState extends State<Menu> {
                       onPressed: () {},
                       child: Text(
                         "Contact Us",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: deviceWidth * 0.08,
+                    height: deviceWidth * 0.08,
+                  ),
+                  Icon(
+                    Icons.exit_to_app,
+                    color: Colors.white,
+                  ),
+                  TextButton(
+                      onPressed: () async {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.remove('email');
+                        Get.to(login());
+                      },
+                      child: Text(
+                        "Logout",
                         style: TextStyle(color: Colors.white),
                       )),
                 ],

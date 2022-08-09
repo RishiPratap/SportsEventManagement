@@ -16,6 +16,7 @@ int entryfee = 0;
 int prizepool = 0;
 var array1 = [];
 String? finalEmail;
+Timer? timer;
 
 class BadmintonSpotSelection extends StatefulWidget {
   final String tourneyId;
@@ -134,6 +135,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 USER: obtianedEmail,
               );
               final tournament_id1Map = tournament_id1.toMap();
+
               final json_tournamentid = jsonEncode(tournament_id1Map);
 
               if (!isTournamentBooked) {
@@ -193,38 +195,42 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 );
               }
 
-              //SOCKET ON
-              // socket.on('spot-clicked-return', (data) {
-              //   Map<String, dynamic> spot_cliclked_return_details =
-              //       jsonDecode(data);
-              //   var details = json_decode_spot_clicked_return
-              //       .fromJson(spot_cliclked_return_details);
-              //   String spotnumber = details.spot_number;
-              //   var timer = 25;
-              //   final socket_number =
-              //       send_socket_number_(spotnumber, "123456", finalEmail);
-              //   print(spotnumber);
-              //   final socket_number_map = socket_number.toMap();
-              //   final json_socket_number = jsonEncode(socket_number_map);
-              //   if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
-              //     Timer.periodic(Duration(seconds: timer), (timer) {
-              //       socket.emit('remove-booking', json_socket_number);
-              //       debugPrint("removed:$spotnumber");
-              //       timer.cancel();
-              //     });
-              //   }
+              socket.on('spot-clicked-return', (data) {
+                Map<String, dynamic> spot_cliclked_return_details =
+                    jsonDecode(data);
+                var details = json_decode_spot_clicked_return
+                    .fromJson(spot_cliclked_return_details);
+                String spotnumber = details.spot_number;
+                // setState(() {});
 
-              //   socket.on('removed-from-waiting-list', (data) {
-              //     if (mounted) {
-              //       setState(() {});
-              //     }
-              //   });
-              //   if (mounted) {
-              //     setState(() {
-              //       array1[int.parse(spotnumber)] = "${socket.id}";
-              //     });
-              //   }
-              // });
+                final socket_number = send_socket_number_(
+                    spotnumber, widget.tourneyId, finalEmail);
+                print(spotnumber);
+                final socket_number_map = socket_number.toMap();
+                final json_socket_number = jsonEncode(socket_number_map);
+                if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
+                  timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
+                    socket.emit('remove-booking', json_socket_number);
+                    debugPrint("removed:$spotnumber");
+                  });
+
+                  // Timer.periodic(Duration(seconds: timer), (timer) {
+                  //   socket.emit('remove-booking', json_socket_number);
+                  //   debugPrint("removed:$spotnumber");
+                  //   timer.cancel();
+
+                  // });
+                }
+
+                socket.on('removed-from-waiting-list', (data) {
+                  setState(() {});
+                });
+                if (mounted) {
+                  setState(() {
+                    array1[int.parse(spotnumber)] = "${socket.id}";
+                  });
+                }
+              });
             },
             color: Color(0xff6EBC55),
             shape: RoundedRectangleBorder(
@@ -308,13 +314,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       print(spotnumber);
       final socket_number_map = socket_number.toMap();
       final json_socket_number = jsonEncode(socket_number_map);
-      // if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
-      //   Timer.periodic(Duration(seconds: timer), (timer) {
-      //     socket.emit('remove-booking', json_socket_number);
-      //     debugPrint("removed:$spotnumber");
-      //     timer.cancel();
-      //   });
-      // }
 
       socket.on('removed-from-waiting-list', (data) {
         if (mounted) {
@@ -404,6 +403,14 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     if (mounted) {
       socket.emit('join-booking', json_tournamentid);
     }
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {

@@ -632,18 +632,18 @@ class SubmitPage extends StatelessWidget {
                       child: Center(
                         child: RaisedButton(
                           onPressed: () async {
-                            if (first_name.text.trim().isNotEmpty ||
-                                last_name.text.trim().isNotEmpty ||
-                                date_of_birth.text.isNotEmpty ||
-                                state.text.isNotEmpty ||
-                                city.text.isNotEmpty ||
-                                gender.text.isNotEmpty ||
-                                Academy.text.isNotEmpty ||
+                            if (first_name.text.trim().isNotEmpty &&
+                                last_name.text.trim().isNotEmpty &&
+                                date_of_birth.text.isNotEmpty &&
+                                state.text.isNotEmpty &&
+                                city.text.isNotEmpty &&
+                                gender.text.isNotEmpty &&
+                                Academy.text.isNotEmpty &&
                                 Intersted_Sports.text.isNotEmpty) {
                               final Details = UserDetails(
                                   USERID: emailController.text.toString(),
                                   PHONE: mobileController.text.toString(),
-                                  NAME: nameController.text.toString(),
+                                  NAME: first_name.text.toString(),
                                   EMAIL: emailController.text.toString(),
                                   PWD: passController.text.toString(),
                                   GENDER: gender.text.toString(),
