@@ -1,22 +1,31 @@
-import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'HomePage.dart';
 
-class ticket extends StatelessWidget {
-  const ticket({Key? key}) : super(key: key);
+class ticket extends StatefulWidget {
+  final String spotNo;
+  final String? location;
+  final String? eventName;
+  final String? sportName;
+  final String? name;
+  final String? category;
+  final String date;
+  const ticket({
+    Key? key,
+    required this.spotNo,
+    required this.location,
+    required this.eventName,
+    required this.sportName,
+    required this.name,
+    required this.category,
+    required this.date,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Home(),
-    );
-  }
+  State<ticket> createState() => _ticketState();
 }
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
+class _ticketState extends State<ticket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +64,7 @@ class Home extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          'RAPID BADMINTON CHALLENGE',
+                          '${widget.eventName}',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize:
@@ -75,7 +84,7 @@ class Home extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.topRight,
                         child: Text(
-                          'GANDHINAGAR',
+                          '${widget.location}',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize:
@@ -131,7 +140,7 @@ class Home extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Shubham Soni is my name',
+                                        '${widget.name}', //TODO ADD NAME
                                         overflow: TextOverflow.ellipsis,
                                         //textAlign: TextAlign.start,
                                         style: TextStyle(
@@ -168,7 +177,7 @@ class Home extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        '07',
+                                        '${widget.spotNo}', //TODO ADD SPOT
                                         overflow: TextOverflow.ellipsis,
                                         //textAlign: TextAlign.start,
                                         style: TextStyle(
@@ -218,7 +227,7 @@ class Home extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Spot:',
+                                        'Sport:',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: MediaQuery.of(context)
@@ -230,7 +239,7 @@ class Home extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Badminton',
+                                        '${widget.sportName}', //TODO ADD SPORT
                                         overflow: TextOverflow.ellipsis,
                                         //textAlign: TextAlign.start,
                                         style: TextStyle(
@@ -267,7 +276,7 @@ class Home extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        "Men's Single",
+                                        "${widget.category}",
                                         overflow: TextOverflow.ellipsis,
                                         //textAlign: TextAlign.start,
                                         style: TextStyle(
@@ -326,7 +335,7 @@ class Home extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        '25/03/2022',
+                                        '${widget.date}',
                                         overflow: TextOverflow.ellipsis,
                                         //textAlign: TextAlign.start,
                                         style: TextStyle(

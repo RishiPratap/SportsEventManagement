@@ -1,6 +1,7 @@
 import 'package:ardent_sports/CreateChallenge.dart';
 import 'package:ardent_sports/EventDetails.dart';
 import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/WebView.dart';
 import 'EventDetails.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';

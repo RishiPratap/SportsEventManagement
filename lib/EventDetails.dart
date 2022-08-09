@@ -660,17 +660,17 @@ class _EventDetailsState extends State<EventDetails> {
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: RaisedButton(
                 onPressed: () {
-                  if (EventName.text.isNotEmpty ||
-                      startdateinput.text.isNotEmpty ||
-                      enddateinput.text.isNotEmpty ||
-                      registrationclosedateinput.text.isNotEmpty ||
-                      starttime.text.isNotEmpty ||
-                      endtime.text.isNotEmpty ||
-                      city.text.isNotEmpty ||
-                      Address.text.isNotEmpty ||
-                      SelectedAge.toString().isNotEmpty ||
-                      SelectedCategory.toString().isNotEmpty ||
-                      noofcourts.text.isNotEmpty ||
+                  if (EventName.text.isNotEmpty &&
+                      startdateinput.text.isNotEmpty &&
+                      enddateinput.text.isNotEmpty &&
+                      registrationclosedateinput.text.isNotEmpty &&
+                      starttime.text.isNotEmpty &&
+                      endtime.text.isNotEmpty &&
+                      city.text.isNotEmpty &&
+                      Address.text.isNotEmpty &&
+                      SelectedAge.toString().isNotEmpty &&
+                      SelectedCategory.toString().isNotEmpty &&
+                      noofcourts.text.isNotEmpty &&
                       breaktime.text.isNotEmpty) {
                     Navigator.push(
                         context,

@@ -38,25 +38,27 @@ class _CreateChallengeState extends State<CreateChallenge> {
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
-          child: Column(
-            children: [
-              SizedBox(
-                height: deviceWidth * 0.2,
-              ),
-              Text(
-                "Create Competition",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w600,
-                  fontSize: deviceWidth * 0.05,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: deviceWidth * 0.2,
                 ),
-              ),
-              SizedBox(
-                height: deviceWidth * 0.02,
-              ),
-              buildCard(deviceWidth),
-            ],
+                Text(
+                  "Create Competition",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600,
+                    fontSize: deviceWidth * 0.05,
+                  ),
+                ),
+                SizedBox(
+                  height: deviceWidth * 0.02,
+                ),
+                buildCard(deviceWidth),
+              ],
+            ),
           ),
         ),
       ),

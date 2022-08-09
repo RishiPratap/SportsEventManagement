@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'Menu.dart';
 import 'dart:ui';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -86,13 +87,17 @@ class UserData {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isLoading = false;
   DateTime timeBackPressed = DateTime.now();
+  late WebViewController _webViewController;
   List<Container> AllTournaments = [];
 
   final url = 'https://ardentsportsapis.herokuapp.com/allTournaments';
+
   List<Container> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
+
     for (int i = 0; i < array_length; i++) {
       var container = Container(
         height: deviceHeight * 0.3,
@@ -112,13 +117,25 @@ class _HomePageState extends State<HomePage> {
                 margin: EdgeInsets.only(top: deviceWidth * 0.002),
                 height: MediaQuery.of(context).size.height * 0.075,
                 child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BadmintonSpotSelection(
-                                  tourneyId: userdata[i].TOURNAMENT_ID,
-                                )));
+                  onTap: () async {
+                    var url =
+                        "https://ardentsportsapis.herokuapp.com/isTimeExceeded?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                    var response = await get(Uri.parse(url));
+                    Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+                    if (jsonData['Message'] == "false") {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BadmintonSpotSelection(
+                                    tourneyId: userdata[i].TOURNAMENT_ID,
+                                    sport: userdata[i].SPORT,
+                                  )));
+
+                      print(userdata[i].SPORT);
+                    } else {
+                      print("Time Exceeded");
+                    }
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -214,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                             )),
                         TextButton(
                             onPressed: () {
-                              userData();
+                              // userData();
                             },
                             child: Text(
                               "V",
@@ -324,7 +341,6 @@ class _HomePageState extends State<HomePage> {
   getAllTournaments() async {
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
-
     try {
       List<UserData> userdata =
           jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
@@ -504,8 +520,8 @@ class _HomePageState extends State<HomePage> {
                         if (snapshot.data == null) {
                           print("In Null");
                           return Container(
-                            child: Center(
-                              child: Text("Loading..."),
+                            child: const Center(
+                              child: CircularProgressIndicator(),
                             ),
                           );
                         } else {

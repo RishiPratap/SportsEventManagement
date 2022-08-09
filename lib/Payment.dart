@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
+import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -16,6 +17,13 @@ class Payment extends StatefulWidget {
   final Socket socket;
   final String btnId;
   final String tourneyId;
+  final String? location;
+  final String? eventName;
+  final String? category;
+  final String? sport;
+  final String? name;
+  final String date;
+
   Payment({
     Key? key,
     required this.Spot_Price,
@@ -23,6 +31,12 @@ class Payment extends StatefulWidget {
     required this.socket,
     required this.btnId,
     required this.tourneyId,
+    required this.location,
+    required this.eventName,
+    required this.category,
+    required this.sport,
+    required this.name,
+    required this.date,
   }) : super(key: key);
   @override
   State<Payment> createState() => _PaymentState();
@@ -108,7 +122,16 @@ class _PaymentState extends State<Payment> {
       Navigator.push(
           context,
           PageTransition(
-              type: PageTransitionType.rightToLeftWithFade, child: ticket()));
+              type: PageTransitionType.rightToLeftWithFade,
+              child: ticket(
+                spotNo: widget.Spot_Number,
+                location: widget.location,
+                eventName: widget.eventName,
+                sportName: widget.sport,
+                name: widget.name,
+                category: widget.category,
+                date: widget.date,
+              )));
     } catch (e) {
       debugPrint('Error:$e');
       if (e is StripeException) {
