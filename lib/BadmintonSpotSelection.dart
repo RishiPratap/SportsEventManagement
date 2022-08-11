@@ -31,7 +31,7 @@ class BadmintonSpotSelection extends StatefulWidget {
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
 }
 
-late Color color1 = Color(0xffFFFF00).withOpacity(0.8);
+late Color color1 = Color(0xffffff00).withOpacity(0.8);
 
 class tournament_id {
   late String TOURNAMENT_ID;
