@@ -1,7 +1,7 @@
 import 'package:ardent_sports/CreateChallenge.dart';
 import 'package:ardent_sports/EventDetails.dart';
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/WebView.dart';
+import 'package:ardent_sports/WebViewTest.dart';
 import 'EventDetails.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       initialRoute: '/',
       routes: {
-        '/': (context) => login(),
-        '/homePage': (context) => HomePage(),
+        '/': (context) => WebViewTest(),
+        '/homePage': (context) => WebViewTest(),
       },
     );
   }

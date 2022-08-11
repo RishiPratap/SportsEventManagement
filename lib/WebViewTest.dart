@@ -16,7 +16,7 @@ class _WebViewTestState extends State<WebViewTest> {
         title: Text('WebView'),
       ),
       body: WebView(
-        initialUrl: 'https://ardentsportsapis.herokuapp.com/?no_of_spots=64',
+        initialUrl: 'https://ardentsportsapis.herokuapp.com/?no_of_spots=16',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

@@ -375,6 +375,11 @@ class _HomePageState extends State<HomePage> {
     // userData();
   }
 
+  Future<Null> _refreshTournaments() async {
+    Navigator.pushReplacement(
+        context, PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -386,152 +391,157 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/Homepage.png"),
-                fit: BoxFit.cover,
+        body: RefreshIndicator(
+          onRefresh: () => _refreshTournaments(),
+          child: SafeArea(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/Homepage.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.3,
-                            height: deviceWidth * 0.1,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                              image: AssetImage('assets/AARDENT_LOGO.png'),
-                              fit: BoxFit.cover,
-                            )),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.6,
-                            height: deviceWidth * 0.08,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/Ardent_Sport_Text.png"),
-                                    fit: BoxFit.fitWidth)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: double.infinity,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () {
-                              Get.to(Menu());
-                            },
+              child: Expanded(
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
                             child: Container(
-                              width: deviceWidth * 0.04,
-                              height: deviceWidth * 0.033,
+                              width: deviceWidth * 0.3,
+                              height: deviceWidth * 0.1,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: AssetImage("assets/menu_bar.png"),
+                                image: AssetImage('assets/AARDENT_LOGO.png'),
+                                fit: BoxFit.cover,
+                              )),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              width: deviceWidth * 0.6,
+                              height: deviceWidth * 0.08,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/Ardent_Sport_Text.png"),
+                                      fit: BoxFit.fitWidth)),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              width: double.infinity,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(Menu());
+                              },
+                              child: Container(
+                                width: deviceWidth * 0.04,
+                                height: deviceWidth * 0.033,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image:
+                                            AssetImage("assets/menu_bar.png"),
+                                        fit: BoxFit.fitHeight)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: Colors.white,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              width: deviceWidth * 0.08,
+                              height: deviceWidth * 0.08,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/Profile_Image.png"),
                                       fit: BoxFit.fitHeight)),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.white,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.08,
-                            height: deviceWidth * 0.08,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/Profile_Image.png"),
-                                    fit: BoxFit.fitHeight)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: double.infinity,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.08,
-                            height: deviceWidth * 0.08,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage("assets/money_bag.png"),
-                                    fit: BoxFit.fitHeight)),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                            child: Text("Shubham"),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: double.infinity,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                            child: Text("₹15,000"),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    FutureBuilder(
-                      future: futures,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<dynamic> snapshot) {
-                        if (snapshot.data == null) {
-                          print("In Null");
-                          return Container(
-                            child: const Center(
-                              child: CircularProgressIndicator(),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              width: double.infinity,
                             ),
-                          );
-                        } else {
-                          return Column(
-                            children: snapshot.data,
-                          );
-                        }
-                      },
-                    ),
-                  ],
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              width: deviceWidth * 0.08,
+                              height: deviceWidth * 0.08,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage("assets/money_bag.png"),
+                                      fit: BoxFit.fitHeight)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.only(left: deviceWidth * 0.03),
+                              child: Text("Shubham"),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              width: double.infinity,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.only(left: deviceWidth * 0.03),
+                              child: Text("₹15,000"),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      FutureBuilder(
+                        future: futures,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.data == null) {
+                            print("In Null");
+                            return Container(
+                              child: const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          } else {
+                            return Column(
+                              children: snapshot.data,
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
