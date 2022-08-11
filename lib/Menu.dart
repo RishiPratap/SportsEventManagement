@@ -238,7 +238,7 @@ class _MenuState extends State<Menu> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         prefs.remove('email');
-                        Get.to(login());
+                        Navigator.popUntil(context, ModalRoute.withName("/"));
                       },
                       child: Text(
                         "Logout",

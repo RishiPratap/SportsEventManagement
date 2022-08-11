@@ -1,8 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'WebViewTest.dart';
+import 'package:get/get.dart';
 
 class PoolDetails extends StatefulWidget {
   final String? SportName;
@@ -248,7 +249,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                             margin: EdgeInsets.all(deviceWidth * 0.04),
                             child: TextField(
                               controller: EntryFeeController,
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.number,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -402,8 +403,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                                     END_DATE: widget.EndDate,
                                     START_TIME: widget.StartTime,
                                     END_TIME: widget.EndTime,
-                                    REGISTRATION_CLOSES_BEFORE:
-                                        int.parse(widget.RegistrationCloses),
+                                    REGISTRATION_CLOSES_BEFORE: 6,
                                     AGE_CATEGORY: widget.AgeCategory,
                                     NO_OF_COURTS: int.parse(widget.NoofCourts),
                                     BREAK_TIME: widget.BreakTime,
@@ -423,6 +423,10 @@ class _PoolDetailsState extends State<PoolDetails> {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
                                   content: Text(response.body),
+                                ));
+
+                                Get.to(WebViewTest(
+                                  spots: SelectedPoolSize,
                                 ));
                               },
                               color: Colors.red,
