@@ -5,41 +5,41 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PoolDetails extends StatefulWidget {
-  // final String? SportName;
-  // final String EventManagerName;
-  // final String EventManagerMobileNo;
-  // final String? EventType;
-  // final String EventName;
-  // final String StartDate;
-  // final String EndDate;
-  // final String StartTime;
-  // final String EndTime;
-  // final String City;
-  // final String Address;
-  // final String? Category;
-  // final String? AgeCategory;
-  // final String RegistrationCloses;
-  // final String NoofCourts;
-  // final String BreakTime;
+  final String? SportName;
+  final String EventManagerName;
+  final String EventManagerMobileNo;
+  final String? EventType;
+  final String EventName;
+  final String StartDate;
+  final String EndDate;
+  final String StartTime;
+  final String EndTime;
+  final String City;
+  final String Address;
+  final String? Category;
+  final String? AgeCategory;
+  final String RegistrationCloses;
+  final String NoofCourts;
+  final String BreakTime;
 
   const PoolDetails({
     Key? key,
-    // required this.SportName,
-    // required this.EventManagerName,
-    // required this.EventManagerMobileNo,
-    // required this.EventType,
-    // required this.EventName,
-    // required this.StartDate,
-    // required this.EndDate,
-    // required this.StartTime,
-    // required this.EndTime,
-    // required this.City,
-    // required this.Address,
-    // required this.Category,
-    // required this.AgeCategory,
-    // required this.RegistrationCloses,
-    // required this.NoofCourts,
-    // required this.BreakTime
+    required this.SportName,
+    required this.EventManagerName,
+    required this.EventManagerMobileNo,
+    required this.EventType,
+    required this.EventName,
+    required this.StartDate,
+    required this.EndDate,
+    required this.StartTime,
+    required this.EndTime,
+    required this.City,
+    required this.Address,
+    required this.Category,
+    required this.AgeCategory,
+    required this.RegistrationCloses,
+    required this.NoofCourts,
+    required this.BreakTime,
   }) : super(key: key);
   @override
   State<PoolDetails> createState() => _PoolDetailsState();
@@ -112,8 +112,21 @@ class CreateChallengeDetails {
 }
 
 class _PoolDetailsState extends State<PoolDetails> {
+  List<String> PoolSizes = ['8', '16', '32', '64', '128'];
+  String? SelectedPoolSize;
+
+  List<String> PointSystems = ['8', '16', '32', '64', '128'];
+  String? SelectedPointSystem;
+
+  List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
+  String? SelectedPerMatchEstimatedTime;
+
+  final EntryFeeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -162,6 +175,272 @@ class _PoolDetailsState extends State<PoolDetails> {
                   ),
                   Divider(
                     color: Colors.white,
+                  ),
+                  SizedBox(
+                    height: deviceWidth * 0.2,
+                  ),
+                  Card(
+                    elevation: 10,
+                    shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
+                    ),
+                    color: Colors.white.withOpacity(0.1),
+                    margin: EdgeInsets.only(
+                        left: deviceWidth * 0.05, right: deviceWidth * 0.05),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: deviceWidth * 0.04,
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(deviceWidth * 0.04),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black.withOpacity(0.3),
+                            ),
+                            child: DropdownButtonFormField(
+                              hint: Text("Pool Size",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: deviceWidth * 0.04,
+                                  )),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.red,
+                              ),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                      color: Colors.black.withOpacity(0.3),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                  )),
+                              value: SelectedPoolSize,
+                              items: PoolSizes.map((value) => DropdownMenuItem(
+                                    child: Text(value),
+                                    value: value,
+                                  )).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  SelectedPoolSize = value as String;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: deviceWidth * 0.02,
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(deviceWidth * 0.04),
+                            child: TextField(
+                              controller: EntryFeeController,
+                              keyboardType: TextInputType.emailAddress,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                    borderSide: BorderSide(
+                                      color: Colors.white.withOpacity(0.4),
+                                    ),
+                                  ),
+                                  hintText: "Entry Fee",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w200),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02),
+                                  )),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(deviceWidth * 0.04),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black.withOpacity(0.3),
+                            ),
+                            child: DropdownButtonFormField(
+                              hint: Text("Select Point System",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: deviceWidth * 0.04,
+                                  )),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.red,
+                              ),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                      color: Colors.black.withOpacity(0.3),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                  )),
+                              value: SelectedPointSystem,
+                              items:
+                                  PointSystems.map((value) => DropdownMenuItem(
+                                        child: Text(value),
+                                        value: value,
+                                      )).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  SelectedPointSystem = value as String;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: deviceWidth * 0.02,
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(deviceWidth * 0.04),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black.withOpacity(0.3),
+                            ),
+                            child: DropdownButtonFormField(
+                              hint: Text("Per Match Estimated Time",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: deviceWidth * 0.04,
+                                  )),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.red,
+                              ),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                      color: Colors.black.withOpacity(0.3),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02),
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                  )),
+                              value: SelectedPerMatchEstimatedTime,
+                              items: PerMatchEstimatedTime.map(
+                                  (value) => DropdownMenuItem(
+                                        child: Text(value),
+                                        value: value,
+                                      )).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  SelectedPerMatchEstimatedTime =
+                                      value as String;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: deviceWidth * 0.02,
+                          ),
+                          Container(
+                            width: deviceWidth * 0.8,
+                            margin: EdgeInsets.fromLTRB(
+                                deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
+                            child: RaisedButton(
+                              onPressed: () async {
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                var obtianedEmail = prefs.getString('email');
+                                print(obtianedEmail);
+                                final ChallengeDetails = CreateChallengeDetails(
+                                    USERID: obtianedEmail!.trim(),
+                                    TOURNAMENT_ID: "123456",
+                                    CATEGORY: widget.Category,
+                                    NO_OF_KNOCKOUT_ROUNDS:
+                                        int.parse(SelectedPoolSize!),
+                                    ENTRY_FEE:
+                                        int.parse(EntryFeeController.text),
+                                    PRIZE_POOL: 10000,
+                                    TOURNAMENT_NAME: widget.EventName,
+                                    CITY: widget.City,
+                                    TYPE: widget.EventType,
+                                    LOCATION: widget.Address,
+                                    START_DATE: widget.StartDate,
+                                    END_DATE: widget.EndDate,
+                                    START_TIME: widget.StartTime,
+                                    END_TIME: widget.EndTime,
+                                    REGISTRATION_CLOSES_BEFORE:
+                                        int.parse(widget.RegistrationCloses),
+                                    AGE_CATEGORY: widget.AgeCategory,
+                                    NO_OF_COURTS: int.parse(widget.NoofCourts),
+                                    BREAK_TIME: widget.BreakTime,
+                                    SPORT: widget.SportName);
+                                final DetailMap = ChallengeDetails.toMap();
+                                final json = jsonEncode(DetailMap);
+                                var url =
+                                    "https://ardentsportsapis.herokuapp.com/createTournament";
+                                var response = await post(Uri.parse(url),
+                                    headers: {
+                                      "Accept": "application/json",
+                                      "Content-Type": "application/json"
+                                    },
+                                    body: json,
+                                    encoding: Encoding.getByName("utf-8"));
+                                print(response.body);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(response.body),
+                                ));
+                              },
+                              color: Colors.red,
+                              child: Text(
+                                'Preview Fixture',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      deviceWidth * 0.06)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: deviceWidth * 0.02,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
