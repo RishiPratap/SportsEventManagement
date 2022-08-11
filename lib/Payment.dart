@@ -374,7 +374,8 @@ class _PaymentState extends State<Payment> {
                       });
                       developer.log('Before Await');
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
                       developer.log("Afeter Await");
                       setState(() {
                         isCreditLoading = false;
@@ -444,7 +445,8 @@ class _PaymentState extends State<Payment> {
                         loading = true;
                       });
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         loading = false;
@@ -512,7 +514,8 @@ class _PaymentState extends State<Payment> {
                       });
                       print("Before await");
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         gPayLoading = false;
@@ -578,7 +581,8 @@ class _PaymentState extends State<Payment> {
                       });
                       print("Before await");
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         phonePayLoading = false;
@@ -643,7 +647,8 @@ class _PaymentState extends State<Payment> {
                       });
                       print("Before await");
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         paytmLoading = false;

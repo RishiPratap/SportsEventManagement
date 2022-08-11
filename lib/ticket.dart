@@ -64,7 +64,7 @@ class _ticketState extends State<ticket> {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          '${widget.eventName}',
+                          '${widget.eventName!.length > 20 ? widget.eventName!.substring(0, 20) + '...' : widget.eventName}',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize:

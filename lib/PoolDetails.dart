@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -382,6 +383,29 @@ class _PoolDetailsState extends State<PoolDetails> {
                                 deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
                             child: RaisedButton(
                               onPressed: () async {
+                                Get.to(WebViewTest(
+                                  spots: SelectedPoolSize,
+                                ));
+                              },
+                              color: Colors.red,
+                              child: Text(
+                                'Preview Fixture',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      deviceWidth * 0.06)),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: deviceWidth * 0.8,
+                            margin: EdgeInsets.fromLTRB(
+                                deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
+                            child: RaisedButton(
+                              onPressed: () async {
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 var obtianedEmail = prefs.getString('email');
@@ -425,13 +449,11 @@ class _PoolDetailsState extends State<PoolDetails> {
                                   content: Text(response.body),
                                 ));
 
-                                Get.to(WebViewTest(
-                                  spots: SelectedPoolSize,
-                                ));
+                                Get.to(HomePage());
                               },
-                              color: Colors.red,
+                              color: Colors.green,
                               child: Text(
-                                'Preview Fixture',
+                                'Submit',
                                 style: TextStyle(color: Colors.white),
                               ),
                               shape: RoundedRectangleBorder(
