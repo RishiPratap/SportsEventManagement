@@ -34,6 +34,7 @@ class SpotConfirmation extends StatefulWidget {
   final String Date;
   final Socket socket;
   final String btnId;
+  final String sport;
   SpotConfirmation(
       {Key? key,
       required this.SpotNo,
@@ -41,7 +42,8 @@ class SpotConfirmation extends StatefulWidget {
       required this.tournament_id,
       required this.Date,
       required this.socket,
-      required this.btnId})
+      required this.btnId,
+      required this.sport})
       : super(key: key);
 
   @override
@@ -406,6 +408,12 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             socket: widget.socket,
                             btnId: widget.btnId,
                             tourneyId: widget.tournament_id,
+                            location: mapUserResponse?['tournament_city'],
+                            eventName: mapUserResponse?['tournament_name'],
+                            category: mapUserResponse?['cat'],
+                            date: widget.Date,
+                            sport: widget.sport,
+                            name: mapUserResponse?['username'],
                           )));
                 },
                 color: const Color(0xffE74745),

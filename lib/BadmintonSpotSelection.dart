@@ -16,12 +16,15 @@ int entryfee = 0;
 int prizepool = 0;
 var array1 = [];
 String? finalEmail;
+Timer? timer;
 
 class BadmintonSpotSelection extends StatefulWidget {
   final String tourneyId;
+  final String sport;
   const BadmintonSpotSelection({
     Key? key,
     required this.tourneyId,
+    required this.sport,
   }) : super(key: key);
 
   @override
@@ -134,10 +137,12 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 USER: obtianedEmail,
               );
               final tournament_id1Map = tournament_id1.toMap();
+
               final json_tournamentid = jsonEncode(tournament_id1Map);
 
               if (!isTournamentBooked) {
                 socket.emit('spot-clicked', json_tournamentid);
+                print(widget.sport);
                 Navigator.push(
                   context,
                   PageTransition(
@@ -149,6 +154,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       btnId: (i - 1).toString(),
                       tournament_id: widget.tourneyId,
                       userEmail: obtianedEmail!,
+                      sport: widget.sport,
                     ),
                   ),
                 );
@@ -200,9 +206,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 var details = json_decode_spot_clicked_return
                     .fromJson(spot_cliclked_return_details);
                 String spotnumber = details.spot_number;
-                var timer = 25;
-                final socket_number =
-                    send_socket_number_(spotnumber, "123456", finalEmail);
+                var timer = 60;
+                final socket_number = send_socket_number_(
+                    spotnumber, widget.tourneyId, finalEmail);
                 print(spotnumber);
                 final socket_number_map = socket_number.toMap();
                 final json_socket_number = jsonEncode(socket_number_map);
@@ -210,6 +216,23 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   Timer.periodic(Duration(seconds: timer), (timer) {
                     socket.emit('remove-booking', json_socket_number);
                     debugPrint("removed:$spotnumber");
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return AlertDialog(
+                    //         title: Text("Time Exceeded!"),
+                    //         content: Text(
+                    //             "The Waiting time is over,Please try again,Click OK to exit the app"),
+                    //         actions: [
+                    //           TextButton(
+                    //             child: Text("OK"),
+                    //             onPressed: () {
+                    //               exit(0);
+                    //             },
+                    //           ),
+                    //         ],
+                    //       );
+                    //     });
                     timer.cancel();
                   });
                 }
@@ -404,6 +427,14 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     if (mounted) {
       socket.emit('join-booking', json_tournamentid);
     }
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
