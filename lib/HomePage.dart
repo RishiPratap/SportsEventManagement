@@ -134,6 +134,37 @@ class _HomePageState extends State<HomePage> {
 
                       print(userdata[i].SPORT);
                     } else {
+                      AlertDialog(
+                        title: const Text(
+                            "This Tournament Booking time has been exceeded"),
+                        content: const Text("Do you want to go to Home Page?"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(14),
+                              child: const Text(
+                                "NO",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+
+                          //one min
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(14),
+                              child: const Text("YES",
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
+                        ],
+                      );
                       print("Time Exceeded");
                     }
                   },
