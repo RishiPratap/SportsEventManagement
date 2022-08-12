@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
-import 'package:ardent_sports/BadmintonSpotSelection.dart';
-import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -374,7 +372,8 @@ class _PaymentState extends State<Payment> {
                       });
                       developer.log('Before Await');
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
                       developer.log("Afeter Await");
                       setState(() {
                         isCreditLoading = false;
@@ -444,7 +443,8 @@ class _PaymentState extends State<Payment> {
                         loading = true;
                       });
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         loading = false;
@@ -512,7 +512,8 @@ class _PaymentState extends State<Payment> {
                       });
                       print("Before await");
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         gPayLoading = false;
@@ -578,7 +579,8 @@ class _PaymentState extends State<Payment> {
                       });
                       print("Before await");
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         phonePayLoading = false;
@@ -643,7 +645,8 @@ class _PaymentState extends State<Payment> {
                       });
                       print("Before await");
                       await initPaymentSheet(context,
-                          email: 'example@gmail.com', amount: 20000);
+                          email: 'example@gmail.com',
+                          amount: int.parse(widget.Spot_Price) * 100);
 
                       setState(() {
                         paytmLoading = false;
@@ -702,64 +705,6 @@ class _PaymentState extends State<Payment> {
     return Positioned(
       top: MediaQuery.of(context).size.width * 1.57,
       right: -w * 0.002,
-      child: TextButton(
-        onPressed: () {},
-        child: SizedBox(
-          height: w * 0.16,
-          width: MediaQuery.of(context).size.width * 0.98,
-          child: TextButton(
-            onPressed: () {
-              print("Coupon Pressed");
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(w * 0.03),
-              ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(w * 0.03, 0, 0, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Apply Coupon",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: w * 0.04,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: w * 0.4,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(w * 0.02, 0, 0, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        ">",
-                        style: TextStyle(
-                            color: Color(0xffD15858),
-                            fontSize: w * 0.06,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  _couponCode2(double w) {
-    return Positioned(
-      top: MediaQuery.of(context).size.width * 0.98,
-      right: -w * 0.001,
       child: TextButton(
         onPressed: () {},
         child: SizedBox(

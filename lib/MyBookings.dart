@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
@@ -100,7 +101,7 @@ class _MyBookings extends State<MyBookings> {
     } else {
       for (int i = 0; i < array_length; i++) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * 0.38,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -241,7 +242,7 @@ class _MyBookings extends State<MyBookings> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
+                  height: MediaQuery.of(context).size.height * 0.09,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -313,6 +314,43 @@ class _MyBookings extends State<MyBookings> {
                       style: TextStyle(
                           color: Colors.white, fontSize: deviceWidth * 0.03),
                     )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.055,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffE74545),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04),
+                        ),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text("Ticket >",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: deviceWidth * 0.03,
+                                  fontWeight: FontWeight.bold)),
+                        )),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.055,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffE74545),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04),
+                        ),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text("View Fixtures >",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: deviceWidth * 0.03,
+                                  fontWeight: FontWeight.bold)),
+                        )),
                   ],
                 )
               ],

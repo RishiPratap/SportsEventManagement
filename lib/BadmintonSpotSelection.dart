@@ -1,3 +1,5 @@
+// ignore: file_names
+// ignore: camel_case_types
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -6,8 +8,6 @@ import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -206,52 +206,22 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 var details = json_decode_spot_clicked_return
                     .fromJson(spot_cliclked_return_details);
                 String spotnumber = details.spot_number;
-                var timer = 60;
+                var timer = 25;
                 final socket_number = send_socket_number_(
                     spotnumber, widget.tourneyId, finalEmail);
                 print(spotnumber);
                 final socket_number_map = socket_number.toMap();
                 final json_socket_number = jsonEncode(socket_number_map);
-                if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
-                  Timer.periodic(Duration(seconds: timer), (timer) {
-                    socket.emit('remove-booking', json_socket_number);
-                    debugPrint("removed:$spotnumber");
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (BuildContext context) {
-                    //       return AlertDialog(
-                    //         title: Text("Time Exceeded!"),
-                    //         content: Text(
-                    //             "The Waiting time is over,Please try again,Click OK to exit the app"),
-                    //         actions: [
-                    //           TextButton(
-                    //             child: Text("OK"),
-                    //             onPressed: () {
-                    //               exit(0);
-                    //             },
-                    //           ),
-                    //         ],
-                    //       );
-                    //     });
-                    timer.cancel();
-                  });
-                }
 
-                socket.on('removed-from-waiting-list', (data) {
-                  if (mounted) {
-                    setState(() {});
-                  }
+                setState(() {
+                  array1[int.parse(spotnumber)] = "${finalEmail}";
+                  debugPrint("Array:$array1");
                 });
-                if (mounted) {
-                  setState(() {
-                    array1[int.parse(spotnumber)] = "${socket.id}";
-                  });
-                }
               });
             },
             color: Color(0xff6EBC55),
             shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
+              borderRadius: BorderRadius.circular(deviceWidth * 0.01),
             ),
             child: Text(
               spotname,
@@ -331,23 +301,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       print(spotnumber);
       final socket_number_map = socket_number.toMap();
       final json_socket_number = jsonEncode(socket_number_map);
-      // if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
-      //   Timer.periodic(Duration(seconds: timer), (timer) {
-      //     socket.emit('remove-booking', json_socket_number);
-      //     debugPrint("removed:$spotnumber");
-      //     timer.cancel();
-      //   });
-      // }
-      //
-      // socket.on('removed-from-waiting-list', (data) {
-      //   if (mounted) {
-      //     setState(() {});
-      //     super.deactivate();
-      //   }
-      // });
       if (mounted) {
         setState(() {
-          array1[int.parse(spotnumber)] = "${socket.id}";
+          array1[int.parse(spotnumber)] = "${finalEmail}";
           super.deactivate();
         });
       }
@@ -360,10 +316,21 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       print("okok${spotnumber}");
       if (mounted) {
         setState(() {
-          array1[int.parse(spotnumber)] = "confirmed-${socket.id}";
+          array1[int.parse(spotnumber)] = "confirmed-$finalEmail";
           super.deactivate();
         });
       }
+    });
+    socket.on('removed-from-waiting-list', (data) {
+      print("removed from waiting list");
+      setState(() {
+        if (mounted) {
+          setState(() {
+            array1[int.parse(data['btnID'])] = data['btnID'];
+            super.deactivate();
+          });
+        }
+      });
     });
     socket.on('spotStatusArray', (data) {
       Map<String, dynamic> spot_details = jsonDecode(data);
