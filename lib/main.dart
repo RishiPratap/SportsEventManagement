@@ -6,6 +6,7 @@ import 'package:ardent_sports/WebViewTest.dart';
 import 'EventDetails.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
+import 'LiveMaintainer.dart';
 import 'login.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -30,8 +31,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       initialRoute: '/',
       routes: {
-        '/': (context) => MyBookings(),
-        '/homePage': (context) => MyBookings(),
+        '/': (context) => LiveMaintainer(),
+        '/homePage': (context) => LiveMaintainer(),
       },
     );
   }

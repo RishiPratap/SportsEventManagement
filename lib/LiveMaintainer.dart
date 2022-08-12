@@ -31,20 +31,20 @@ class player_score {
 class Details_LiveMaintainer {
   late String entity;
   late String entity_ID;
+  late String TOURNAMENT_ID;
   late String MATCHID;
-  late String sport;
   Details_LiveMaintainer({
     required this.entity,
     required this.entity_ID,
+    required this.TOURNAMENT_ID,
     required this.MATCHID,
-    required this.sport,
   });
   Map<String, dynamic> toMap() {
     return {
       "entity": this.entity,
       "entity_ID": this.entity_ID,
+      "TOURNAMENT_ID": this.TOURNAMENT_ID,
       "MATCHID": this.MATCHID,
-      "sport": this.sport,
     };
   }
 }
@@ -89,15 +89,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
   @override
   void initState() {
     super.initState();
-    // score_1_first = widget.score_1_first;
-    // score_2_first = widget.score_2_first;
-    // score_3_first = widget.score_3_first;
-    // score_1_second = widget.score_1_second;
-    // score_2_second = widget.score_2_second;
-    // score_3_second = widget.score_3_second;
-  }
-
-  void connect() {
     socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
@@ -105,8 +96,19 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
     socket.connect();
     socket.onConnect((data) => print("Connected"));
 
+    final details = Details_LiveMaintainer(
+      entity: "LIVE-MAINTAINER",
+      entity_ID: "buddhiman3@gmail.com",
+      TOURNAMENT_ID: "TTbuddhiman3@gmail.com3",
+      MATCHID: "2",
+    );
+    final detailsmap = details.toMap();
+    final json_details = jsonEncode(detailsmap);
+    socket.emit('join-room', json_details);
     print(socket.connected);
   }
+
+  void connect() {}
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +179,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                   'assets/edit_button.png'),
                                               onPressed: () {
                                                 print("1");
-                                                connect();
                                                 update_score_1_first =
                                                     score_1_first;
                                                 update_score_1_second =
@@ -475,6 +476,7 @@ class _Editbutton1State extends State<Editbutton1> {
                         if (update_score_1_first > 0) {
                           update_score_1_first--;
                         }
+                        super.deactivate();
                       });
                     },
                   ),
@@ -500,6 +502,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     onPressed: () {
                       setState(() {
                         update_score_1_first++;
+                        super.deactivate();
                       });
                     },
                   ),
@@ -531,6 +534,7 @@ class _Editbutton1State extends State<Editbutton1> {
                         if (update_score_1_second > 0) {
                           update_score_1_second--;
                         }
+                        super.deactivate();
                       });
                     },
                   ),
@@ -556,6 +560,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     onPressed: () {
                       setState(() {
                         update_score_1_second++;
+                        super.deactivate();
                       });
                     },
                   ),
@@ -572,28 +577,20 @@ class _Editbutton1State extends State<Editbutton1> {
                       setState(() {
                         score_1_first = update_score_1_first;
                         score_1_second = update_score_1_second;
+                        final Score = Score_LiveMaintainer(
+                            PLAYER_1_SCORE: update_score_1_first.toString(),
+                            PLAYER_2_SCORE: update_score_1_second.toString(),
+                            set: "1");
+                        final scoremap = Score.toMap();
+                        final json_score = jsonEncode(scoremap);
+                        socket.emit('update-score', json_score);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LiveMaintainer()),
+                        );
+                        super.deactivate();
                       });
-                      final details = Details_LiveMaintainer(
-                        entity: "LIVE-MAINTAINER",
-                        entity_ID: "livman1",
-                        MATCHID: "1",
-                        sport: "tabletennis",
-                      );
-                      final Score = Score_LiveMaintainer(
-                          PLAYER_1_SCORE: update_score_1_first.toString(),
-                          PLAYER_2_SCORE: update_score_1_second.toString(),
-                          set: "1");
-                      final detailsmap = details.toMap();
-                      final scoremap = Score.toMap();
-                      final json_details = jsonEncode(detailsmap);
-                      final json_score = jsonEncode(scoremap);
-                      socket.emit('join-room', json_details);
-                      socket.emit('update-score', json_score);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LiveMaintainer()),
-                      );
                     },
                     child: Text(
                       "Ok",
@@ -674,6 +671,7 @@ class _Editbutton2State extends State<Editbutton2> {
                         if (update_score_2_first > 0) {
                           update_score_2_first--;
                         }
+                        super.deactivate();
                       });
                     },
                   ),
@@ -699,6 +697,7 @@ class _Editbutton2State extends State<Editbutton2> {
                     onPressed: () {
                       setState(() {
                         update_score_2_first++;
+                        super.deactivate();
                       });
                     },
                   ),
@@ -730,6 +729,7 @@ class _Editbutton2State extends State<Editbutton2> {
                         if (update_score_2_second > 0) {
                           update_score_2_second--;
                         }
+                        super.deactivate();
                       });
                     },
                   ),
@@ -756,7 +756,9 @@ class _Editbutton2State extends State<Editbutton2> {
                       setState(() {
                         setState(() {
                           update_score_2_second++;
+                          super.deactivate();
                         });
+                        super.deactivate();
                       });
                     },
                   ),
@@ -773,22 +775,14 @@ class _Editbutton2State extends State<Editbutton2> {
                       setState(() {
                         score_2_first = update_score_2_first;
                         score_2_second = update_score_2_second;
+                        super.deactivate();
                       });
-                      final details = Details_LiveMaintainer(
-                        entity: "LIVE-MAINTAINER",
-                        entity_ID: "livman1",
-                        MATCHID: "1",
-                        sport: "tabletennis",
-                      );
                       final Score = Score_LiveMaintainer(
                           PLAYER_1_SCORE: update_score_2_first.toString(),
                           PLAYER_2_SCORE: update_score_2_second.toString(),
                           set: "2");
-                      final detailsmap = details.toMap();
                       final scoremap = Score.toMap();
-                      final json_details = jsonEncode(detailsmap);
                       final json_score = jsonEncode(scoremap);
-                      socket.emit('join-room', json_details);
                       socket.emit('update-score', json_score);
                       Navigator.push(
                         context,
@@ -877,6 +871,7 @@ class _Editbutton3State extends State<Editbutton3> {
                         if (update_score_3_first > 0) {
                           update_score_3_first--;
                         }
+                        super.deactivate();
                       });
                     },
                   ),
@@ -902,6 +897,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     onPressed: () {
                       setState(() {
                         update_score_3_first++;
+                        super.deactivate();
                       });
                     },
                   ),
@@ -933,6 +929,7 @@ class _Editbutton3State extends State<Editbutton3> {
                         if (update_score_3_second > 0) {
                           update_score_3_second--;
                         }
+                        super.deactivate();
                       });
                     },
                   ),
@@ -958,6 +955,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     onPressed: () {
                       setState(() {
                         update_score_3_second++;
+                        super.deactivate();
                       });
                     },
                   ),
@@ -974,28 +972,20 @@ class _Editbutton3State extends State<Editbutton3> {
                       setState(() {
                         score_3_first = update_score_3_first;
                         score_3_second = update_score_3_second;
+                        final Score = Score_LiveMaintainer(
+                            PLAYER_1_SCORE: update_score_3_first.toString(),
+                            PLAYER_2_SCORE: update_score_3_second.toString(),
+                            set: "3");
+                        final scoremap = Score.toMap();
+                        final json_score = jsonEncode(scoremap);
+                        socket.emit('update-score', json_score);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LiveMaintainer()),
+                        );
+                        super.deactivate();
                       });
-                      final details = Details_LiveMaintainer(
-                        entity: "LIVE-MAINTAINER",
-                        entity_ID: "livman1",
-                        MATCHID: "1",
-                        sport: "tabletennis",
-                      );
-                      final Score = Score_LiveMaintainer(
-                          PLAYER_1_SCORE: update_score_3_first.toString(),
-                          PLAYER_2_SCORE: update_score_3_second.toString(),
-                          set: "3");
-                      final detailsmap = details.toMap();
-                      final scoremap = Score.toMap();
-                      final json_details = jsonEncode(detailsmap);
-                      final json_score = jsonEncode(scoremap);
-                      socket.emit('join-room', json_details);
-                      socket.emit('update-score', json_score);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LiveMaintainer()),
-                      );
                     },
                     child: Text(
                       "Ok",

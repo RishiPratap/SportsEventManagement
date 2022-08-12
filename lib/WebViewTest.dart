@@ -36,7 +36,7 @@ class _WebViewTestState extends State<WebViewTest> {
               }),
         ].toSet(),
         initialUrl:
-            'https://ardentsportsapis.herokuapp.com/?no_of_spots=${widget.spots}',
+            'https://ardentsportsapis.herokuapp.com/getScore?TOURNAMENT_ID=TTbuddhiman3@gmail.com3&MATCHID=Match%204',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );
