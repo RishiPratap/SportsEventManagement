@@ -137,8 +137,7 @@ class _HomePageState extends State<HomePage> {
                       showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
-                                title: const Text(
-                                    "Time Exceeded!\nYou can't join this tournament anymore"),
+                                title: const Text("Time Exceeded!"),
                                 content: const Text(
                                     "This Tournament Booking time has been exceeded"),
                                 actions: <Widget>[

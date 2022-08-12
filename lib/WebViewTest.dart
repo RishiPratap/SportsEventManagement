@@ -1,5 +1,7 @@
+import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'HomePage.dart';
 
 class WebViewTest extends StatefulWidget {
   final String? spots;
@@ -10,13 +12,29 @@ class WebViewTest extends StatefulWidget {
 }
 
 class _WebViewTestState extends State<WebViewTest> {
+  late WebViewController controller;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Fixtures'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                Navigator.pushReplacement(context,
+                    PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
+              },
+              icon: const Icon(Icons.exit_to_app)),
+        ],
       ),
       body: WebView(
+        javascriptChannels: <JavascriptChannel>[
+          JavascriptChannel(
+              name: 'Print',
+              onMessageReceived: (JavascriptMessage message) {
+                print(message.message);
+              }),
+        ].toSet(),
         initialUrl:
             'https://ardentsportsapis.herokuapp.com/?no_of_spots=${widget.spots}',
         javascriptMode: JavascriptMode.unrestricted,

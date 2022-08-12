@@ -1,3 +1,5 @@
+// ignore: file_names
+// ignore: camel_case_types
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -6,8 +8,6 @@ import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -301,20 +301,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       print(spotnumber);
       final socket_number_map = socket_number.toMap();
       final json_socket_number = jsonEncode(socket_number_map);
-      // if (color1 == const Color(0xffFFFF00).withOpacity(0.8)) {
-      //   Timer.periodic(Duration(seconds: timer), (timer) {
-      //     socket.emit('remove-booking', json_socket_number);
-      //     debugPrint("removed:$spotnumber");
-      //     timer.cancel();
-      //   });
-      // }
-      //
-      // socket.on('removed-from-waiting-list', (data) {
-      //   if (mounted) {
-      //     setState(() {});
-      //     super.deactivate();
-      //   }
-      // });
       if (mounted) {
         setState(() {
           array1[int.parse(spotnumber)] = "${finalEmail}";
