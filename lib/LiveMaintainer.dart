@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
@@ -92,6 +89,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
     socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
+      "forceNew": true,
     });
     socket.connect();
     socket.onConnect((data) => print("Connected"));
@@ -574,23 +572,22 @@ class _Editbutton1State extends State<Editbutton1> {
                 Container(
                   child: TextButton(
                     onPressed: () {
-                      setState(() {
-                        score_1_first = update_score_1_first;
-                        score_1_second = update_score_1_second;
-                        final Score = Score_LiveMaintainer(
-                            PLAYER_1_SCORE: update_score_1_first.toString(),
-                            PLAYER_2_SCORE: update_score_1_second.toString(),
-                            set: "1");
-                        final scoremap = Score.toMap();
-                        final json_score = jsonEncode(scoremap);
-                        socket.emit('update-score', json_score);
-                        Navigator.push(
+                      score_1_first = update_score_1_first;
+                      score_1_second = update_score_1_second;
+                      final Score = Score_LiveMaintainer(
+                          PLAYER_1_SCORE: update_score_1_first.toString(),
+                          PLAYER_2_SCORE: update_score_1_second.toString(),
+                          set: "1");
+                      final scoremap = Score.toMap();
+                      final json_score = jsonEncode(scoremap);
+                      socket.emit('update-score', json_score);
+                      super.deactivate();
+
+                      Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => LiveMaintainer()),
-                        );
-                        super.deactivate();
-                      });
+                          PageRouteBuilder(
+                              pageBuilder: (a, b, c) => LiveMaintainer()));
+                      // Timer.periodic(const Duration(seconds: 2), (timer) {});
                     },
                     child: Text(
                       "Ok",
