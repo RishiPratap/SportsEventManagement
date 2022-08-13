@@ -1,103 +1,76 @@
 import 'dart:convert';
-import 'package:ardent_sports/WebViewTest.dart';
+
+import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
+import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'HomePage.dart';
-import 'package:get/get.dart';
 
-class MyBookings extends StatefulWidget {
-  const MyBookings({Key? key}) : super(key: key);
+class LiveMaintainerMatchSelection extends StatefulWidget {
+  final String Tournament_id;
+  const LiveMaintainerMatchSelection({Key? key, required this.Tournament_id})
+      : super(key: key);
 
   @override
-  State<MyBookings> createState() => _MyBookings();
+  State<LiveMaintainerMatchSelection> createState() =>
+      _LiveMaintainerMatchSelectionState();
 }
 
-class UserData {
-  late String _id;
+class MatchesData {
   late String TOURNAMENT_ID;
-  late String TOURNAMENT_NAME;
-  late bool STATUS;
+  late String PLAYER1_NAME;
+  late String PLAYER2_NAME;
+  late String MATCHID;
+  late String SPORT_NAME;
   late String LOCATION;
   late String CITY;
-  late String TYPE;
-  late String START_DATE;
-  late String COLOR;
-  late String END_DATE;
-  late String SPORT;
-  late bool CANCELLATION_STATUS;
-  late List PARTICIPANTS;
-  late int NO_OF_KNOCKOUT_ROUNDS;
-  late List SPOT_STATUS_ARRAY;
-  late int PRIZE_POOL;
-  late int ENTRY_FEE;
+  late String TOURNAMENT_NAME;
   late String IMG_URL;
-  late List MATCHES;
-  late int __v;
-  UserData(
-    this._id,
+  late String PRIZE_POOL;
+  MatchesData(
     this.TOURNAMENT_ID,
-    this.TOURNAMENT_NAME,
-    this.STATUS,
+    this.PLAYER1_NAME,
+    this.PLAYER2_NAME,
+    this.MATCHID,
+    this.SPORT_NAME,
     this.LOCATION,
     this.CITY,
-    this.TYPE,
-    this.START_DATE,
-    this.COLOR,
-    this.END_DATE,
-    this.SPORT,
-    this.CANCELLATION_STATUS,
-    this.PARTICIPANTS,
-    this.NO_OF_KNOCKOUT_ROUNDS,
-    this.SPOT_STATUS_ARRAY,
-    this.PRIZE_POOL,
-    this.ENTRY_FEE,
+    this.TOURNAMENT_NAME,
     this.IMG_URL,
-    this.MATCHES,
-    this.__v,
+    this.PRIZE_POOL,
   );
 
-  UserData.fromJson(Map<String, dynamic> json) {
-    _id = json['_id'];
+  MatchesData.fromJson(Map<String, dynamic> json) {
     TOURNAMENT_ID = json['TOURNAMENT_ID'];
-    TOURNAMENT_NAME = json['TOURNAMENT_NAME'];
-    STATUS = json['STATUS'];
+    PLAYER1_NAME = json['PLAYER1_NAME'];
+    PLAYER2_NAME = json['PLAYER2_NAME'];
+    MATCHID = json['MATCHID'];
+    SPORT_NAME = json['SPORT_NAME'];
     LOCATION = json['LOCATION'];
     CITY = json['CITY'];
-    TYPE = json['TYPE'];
-    START_DATE = json['START_DATE'];
-    COLOR = json['COLOR'];
-    END_DATE = json['END_DATE'];
-    SPORT = json['SPORT'];
-    CANCELLATION_STATUS = json['CANCELLATION_STATUS'];
-    PARTICIPANTS = json['PARTICIPANTS'];
-    NO_OF_KNOCKOUT_ROUNDS = json['NO_OF_KNOCKOUT_ROUNDS'];
-    SPOT_STATUS_ARRAY = json['SPOT_STATUS_ARRAY'];
-    PRIZE_POOL = json['PRIZE_POOL'];
-    ENTRY_FEE = json['ENTRY_FEE'];
+    TOURNAMENT_NAME = json['TOURNAMENT_NAME'];
     IMG_URL = json['IMG_URL'];
-    MATCHES = json['MATCHES'];
-    __v = json['__v'];
+    PRIZE_POOL = json['PRIZE_POOL'];
   }
 }
 
-class _MyBookings extends State<MyBookings> {
+class _LiveMaintainerMatchSelectionState
+    extends State<LiveMaintainerMatchSelection> {
   var futures;
-  List<Container> AllUpcomingHostedTournaments = [];
+  List<Container> AllUpcomingHostedMatches = [];
 
-  List<Container> AllTournaments = [];
+  List<Container> AllMatches = [];
 
-  List<Container> getHostedTournaments(
-      List<UserData> userdata, int array_length) {
+  List<Container> getHostedMatches(
+      List<MatchesData> matchesdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     if (array_length == 0) {
       var container = Container(
         margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-        child: Text("You Do not have any Bookings"),
+        child: Text("There arent any matches in this Tournament"),
       );
-      AllTournaments.add(container);
+      AllMatches.add(container);
     } else {
       for (int i = 0; i < array_length; i++) {
         var container = Container(
@@ -123,7 +96,7 @@ class _MyBookings extends State<MyBookings> {
                       //     context,
                       //     MaterialPageRoute(
                       //         builder: (context) => BadmintonSpotSelection(
-                      //           tourneyId: userdata[i].TOURNAMENT_ID,
+                      //           tourneyId: matchesdata[i].TOURNAMENT_ID,
                       //         )));
                     },
                     child: Card(
@@ -131,7 +104,7 @@ class _MyBookings extends State<MyBookings> {
                         borderRadius: BorderRadius.circular(deviceWidth * 0.04),
                       ),
                       elevation: 20,
-                      color: userdata[i].SPORT == 'Badminton'
+                      color: matchesdata[i].SPORT_NAME == 'Badminton'
                           ? Color(0xff6BB8FF)
                           : Color(0xff03C289),
                       child: Container(
@@ -150,7 +123,7 @@ class _MyBookings extends State<MyBookings> {
                                   color: Colors.transparent.withOpacity(0.6),
                                   backgroundBlendMode: BlendMode.darken),
                               child: Image(
-                                image: NetworkImage(userdata[i].IMG_URL),
+                                image: NetworkImage(matchesdata[i].IMG_URL),
                                 height: deviceWidth * 0.04,
                                 width: deviceWidth * 0.04,
                                 fit: BoxFit.cover,
@@ -163,12 +136,12 @@ class _MyBookings extends State<MyBookings> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  userdata[i].TOURNAMENT_NAME.length >= 17
-                                      ? userdata[i]
+                                  matchesdata[i].TOURNAMENT_NAME.length >= 17
+                                      ? matchesdata[i]
                                               .TOURNAMENT_NAME
                                               .substring(0, 15) +
                                           '...'
-                                      : userdata[i].TOURNAMENT_NAME,
+                                      : matchesdata[i].TOURNAMENT_NAME,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: deviceWidth * 0.027,
@@ -179,7 +152,7 @@ class _MyBookings extends State<MyBookings> {
                                   height: deviceWidth * 0.01,
                                 ),
                                 Text(
-                                  userdata[i].CITY,
+                                  matchesdata[i].CITY,
                                   style: TextStyle(
                                     fontSize: deviceWidth * 0.027,
                                     fontWeight: FontWeight.w400,
@@ -213,7 +186,7 @@ class _MyBookings extends State<MyBookings> {
                           Container(
                               margin: EdgeInsets.only(left: deviceWidth * 0.07),
                               child: Text(
-                                "Category",
+                                matchesdata[i].PLAYER1_NAME,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -221,21 +194,21 @@ class _MyBookings extends State<MyBookings> {
                           TextButton(
                               onPressed: () {},
                               child: Text(
-                                "V",
+                                "Vs",
                                 style: TextStyle(
                                   fontSize: deviceWidth * 0.04,
                                   color: Color(0xffE74545),
                                 ),
                               )),
                           Container(
-                              margin:
-                                  EdgeInsets.only(right: deviceWidth * 0.07),
-                              child: Text(
-                                "Spots Left",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ))
+                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                            child: Text(
+                              matchesdata[i].PLAYER2_NAME,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -289,7 +262,8 @@ class _MyBookings extends State<MyBookings> {
                                           fontSize: deviceWidth * 0.05,
                                         )),
                                     TextSpan(
-                                      text: userdata[i].PRIZE_POOL.toString(),
+                                      text:
+                                          matchesdata[i].PRIZE_POOL.toString(),
                                       style: TextStyle(
                                           fontSize: deviceWidth * 0.05,
                                           color: Color(0xffE74545),
@@ -310,7 +284,7 @@ class _MyBookings extends State<MyBookings> {
                       ),
                     ),
                     Text(
-                      userdata[i].LOCATION,
+                      matchesdata[i].LOCATION,
                       style: TextStyle(
                           color: Colors.white, fontSize: deviceWidth * 0.03),
                     )
@@ -320,64 +294,47 @@ class _MyBookings extends State<MyBookings> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE74545),
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.04),
-                        ),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text("Ticket >",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: deviceWidth * 0.03,
-                                  fontWeight: FontWeight.bold)),
-                        )),
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE74545),
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.04),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
+                      height: MediaQuery.of(context).size.height * 0.055,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffE74545),
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => WebViewTest(
-                                  Tourney_id: userdata[i].TOURNAMENT_ID,
-                                  spots: 16.toString(),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Text("View Fixtures >",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: deviceWidth * 0.03,
-                                  fontWeight: FontWeight.bold)),
-                        )),
+                                  builder: (context) => LiveMaintainer(
+                                        Tournament_ID:
+                                            matchesdata[i].TOURNAMENT_ID,
+                                        Match_Id: matchesdata[i].MATCHID,
+                                      )));
+                        },
+                        child: Text("Start Scoring >",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: deviceWidth * 0.03,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
                   ],
                 )
               ],
             ),
           ),
         );
-        AllTournaments.add(container);
+        AllMatches.add(container);
       }
     }
-    return AllTournaments;
+    return AllMatches;
   }
 
-  getAllHostedTournaments() async {
+  getAllHostedMatches() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardentsportsapis.herokuapp.com/myBookings?USERID=$obtianedEmail";
+        "https://ardentsportsapis.herokuapp.com/allMatches?TOURNAMENT_ID=${widget.Tournament_id}";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
@@ -388,11 +345,11 @@ class _MyBookings extends State<MyBookings> {
     }
     print(jsonData);
     try {
-      List<UserData> userdata =
-          jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
-      int array_length = userdata.length;
-      print(userdata);
-      return getHostedTournaments(userdata, array_length);
+      List<MatchesData> matchesdata =
+          jsonData.map((dynamic item) => MatchesData.fromJson(item)).toList();
+      int array_length = matchesdata.length;
+      print(matchesdata);
+      return getHostedMatches(matchesdata, array_length);
     } catch (e) {
       print(e);
     }
@@ -400,7 +357,7 @@ class _MyBookings extends State<MyBookings> {
 
   void initState() {
     super.initState();
-    futures = getAllHostedTournaments();
+    futures = getAllHostedMatches();
   }
 
   @override
@@ -471,20 +428,18 @@ class _MyBookings extends State<MyBookings> {
                       height: deviceWidth * 0.06,
                     ),
                     TextButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(deviceWidth * 0.04))),
-                        onPressed: () {
-                          Get.to(HomePage());
-                        },
-                        child: Text(
-                          "Join a Tournament",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: deviceWidth * 0.03),
-                        )),
+                      style: TextButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04))),
+                      onPressed: () {},
+                      child: Text(
+                        "Preview Fixture",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: deviceWidth * 0.03),
+                      ),
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

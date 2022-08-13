@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'ScoreAChallenge.dart';
 import 'login.dart';
 
 class Menu extends StatefulWidget {
@@ -111,7 +112,12 @@ class _MenuState extends State<Menu> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ScoreAChallenge()));
+                      },
                       child: Text(
                         "Score a challenge",
                         style: TextStyle(color: Colors.white),

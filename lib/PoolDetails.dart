@@ -130,7 +130,7 @@ class _PoolDetailsState extends State<PoolDetails> {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -385,6 +385,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                               onPressed: () async {
                                 Get.to(WebViewTest(
                                   spots: SelectedPoolSize,
+                                  Tourney_id: "1",
                                 ));
                               },
                               color: Colors.red,
