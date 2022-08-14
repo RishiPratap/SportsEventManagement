@@ -96,9 +96,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
 
     final details = Details_LiveMaintainer(
       entity: "LIVE-MAINTAINER",
-      entity_ID: "buddhiman3@gmail.com",
-      TOURNAMENT_ID: "TTbuddhiman3@gmail.com3",
-      MATCHID: "2",
+      entity_ID: "test2@gmail.com",
+      TOURNAMENT_ID: "TTtest2@gmail.com1",
+      MATCHID: "0",
     );
     final detailsmap = details.toMap();
     final json_details = jsonEncode(detailsmap);

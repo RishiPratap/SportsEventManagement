@@ -7,8 +7,7 @@ import 'package:ardent_sports/ScoreAMatch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'login.dart';
+import 'LiveMaintainer.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -111,7 +110,9 @@ class _MenuState extends State<Menu> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(LiveMaintainer());
+                      },
                       child: Text(
                         "Score a challenge",
                         style: TextStyle(color: Colors.white),
