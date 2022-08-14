@@ -1352,8 +1352,12 @@ class _SubmitState extends State<Submit> {
                                     width: 350,
                                     child: RaisedButton(
                                       onPressed: () async {
+                                        print(widget.MatchId);
+                                        print(widget.Tournament_ID);
+                                        print(widget.Player_win_name);
                                         var url =
-                                            "https://ardentsportsapis.herokuapp.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match ${widget.MatchId}&WINNER_ID=${widget.Player_win_name}";
+                                            "https://ardentsportsapis.herokuapp.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}&WINNER_ID=${widget.Player_win_name}";
+                                        print(url);
                                         var response =
                                             await get(Uri.parse(url));
                                         print(response.statusCode);
