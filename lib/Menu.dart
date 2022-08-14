@@ -7,7 +7,13 @@ import 'package:ardent_sports/ScoreAMatch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+<<<<<<< HEAD
 import 'LiveMaintainer.dart';
+=======
+
+import 'ScoreAChallenge.dart';
+import 'login.dart';
+>>>>>>> d41a17b34db20a77a716cc98c412c344f77610ad
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -111,7 +117,14 @@ class _MenuState extends State<Menu> {
                   ),
                   TextButton(
                       onPressed: () {
+<<<<<<< HEAD
                         Get.to(LiveMaintainer());
+=======
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ScoreAChallenge()));
+>>>>>>> d41a17b34db20a77a716cc98c412c344f77610ad
                       },
                       child: Text(
                         "Score a challenge",

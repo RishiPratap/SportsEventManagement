@@ -386,6 +386,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
+      "forceNew": true,
     });
     socket.connect();
     final tournament_id1 = tournament_id(TOURNAMENT_ID: widget.tourneyId);
@@ -407,73 +408,37 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
-    return WillPopScope(
-      onWillPop: () {
-        showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text("Exit Alert"),
-            content: const Text("Are you sure you want to exit?"),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  child: const Text(
-                    "NO",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  exit(0);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  child:
-                      const Text("YES", style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
-        );
-        return Future.value(false);
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  FutureBuilder(
-                    future: connect(deviceWidth),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      if (snapshot.data == null) {
-                        return Container(
-                          child: Center(
-                            child: Text("Loading..."),
-                          ),
-                        );
-                      } else {
-                        return Column(
-                          children: snapshot.data.children,
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                FutureBuilder(
+                  future: connect(deviceWidth),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.data == null) {
+                      return Container(
+                        child: Center(
+                          child: Text("Loading..."),
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        children: snapshot.data.children,
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
           ),
         ),

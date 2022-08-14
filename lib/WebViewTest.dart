@@ -5,7 +5,9 @@ import 'HomePage.dart';
 
 class WebViewTest extends StatefulWidget {
   final String? spots;
-  const WebViewTest({Key? key, required this.spots}) : super(key: key);
+  final String Tourney_id;
+  const WebViewTest({Key? key, required this.spots, required this.Tourney_id})
+      : super(key: key);
 
   @override
   State<WebViewTest> createState() => _WebViewTestState();
@@ -36,7 +38,7 @@ class _WebViewTestState extends State<WebViewTest> {
               }),
         ].toSet(),
         initialUrl:
-            'https://ardentsportsapis.herokuapp.com/getScore?TOURNAMENT_ID=TTbuddhiman3@gmail.com3&MATCHID=Match%204',
+            'https://ardentsportsapis.herokuapp.com/getTournamentFixtures?TOURNAMENT_ID=${widget.Tourney_id}',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/LiveMaintainerMatchSelection.dart';
+import 'package:ardent_sports/ScoreAChallenge.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'LiveMaintainer.dart';
@@ -28,7 +30,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => login(),
         '/homePage': (context) => HomePage(),
-        '/live': (context) => LiveMaintainer(),
       },
     );
   }

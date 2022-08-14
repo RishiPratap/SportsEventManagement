@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
 
-    for (int i = 0; i < array_length; i++) {
+    for (int i = array_length - 1; i >= 0; i--) {
       var container = Container(
         height: deviceHeight * 0.3,
         padding: EdgeInsets.all(deviceWidth * 0.018),

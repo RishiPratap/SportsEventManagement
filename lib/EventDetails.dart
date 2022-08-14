@@ -67,7 +67,7 @@ class _EventDetailsState extends State<EventDetails> {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Container(
             width: double.infinity,

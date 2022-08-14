@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
@@ -65,19 +66,17 @@ class Score_LiveMaintainer {
 }
 
 class LiveMaintainer extends StatefulWidget {
-  // LiveMaintainer(
-  //     {this.score_1_first,
-  //     this.score_2_first,
-  //     this.score_3_first,
-  //     this.score_1_second,
-  //     this.score_2_second,
-  //     this.score_3_second});
-  // final score_1_first;
-  // final score_2_first;
-  // final score_3_first;
-  // final score_1_second;
-  // final score_2_second;
-  // final score_3_second;
+  final String Tournament_ID;
+  final String Match_Id;
+  final String Player_1_name;
+  final String Player_2_name;
+  const LiveMaintainer(
+      {Key? key,
+      required this.Tournament_ID,
+      required this.Match_Id,
+      required this.Player_1_name,
+      required this.Player_2_name})
+      : super(key: key);
   @override
   LiveMaintainer1 createState() => LiveMaintainer1();
 }
@@ -95,10 +94,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
     socket.onConnect((data) => print("Connected"));
 
     final details = Details_LiveMaintainer(
-      entity: "LIVE-MAINTAINER",
-      entity_ID: "test2@gmail.com",
-      TOURNAMENT_ID: "TTtest2@gmail.com1",
-      MATCHID: "0",
+      entity: "LIV",
+      entity_ID: "shubro18@gmail.com",
+      TOURNAMENT_ID: widget.Tournament_ID,
+      MATCHID: widget.Match_Id,
     );
     final detailsmap = details.toMap();
     final json_details = jsonEncode(detailsmap);
@@ -185,7 +184,16 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     context: context,
                                                     builder:
                                                         (BuildContext context) {
-                                                      return Editbutton1();
+                                                      return Editbutton1(
+                                                        Tournament_Id: widget
+                                                            .Tournament_ID,
+                                                        Match_Id:
+                                                            widget.Match_Id,
+                                                        Player_1_name: widget
+                                                            .Player_1_name,
+                                                        Player_2_name: widget
+                                                            .Player_2_name,
+                                                      );
                                                       ;
                                                     });
                                               },
@@ -207,7 +215,16 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     context: context,
                                                     builder:
                                                         (BuildContext context) {
-                                                      return Editbutton2();
+                                                      return Editbutton2(
+                                                        Tournament_ID: widget
+                                                            .Tournament_ID,
+                                                        Match_Id:
+                                                            widget.Match_Id,
+                                                        Player_1_name: widget
+                                                            .Player_1_name,
+                                                        Player_2_name: widget
+                                                            .Player_2_name,
+                                                      );
                                                       ;
                                                     });
                                               },
@@ -229,7 +246,16 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     context: context,
                                                     builder:
                                                         (BuildContext context) {
-                                                      return Editbutton3();
+                                                      return Editbutton3(
+                                                        Tournament_ID: widget
+                                                            .Tournament_ID,
+                                                        Match_Id:
+                                                            widget.Match_Id,
+                                                        Player_1_name: widget
+                                                            .Player_1_name,
+                                                        Player_2_name: widget
+                                                            .Player_2_name,
+                                                      );
                                                     });
                                               },
                                             ),
@@ -398,11 +424,37 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                     width: 350,
                                     child: RaisedButton(
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Submit()));
+                                        if ((score_1_first > score_1_second && score_2_first > score_2_second) ||
+                                            (score_1_first > score_1_second &&
+                                                score_3_first >
+                                                    score_3_second) ||
+                                            (score_2_first > score_2_second &&
+                                                score_3_first >
+                                                    score_3_second)) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => Submit(
+                                                        Player_win_name: widget
+                                                            .Player_2_name,
+                                                        MatchId:
+                                                            widget.Match_Id,
+                                                        Tournament_ID: widget
+                                                            .Tournament_ID,
+                                                      )));
+                                        } else {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => Submit(
+                                                        Player_win_name: widget
+                                                            .Player_2_name,
+                                                        MatchId:
+                                                            widget.Match_Id,
+                                                        Tournament_ID: widget
+                                                            .Tournament_ID,
+                                                      )));
+                                        }
                                       },
                                       color: Color(0xffD15858),
                                       shape: RoundedRectangleBorder(
@@ -432,7 +484,17 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
 }
 
 class Editbutton1 extends StatefulWidget {
-  const Editbutton1({Key? key}) : super(key: key);
+  final String Tournament_Id;
+  final String Match_Id;
+  final String Player_1_name;
+  final String Player_2_name;
+  const Editbutton1(
+      {Key? key,
+      required this.Tournament_Id,
+      required this.Match_Id,
+      required this.Player_1_name,
+      required this.Player_2_name})
+      : super(key: key);
 
   @override
   State<Editbutton1> createState() => _Editbutton1State();
@@ -581,13 +643,22 @@ class _Editbutton1State extends State<Editbutton1> {
                       final scoremap = Score.toMap();
                       final json_score = jsonEncode(scoremap);
                       socket.emit('update-score', json_score);
+                      socket.on('score-updated', (data) {
+                        print('1');
+                        print(data.toString());
+                      });
                       super.deactivate();
-
-                      Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                              pageBuilder: (a, b, c) => LiveMaintainer()));
-                      // Timer.periodic(const Duration(seconds: 2), (timer) {});
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LiveMaintainer(
+                            Tournament_ID: widget.Tournament_Id,
+                            Match_Id: widget.Match_Id,
+                            Player_1_name: widget.Player_1_name,
+                            Player_2_name: widget.Player_2_name,
+                          ),
+                        ),
+                      ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
                     },
                     child: Text(
                       "Ok",
@@ -624,7 +695,17 @@ class _Editbutton1State extends State<Editbutton1> {
 }
 
 class Editbutton2 extends StatefulWidget {
-  const Editbutton2({Key? key}) : super(key: key);
+  final String Tournament_ID;
+  final String Match_Id;
+  final String Player_1_name;
+  final String Player_2_name;
+  const Editbutton2(
+      {Key? key,
+      required this.Tournament_ID,
+      required this.Match_Id,
+      required this.Player_1_name,
+      required this.Player_2_name})
+      : super(key: key);
 
   @override
   State<Editbutton2> createState() => _Editbutton2State();
@@ -784,8 +865,14 @@ class _Editbutton2State extends State<Editbutton2> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LiveMaintainer()),
-                      );
+                          builder: (context) => LiveMaintainer(
+                            Tournament_ID: widget.Tournament_ID,
+                            Match_Id: widget.Match_Id,
+                            Player_1_name: widget.Player_1_name,
+                            Player_2_name: widget.Player_1_name,
+                          ),
+                        ),
+                      ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
                     },
                     child: Text(
                       "Ok",
@@ -823,8 +910,17 @@ class _Editbutton2State extends State<Editbutton2> {
 }
 
 class Editbutton3 extends StatefulWidget {
-  const Editbutton3({Key? key}) : super(key: key);
-
+  final String Tournament_ID;
+  final String Match_Id;
+  final String Player_1_name;
+  final String Player_2_name;
+  const Editbutton3(
+      {Key? key,
+      required this.Tournament_ID,
+      required this.Match_Id,
+      required this.Player_1_name,
+      required this.Player_2_name})
+      : super(key: key);
   @override
   State<Editbutton3> createState() => _Editbutton3State();
 }
@@ -979,8 +1075,15 @@ class _Editbutton3State extends State<Editbutton3> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LiveMaintainer()),
-                        );
+                            builder: (context) => LiveMaintainer(
+                              Tournament_ID: widget.Tournament_ID,
+                              Match_Id: widget.Match_Id,
+                              Player_1_name: widget.Player_1_name,
+                              Player_2_name: widget.Player_1_name,
+                            ),
+                          ),
+                        ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
+
                         super.deactivate();
                       });
                     },
@@ -1019,7 +1122,15 @@ class _Editbutton3State extends State<Editbutton3> {
 }
 
 class Submit extends StatefulWidget {
-  const Submit({Key? key}) : super(key: key);
+  final String Player_win_name;
+  final String MatchId;
+  final String Tournament_ID;
+  const Submit(
+      {Key? key,
+      required this.Player_win_name,
+      required this.Tournament_ID,
+      required this.MatchId})
+      : super(key: key);
 
   @override
   State<Submit> createState() => _SubmitState();
@@ -1240,7 +1351,18 @@ class _SubmitState extends State<Submit> {
                                   Container(
                                     width: 350,
                                     child: RaisedButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        print(widget.MatchId);
+                                        print(widget.Tournament_ID);
+                                        print(widget.Player_win_name);
+                                        var url =
+                                            "https://ardentsportsapis.herokuapp.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}&WINNER_ID=${widget.Player_win_name}";
+                                        print(url);
+                                        var response =
+                                            await get(Uri.parse(url));
+                                        print(response.statusCode);
+                                        print(response.body);
+                                      },
                                       color: Color(0xffD15858),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
