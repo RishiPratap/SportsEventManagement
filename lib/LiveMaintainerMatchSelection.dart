@@ -309,6 +309,10 @@ class _LiveMaintainerMatchSelectionState
                                         Tournament_ID:
                                             matchesdata[i].TOURNAMENT_ID,
                                         Match_Id: matchesdata[i].MATCHID,
+                                        Player_1_name:
+                                            matchesdata[i].PLAYER1_NAME,
+                                        Player_2_name:
+                                            matchesdata[i].PLAYER2_NAME,
                                       )));
                         },
                         child: Text("Start Scoring >",
