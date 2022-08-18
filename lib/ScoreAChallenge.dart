@@ -12,6 +12,11 @@ class ScoreAChallenge extends StatefulWidget {
 }
 
 class _ScoreAChallengeState extends State<ScoreAChallenge> {
+  Future<Null> _refreshScore() async {
+    Navigator.pushReplacement(
+        context, PageRouteBuilder(pageBuilder: (a, b, c) => ScoreAChallenge()));
+  }
+
   @override
   String sport_name = "Select a sport";
   TextEditingController challengeid = TextEditingController();
@@ -29,6 +34,7 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
           child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 Row(

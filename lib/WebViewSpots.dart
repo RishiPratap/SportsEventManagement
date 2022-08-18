@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'HomePage.dart';
 
-class WebViewTest extends StatefulWidget {
-  final String Tourney_id;
-  const WebViewTest({Key? key, required this.Tourney_id}) : super(key: key);
+class WebViewSpots extends StatefulWidget {
+  final String? spots;
+
+  const WebViewSpots({Key? key, required this.spots}) : super(key: key);
 
   @override
-  State<WebViewTest> createState() => _WebViewTestState();
+  State<WebViewSpots> createState() => _WebViewSpotsState();
 }
 
-class _WebViewTestState extends State<WebViewTest> {
+class _WebViewSpotsState extends State<WebViewSpots> {
   late WebViewController controller;
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _WebViewTestState extends State<WebViewTest> {
               }),
         ].toSet(),
         initialUrl:
-            'https://ardentsportsapis.herokuapp.com/getTournamentFixtures?TOURNAMENT_ID=${widget.Tourney_id}',
+            'https://ardentsportsapis.herokuapp.com/?no_of_spots=${widget.spots}',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

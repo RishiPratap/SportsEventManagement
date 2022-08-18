@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/UserDetails.dart';
-import 'package:ardent_sports/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'login.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:intl/intl.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -316,16 +315,31 @@ class _SignUpPage extends State<SignUpPage> {
   }
 }
 
-class SubmitPage extends StatelessWidget {
-  final first_name = TextEditingController();
-  final last_name = TextEditingController();
-  final date_of_birth = TextEditingController();
-  final state = TextEditingController();
-  final city = TextEditingController();
-  final Academy = TextEditingController();
-  final Intersted_Sports = TextEditingController();
-  final gender = TextEditingController();
+class SubmitPage extends StatefulWidget {
   SubmitPage({Key? key}) : super(key: key);
+
+  @override
+  State<SubmitPage> createState() => _SubmitPageState();
+}
+
+class _SubmitPageState extends State<SubmitPage> {
+  final first_name = TextEditingController();
+
+  final last_name = TextEditingController();
+
+  final date_of_birth = TextEditingController();
+
+  final state = TextEditingController();
+
+  final city = TextEditingController();
+
+  final Academy = TextEditingController();
+
+  final Intersted_Sports = TextEditingController();
+
+  List<String> gender = ['Male', 'Female'];
+
+  String? selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -455,6 +469,25 @@ class SubmitPage extends StatelessWidget {
                                   height: deviceWidth * 0.14,
                                   child: TextFormField(
                                     controller: date_of_birth,
+                                    readOnly: true,
+                                    onTap: () async {
+                                      DateTime? pickedDate =
+                                          await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(1900),
+                                              lastDate: DateTime(2100));
+
+                                      if (pickedDate != null) {
+                                        String formattedDate =
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(pickedDate);
+                                        setState(() {
+                                          date_of_birth.text =
+                                              formattedDate.toString();
+                                        });
+                                      }
+                                    },
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(
@@ -540,8 +573,29 @@ class SubmitPage extends StatelessWidget {
                               child: Expanded(
                                 child: Container(
                                   height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: gender,
+                                  child: DropdownButtonFormField(
+                                    value: selectedGender,
+                                    items: gender
+                                        .map((value) => DropdownMenuItem(
+                                              child: Text(value),
+                                              value: value,
+                                            ))
+                                        .toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedGender = value as String;
+                                      });
+                                    },
+                                    hint: Text("Select Gender",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: deviceWidth * 0.04,
+                                        )),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.red,
+                                    ),
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(
@@ -632,12 +686,17 @@ class SubmitPage extends StatelessWidget {
                       child: Center(
                         child: RaisedButton(
                           onPressed: () async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            var obtianedEmail =
+                                prefs.setString('email', emailController.text);
+
                             if (first_name.text.trim().isNotEmpty &&
                                 last_name.text.trim().isNotEmpty &&
                                 date_of_birth.text.isNotEmpty &&
                                 state.text.isNotEmpty &&
                                 city.text.isNotEmpty &&
-                                gender.text.isNotEmpty &&
+                                selectedGender!.isNotEmpty &&
                                 Academy.text.isNotEmpty &&
                                 Intersted_Sports.text.isNotEmpty) {
                               final Details = UserDetails(
@@ -646,7 +705,7 @@ class SubmitPage extends StatelessWidget {
                                   NAME: first_name.text.toString(),
                                   EMAIL: emailController.text.toString(),
                                   PWD: passController.text.toString(),
-                                  GENDER: gender.text.toString(),
+                                  GENDER: selectedGender as String,
                                   DOB: date_of_birth.text.toString(),
                                   CITY: city.text.toString(),
                                   STATE: state.text.toString(),

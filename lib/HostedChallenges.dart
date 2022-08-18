@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -100,7 +100,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     } else {
       for (int i = 0; i < array_length; i++) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * 0.38,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -162,10 +162,10 @@ class _HostedChallengesState extends State<HostedChallenges> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  userdata[i].TOURNAMENT_NAME.length >= 17
+                                  userdata[i].TOURNAMENT_NAME.length >= 15
                                       ? userdata[i]
                                               .TOURNAMENT_NAME
-                                              .substring(0, 19) +
+                                              .substring(0, 12) +
                                           '...'
                                       : userdata[i].TOURNAMENT_NAME,
                                   textAlign: TextAlign.center,
@@ -309,14 +309,54 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       ),
                     ),
                     Text(
-                      userdata[i].LOCATION.length > 15
+                      userdata[i].LOCATION.length > 20
                           ? userdata[i].LOCATION.substring(0, 12) + '...'
                           : userdata[i].LOCATION,
                       style: TextStyle(
                           color: Colors.white, fontSize: deviceWidth * 0.03),
-                    )
+                    ),
                   ],
-                )
+                ),
+                Text(
+                  "TournamentID:${userdata[i].TOURNAMENT_ID}",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: deviceWidth * 0.03,
+                      fontWeight: FontWeight.w800),
+                ),
+                TextButton(
+                    onPressed: () async {
+                      final url =
+                          "https://ardentsportsapis.herokuapp.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+
+                      var response = await get(Uri.parse(url));
+                      if (response.statusCode == 200) {
+                        const msg = 'Tournament has Successfully Started!';
+                        Fluttertoast.showToast(msg: msg);
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Failed to start Tournament");
+                      }
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green,
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: Text(
+                          "Start Challenge",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                    ))
               ],
             ),
           ),
@@ -358,7 +398,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        SystemNavigator.pop();
+        Navigator.pop(context);
         return false;
       },
       child: Scaffold(
@@ -375,6 +415,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
             ),
             child: Expanded(
               child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
                     Row(

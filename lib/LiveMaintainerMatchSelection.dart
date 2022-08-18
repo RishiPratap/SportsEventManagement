@@ -1,10 +1,10 @@
 import 'dart:convert';
-
-import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
+import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 class LiveMaintainerMatchSelection extends StatefulWidget {
   final String Tournament_id;
@@ -172,7 +172,7 @@ class _LiveMaintainerMatchSelectionState
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.95,
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.018),
@@ -184,7 +184,7 @@ class _LiveMaintainerMatchSelectionState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                              margin: EdgeInsets.only(left: deviceWidth * 0.08),
                               child: Text(
                                 matchesdata[i].PLAYER1_NAME,
                                 style: TextStyle(
@@ -366,6 +366,15 @@ class _LiveMaintainerMatchSelectionState
 
   @override
   Widget build(BuildContext context) {
+    Future<Null> _refreshTournaments() async {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (a, b, c) => LiveMaintainerMatchSelection(
+                    Tournament_id: widget.Tournament_id,
+                  )));
+    }
+
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
@@ -375,103 +384,114 @@ class _LiveMaintainerMatchSelectionState
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/Homepage.png"),
-                fit: BoxFit.cover,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await _refreshTournaments();
+          },
+          child: SafeArea(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/Homepage.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.18,
-                            height: deviceWidth * 0.1,
-                            margin: EdgeInsets.fromLTRB(
-                                0, deviceWidth * 0.03, 0, 0),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                              image: AssetImage('assets/AARDENT_LOGO.png'),
-                              fit: BoxFit.cover,
-                            )),
+              child: Expanded(
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              width: deviceWidth * 0.18,
+                              height: deviceWidth * 0.1,
+                              margin: EdgeInsets.fromLTRB(
+                                  0, deviceWidth * 0.03, 0, 0),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                image: AssetImage('assets/AARDENT_LOGO.png'),
+                                fit: BoxFit.cover,
+                              )),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.026,
-                            height: deviceWidth * 0.08,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/Ardent_Sport_Text.png"),
-                                    fit: BoxFit.fitWidth)),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              width: deviceWidth * 0.026,
+                              height: deviceWidth * 0.08,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/Ardent_Sport_Text.png"),
+                                      fit: BoxFit.fitWidth)),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: double.infinity,
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              width: double.infinity,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: deviceWidth * 0.06,
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.04))),
-                      onPressed: () {},
-                      child: Text(
-                        "Preview Fixture",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: deviceWidth * 0.03),
+                        ],
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.fromLTRB(
-                                deviceWidth * 0.03, 0, 0, 0),
-                            child: Text("Current Matches")),
-                        FutureBuilder(
-                          future: futures,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            if (snapshot.data == null) {
-                              print("In Null");
-                              return Container(
-                                child: Center(
-                                  child: Text("Loading..."),
-                                ),
-                              );
-                            } else {
-                              return Column(
-                                children: snapshot.data,
-                              );
-                            }
-                          },
+                      Divider(
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: deviceWidth * 0.06,
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04))),
+                        onPressed: () {
+                          Get.to(WebViewTest(Tourney_id: widget.Tournament_id));
+                        },
+                        child: Text(
+                          "Preview Fixture",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: deviceWidth * 0.03),
                         ),
-                      ],
-                    )
-                  ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.fromLTRB(
+                                  deviceWidth * 0.03, 0, 0, 0),
+                              child: Text("Current Matches")),
+                          FutureBuilder(
+                            future: futures,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<dynamic> snapshot) {
+                              if (snapshot.data == null) {
+                                print("In Null");
+                                return Container(
+                                  child: Center(
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Column(
+                                  children: snapshot.data,
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

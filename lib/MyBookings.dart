@@ -99,7 +99,7 @@ class _MyBookings extends State<MyBookings> {
       );
       AllTournaments.add(container);
     } else {
-      for (int i = 0; i < array_length; i++) {
+      for (int i = array_length - 1; i >= 0; i--) {
         var container = Container(
           height: MediaQuery.of(context).size.height * 0.38,
           padding: EdgeInsets.all(deviceWidth * 0.018),
@@ -350,7 +350,6 @@ class _MyBookings extends State<MyBookings> {
                               MaterialPageRoute(
                                 builder: (context) => WebViewTest(
                                   Tourney_id: userdata[i].TOURNAMENT_ID,
-                                  spots: 16.toString(),
                                 ),
                               ),
                             );

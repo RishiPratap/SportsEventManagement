@@ -129,7 +129,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   await SharedPreferences.getInstance();
               var obtianedEmail = prefs.getString('email');
 
-              debugPrint("EmailFromSocket: $finalEmail");
+              debugPrint("EmailFromSocket: $obtianedEmail");
               debugPrint("tournamentIDDDDDD:${widget.tourneyId}");
               final tournament_id1 = SpotClickedDetails(
                 TOURNAMENT_ID: widget.tourneyId,

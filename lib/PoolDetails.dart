@@ -3,7 +3,7 @@ import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'WebViewTest.dart';
+import 'WebViewSpots.dart';
 import 'package:get/get.dart';
 
 class PoolDetails extends StatefulWidget {
@@ -383,10 +383,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                                 deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
                             child: RaisedButton(
                               onPressed: () async {
-                                Get.to(WebViewTest(
-                                  spots: SelectedPoolSize,
-                                  Tourney_id: "1",
-                                ));
+                                Get.to(WebViewSpots(spots: SelectedPoolSize));
                               },
                               color: Colors.red,
                               child: Text(

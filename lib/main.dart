@@ -1,6 +1,6 @@
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/LiveMaintainerMatchSelection.dart';
 import 'package:ardent_sports/ScoreAChallenge.dart';
+
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'LiveMaintainer.dart';
@@ -26,10 +26,16 @@ class MyApp extends StatelessWidget {
       title: 'Ardent Sports',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      initialRoute: '/',
+      // home: login(),
       routes: {
         '/': (context) => login(),
         '/homePage': (context) => HomePage(),
+        '/live': (context) => LiveMaintainer(
+            Tournament_ID: '',
+            Match_Id: '',
+            Player_1_name: '',
+            Player_2_name: ''),
+        '/scoreChallenge': (context) => ScoreAChallenge()
       },
     );
   }

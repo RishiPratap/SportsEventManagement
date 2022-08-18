@@ -1,13 +1,14 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'Menu.dart';
-import 'dart:ui';
+import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -29,6 +30,8 @@ class UserData {
   late String START_DATE;
   late String COLOR;
   late String END_DATE;
+  late String START_TIME;
+  late String END_TIME;
   late String SPORT;
   late bool CANCELLATION_STATUS;
   late List PARTICIPANTS;
@@ -50,6 +53,8 @@ class UserData {
     this.START_DATE,
     this.COLOR,
     this.END_DATE,
+    this.START_TIME,
+    this.END_TIME,
     this.SPORT,
     this.CANCELLATION_STATUS,
     this.PARTICIPANTS,
@@ -73,6 +78,8 @@ class UserData {
     START_DATE = json['START_DATE'];
     COLOR = json['COLOR'];
     END_DATE = json['END_DATE'];
+    START_TIME = json['START_TIME'];
+    END_TIME = json['END_TIME'];
     SPORT = json['SPORT'];
     CANCELLATION_STATUS = json['CANCELLATION_STATUS'];
     PARTICIPANTS = json['PARTICIPANTS'];
@@ -300,7 +307,7 @@ class _HomePageState extends State<HomePage> {
                                 SizedBox(
                                   width: deviceWidth * 0.03,
                                 ),
-                                Text(
+                                const Text(
                                   "Prize money",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -344,12 +351,46 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    userdata[i].LOCATION.length > 15
-                        ? userdata[i].LOCATION.substring(0, 13) + '...'
+                    userdata[i].LOCATION.length > 20
+                        ? userdata[i].LOCATION.substring(0, 12) + '...'
                         : userdata[i].LOCATION,
                     style: TextStyle(
                         color: Colors.white, fontSize: deviceWidth * 0.03),
-                  )
+                  ),
+                  Flexible(fit: FlexFit.tight, child: SizedBox()),
+                  Container(
+                    padding: EdgeInsets.all(deviceWidth * 0.02),
+                    margin: EdgeInsets.only(right: deviceWidth * 0.08),
+                    decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      children: [
+                        Icon(Icons.calendar_today, color: Colors.red),
+                        SizedBox(
+                          width: deviceWidth * 0.02,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              userdata[i].START_DATE,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: deviceWidth * 0.03,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${(userdata[i].START_TIME)} - ${(userdata[i].END_TIME)}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: deviceWidth * 0.03,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               )
             ],
@@ -360,6 +401,10 @@ class _HomePageState extends State<HomePage> {
     }
     return AllTournaments;
   }
+
+  // _convertTime(time) {
+  //   DateFormat("h:mm a").format(DateTime.parse(time));
+  // }
 
   getAllTournaments() async {
     var response = await get(Uri.parse(url));
@@ -390,11 +435,30 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Map? mapUserInfo;
+
+  Future _getDetails() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var email = prefs.getString('email');
+    final uri =
+        'https://ardentsportsapis.herokuapp.com/userDetails?USERID=${email!.trim()}';
+
+    http.Response response;
+    response = await http.get(Uri.parse(uri));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        mapUserInfo = json.decode(response.body);
+      });
+    }
+  }
+
   var futures;
   @override
   void initState() {
     super.initState();
     futures = getAllTournaments();
+    _getDetails();
     // userData();
   }
 
@@ -523,8 +587,10 @@ class _HomePageState extends State<HomePage> {
                           Expanded(
                             flex: 1,
                             child: Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                              child: Text("Shubham"),
+                              margin: EdgeInsets.only(left: deviceWidth * 0.01),
+                              child: Center(
+                                  child: Text(
+                                      "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}")),
                             ),
                           ),
                           Expanded(

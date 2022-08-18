@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-
 import 'PoolDetails.dart';
 
 class EventDetails extends StatefulWidget {
@@ -551,24 +550,24 @@ class _EventDetailsState extends State<EventDetails> {
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: registrationclosedateinput,
-                keyboardType: TextInputType.emailAddress,
-                readOnly: true,
+                keyboardType: TextInputType.number,
+
                 style: TextStyle(color: Colors.white),
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100));
-                  if (pickedDate != null) {
-                    String formattedDate =
-                        DateFormat('dd-MM-yyyy').format(pickedDate);
-                    setState(() {
-                      registrationclosedateinput.text =
-                          formattedDate.toString();
-                    });
-                  }
-                },
+                // onTap: () async {
+                //   DateTime? pickedDate = await showDatePicker(
+                //       context: context,
+                //       initialDate: DateTime.now(),
+                //       firstDate: DateTime(2000),
+                //       lastDate: DateTime(2100));
+                //   if (pickedDate != null) {
+                //     String formattedDate =
+                //         DateFormat('dd-MM-yyyy').format(pickedDate);
+                //     setState(() {
+                //       registrationclosedateinput.text =
+                //           formattedDate.toString();
+                //     });
+                //   }
+                // },
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.01),
