@@ -83,6 +83,7 @@ class UserData {
 
 class _HostedChallengesState extends State<HostedChallenges> {
   var futures;
+  var futures_past_hosted_challenges;
   List<Container> AllUpcomingHostedTournaments = [];
 
   List<Container> AllTournaments = [];
@@ -100,7 +101,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     } else {
       for (int i = 0; i < array_length; i++) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.38,
+          height: MediaQuery.of(context).size.height * 0.4,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -387,9 +388,30 @@ class _HostedChallengesState extends State<HostedChallenges> {
     }
   }
 
+  getAllPastHostedTournaments() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var obtianedEmail = prefs.getString('email');
+    var url =
+        "https://ardentsportsapis.herokuapp.com/pastTournaments?USERID=$obtianedEmail";
+    var response = await get(Uri.parse(url));
+    List<dynamic> jsonData = jsonDecode(response.body);
+
+    print(jsonData);
+    try {
+      List<UserData> userdata =
+          jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
+      int array_length = userdata.length;
+      print(userdata);
+      return getHostedTournaments(userdata, array_length);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void initState() {
     super.initState();
     futures = getAllHostedTournaments();
+    futures_past_hosted_challenges = getAllPastHostedTournaments();
   }
 
   @override
@@ -478,7 +500,8 @@ class _HostedChallengesState extends State<HostedChallenges> {
                               print("In Null");
                               return Container(
                                 child: Center(
-                                  child: Text("Loading..."),
+                                  child: Text(
+                                      "You Dont Have any Hosted Challenges"),
                                 ),
                               );
                             } else {
@@ -492,7 +515,26 @@ class _HostedChallengesState extends State<HostedChallenges> {
                           margin:
                               EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
                           child: Text("Past Hosted Challenges"),
-                        )
+                        ),
+                        FutureBuilder(
+                          future: futures_past_hosted_challenges,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<dynamic> snapshot) {
+                            if (snapshot.data == null) {
+                              print("In Null");
+                              return Container(
+                                child: Center(
+                                  child: Text(
+                                      "You Dont Have any past hosted challenges"),
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                children: snapshot.data,
+                              );
+                            }
+                          },
+                        ),
                       ],
                     )
                   ],
