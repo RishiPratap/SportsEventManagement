@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'HomePage.dart';
 
 class LiveMaintainerMatchSelection extends StatefulWidget {
   final String Tournament_id;
@@ -74,7 +76,7 @@ class _LiveMaintainerMatchSelectionState
     } else {
       for (int i = 0; i < array_length; i++) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.38,
+          height: MediaQuery.of(context).size.height * 0.43,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -323,6 +325,20 @@ class _LiveMaintainerMatchSelectionState
                       ),
                     ),
                   ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "Match Id :${int.parse(matchesdata[i].MATCHID) + 1}",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    )
+                  ],
                 )
               ],
             ),
@@ -379,7 +395,8 @@ class _LiveMaintainerMatchSelectionState
     double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context);
+        Navigator.pushReplacement(
+            context, PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
         return false;
       },
       child: Scaffold(

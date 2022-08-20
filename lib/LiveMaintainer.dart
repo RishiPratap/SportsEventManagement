@@ -1220,7 +1220,7 @@ class _SubmitState extends State<Submit> {
           context: context,
           builder: (ctx) => AlertDialog(
             title: const Text("Back Alert"),
-            content: const Text("Are you sure you want to go to HomePage?"),
+            content: const Text("Are you sure you want to go to back?"),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -1236,7 +1236,9 @@ class _SubmitState extends State<Submit> {
               ),
               TextButton(
                 onPressed: () {
-                  Get.to(HomePage());
+                  Get.to(LiveMaintainerMatchSelection(
+                    Tournament_id: widget.Tournament_ID,
+                  ));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(14),

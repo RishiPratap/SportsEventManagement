@@ -23,16 +23,12 @@ class _ProfileState extends State<Profile> {
               children: [
                 Container(
                   decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/background_rect.png'),
+                      fit: BoxFit.cover,
+                    ),
                     color: Colors.white.withOpacity(0.6),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        topLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03)),
+                    borderRadius:BorderRadius.all(Radius.circular(MediaQuery.of(context).size.height * 0.03)),
                   ),
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: Column(
@@ -53,8 +49,8 @@ class _ProfileState extends State<Profile> {
                                       radius:
                                           MediaQuery.of(context).size.height *
                                               0.135, // Image radius
-                                      backgroundImage: NetworkImage(
-                                          'https://i.stack.imgur.com/UHa1c.png'),
+                                      //  backgroundImage: NetworkImage(
+                                      //     'https://i.stack.imgur.com/UHa1c.png'),
                                     )),
                               ),
                               Expanded(
@@ -177,20 +173,12 @@ class _ProfileState extends State<Profile> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.16,
                   decoration: BoxDecoration(
-                    // gradient: const LinearGradient(colors: [
-                    //   Color(0xFF88EC6C),
-                    //   Color.fromRGBO(255, 255, 255, 0.7),
-                    //   Color.fromRGBO(255, 255, 255, 0)
-                    // ]),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        topLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03)),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        'assets/GreenRect.png',
+                      ),
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -265,16 +253,12 @@ class _ProfileState extends State<Profile> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.16,
                   decoration: BoxDecoration(
-                    color: Color(0xFFF48E46),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        topLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03)),
+                    image: DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      image: AssetImage(
+                        'assets/OrangeRect.png',
+                      ),
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -304,19 +288,16 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   Expanded(
                                     child: Center(
-                                      child: Opacity(
-                                        opacity: 0.9,
-                                        child: Container(
-                                          child: Text("ok"),
-                                          decoration: BoxDecoration(
-                                              color: Colors.black,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.02)),
-                                        ),
+                                      child: Container(
+                                        child: Text("ok"),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Colors.black.withOpacity(0.2),
+                                            borderRadius: BorderRadius.circular(
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.02)),
                                       ),
                                     ),
                                   ),
@@ -351,16 +332,12 @@ class _ProfileState extends State<Profile> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.16,
                   decoration: BoxDecoration(
-                    color: Color(0xFFBE46C7),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomRight: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        topLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03),
-                        bottomLeft: Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03)),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        'assets/PurpRect.png',
+                      ),
+                    ),
                   ),
                   child: Column(
                     children: [
