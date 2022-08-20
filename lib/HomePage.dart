@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
+import 'Profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -553,14 +553,22 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Expanded(
                             flex: 1,
-                            child: Container(
-                              width: deviceWidth * 0.08,
-                              height: deviceWidth * 0.08,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/Profile_Image.png"),
-                                      fit: BoxFit.fitHeight)),
+                            child: InkWell(
+                              onTap: () {
+                                print("pressed");
+                                Get.to(Profile(
+                                  name: mapUserInfo?['Name'],
+                                ));
+                              },
+                              child: Container(
+                                width: deviceWidth * 0.08,
+                                height: deviceWidth * 0.08,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/Profile_Image.png"),
+                                        fit: BoxFit.fitHeight)),
+                              ),
                             ),
                           ),
                           Expanded(
