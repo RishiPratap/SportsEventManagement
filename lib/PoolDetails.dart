@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ardent_sports/CreateChallengeTicket.dart';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -441,13 +442,11 @@ class _PoolDetailsState extends State<PoolDetails> {
                                     },
                                     body: json,
                                     encoding: Encoding.getByName("utf-8"));
-                                print(response.body);
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(response.body),
+                                Map<String, dynamic> jsonData =
+                                    jsonDecode(response.body);
+                                Get.to(CreateChallengeTicket(
+                                  Tournament_ID: jsonData['TOURNAMENT_ID'],
                                 ));
-
-                                Get.to(HomePage());
                               },
                               color: Colors.green,
                               child: Text(
