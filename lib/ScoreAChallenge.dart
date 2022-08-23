@@ -19,6 +19,7 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
 
   @override
   String sport_name = "Select a sport";
+  bool isLoading = false;
   TextEditingController challengeid = TextEditingController();
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -291,7 +292,8 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                         Expanded(
                           flex: 2,
                           child: Container(
-                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.all(10),
+                            width: MediaQuery.of(context).size.width - 50,
                             height: 40,
                             child: RaisedButton(
                               shape: RoundedRectangleBorder(

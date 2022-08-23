@@ -468,8 +468,13 @@ class _LiveMaintainerMatchSelectionState
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(deviceWidth * 0.04))),
-                        onPressed: () {
-                          Get.to(WebViewTest(Tourney_id: widget.Tournament_id));
+                        onPressed: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          var email = prefs.getString('email');
+                          Get.to(WebViewTest(
+                            Tourney_id: widget.Tournament_id,
+                            userId: email,
+                          ));
                         },
                         child: Text(
                           "Preview Fixture",

@@ -1,10 +1,10 @@
 import 'dart:convert';
-
-import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
+import 'PastHostedChallenges.dart';
 
 class HostedChallenges extends StatefulWidget {
   const HostedChallenges({Key? key}) : super(key: key);
@@ -84,8 +84,6 @@ class UserData {
 class _HostedChallengesState extends State<HostedChallenges> {
   var futures;
   var futures_past_hosted_challenges;
-  List<Container> AllUpcomingHostedTournaments = [];
-
   List<Container> AllTournaments = [];
 
   List<Container> getHostedTournaments(
@@ -99,7 +97,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
       );
       AllTournaments.add(container);
     } else {
-      for (int i = 0; i < array_length; i++) {
+      for (int i = array_length - 1; i >= 0; i--) {
         var container = Container(
           height: MediaQuery.of(context).size.height * 0.4,
           padding: EdgeInsets.all(deviceWidth * 0.018),
@@ -382,6 +380,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
           jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
       int array_length = userdata.length;
       print(userdata);
+      getAllPastHostedTournaments();
       return getHostedTournaments(userdata, array_length);
     } catch (e) {
       print(e);
@@ -411,7 +410,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
   void initState() {
     super.initState();
     futures = getAllHostedTournaments();
-    futures_past_hosted_challenges = getAllPastHostedTournaments();
+    // futures_past_hosted_challenges = getAllPastHostedTournaments();
   }
 
   @override
@@ -488,7 +487,16 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         Container(
                             margin: EdgeInsets.fromLTRB(
                                 deviceWidth * 0.03, 0, 0, 0),
-                            child: Text("Upcoming Hosted Challenges")),
+                            child: const Text(
+                              "Upcoming Hosted Challenges",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.red,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            )),
                         SizedBox(
                           height: deviceWidth * 0.05,
                         ),
@@ -512,29 +520,46 @@ class _HostedChallengesState extends State<HostedChallenges> {
                           },
                         ),
                         Container(
-                          margin:
-                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-                          child: Text("Past Hosted Challenges"),
-                        ),
-                        FutureBuilder(
-                          future: futures_past_hosted_challenges,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            if (snapshot.data == null) {
-                              print("In Null");
-                              return Container(
-                                child: Center(
-                                  child: Text(
-                                      "You Dont Have any past hosted challenges"),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.red,
+                            ),
+                            margin: EdgeInsets.fromLTRB(
+                                deviceWidth * 0.03, 0, 0, 0),
+                            child: TextButton(
+                              onPressed: () {
+                                Get.to(PastHostedChallenges());
+                              },
+                              child: Text(
+                                "Past Hosted Challenges >",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w800,
                                 ),
-                              );
-                            } else {
-                              return Column(
-                                children: snapshot.data,
-                              );
-                            }
-                          },
-                        ),
+                              ),
+                            )),
+                        // FutureBuilder(
+                        //   future: getAllPastHostedTournaments(),
+                        //   builder: (BuildContext context,
+                        //       AsyncSnapshot<dynamic> snapshot) {
+                        //     if (snapshot.data == null) {
+                        //       print("In Null");
+                        //       return Container(
+                        //         child: Center(
+                        //           child: Text(
+                        //               "You Dont Have any past hosted challenges"),
+                        //         ),
+                        //       );
+                        //     } else {
+                        //       return Column(
+                        //         children: snapshot.data,
+                        //       );
+                        //     }
+                        //   },
+                        // ),
                       ],
                     )
                   ],

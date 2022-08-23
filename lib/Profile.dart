@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
   final String? name;
-  const Profile({Key? key, required this.name}) : super(key: key);
+  final String? points;
+  const Profile({Key? key, required this.name, required this.points})
+      : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -28,7 +30,8 @@ class _ProfileState extends State<Profile> {
                       fit: BoxFit.cover,
                     ),
                     color: Colors.white.withOpacity(0.6),
-                    borderRadius:BorderRadius.all(Radius.circular(MediaQuery.of(context).size.height * 0.03)),
+                    borderRadius: BorderRadius.all(Radius.circular(
+                        MediaQuery.of(context).size.height * 0.03)),
                   ),
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: Column(
@@ -184,22 +187,21 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: Center(
-                          child: Container(
-                              child: Text(
-                            "Level",
-                            style: TextStyle(
-                              fontFamily: 'SNAP_ITC',
-                              fontSize: 22,
-                            ),
-                          )),
-                        ),
+                        child: Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Text(
+                              "Points",
+                              style: TextStyle(
+                                fontFamily: 'SNAP_ITC',
+                                fontSize: 22,
+                              ),
+                            )),
                       ),
                       Expanded(
                         flex: 3,
                         child: Center(
                           child: Opacity(
-                            opacity: 0.2,
+                            opacity: 0.1,
                             child: Container(
                               child: Row(
                                 children: [
@@ -207,14 +209,12 @@ class _ProfileState extends State<Profile> {
                                     child: Center(
                                       child: Container(
                                         child: Text(
-                                          "Badminton",
+                                          "${widget.points}",
                                           style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.025,
-                                          ),
+                                              color: Colors.white,
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 20),
                                         ),
                                       ),
                                     ),
@@ -287,18 +287,17 @@ class _ProfileState extends State<Profile> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Expanded(
-                                    child: Center(
-                                      child: Container(
-                                        child: Text("ok"),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.black.withOpacity(0.2),
-                                            borderRadius: BorderRadius.circular(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.02)),
-                                      ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/award1.png')),
+                                          color: Colors.black.withOpacity(0.2),
+                                          borderRadius: BorderRadius.circular(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.02)),
                                     ),
                                   ),
                                 ],

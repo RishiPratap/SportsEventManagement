@@ -1,6 +1,6 @@
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/ScoreAChallenge.dart';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'LiveMaintainer.dart';
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      builder: EasyLoading.init(),
       title: 'Ardent Sports',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),

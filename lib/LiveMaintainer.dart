@@ -1343,13 +1343,13 @@ class _SubmitState extends State<Submit> {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 16,
                                                   ),
                                                   Center(
                                                     child: Text(
                                                       "$score_1_first",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
                                                             FontStyle.normal,
@@ -1365,7 +1365,7 @@ class _SubmitState extends State<Submit> {
                                                   Center(
                                                     child: Text(
                                                       "${score_2_first}",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
                                                             FontStyle.normal,
@@ -1381,7 +1381,7 @@ class _SubmitState extends State<Submit> {
                                                   Center(
                                                     child: Text(
                                                       "$score_3_first",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
                                                             FontStyle.normal,
@@ -1395,7 +1395,7 @@ class _SubmitState extends State<Submit> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 17,
                                           ),
                                           Container(

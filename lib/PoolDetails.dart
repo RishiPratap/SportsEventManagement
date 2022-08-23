@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
-import 'package:ardent_sports/HomePage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -115,7 +116,7 @@ class CreateChallengeDetails {
 }
 
 class _PoolDetailsState extends State<PoolDetails> {
-  List<String> PoolSizes = ['8', '16', '32', '64', '128'];
+  List<String> PoolSizes = ['8', '16', '32', '64'];
   String? SelectedPoolSize;
 
   List<String> PointSystems = ['8', '16', '32', '64', '128'];
@@ -125,9 +126,11 @@ class _PoolDetailsState extends State<PoolDetails> {
   String? SelectedPerMatchEstimatedTime;
 
   final EntryFeeController = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -405,48 +408,63 @@ class _PoolDetailsState extends State<PoolDetails> {
                                 deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
                             child: RaisedButton(
                               onPressed: () async {
-                                final SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                var obtianedEmail = prefs.getString('email');
-                                print(obtianedEmail);
-                                final ChallengeDetails = CreateChallengeDetails(
-                                    USERID: obtianedEmail!.trim(),
-                                    TOURNAMENT_ID: "123456",
-                                    CATEGORY: widget.Category,
-                                    NO_OF_KNOCKOUT_ROUNDS:
-                                        int.parse(SelectedPoolSize!),
-                                    ENTRY_FEE:
-                                        int.parse(EntryFeeController.text),
-                                    PRIZE_POOL: 10000,
-                                    TOURNAMENT_NAME: widget.EventName,
-                                    CITY: widget.City,
-                                    TYPE: widget.EventType,
-                                    LOCATION: widget.Address,
-                                    START_DATE: widget.StartDate,
-                                    END_DATE: widget.EndDate,
-                                    START_TIME: widget.StartTime,
-                                    END_TIME: widget.EndTime,
-                                    REGISTRATION_CLOSES_BEFORE: 6,
-                                    AGE_CATEGORY: widget.AgeCategory,
-                                    NO_OF_COURTS: int.parse(widget.NoofCourts),
-                                    BREAK_TIME: widget.BreakTime,
-                                    SPORT: widget.SportName);
-                                final DetailMap = ChallengeDetails.toMap();
-                                final json = jsonEncode(DetailMap);
-                                var url =
-                                    "https://ardentsportsapis.herokuapp.com/createTournament";
-                                var response = await post(Uri.parse(url),
-                                    headers: {
-                                      "Accept": "application/json",
-                                      "Content-Type": "application/json"
-                                    },
-                                    body: json,
-                                    encoding: Encoding.getByName("utf-8"));
-                                Map<String, dynamic> jsonData =
-                                    jsonDecode(response.body);
-                                Get.to(CreateChallengeTicket(
-                                  Tournament_ID: jsonData['TOURNAMENT_ID'],
-                                ));
+                                EasyLoading.show(
+                                  status: 'Loading...',
+                                  maskType: EasyLoadingMaskType.black,
+                                );
+                                if (PoolSizes.isNotEmpty &&
+                                    EntryFeeController.text.isNotEmpty &&
+                                    PointSystems.isNotEmpty &&
+                                    PerMatchEstimatedTime.isNotEmpty) {
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  var obtianedEmail = prefs.getString('email');
+                                  print(obtianedEmail);
+                                  final ChallengeDetails =
+                                      CreateChallengeDetails(
+                                          USERID: obtianedEmail!.trim(),
+                                          TOURNAMENT_ID: "123456",
+                                          CATEGORY: widget.Category,
+                                          NO_OF_KNOCKOUT_ROUNDS:
+                                              int.parse(SelectedPoolSize!),
+                                          ENTRY_FEE: int.parse(
+                                              EntryFeeController.text),
+                                          PRIZE_POOL: 10000,
+                                          TOURNAMENT_NAME: widget.EventName,
+                                          CITY: widget.City,
+                                          TYPE: widget.EventType,
+                                          LOCATION: widget.Address,
+                                          START_DATE: widget.StartDate,
+                                          END_DATE: widget.EndDate,
+                                          START_TIME: widget.StartTime,
+                                          END_TIME: widget.EndTime,
+                                          REGISTRATION_CLOSES_BEFORE: 6,
+                                          AGE_CATEGORY: widget.AgeCategory,
+                                          NO_OF_COURTS:
+                                              int.parse(widget.NoofCourts),
+                                          BREAK_TIME: widget.BreakTime,
+                                          SPORT: widget.SportName);
+                                  final DetailMap = ChallengeDetails.toMap();
+                                  final json = jsonEncode(DetailMap);
+                                  var url =
+                                      "https://ardentsportsapis.herokuapp.com/createTournament";
+                                  var response = await post(Uri.parse(url),
+                                      headers: {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json"
+                                      },
+                                      body: json,
+                                      encoding: Encoding.getByName("utf-8"));
+                                  Map<String, dynamic> jsonData =
+                                      jsonDecode(response.body);
+                                  Get.to(CreateChallengeTicket(
+                                    Tournament_ID: jsonData['TOURNAMENT_ID'],
+                                  ));
+                                  EasyLoading.dismiss();
+                                } else {
+                                  EasyLoading.showError(
+                                      "All fields are required");
+                                }
                               },
                               color: Colors.green,
                               child: Text(

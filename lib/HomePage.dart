@@ -1,13 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import 'Menu.dart';
 import 'package:http/http.dart' as http;
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'Profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -82,7 +84,7 @@ class UserData {
     END_TIME = json['END_TIME'];
     SPORT = json['SPORT'];
     CANCELLATION_STATUS = json['CANCELLATION_STATUS'];
-    PARTICIPANTS = json['PARTICIPANTS'];
+    PARTICIPANTS = ['PARTICIPANTS'];
     NO_OF_KNOCKOUT_ROUNDS = json['NO_OF_KNOCKOUT_ROUNDS'];
     SPOT_STATUS_ARRAY = json['SPOT_STATUS_ARRAY'];
     PRIZE_POOL = json['PRIZE_POOL'];
@@ -94,9 +96,7 @@ class UserData {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isLoading = false;
   DateTime timeBackPressed = DateTime.now();
-  late WebViewController _webViewController;
   List<Container> AllTournaments = [];
 
   final url = 'https://ardentsportsapis.herokuapp.com/allTournaments';
@@ -125,12 +125,19 @@ class _HomePageState extends State<HomePage> {
                 height: MediaQuery.of(context).size.height * 0.075,
                 child: InkWell(
                   onTap: () async {
+                    EasyLoading.show(
+                      status: 'Loading...',
+                      indicator: SpinKitThreeBounce(
+                        color: Color(0xFFE74545),
+                      ),
+                    );
                     var url =
                         "https://ardentsportsapis.herokuapp.com/isTimeExceeded?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
                     var response = await get(Uri.parse(url));
-                    Map<String, dynamic> jsonData = jsonDecode(response.body);
 
-                    if (jsonData['Message'] == "false") {
+                    Map<String, dynamic> jsonData = jsonDecode(response.body);
+                    if (jsonData['Message'] == "false" &&
+                        userdata[i].STATUS == true) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -138,8 +145,10 @@ class _HomePageState extends State<HomePage> {
                                     tourneyId: userdata[i].TOURNAMENT_ID,
                                     sport: userdata[i].SPORT,
                                   )));
-
-                      print(userdata[i].SPORT);
+                      EasyLoading.dismiss();
+                    } else if (userdata[i].STATUS == false) {
+                      EasyLoading.showError(
+                          "Tournament has been completed. You can't join this tournament anymore");
                     } else {
                       showDialog(
                           context: context,
@@ -164,6 +173,7 @@ class _HomePageState extends State<HomePage> {
                                   //one min
                                 ],
                               ));
+                      EasyLoading.dismiss();
                       print("Time Exceeded");
                     }
                   },
@@ -261,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                             )),
                         TextButton(
                             onPressed: () {
-                              // userData();
+                              //userData();
                             },
                             child: Text(
                               "V",
@@ -457,6 +467,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     futures = getAllTournaments();
     _getDetails();
     // userData();
@@ -558,6 +569,7 @@ class _HomePageState extends State<HomePage> {
                                 print("pressed");
                                 Get.to(Profile(
                                   name: mapUserInfo?['Name'],
+                                  points: mapUserInfo?['Points'],
                                 ));
                               },
                               child: Container(

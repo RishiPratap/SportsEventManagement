@@ -1,17 +1,14 @@
 import 'dart:convert';
-import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'HomePage.dart';
-import 'package:get/get.dart';
 
-class MyBookings extends StatefulWidget {
-  const MyBookings({Key? key}) : super(key: key);
+class PastHostedChallenges extends StatefulWidget {
+  const PastHostedChallenges({Key? key}) : super(key: key);
 
   @override
-  State<MyBookings> createState() => _MyBookings();
+  State<PastHostedChallenges> createState() => _PastHostedChallengesState();
 }
 
 class UserData {
@@ -82,10 +79,9 @@ class UserData {
   }
 }
 
-class _MyBookings extends State<MyBookings> {
+class _PastHostedChallengesState extends State<PastHostedChallenges> {
   var futures;
-  List<Container> AllUpcomingHostedTournaments = [];
-
+  var futures_past_hosted_challenges;
   List<Container> AllTournaments = [];
 
   List<Container> getHostedTournaments(
@@ -95,13 +91,13 @@ class _MyBookings extends State<MyBookings> {
     if (array_length == 0) {
       var container = Container(
         margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-        child: Text("You Do not have any Bookings"),
+        child: Text("You Dont Have Any Hosted Challenges"),
       );
       AllTournaments.add(container);
     } else {
-      for (int i = array_length - 1; i >= 0; i--) {
+      for (int i = 0; i < array_length; i++) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.38,
+          height: MediaQuery.of(context).size.height * 0.4,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -163,10 +159,10 @@ class _MyBookings extends State<MyBookings> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  userdata[i].TOURNAMENT_NAME.length >= 17
+                                  userdata[i].TOURNAMENT_NAME.length >= 15
                                       ? userdata[i]
                                               .TOURNAMENT_NAME
-                                              .substring(0, 15) +
+                                              .substring(0, 12) +
                                           '...'
                                       : userdata[i].TOURNAMENT_NAME,
                                   textAlign: TextAlign.center,
@@ -242,7 +238,7 @@ class _MyBookings extends State<MyBookings> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.09,
+                  height: MediaQuery.of(context).size.height * 0.06,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -310,61 +306,54 @@ class _MyBookings extends State<MyBookings> {
                       ),
                     ),
                     Text(
-                      userdata[i].LOCATION,
+                      userdata[i].LOCATION.length > 20
+                          ? userdata[i].LOCATION.substring(0, 12) + '...'
+                          : userdata[i].LOCATION,
                       style: TextStyle(
                           color: Colors.white, fontSize: deviceWidth * 0.03),
-                    )
+                    ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE74545),
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.04),
+                Text(
+                  "TournamentID:${userdata[i].TOURNAMENT_ID}",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: deviceWidth * 0.03,
+                      fontWeight: FontWeight.w800),
+                ),
+                TextButton(
+                    onPressed: () async {
+                      final url =
+                          "https://ardentsportsapis.herokuapp.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+
+                      var response = await get(Uri.parse(url));
+                      if (response.statusCode == 200) {
+                        const msg = 'Tournament has Successfully Started!';
+                        Fluttertoast.showToast(msg: msg);
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Failed to start Tournament");
+                      }
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green,
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: Text(
+                          "Start Challenge",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800),
                         ),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text("Ticket >",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: deviceWidth * 0.03,
-                                  fontWeight: FontWeight.bold)),
-                        )),
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE74545),
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.04),
-                        ),
-                        child: TextButton(
-                          onPressed: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            var id = prefs.getString('email');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => WebViewTest(
-                                  userId: id,
-                                  Tourney_id: userdata[i].TOURNAMENT_ID,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Text("View Fixtures >",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: deviceWidth * 0.03,
-                                  fontWeight: FontWeight.bold)),
-                        )),
-                  ],
-                )
+                      ),
+                    ))
               ],
             ),
           ),
@@ -375,19 +364,14 @@ class _MyBookings extends State<MyBookings> {
     return AllTournaments;
   }
 
-  getAllHostedTournaments() async {
+  getAllPastHostedTournaments() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardentsportsapis.herokuapp.com/myBookings?USERID=$obtianedEmail";
+        "https://ardentsportsapis.herokuapp.com/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
-      print(response.body);
-    } else {
-      print("Didn't Receive");
-    }
     print(jsonData);
     try {
       List<UserData> userdata =
@@ -402,7 +386,8 @@ class _MyBookings extends State<MyBookings> {
 
   void initState() {
     super.initState();
-    futures = getAllHostedTournaments();
+    futures = getAllPastHostedTournaments();
+    // futures_past_hosted_challenges = getAllPastHostedTournaments();
   }
 
   @override
@@ -428,6 +413,7 @@ class _MyBookings extends State<MyBookings> {
             ),
             child: Expanded(
               child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
                     Row(
@@ -449,7 +435,7 @@ class _MyBookings extends State<MyBookings> {
                         Expanded(
                           flex: 1,
                           child: Container(
-                            width: deviceWidth * 0.026,
+                            width: deviceWidth * 0.26,
                             height: deviceWidth * 0.08,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -472,28 +458,25 @@ class _MyBookings extends State<MyBookings> {
                     SizedBox(
                       height: deviceWidth * 0.06,
                     ),
-                    TextButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(deviceWidth * 0.04))),
-                        onPressed: () {
-                          Get.to(HomePage());
-                        },
-                        child: Text(
-                          "Join a Tournament",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: deviceWidth * 0.03),
-                        )),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                             margin: EdgeInsets.fromLTRB(
                                 deviceWidth * 0.03, 0, 0, 0),
-                            child: Text("My Bookings")),
+                            child: const Text(
+                              "Past Hosted Challenges",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.red,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            )),
+                        SizedBox(
+                          height: deviceWidth * 0.05,
+                        ),
                         FutureBuilder(
                           future: futures,
                           builder: (BuildContext context,
@@ -502,7 +485,8 @@ class _MyBookings extends State<MyBookings> {
                               print("In Null");
                               return Container(
                                 child: Center(
-                                  child: Text("Loading..."),
+                                  child: Text(
+                                      "You don't have any past challenges"),
                                 ),
                               );
                             } else {
