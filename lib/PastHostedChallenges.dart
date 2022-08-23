@@ -97,7 +97,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
     } else {
       for (int i = 0; i < array_length; i++) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.43,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(

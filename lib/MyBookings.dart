@@ -101,7 +101,7 @@ class _MyBookings extends State<MyBookings> {
     } else {
       for (int i = array_length - 1; i >= 0; i--) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.38,
+          height: MediaQuery.of(context).size.height * 0.41,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
