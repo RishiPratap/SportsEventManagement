@@ -104,10 +104,9 @@ class _HomePageState extends State<HomePage> {
   List<Container> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
-
     for (int i = array_length - 1; i >= 0; i--) {
       var container = Container(
-        height: deviceHeight * 0.3,
+        height: deviceHeight * 0.33,
         padding: EdgeInsets.all(deviceWidth * 0.018),
         child: Card(
           shape: RoundedRectangleBorder(
@@ -194,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Container(
                             alignment: Alignment.center,
-                            height: deviceWidth * 0.1,
+                            height: deviceHeight * 0.1,
                             width: deviceWidth * 0.1,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
@@ -246,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
               SizedBox(
-                height: deviceWidth * 0.018,
+                height: deviceHeight * 0.012,
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.06,
@@ -512,7 +511,7 @@ class _HomePageState extends State<HomePage> {
                             flex: 1,
                             child: Container(
                               width: deviceWidth * 0.3,
-                              height: deviceWidth * 0.1,
+                              height: deviceHeight * 0.07,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                 image: AssetImage('assets/AARDENT_LOGO.png'),
@@ -524,7 +523,7 @@ class _HomePageState extends State<HomePage> {
                             flex: 1,
                             child: Container(
                               width: deviceWidth * 0.6,
-                              height: deviceWidth * 0.08,
+                              height: deviceHeight * 0.08,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
@@ -546,7 +545,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Container(
                                 width: deviceWidth * 0.04,
-                                height: deviceWidth * 0.033,
+                                height: deviceHeight * 0.02,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image:
@@ -574,7 +573,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Container(
                                 width: deviceWidth * 0.08,
-                                height: deviceWidth * 0.08,
+                                height: deviceHeight * 0.05,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
@@ -593,7 +592,7 @@ class _HomePageState extends State<HomePage> {
                             flex: 1,
                             child: Container(
                               width: deviceWidth * 0.08,
-                              height: deviceWidth * 0.08,
+                              height: deviceHeight * 0.05,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage("assets/money_bag.png"),
