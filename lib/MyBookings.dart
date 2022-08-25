@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:ardent_sports/WebViewTest.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'HomePage.dart';
 import 'package:get/get.dart';
 
@@ -80,27 +81,6 @@ class UserData {
     IMG_URL = json['IMG_URL'];
     MATCHES = json['MATCHES'];
     __v = json['__v'];
-  }
-}
-
-class TicketDetails {
-  late String TNAME;
-  late int SPOT;
-  late String USRNAME;
-  late String SPORT;
-  late String CATEGORY;
-  late String DATE;
-  late String LOCATION;
-  TicketDetails(this.TNAME, this.SPOT, this.USRNAME, this.SPORT, this.CATEGORY,
-      this.DATE, this.LOCATION);
-  TicketDetails.fromJson(Map<String, dynamic> json) {
-    TNAME = json["TNAME"];
-    SPOT = json["SPOT"];
-    USRNAME = json["USRNAME"];
-    SPORT = json["SPORT"];
-    CATEGORY = json["CATEGORY"];
-    DATE = json["DATE"];
-    LOCATION = json["LOCATION"];
   }
 }
 
@@ -351,34 +331,43 @@ class _MyBookings extends State<MyBookings> {
                         ),
                         child: TextButton(
                           onPressed: () async {
+                            EasyLoading.show(
+                                status: 'Loading...',
+                                indicator: SpinKitThreeBounce(
+                                  color: Color(0xFFE74545),
+                                ),
+                                maskType: EasyLoadingMaskType.black);
                             final SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             var obtianedEmail = prefs.getString('email');
                             var url =
                                 "https://ardentsportsapis.herokuapp.com/ticket?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}&USERID=$obtianedEmail";
                             var response = await get(Uri.parse(url));
-                            List<dynamic> jsonData = jsonDecode(response.body);
+                            Map<String, dynamic> jsonData =
+                                jsonDecode(response.body);
                             try {
-                              List<TicketDetails> ticketdetails = jsonData
-                                  .map((dynamic item) =>
-                                      TicketDetails.fromJson(item))
-                                  .toList();
+                              Map<String, dynamic> jsonData =
+                                  jsonDecode(response.body);
+                              print(response.body);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ticket(
-                                    spotNo: ticketdetails[i].SPOT.toString(),
-                                    location: ticketdetails[i].LOCATION,
-                                    eventName: ticketdetails[i].TNAME,
-                                    sportName: ticketdetails[i].SPORT,
-                                    name: ticketdetails[i].USRNAME,
-                                    category: ticketdetails[i].CATEGORY,
-                                    date: ticketdetails[i].DATE,
+                                    spotNo: jsonData["SPOT"].toString(),
+                                    location: jsonData["LOCATION"],
+                                    eventName: jsonData["TNAME"],
+                                    sportName: jsonData["SPORT"],
+                                    name: jsonData["USRNAME"],
+                                    category: jsonData["CATEGORY"],
+                                    date: jsonData["DATE"],
                                   ),
                                 ),
                               );
+
+                              EasyLoading.dismiss();
                             } catch (e) {
                               print(e);
+                              EasyLoading.showError("Error Loading Ticket");
                             }
                           },
                           child: Text("Ticket >",

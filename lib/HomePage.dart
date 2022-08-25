@@ -125,11 +125,11 @@ class _HomePageState extends State<HomePage> {
                 child: InkWell(
                   onTap: () async {
                     EasyLoading.show(
-                      status: 'Loading...',
-                      indicator: SpinKitThreeBounce(
-                        color: Color(0xFFE74545),
-                      ),
-                    );
+                        status: 'Loading...',
+                        indicator: SpinKitThreeBounce(
+                          color: Color(0xFFE74545),
+                        ),
+                        maskType: EasyLoadingMaskType.black);
                     var url =
                         "https://ardentsportsapis.herokuapp.com/isTimeExceeded?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
                     var response = await get(Uri.parse(url));
