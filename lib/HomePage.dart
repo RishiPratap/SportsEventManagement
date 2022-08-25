@@ -593,10 +593,7 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               width: deviceWidth * 0.08,
                               height: deviceHeight * 0.05,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage("assets/money_bag.png"),
-                                      fit: BoxFit.fitHeight)),
+                              decoration: BoxDecoration(),
                             ),
                           ),
                         ],
@@ -622,7 +619,7 @@ class _HomePageState extends State<HomePage> {
                             flex: 1,
                             child: Container(
                               margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                              child: Text("₹15,000"),
+                              child: Text(""),
                             ),
                           ),
                         ],

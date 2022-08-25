@@ -81,7 +81,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   color: Colors.black.withOpacity(0.3),
                 ),
                 child: DropdownButtonFormField(
-                  hint: Text("Select Sport(BD,TT,Cric)",
+                  hint: Text("Select Sport",
                       style: TextStyle(
                         color: Colors.white,
                         fontStyle: FontStyle.normal,
