@@ -67,7 +67,7 @@ class _PaymentState extends State<Payment> {
     debugPrint(paymentResult.toString());
   }
 
-  var url = 'https://ardentsportsapis.herokuapp.com/makePayment';
+  var url = 'http://44.202.65.121:443/makePayment';
   Future<void> initPaymentSheet(context,
       {required String email, required int amount}) async {
     try {

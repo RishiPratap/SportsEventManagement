@@ -715,8 +715,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                       Intersted_Sports.text.toString());
                               final DetailMap = Details.toMap();
                               final json = jsonEncode(DetailMap);
-                              var url =
-                                  "https://ardentsportsapis.herokuapp.com/createUser";
+                              var url = "http://44.202.65.121:443/createUser";
                               var response = await post(Uri.parse(url),
                                   headers: {
                                     "Accept": "application/json",

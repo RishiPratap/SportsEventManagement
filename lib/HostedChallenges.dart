@@ -326,7 +326,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                 TextButton(
                     onPressed: () async {
                       final url =
-                          "https://ardentsportsapis.herokuapp.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                          "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
 
                       var response = await get(Uri.parse(url));
                       if (response.statusCode == 200) {
@@ -370,7 +370,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardentsportsapis.herokuapp.com/hostedTournaments?USERID=$obtianedEmail";
+        "http://44.202.65.121:443/hostedTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
@@ -390,8 +390,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
   getAllPastHostedTournaments() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
-    var url =
-        "https://ardentsportsapis.herokuapp.com/pastTournaments?USERID=$obtianedEmail";
+    var url = "http://44.202.65.121:443/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
