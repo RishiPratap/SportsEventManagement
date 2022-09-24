@@ -126,6 +126,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   String? SelectedPerMatchEstimatedTime;
 
   final EntryFeeController = TextEditingController();
+  final PrizePoolController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -269,6 +270,34 @@ class _PoolDetailsState extends State<PoolDetails> {
                                     ),
                                   ),
                                   hintText: "Entry Fee",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w200),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02),
+                                  )),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(deviceWidth * 0.04),
+                            child: TextField(
+                              controller: PrizePoolController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                    borderSide: BorderSide(
+                                      color: Colors.white.withOpacity(0.4),
+                                    ),
+                                  ),
+                                  hintText: "Prize Pool",
                                   hintStyle: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w200),
@@ -429,7 +458,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                                               int.parse(SelectedPoolSize!),
                                           ENTRY_FEE: int.parse(
                                               EntryFeeController.text),
-                                          PRIZE_POOL: 10000,
+                                          PRIZE_POOL: int.parse(
+                                              PrizePoolController.text),
                                           TOURNAMENT_NAME: widget.EventName,
                                           CITY: widget.City,
                                           TYPE: widget.EventType,

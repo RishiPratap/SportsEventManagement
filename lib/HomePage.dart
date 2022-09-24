@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -96,6 +98,8 @@ class UserData {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool showModal = false;
+
   DateTime timeBackPressed = DateTime.now();
   List<Container> AllTournaments = [];
 
@@ -216,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                                 userdata[i].TOURNAMENT_NAME.length >= 13
                                     ? userdata[i]
                                             .TOURNAMENT_NAME
-                                            .substring(0, 16) +
+                                            .substring(0, 13) +
                                         '...'
                                     : userdata[i].TOURNAMENT_NAME,
                                 textAlign: TextAlign.center,
@@ -269,9 +273,7 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold),
                             )),
                         TextButton(
-                            onPressed: () {
-                              //userData();
-                            },
+                            onPressed: () {},
                             child: Text(
                               "V",
                               style: TextStyle(

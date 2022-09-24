@@ -497,12 +497,7 @@ class _EventDetailsState extends State<EventDetails> {
                       height: deviceWidth * 0.02,
                     ),
                     RaisedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => EventDetails()));
-                      },
+                      onPressed: () {},
                       color: Colors.red,
                       child: Text(
                         'Add',
@@ -532,7 +527,6 @@ class _EventDetailsState extends State<EventDetails> {
                       children: [
                         Text("  "),
                         Image(image: AssetImage("assets/Menu.png")),
-                        Text("     WS OPEN"),
                       ],
                     ),
                     SizedBox(

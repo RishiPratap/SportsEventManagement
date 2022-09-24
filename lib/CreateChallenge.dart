@@ -10,7 +10,10 @@ class CreateChallenge extends StatefulWidget {
 }
 
 class _CreateChallengeState extends State<CreateChallenge> {
-  List<String> Sports = ['Badminton', 'Table Tennis', 'Cricket'];
+  List<String> Sports = [
+    'Badminton',
+    'Table Tennis',
+  ];
   String? SelectedSport;
 
   List<String> Event = ['Fixed', 'Dynamic'];
