@@ -477,7 +477,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                                   final DetailMap = ChallengeDetails.toMap();
                                   final json = jsonEncode(DetailMap);
                                   var url =
-                                      "https://ardentsportsapis.herokuapp.com/createTournament";
+                                      "http://44.202.65.121:443/createTournament";
                                   var response = await post(Uri.parse(url),
                                       headers: {
                                         "Accept": "application/json",

@@ -1,4 +1,12 @@
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
   final String? name;
@@ -11,6 +19,70 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  File? image;
+  Dio dio = Dio();
+  Widget bottomSheet() {
+    return Container(
+      height: 100.0,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
+            "Choose Profile photo",
+            style: TextStyle(
+              fontSize: 20.0,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            FlatButton.icon(
+              icon: Icon(Icons.camera),
+              onPressed: () {
+                pickImage(ImageSource.camera);
+              },
+              label: Text("Camera"),
+            ),
+            FlatButton.icon(
+              icon: Icon(Icons.image),
+              onPressed: () {
+                pickImage(ImageSource.gallery);
+              },
+              label: Text("Gallery"),
+            ),
+          ])
+        ],
+      ),
+    );
+  }
+
+  Future pickImage(ImageSource source) async {
+    var imagePicker = await ImagePicker().pickImage(source: source);
+
+    if (imagePicker != null) {
+      setState(() {
+        image = File(imagePicker.path);
+      });
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future uploadImage() async {
+    var formData = FormData.fromMap({
+      "image": await MultipartFile.fromFile(image!.path),
+    });
+
+    var response = await dio.post(
+        "https://ardentsportsapis.herokuapp.com/postProfilePic",
+        data: formData);
+    debugPrint(response.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,16 +117,43 @@ class _ProfileState extends State<Profile> {
                               Expanded(
                                 flex: 1,
                                 child: Container(
-                                    padding: EdgeInsets.all(
-                                        MediaQuery.of(context).size.height *
-                                            0.0188),
-                                    child: CircleAvatar(
-                                      radius:
-                                          MediaQuery.of(context).size.height *
-                                              0.135, // Image radius
-                                      //  backgroundImage: NetworkImage(
-                                      //     'https://i.stack.imgur.com/UHa1c.png'),
-                                    )),
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.height *
+                                          0.0188),
+                                  child: Stack(
+                                    children: [
+                                      CircleAvatar(
+                                        radius:
+                                            MediaQuery.of(context).size.height *
+                                                0.145, // Image radius
+                                        backgroundImage: image != null
+                                            ? Image.file(image!).image
+                                            : AssetImage(
+                                                'assets/profile-avatar 1.png'),
+                                      ),
+                                      Positioned(
+                                        bottom:
+                                            MediaQuery.of(context).size.height *
+                                                0.045,
+                                        right:
+                                            MediaQuery.of(context).size.width *
+                                                0.02,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: ((builder) =>
+                                                  bottomSheet()),
+                                            );
+                                          },
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                               Expanded(
                                 flex: 2,
@@ -461,40 +560,20 @@ class _ProfileState extends State<Profile> {
                       Expanded(
                         flex: 2,
                         child: Center(
-                          child: Container(
-                              child: Text(
-                            "Analytics",
-                            style:
-                                TextStyle(fontFamily: 'SNAP_ITC', fontSize: 22),
-                          )),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Center(
-                          child: Opacity(
-                            opacity: 0.2,
+                          child: InkWell(
+                            onTap: () {
+                              uploadImage();
+                              print("Pressed");
+                            },
                             child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(
-                                        MediaQuery.of(context).size.height *
-                                            0.03),
-                                    bottomRight: Radius.circular(
-                                        MediaQuery.of(context).size.height *
-                                            0.03),
-                                    topLeft: Radius.circular(
-                                        MediaQuery.of(context).size.height *
-                                            0.03),
-                                    bottomLeft: Radius.circular(
-                                        MediaQuery.of(context).size.height *
-                                            0.03)),
-                              ),
-                            ),
+                                child: Text(
+                              "Upload",
+                              style: TextStyle(
+                                  fontFamily: 'SNAP_ITC', fontSize: 22),
+                            )),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

@@ -384,7 +384,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   //http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/
   var futures;
   void initState() {
-    socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
+    socket = io("http://44.202.65.121:443", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
       "forceNew": true,

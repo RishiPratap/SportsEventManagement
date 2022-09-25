@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
   DateTime timeBackPressed = DateTime.now();
   List<Container> AllTournaments = [];
 
-  final url = 'https://ardentsportsapis.herokuapp.com/allTournaments';
+  final url = 'http://44.202.65.121:443/allTournaments';
 
   List<Container> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         maskType: EasyLoadingMaskType.black);
                     var url =
-                        "https://ardentsportsapis.herokuapp.com/isTimeExceeded?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                        "http://44.202.65.121:443/isTimeExceeded?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
                     var response = await get(Uri.parse(url));
 
                     Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -451,8 +451,7 @@ class _HomePageState extends State<HomePage> {
   Future _getDetails() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var email = prefs.getString('email');
-    final uri =
-        'https://ardentsportsapis.herokuapp.com/userDetails?USERID=${email!.trim()}';
+    final uri = 'http://44.202.65.121:443/userDetails?USERID=${email!.trim()}';
 
     http.Response response;
     response = await http.get(Uri.parse(uri));

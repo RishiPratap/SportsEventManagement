@@ -88,7 +88,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
   @override
   void initState() {
     super.initState();
-    socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
+    socket = io("http://44.202.65.121:443", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
       "forceNew": true,
@@ -1496,7 +1496,7 @@ class _SubmitState extends State<Submit> {
                                             print(widget.Tournament_ID);
 
                                             var url =
-                                                "https://ardentsportsapis.herokuapp.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
+                                                "http://44.202.65.121:443/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
                                             print(url);
                                             http.Response response;
                                             response =

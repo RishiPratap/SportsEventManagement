@@ -354,7 +354,7 @@ class _LiveMaintainerMatchSelectionState
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardentsportsapis.herokuapp.com/allMatches?TOURNAMENT_ID=${widget.Tournament_id}";
+        "http://44.202.65.121:443/allMatches?TOURNAMENT_ID=${widget.Tournament_id}";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
