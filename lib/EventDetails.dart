@@ -62,6 +62,8 @@ class _EventDetailsState extends State<EventDetails> {
     }
   }
 
+  List<Row> AllAddedCategories = [];
+
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -497,7 +499,24 @@ class _EventDetailsState extends State<EventDetails> {
                       height: deviceWidth * 0.02,
                     ),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        var row = Row(
+                          children: [
+                            Text("  "),
+                            Image(image: AssetImage("assets/Menu.png")),
+                            SelectedCategory == null
+                                ? Text("")
+                                : Text("  $SelectedCategory "),
+                            SelectedAge == null
+                                ? Text("")
+                                : Text("   $SelectedAge")
+                          ],
+                        );
+                        setState(() {
+                          AllAddedCategories.add(row);
+                        });
+                      },
+//
                       color: Colors.red,
                       child: Text(
                         'Add',
@@ -507,27 +526,8 @@ class _EventDetailsState extends State<EventDetails> {
                           borderRadius:
                               BorderRadius.circular(deviceWidth * 0.06)),
                     ),
-                    Row(
-                      children: [
-                        Text("  "),
-                        Image(image: AssetImage("assets/Menu.png")),
-                        SelectedCategory == null
-                            ? Text("")
-                            : Text("$SelectedCategory"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("  "),
-                        Image(image: AssetImage("assets/Menu.png")),
-                        SelectedAge == null ? Text("") : Text("$SelectedAge"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("  "),
-                        Image(image: AssetImage("assets/Menu.png")),
-                      ],
+                    Column(
+                      children: AllAddedCategories,
                     ),
                     SizedBox(
                       height: deviceWidth * 0.02,
