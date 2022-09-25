@@ -516,6 +516,7 @@ class _EventDetailsState extends State<EventDetails> {
                           AllAddedCategories.add(row);
                         });
                       },
+//
                       color: Colors.red,
                       child: Text(
                         'Add',
