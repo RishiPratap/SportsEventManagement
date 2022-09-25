@@ -72,6 +72,8 @@ class _ProfileState extends State<Profile> {
       "image": await MultipartFile.fromFile(image!.path),
     });
 
+    print(image!.path);
+
     var response = await dio.post(
         "https://ardentsportsapis.herokuapp.com/postProfilePic",
         data: formData);
