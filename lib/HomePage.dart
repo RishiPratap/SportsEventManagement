@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,6 +20,22 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+}
+
+class SpotStatusArray {
+  late String category;
+  late String id;
+  late List array;
+  SpotStatusArray(
+    this.category,
+    this.id,
+    this.array,
+  );
+  SpotStatusArray.fromJson(Map<String, dynamic> json) {
+    category = json['category'];
+    id = json['id'];
+    array = json[array];
+  }
 }
 
 class UserData {
@@ -46,6 +61,7 @@ class UserData {
   late String IMG_URL;
   late List MATCHES;
   late int __v;
+  late List spotStatusArray;
   UserData(
     this._id,
     this.TOURNAMENT_ID,
@@ -69,6 +85,7 @@ class UserData {
     this.IMG_URL,
     this.MATCHES,
     this.__v,
+    this.spotStatusArray,
   );
 
   UserData.fromJson(Map<String, dynamic> json) {
@@ -94,16 +111,15 @@ class UserData {
     IMG_URL = json['IMG_URL'];
     MATCHES = json['MATCHES'];
     __v = json['__v'];
+    spotStatusArray = json['spotStatusArrays'];
   }
 }
 
 class _HomePageState extends State<HomePage> {
-  bool showModal = false;
-
   DateTime timeBackPressed = DateTime.now();
   List<Card> AllTournaments = [];
 
-  final url = 'http://44.202.65.121:443/allTournaments';
+  final url = 'https://ardentsportsapis.herokuapp.com/baseTournaments';
 
   List<Card> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -124,59 +140,7 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.only(top: deviceWidth * 0.002),
               height: MediaQuery.of(context).size.height * 0.075,
               child: InkWell(
-                onTap: () async {
-                  EasyLoading.show(
-                      status: 'Loading...',
-                      indicator: SpinKitThreeBounce(
-                        color: Color(0xFFE74545),
-                      ),
-                      maskType: EasyLoadingMaskType.black);
-                  var url =
-                      "http://44.202.65.121:443/isTimeExceeded?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-                  var response = await get(Uri.parse(url));
-
-                  Map<String, dynamic> jsonData = jsonDecode(response.body);
-                  if (jsonData['Message'] == "false" &&
-                      userdata[i].STATUS == true) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BadmintonSpotSelection(
-                                  tourneyId: userdata[i].TOURNAMENT_ID,
-                                  sport: userdata[i].SPORT,
-                                )));
-                    EasyLoading.dismiss();
-                  } else if (userdata[i].STATUS == false) {
-                    EasyLoading.showError(
-                        "Tournament has been completed. You can't join this tournament anymore");
-                  } else {
-                    showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                              title: const Text("Time Exceeded!"),
-                              content: const Text(
-                                  "This Tournament Booking time has been exceeded"),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(14),
-                                    child: const Text(
-                                      "OK",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-
-                                //one min
-                              ],
-                            ));
-                    EasyLoading.dismiss();
-                    print("Time Exceeded");
-                  }
-                },
+                onTap: () async {},
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -288,7 +252,8 @@ class _HomePageState extends State<HomePage> {
                       )
                     ],
                   ),
-                  children: getAllTournamentCategories(),
+                  children:
+                      getAllTournamentCategories(userdata[i].spotStatusArray),
                 ),
               ),
             ),
@@ -410,16 +375,110 @@ class _HomePageState extends State<HomePage> {
     return AllTournaments;
   }
 
-  List<Container> getAllTournamentCategories() {
+  List<Container> getAllTournamentCategories(List spotStatusArray) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     List<Container> AllCategories = [];
+    int array_length = spotStatusArray.length;
+    for (int i = 0; i < array_length; i++) {
+      int x = spotStatusArray[i]['array'].length;
+      int y = 0;
+      for (int j = 0; j < x; j++) {
+        if (spotStatusArray[i]['array'][j] == "$j") {
+          y++;
+        }
+      }
+      var container = Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: InkWell(
+                onTap: () async {
+                  EasyLoading.show(
+                      status: 'Loading...',
+                      indicator: SpinKitThreeBounce(
+                        color: Color(0xFFE74545),
+                      ),
+                      maskType: EasyLoadingMaskType.black);
+                  var url =
+                      "http://44.202.65.121:443/isTimeExceeded?TOURNAMENT_ID=${spotStatusArray[i]['id']}";
+                  var response = await get(Uri.parse(url));
 
-    var container = Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text("Mens Singles"), Text("27/32")],
-      ),
-    );
-    AllCategories.add(container);
+                  Map<String, dynamic> jsonData = jsonDecode(response.body);
+                  if (jsonData['Message'] == "false" &&
+                      spotStatusArray[i]['STATUS'] == true) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BadmintonSpotSelection(
+                                  tourneyId: spotStatusArray[i]['id'],
+                                  sport: spotStatusArray[i]['SPORT'],
+                                )));
+                    EasyLoading.dismiss();
+                  } else if (spotStatusArray[i]['STATUS'] == false) {
+                    EasyLoading.showError(
+                        "Tournament has been completed. You can't join this tournament anymore");
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                              title: const Text("Time Exceeded!"),
+                              content: const Text(
+                                  "This Tournament Booking time has been exceeded"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(14),
+                                    child: const Text(
+                                      "OK",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+
+                                //one min
+                              ],
+                            ));
+                    EasyLoading.dismiss();
+                    print("Time Exceeded");
+                  }
+                },
+                child: Container(
+                    margin: EdgeInsets.only(left: deviceWidth * 0.02),
+                    height: deviceHeight * 0.03,
+                    width: deviceWidth * 0.4,
+                    decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    child: new Center(
+                      child: new Text(
+                        spotStatusArray[i]['category'],
+                        style: TextStyle(color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text(
+                "$y/$x",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+      AllCategories.add(container);
+    }
     return AllCategories;
   }
 
