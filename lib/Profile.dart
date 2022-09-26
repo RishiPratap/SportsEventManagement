@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:ardent_sports/SpotConfirmation.dart';
+import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +81,27 @@ class _ProfileState extends State<Profile> {
 
   Map? mapUserImage;
 
+  Future getImage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userName = prefs.getString('email');
+    var url =
+        'https://ardentsportsapis.herokuapp.com/profilePicUrl?USERID=$userName';
+
+    try {
+      Response response;
+      response = await dio.get(url);
+
+      if (response.statusCode == 200) {
+        setState(() {
+          mapUserImage = response.data;
+        });
+        print(mapUserImage);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future uploadImage() async {
     setState(() {
       isLoading = true;
@@ -104,8 +125,6 @@ class _ProfileState extends State<Profile> {
       if (response.statusCode == 200) {
         setState(() {
           isLoading = false;
-          mapUserImage = response.data;
-          print(mapUserImage);
         });
 
         print("Image Uploaded");
@@ -121,6 +140,13 @@ class _ProfileState extends State<Profile> {
         isLoading = false;
       });
     }
+  }
+
+  @override
+  void initState() {
+    getImage();
+    print("init state");
+    super.initState();
   }
 
   @override
@@ -169,14 +195,12 @@ class _ProfileState extends State<Profile> {
                                                   .size
                                                   .height *
                                               0.145, // Image radius
-                                          backgroundImage: mapUserImage?[
-                                                      'Message'] ==
-                                                  null
-                                              ? AssetImage(
-                                                  'assets/profile-avatar 1.png')
-                                              : NetworkImage(
-                                                      mapUserImage?['Message'])
-                                                  as ImageProvider,
+                                          backgroundImage:
+                                              CachedNetworkImageProvider(
+                                                  mapUserImage == null
+                                                      ? 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'
+                                                      : mapUserImage?[
+                                                          'Message']),
                                         ),
                                         Positioned(
                                           bottom: MediaQuery.of(context)
