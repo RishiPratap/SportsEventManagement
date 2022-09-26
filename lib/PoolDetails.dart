@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'CategoryDetails.dart';
 import 'WebViewSpots.dart';
 import 'package:get/get.dart';
 
@@ -25,26 +26,28 @@ class PoolDetails extends StatefulWidget {
   final String RegistrationCloses;
   final String NoofCourts;
   final String BreakTime;
+  final List<CategorieDetails> AllCategoryDetails;
 
-  const PoolDetails({
-    Key? key,
-    required this.SportName,
-    required this.EventManagerName,
-    required this.EventManagerMobileNo,
-    required this.EventType,
-    required this.EventName,
-    required this.StartDate,
-    required this.EndDate,
-    required this.StartTime,
-    required this.EndTime,
-    required this.City,
-    required this.Address,
-    required this.Category,
-    required this.AgeCategory,
-    required this.RegistrationCloses,
-    required this.NoofCourts,
-    required this.BreakTime,
-  }) : super(key: key);
+  const PoolDetails(
+      {Key? key,
+      required this.SportName,
+      required this.EventManagerName,
+      required this.EventManagerMobileNo,
+      required this.EventType,
+      required this.EventName,
+      required this.StartDate,
+      required this.EndDate,
+      required this.StartTime,
+      required this.EndTime,
+      required this.City,
+      required this.Address,
+      required this.Category,
+      required this.AgeCategory,
+      required this.RegistrationCloses,
+      required this.NoofCourts,
+      required this.BreakTime,
+      required this.AllCategoryDetails})
+      : super(key: key);
   @override
   State<PoolDetails> createState() => _PoolDetailsState();
 }
@@ -410,6 +413,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                           SizedBox(
                             height: deviceWidth * 0.02,
                           ),
+                          Row(),
                           Container(
                             width: deviceWidth * 0.8,
                             margin: EdgeInsets.fromLTRB(
@@ -449,6 +453,19 @@ class _PoolDetailsState extends State<PoolDetails> {
                                       await SharedPreferences.getInstance();
                                   var obtianedEmail = prefs.getString('email');
                                   print(obtianedEmail);
+                                  String Category = "";
+                                  for (int i = 0;
+                                      i < widget.AllCategoryDetails.length;
+                                      i++) {
+                                    Category += widget
+                                        .AllCategoryDetails[i].CategoryName;
+                                    if (i !=
+                                        widget.AllCategoryDetails.length - 1) {
+                                      Category += "-";
+                                    }
+                                  }
+                                  print(Category);
+
                                   final ChallengeDetails =
                                       CreateChallengeDetails(
                                           USERID: obtianedEmail!.trim(),

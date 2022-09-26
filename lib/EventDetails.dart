@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'CategoryDetails.dart';
 import 'PoolDetails.dart';
 
 class EventDetails extends StatefulWidget {
@@ -63,6 +64,7 @@ class _EventDetailsState extends State<EventDetails> {
   }
 
   List<Row> AllAddedCategories = [];
+  List<CategorieDetails> AllCategories = [];
 
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -257,17 +259,22 @@ class _EventDetailsState extends State<EventDetails> {
                             initialTime: TimeOfDay.now(),
                             context: context,
                           );
+
                           if (pickedTime != null) {
-                            DateTime parsedTime = DateFormat.jm()
-                                .parse(pickedTime.format(context).toString());
-                            String formattedTime =
-                                DateFormat('HH:mm:ss').format(parsedTime);
+                            int hour = pickedTime.hour;
+                            int minute = pickedTime.minute;
                             setState(() {
-                              starttime.text = formattedTime.toString();
+                              starttime.text = "$hour:$minute";
                             });
+                            // DateTime parsedTime = DateFormat.jm()
+                            //     .parse(pickedTime.format(context).toString());
+                            // String formattedTime =
+                            //     DateFormat('HH:mm:ss').format(parsedTime);
+                            // setState(() {
+                            //   starttime.text = formattedTime.toString();
+                            // });
                           }
                         },
-                        keyboardType: TextInputType.emailAddress,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -304,13 +311,19 @@ class _EventDetailsState extends State<EventDetails> {
                             context: context,
                           );
                           if (pickedTime != null) {
-                            DateTime parsedTime = DateFormat.jm()
-                                .parse(pickedTime.format(context).toString());
-                            String formattedTime =
-                                DateFormat('HH:mm:ss').format(parsedTime);
+                            int hour = pickedTime.hour;
+                            int minute = pickedTime.minute;
                             setState(() {
-                              endtime.text = formattedTime.toString();
+                              endtime.text = "$hour:$minute";
                             });
+
+                            // DateTime parsedTime = DateFormat.jm()
+                            //     .parse(pickedTime.format(context).toString());
+                            // String formattedTime =
+                            //     DateFormat('HH:mm:ss').format(parsedTime);
+                            // setState(() {
+                            //   endtime.text = formattedTime.toString();
+                            // });
                           }
                         },
                         decoration: InputDecoration(
@@ -500,6 +513,9 @@ class _EventDetailsState extends State<EventDetails> {
                     ),
                     RaisedButton(
                       onPressed: () {
+                        CategorieDetails detail =
+                            CategorieDetails(SelectedCategory!, SelectedAge!);
+                        AllCategories.add(detail);
                         var row = Row(
                           children: [
                             Text("  "),
@@ -516,7 +532,6 @@ class _EventDetailsState extends State<EventDetails> {
                           AllAddedCategories.add(row);
                         });
                       },
-//
                       color: Colors.red,
                       child: Text(
                         'Add',
@@ -687,6 +702,7 @@ class _EventDetailsState extends State<EventDetails> {
                                   AgeCategory: SelectedAge,
                                   NoofCourts: noofcourts.text,
                                   BreakTime: breaktime.text,
+                                  AllCategoryDetails: AllCategories,
                                 )));
                   } else {
                     showDialog(
