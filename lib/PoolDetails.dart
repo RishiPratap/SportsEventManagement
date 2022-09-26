@@ -470,7 +470,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                                       CreateChallengeDetails(
                                           USERID: obtianedEmail!.trim(),
                                           TOURNAMENT_ID: "123456",
-                                          CATEGORY: widget.Category,
+                                          CATEGORY: Category,
                                           NO_OF_KNOCKOUT_ROUNDS:
                                               int.parse(SelectedPoolSize!),
                                           ENTRY_FEE: int.parse(
@@ -494,7 +494,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                                   final DetailMap = ChallengeDetails.toMap();
                                   final json = jsonEncode(DetailMap);
                                   var url =
-                                      "http://44.202.65.121:443/createTournament";
+                                      "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
                                   var response = await post(Uri.parse(url),
                                       headers: {
                                         "Accept": "application/json",
