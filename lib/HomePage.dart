@@ -580,13 +580,14 @@ class _HomePageState extends State<HomePage> {
                           Expanded(
                             flex: 1,
                             child: Container(
-                              width: deviceWidth * 0.3,
+                              width: deviceWidth * 0.6,
                               height: deviceHeight * 0.07,
                               decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                image: AssetImage('assets/AARDENT_LOGO.png'),
-                                fit: BoxFit.cover,
-                              )),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/AARDENT_LOGO.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                           Expanded(
