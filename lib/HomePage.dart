@@ -126,6 +126,7 @@ class _HomePageState extends State<HomePage> {
     double deviceHeight = MediaQuery.of(context).size.height;
     for (int i = array_length - 1; i >= 0; i--) {
       var container = Card(
+        margin: EdgeInsets.all(deviceWidth * 0.04),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(deviceWidth * 0.03),
         ),
@@ -252,8 +253,8 @@ class _HomePageState extends State<HomePage> {
                       )
                     ],
                   ),
-                  children:
-                      getAllTournamentCategories(userdata[i].spotStatusArray),
+                  children: getAllTournamentCategories(
+                      userdata[i].spotStatusArray, userdata[i].START_DATE),
                 ),
               ),
             ),
@@ -366,7 +367,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ],
-            )
+            ),
+            SizedBox(
+              height: 10,
+            ),
           ],
         ),
       );
@@ -375,7 +379,8 @@ class _HomePageState extends State<HomePage> {
     return AllTournaments;
   }
 
-  List<Container> getAllTournamentCategories(List spotStatusArray) {
+  List<Container> getAllTournamentCategories(
+      List spotStatusArray, String Date) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     List<Container> AllCategories = [];
@@ -415,6 +420,7 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => BadmintonSpotSelection(
                                   tourneyId: spotStatusArray[i]['id'],
                                   sport: spotStatusArray[i]['SPORT'],
+                                  Date: Date,
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
@@ -580,13 +586,14 @@ class _HomePageState extends State<HomePage> {
                           Expanded(
                             flex: 1,
                             child: Container(
-                              width: deviceWidth * 0.3,
+                              width: deviceWidth * 0.6,
                               height: deviceHeight * 0.07,
                               decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                image: AssetImage('assets/AARDENT_LOGO.png'),
-                                fit: BoxFit.cover,
-                              )),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/AARDENT_LOGO.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                           Expanded(
