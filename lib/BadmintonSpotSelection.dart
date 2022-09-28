@@ -22,11 +22,13 @@ Timer? timer;
 class BadmintonSpotSelection extends StatefulWidget {
   final String tourneyId;
   final String sport;
-  const BadmintonSpotSelection({
-    Key? key,
-    required this.tourneyId,
-    required this.sport,
-  }) : super(key: key);
+  final String Date;
+  const BadmintonSpotSelection(
+      {Key? key,
+      required this.tourneyId,
+      required this.sport,
+      required this.Date})
+      : super(key: key);
 
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
@@ -150,7 +152,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                     type: PageTransitionType.rightToLeftWithFade,
                     child: SpotConfirmation(
                       SpotNo: i.toString(),
-                      Date: "21/11/21",
+                      Date: widget.Date,
                       socket: socket,
                       btnId: (i - 1).toString(),
                       tournament_id: widget.tourneyId,
@@ -364,9 +366,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     print("is${array1}");
     return Column(
       children: [
-        SizedBox(
-          height: deviceWidth * 0.04,
-        ),
         Container(
           margin: EdgeInsets.only(
               left: deviceWidth * 0.05, right: deviceWidth * 0.05),
@@ -421,7 +420,28 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           ),
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "<",
+                          style: TextStyle(color: Colors.white, fontSize: 35),
+                        )),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Rules >",
+                          style:
+                              TextStyle(color: Color(0xffD15858), fontSize: 20),
+                        ))
+                  ],
+                ),
                 FutureBuilder(
                   future: connect(deviceWidth),
                   builder:

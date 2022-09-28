@@ -254,33 +254,85 @@ class _PoolDetailsState extends State<PoolDetails> {
                           SizedBox(
                             height: deviceWidth * 0.02,
                           ),
-                          Container(
-                            margin: EdgeInsets.all(deviceWidth * 0.04),
-                            child: TextField(
-                              controller: EntryFeeController,
-                              keyboardType: TextInputType.number,
-                              style: TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        deviceWidth * 0.04),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        deviceWidth * 0.04),
-                                    borderSide: BorderSide(
-                                      color: Colors.white.withOpacity(0.4),
-                                    ),
-                                  ),
-                                  hintText: "Entry Fee",
-                                  hintStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w200),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        deviceWidth * 0.02),
-                                  )),
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // TextField(
+                              //   controller: PrizePoolController,
+                              //   keyboardType: TextInputType.number,
+                              //   style: TextStyle(color: Colors.white),
+                              //   decoration: InputDecoration(
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.04),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.04),
+                              //         borderSide: BorderSide(
+                              //           color: Colors.white.withOpacity(0.4),
+                              //         ),
+                              //       ),
+                              //       hintText: "Prize Pool",
+                              //       hintStyle: TextStyle(
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.w200),
+                              //       border: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.02),
+                              //       )),
+                              // ),
+                              // TextField(
+                              //   controller: PrizePoolController,
+                              //   keyboardType: TextInputType.number,
+                              //   style: TextStyle(color: Colors.white),
+                              //   decoration: InputDecoration(
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.04),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.04),
+                              //         borderSide: BorderSide(
+                              //           color: Colors.white.withOpacity(0.4),
+                              //         ),
+                              //       ),
+                              //       hintText: "Prize Pool",
+                              //       hintStyle: TextStyle(
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.w200),
+                              //       border: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.02),
+                              //       )),
+                              // ),
+                              // TextField(
+                              //   controller: PrizePoolController,
+                              //   keyboardType: TextInputType.number,
+                              //   style: TextStyle(color: Colors.white),
+                              //   decoration: InputDecoration(
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.04),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.04),
+                              //         borderSide: BorderSide(
+                              //           color: Colors.white.withOpacity(0.4),
+                              //         ),
+                              //       ),
+                              //       hintText: "Prize Pool",
+                              //       hintStyle: TextStyle(
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.w200),
+                              //       border: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             deviceWidth * 0.02),
+                              //       )),
+                              // ),
+                            ],
                           ),
                           Container(
                             margin: EdgeInsets.all(deviceWidth * 0.04),
@@ -301,6 +353,34 @@ class _PoolDetailsState extends State<PoolDetails> {
                                     ),
                                   ),
                                   hintText: "Prize Pool",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w200),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.02),
+                                  )),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(deviceWidth * 0.04),
+                            child: TextField(
+                              controller: EntryFeeController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                    borderSide: BorderSide(
+                                      color: Colors.white.withOpacity(0.4),
+                                    ),
+                                  ),
+                                  hintText: "Entry Fee",
                                   hintStyle: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w200),

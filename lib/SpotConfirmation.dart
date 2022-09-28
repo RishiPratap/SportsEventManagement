@@ -102,65 +102,38 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
-    return WillPopScope(
-      onWillPop: () {
-        showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text("Exit Alert"),
-            content: const Text("Are you sure you want to exit?"),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  child: const Text(
-                    "NO",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
+          child: SingleChildScrollView(
+              child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "<",
+                        style: TextStyle(color: Colors.white, fontSize: 35),
+                      )),
+                ],
               ),
-              TextButton(
-                onPressed: () {
-                  exit(0);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  child:
-                      const Text("YES", style: TextStyle(color: Colors.white)),
-                ),
-              ),
+              Container(
+                margin: EdgeInsets.only(
+                    left: deviceWidth * 0.05, right: deviceWidth * 0.05),
+                child: SpotConfirmationCard(deviceWidth),
+              )
             ],
-          ),
-        );
-        return Future.value(false);
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/Homepage.png"),
-                    fit: BoxFit.cover)),
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                SizedBox(
-                  height: deviceWidth * 0.04,
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: deviceWidth * 0.05, right: deviceWidth * 0.05),
-                  child: SpotConfirmationCard(deviceWidth),
-                )
-              ],
-            )),
-          ),
+          )),
         ),
       ),
     );
