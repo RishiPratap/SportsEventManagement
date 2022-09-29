@@ -1,4 +1,5 @@
 import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -163,7 +164,7 @@ class CreateChallengeTicket extends StatelessWidget {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                Get.to(HomePage());
+                                Get.to(HostedChallenges());
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
