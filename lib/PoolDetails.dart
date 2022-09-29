@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
@@ -57,13 +58,13 @@ class CreateChallengeDetails {
   late String USERID;
   late String TOURNAMENT_ID;
   late String? CATEGORY;
-  late int NO_OF_KNOCKOUT_ROUNDS;
-  late int ENTRY_FEE;
+  late String NO_OF_KNOCKOUT_ROUNDS;
+  late String ENTRY_FEE;
   late String GOLD;
   late String SILVER;
   late String BRONZE;
   late String OTHER;
-  late int PRIZE_POOL;
+  late String PRIZE_POOL;
   late String TOURNAMENT_NAME;
   late String CITY;
   late String? TYPE;
@@ -74,7 +75,7 @@ class CreateChallengeDetails {
   late String END_TIME;
   late int REGISTRATION_CLOSES_BEFORE;
   late String? AGE_CATEGORY;
-  late int NO_OF_COURTS;
+  late String NO_OF_COURTS;
   late String BREAK_TIME;
   late String? SPORT;
 
@@ -131,6 +132,27 @@ class CreateChallengeDetails {
   }
 }
 
+class details {
+  late String PoolSize;
+  late String gold;
+  late String silver;
+  late String bronze;
+  late String others;
+  late String entryfee;
+  late String pointsystem;
+  late String PerMatchEstimatedTime;
+
+  details(
+      {required this.PoolSize,
+      required this.gold,
+      required this.silver,
+      required this.bronze,
+      required this.others,
+      required this.entryfee,
+      required this.pointsystem,
+      required this.PerMatchEstimatedTime});
+}
+
 class _PoolDetailsState extends State<PoolDetails> {
   List<String> PoolSizes = ['8', '16', '32', '64'];
   String? SelectedPoolSize;
@@ -141,6 +163,10 @@ class _PoolDetailsState extends State<PoolDetails> {
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
   String? SelectedPerMatchEstimatedTime;
 
+  List<details> poolDetails = [];
+
+  bool isLoading = false;
+
   final EntryFeeController = TextEditingController();
   final PrizePoolController = TextEditingController();
 
@@ -148,7 +174,424 @@ class _PoolDetailsState extends State<PoolDetails> {
   final silver = TextEditingController();
   final bronze = TextEditingController();
   final others = TextEditingController();
-  bool isLoading = false;
+
+  List<Container> AllPools(int count, double deviceWidth, double deviceHeight) {
+    List<Container> AllDetails = [];
+    for (int i = 0; i < count; i++) {
+      var container = Container(
+        width: deviceWidth * 1.5,
+        child: Card(
+          elevation: 10,
+          shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(deviceWidth * 0.01),
+          ),
+          margin: EdgeInsets.only(
+              left: deviceWidth * 0.025, right: deviceWidth * 0.025),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: deviceWidth * 0.1,
+                ),
+                Container(
+                  margin: EdgeInsets.all(deviceWidth * 0.04),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.black.withOpacity(0.3),
+                  ),
+                  child: DropdownButtonFormField(
+                    hint: Text("Pool Size",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: deviceWidth * 0.04,
+                        )),
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.red,
+                    ),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.02),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.06),
+                        )),
+                    value: SelectedPoolSize,
+                    items: PoolSizes.map((value) => DropdownMenuItem(
+                          child: Text(value),
+                          value: value,
+                        )).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        SelectedPoolSize = value as String;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: deviceWidth * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Align(
+                      child: Container(
+                        height: deviceHeight * 0.06,
+                        width: deviceWidth * 0.2,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: gold,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.4),
+                                ),
+                              ),
+                              hintText: "Gold",
+                              hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
+                              )),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      child: Container(
+                        height: deviceHeight * 0.06,
+                        width: deviceWidth * 0.2,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: silver,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.4),
+                                ),
+                              ),
+                              hintText: "Silver",
+                              hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
+                              )),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      child: Container(
+                        height: deviceHeight * 0.06,
+                        width: deviceWidth * 0.2,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: bronze,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.4),
+                                ),
+                              ),
+                              hintText: "Bronze",
+                              hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
+                              )),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      child: SizedBox(
+                        height: deviceHeight * 0.06,
+                        width: deviceWidth * 0.2,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: others,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.04),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.4),
+                                ),
+                              ),
+                              hintText: "Others",
+                              hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.02),
+                              )),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.all(deviceWidth * 0.04),
+                  child: TextField(
+                    controller: EntryFeeController,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04),
+                          borderSide: BorderSide(
+                            color: Colors.white.withOpacity(0.4),
+                          ),
+                        ),
+                        hintText: "Entry Fee",
+                        hintStyle: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w200),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.02),
+                        )),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(deviceWidth * 0.04),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.black.withOpacity(0.3),
+                  ),
+                  child: DropdownButtonFormField(
+                    hint: Text("Select Point System",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: deviceWidth * 0.04,
+                        )),
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.red,
+                    ),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.02),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.06),
+                        )),
+                    value: SelectedPointSystem,
+                    items: PointSystems.map((value) => DropdownMenuItem(
+                          child: Text(value),
+                          value: value,
+                        )).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        SelectedPointSystem = value as String;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: deviceWidth * 0.02,
+                ),
+                Container(
+                  margin: EdgeInsets.all(deviceWidth * 0.04),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.black.withOpacity(0.3),
+                  ),
+                  child: DropdownButtonFormField(
+                    hint: Text("Per Match Estimated Time",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: deviceWidth * 0.04,
+                        )),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.red,
+                    ),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.02),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.06),
+                        )),
+                    value: SelectedPerMatchEstimatedTime,
+                    items:
+                        PerMatchEstimatedTime.map((value) => DropdownMenuItem(
+                              child: Text(value),
+                              value: value,
+                            )).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        SelectedPerMatchEstimatedTime = value as String;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: deviceWidth * 0.02,
+                ),
+                Row(),
+                Container(
+                  width: deviceWidth * 0.8,
+                  margin: EdgeInsets.fromLTRB(
+                      deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
+                  child: RaisedButton(
+                    onPressed: () async {
+                      Get.to(WebViewSpots(spots: SelectedPoolSize));
+                    },
+                    color: Colors.red,
+                    child: Text(
+                      'Preview Fixture',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(deviceWidth * 0.06)),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: deviceWidth * 0.8,
+                  margin: EdgeInsets.fromLTRB(
+                      deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
+                  child: RaisedButton(
+                    onPressed: () async {
+                      // EasyLoading.show(
+                      //   status: 'Loading...',
+                      //   maskType: EasyLoadingMaskType.black,
+                      // );
+                      if (PoolSizes.isNotEmpty &&
+                          EntryFeeController.text.isNotEmpty &&
+                          PointSystems.isNotEmpty &&
+                          PerMatchEstimatedTime.isNotEmpty &&
+                          gold.text.isNotEmpty &&
+                          silver.text.isNotEmpty &&
+                          bronze.text.isNotEmpty) {
+                        var pool = details(
+                            PoolSize: SelectedPoolSize!,
+                            gold: gold.text,
+                            silver: silver.text,
+                            bronze: bronze.text,
+                            others: others.text,
+                            entryfee: EntryFeeController.text,
+                            pointsystem: SelectedPointSystem!,
+                            PerMatchEstimatedTime:
+                                SelectedPerMatchEstimatedTime!);
+                        poolDetails.add(pool);
+                        setState(() {
+                          String? ok;
+                          gold.text = "";
+                          silver.text = "";
+                          bronze.text = "";
+                          SelectedPoolSize = ok;
+                          EntryFeeController.text = "";
+                          others.text = "";
+                          SelectedPointSystem = ok;
+                          SelectedPerMatchEstimatedTime = ok;
+                        });
+                      } else {
+                        EasyLoading.showError("All fields are required");
+                      }
+                    },
+                    color: Colors.green,
+                    child: Text(
+                      'Submit Category Details',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(deviceWidth * 0.06)),
+                  ),
+                ),
+                SizedBox(
+                  height: deviceWidth * 0.02,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      AllDetails.add(container);
+    }
+    return AllDetails;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,546 +600,168 @@ class _PoolDetailsState extends State<PoolDetails> {
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/Homepage.png"),
-                    fit: BoxFit.cover)),
-            child: SingleChildScrollView(
-              child: SafeArea(
-                child: Column(
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
+          child: SafeArea(
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: 90,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/AARDENT_LOGO.png"),
-                                    fit: BoxFit.cover)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: 130,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/Ardent_Sport_Text.png"),
-                                    fit: BoxFit.fitWidth)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: double.infinity,
-                          ),
-                        ),
-                      ],
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        width: 90,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/AARDENT_LOGO.png"),
+                                fit: BoxFit.cover)),
+                      ),
                     ),
-                    Divider(
-                      color: Colors.white,
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        width: 130,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    AssetImage("assets/Ardent_Sport_Text.png"),
+                                fit: BoxFit.fitWidth)),
+                      ),
                     ),
-                    SizedBox(
-                      height: deviceHeight * 0.06,
-                    ),
-                    Container(
-                      width: deviceWidth * 1.5,
-                      child: Card(
-                        elevation: 10,
-                        shape: BeveledRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.01),
-                        ),
-                        margin: EdgeInsets.only(
-                            left: deviceWidth * 0.025,
-                            right: deviceWidth * 0.025),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: deviceWidth * 0.1,
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(deviceWidth * 0.04),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black.withOpacity(0.3),
-                                ),
-                                child: DropdownButtonFormField(
-                                  hint: Text("Pool Size",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: deviceWidth * 0.04,
-                                      )),
-                                  icon: Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.red,
-                                  ),
-                                  decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide(
-                                          color: Colors.black.withOpacity(0.3),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.02),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                      )),
-                                  value: SelectedPoolSize,
-                                  items:
-                                      PoolSizes.map((value) => DropdownMenuItem(
-                                            child: Text(value),
-                                            value: value,
-                                          )).toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      SelectedPoolSize = value as String;
-                                    });
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: deviceWidth * 0.02,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Align(
-                                    child: Container(
-                                      height: deviceHeight * 0.06,
-                                      width: deviceWidth * 0.2,
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        controller: gold,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(color: Colors.white),
-                                        decoration: InputDecoration(
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                              borderSide: BorderSide(
-                                                color: Colors.white
-                                                    .withOpacity(0.4),
-                                              ),
-                                            ),
-                                            hintText: "Gold",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w200),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.02),
-                                            )),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    child: Container(
-                                      height: deviceHeight * 0.06,
-                                      width: deviceWidth * 0.2,
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        controller: silver,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(color: Colors.white),
-                                        decoration: InputDecoration(
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                              borderSide: BorderSide(
-                                                color: Colors.white
-                                                    .withOpacity(0.4),
-                                              ),
-                                            ),
-                                            hintText: "Silver",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w200),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.02),
-                                            )),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    child: Container(
-                                      height: deviceHeight * 0.06,
-                                      width: deviceWidth * 0.2,
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        controller: bronze,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(color: Colors.white),
-                                        decoration: InputDecoration(
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                              borderSide: BorderSide(
-                                                color: Colors.white
-                                                    .withOpacity(0.4),
-                                              ),
-                                            ),
-                                            hintText: "Bronze",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w200),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.02),
-                                            )),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    child: SizedBox(
-                                      height: deviceHeight * 0.06,
-                                      width: deviceWidth * 0.2,
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        controller: others,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(color: Colors.white),
-                                        decoration: InputDecoration(
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.04),
-                                              borderSide: BorderSide(
-                                                color: Colors.white
-                                                    .withOpacity(0.4),
-                                              ),
-                                            ),
-                                            hintText: "Others",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w200),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      deviceWidth * 0.02),
-                                            )),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(deviceWidth * 0.04),
-                                child: TextField(
-                                  controller: EntryFeeController,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.04),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.04),
-                                        borderSide: BorderSide(
-                                          color: Colors.white.withOpacity(0.4),
-                                        ),
-                                      ),
-                                      hintText: "Entry Fee",
-                                      hintStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w200),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.02),
-                                      )),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(deviceWidth * 0.04),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black.withOpacity(0.3),
-                                ),
-                                child: DropdownButtonFormField(
-                                  hint: Text("Select Point System",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: deviceWidth * 0.04,
-                                      )),
-                                  icon: Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.red,
-                                  ),
-                                  decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide(
-                                          color: Colors.black.withOpacity(0.3),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.02),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                      )),
-                                  value: SelectedPointSystem,
-                                  items: PointSystems.map(
-                                      (value) => DropdownMenuItem(
-                                            child: Text(value),
-                                            value: value,
-                                          )).toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      SelectedPointSystem = value as String;
-                                    });
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: deviceWidth * 0.02,
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(deviceWidth * 0.04),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black.withOpacity(0.3),
-                                ),
-                                child: DropdownButtonFormField(
-                                  hint: Text("Per Match Estimated Time",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: deviceWidth * 0.04,
-                                      )),
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.red,
-                                  ),
-                                  decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide(
-                                          color: Colors.black.withOpacity(0.3),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.02),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                      )),
-                                  value: SelectedPerMatchEstimatedTime,
-                                  items: PerMatchEstimatedTime.map(
-                                      (value) => DropdownMenuItem(
-                                            child: Text(value),
-                                            value: value,
-                                          )).toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      SelectedPerMatchEstimatedTime =
-                                          value as String;
-                                    });
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: deviceWidth * 0.02,
-                              ),
-                              Row(),
-                              Container(
-                                width: deviceWidth * 0.8,
-                                margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                    0, deviceWidth * 0.03, 0),
-                                child: RaisedButton(
-                                  onPressed: () async {
-                                    Get.to(
-                                        WebViewSpots(spots: SelectedPoolSize));
-                                  },
-                                  color: Colors.red,
-                                  child: Text(
-                                    'Preview Fixture',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06)),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                width: deviceWidth * 0.8,
-                                margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                    0, deviceWidth * 0.03, 0),
-                                child: RaisedButton(
-                                  onPressed: () async {
-                                    EasyLoading.show(
-                                      status: 'Loading...',
-                                      maskType: EasyLoadingMaskType.black,
-                                    );
-                                    if (PoolSizes.isNotEmpty &&
-                                        EntryFeeController.text.isNotEmpty &&
-                                        PointSystems.isNotEmpty &&
-                                        PerMatchEstimatedTime.isNotEmpty) {
-                                      final SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
-                                      var obtianedEmail =
-                                          prefs.getString('email');
-                                      print(obtianedEmail);
-                                      String Category = "";
-                                      for (int i = 0;
-                                          i < widget.AllCategoryDetails.length;
-                                          i++) {
-                                        Category += widget
-                                            .AllCategoryDetails[i].CategoryName;
-                                        if (i !=
-                                            widget.AllCategoryDetails.length -
-                                                1) {
-                                          Category += "-";
-                                        }
-                                      }
-                                      print(Category);
-
-                                      final ChallengeDetails =
-                                          CreateChallengeDetails(
-                                              USERID: obtianedEmail!.trim(),
-                                              TOURNAMENT_ID: "123456",
-                                              CATEGORY: Category,
-                                              NO_OF_KNOCKOUT_ROUNDS:
-                                                  int.parse(SelectedPoolSize!),
-                                              ENTRY_FEE: int.parse(
-                                                  EntryFeeController.text),
-                                              GOLD: gold.text,
-                                              SILVER: silver.text,
-                                              BRONZE: bronze.text,
-                                              OTHER: others.text,
-                                              PRIZE_POOL: 12000,
-                                              TOURNAMENT_NAME: widget.EventName,
-                                              CITY: widget.City,
-                                              TYPE: widget.EventType,
-                                              LOCATION: widget.Address,
-                                              START_DATE: widget.StartDate,
-                                              END_DATE: widget.EndDate,
-                                              START_TIME: widget.StartTime,
-                                              END_TIME: widget.EndTime,
-                                              REGISTRATION_CLOSES_BEFORE: 6,
-                                              AGE_CATEGORY: widget.AgeCategory,
-                                              NO_OF_COURTS:
-                                                  int.parse(widget.NoofCourts),
-                                              BREAK_TIME: widget.BreakTime,
-                                              SPORT: widget.SportName);
-                                      final DetailMap =
-                                          ChallengeDetails.toMap();
-                                      final json = jsonEncode(DetailMap);
-                                      var url =
-                                          "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
-                                      try {
-                                        var response = await post(
-                                            Uri.parse(url),
-                                            headers: {
-                                              "Accept": "application/json",
-                                              "Content-Type": "application/json"
-                                            },
-                                            body: json,
-                                            encoding:
-                                                Encoding.getByName("utf-8"));
-                                        Map<String, dynamic> jsonData =
-                                            jsonDecode(response.body);
-                                        Get.to(CreateChallengeTicket(
-                                          Tournament_ID:
-                                              jsonData['TOURNAMENT_ID'],
-                                        ));
-                                        EasyLoading.dismiss();
-                                      } catch (e) {
-                                        print(e);
-                                        EasyLoading.showError(
-                                            "Something went wrong,Please try again!");
-                                        EasyLoading.dismiss();
-                                      }
-                                    } else {
-                                      EasyLoading.showError(
-                                          "All fields are required");
-                                    }
-                                  },
-                                  color: Colors.green,
-                                  child: Text(
-                                    'Submit',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06)),
-                                ),
-                              ),
-                              SizedBox(
-                                height: deviceWidth * 0.02,
-                              ),
-                            ],
-                          ),
-                        ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        width: double.infinity,
                       ),
                     ),
                   ],
                 ),
-              ),
+                Divider(
+                  color: Colors.white,
+                ),
+                Expanded(
+                    child: PageView(
+                  children: AllPools(widget.AllCategoryDetails.length,
+                      deviceWidth, deviceHeight),
+                )),
+                SizedBox(
+                  height: 30,
+                ),
+                TextButton(
+                    onPressed: () async {
+                      String poolsize_details = "";
+                      String gold_details = "";
+                      String silver_details = "";
+                      String bronze_details = "";
+                      String other_details = "";
+                      String entryfee_details = "";
+                      String selected_point_system_details = "";
+                      String per_match_estimated_time = "";
+                      for (int i = 0; i < poolDetails.length; i++) {
+                        poolsize_details += poolDetails[i].PoolSize;
+                        gold_details += poolDetails[i].gold;
+                        silver_details += poolDetails[i].silver;
+                        bronze_details += poolDetails[i].bronze;
+                        other_details += poolDetails[i].others;
+                        entryfee_details += poolDetails[i].entryfee;
+                        selected_point_system_details +=
+                            poolDetails[i].pointsystem;
+                        per_match_estimated_time +=
+                            poolDetails[i].PerMatchEstimatedTime;
+                        if (i != widget.AllCategoryDetails.length - 1) {
+                          poolsize_details += "-";
+                          gold_details += "-";
+                          silver_details += "-";
+                          bronze_details += "-";
+                          other_details += "-";
+                          entryfee_details += "-";
+                          selected_point_system_details += "-";
+                          per_match_estimated_time += "-";
+                        }
+                      }
+                      EasyLoading.show(
+                        status: 'Loading...',
+                        maskType: EasyLoadingMaskType.black,
+                      );
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      var obtianedEmail = prefs.getString('email');
+                      print(obtianedEmail);
+                      String Category = "";
+                      String AgeCategory = "";
+                      for (int i = 0;
+                          i < widget.AllCategoryDetails.length;
+                          i++) {
+                        Category += widget.AllCategoryDetails[i].CategoryName;
+                        AgeCategory += widget.AllCategoryDetails[i].AgeCategory;
+                        if (i != widget.AllCategoryDetails.length - 1) {
+                          Category += "-";
+                          AgeCategory += "-";
+                        }
+                      }
+                      print(Category);
+                      print(gold_details);
+                      print(silver_details);
+                      print(bronze_details);
+                      print(other_details);
+
+                      final ChallengeDetails = CreateChallengeDetails(
+                          USERID: obtianedEmail!.trim(),
+                          TOURNAMENT_ID: "123456",
+                          CATEGORY: Category,
+                          NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
+                          ENTRY_FEE: entryfee_details,
+                          GOLD: gold_details,
+                          SILVER: silver_details,
+                          BRONZE: bronze_details,
+                          OTHER: other_details,
+                          PRIZE_POOL: "12000",
+                          TOURNAMENT_NAME: widget.EventName,
+                          CITY: widget.City,
+                          TYPE: widget.EventType,
+                          LOCATION: widget.Address,
+                          START_DATE: widget.StartDate,
+                          END_DATE: widget.EndDate,
+                          START_TIME: widget.StartTime,
+                          END_TIME: widget.EndTime,
+                          REGISTRATION_CLOSES_BEFORE: 6,
+                          AGE_CATEGORY: AgeCategory,
+                          NO_OF_COURTS: widget.NoofCourts,
+                          BREAK_TIME: widget.BreakTime,
+                          SPORT: widget.SportName);
+                      final DetailMap = ChallengeDetails.toMap();
+                      final json = jsonEncode(DetailMap);
+                      var url =
+                          "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
+                      try {
+                        var response = await post(Uri.parse(url),
+                            headers: {
+                              "Accept": "application/json",
+                              "Content-Type": "application/json"
+                            },
+                            body: json,
+                            encoding: Encoding.getByName("utf-8"));
+                        Map<String, dynamic> jsonData =
+                            jsonDecode(response.body);
+                        Get.to(CreateChallengeTicket(
+                          Tournament_ID: jsonData['TOURNAMENT_ID'],
+                        ));
+                        EasyLoading.dismiss();
+                      } catch (e) {
+                        print(e);
+                        EasyLoading.showError(
+                            "Something went wrong,Please try again!");
+                        EasyLoading.dismiss();
+                      }
+                    },
+                    child: Text("ok")),
+              ],
             ),
           ),
         ));
