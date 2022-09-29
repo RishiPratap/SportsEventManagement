@@ -108,8 +108,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
     print(socket.connected);
   }
 
-  void connect() {}
-
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
@@ -166,9 +164,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                     Center(
                       child: Expanded(
                         child: Container(
-                          height: 447,
-                          width: 400,
-                          margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          width: MediaQuery.of(context).size.width * 0.95,
+                          margin: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.08),
                           padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                           child: Card(
                             elevation: 10,
@@ -249,7 +248,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 icon: Image.asset(
                                                     'assets/edit_button.png'),
                                                 onPressed: () {
-                                                  connect();
                                                   update_score_2_first =
                                                       score_2_first;
                                                   update_score_2_second =
@@ -280,7 +278,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 icon: Image.asset(
                                                     'assets/edit_button.png'),
                                                 onPressed: () {
-                                                  connect();
                                                   update_score_3_first =
                                                       score_3_first;
                                                   update_score_3_second =
