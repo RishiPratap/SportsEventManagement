@@ -41,8 +41,8 @@ class _loginState extends State<login> {
       if (finalEmail == null) {
         Get.to(login());
       } else {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => PoolDetailsView()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
   }
@@ -140,8 +140,8 @@ class _loginState extends State<login> {
                                   deviceWidth * 0.04, 0.05 * cardheight, 0, 0),
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(
-                                      deviceWidth * 0.04),
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.04),
                                 ),
                                 child: Text(
                                   "Login",
