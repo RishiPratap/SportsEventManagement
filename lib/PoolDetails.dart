@@ -674,7 +674,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                             poolDetails[i].pointsystem;
                         per_match_estimated_time +=
                             poolDetails[i].PerMatchEstimatedTime;
-                        if (i != widget.AllCategoryDetails.length - 1) {
+                        if (i != poolDetails.length - 1) {
                           poolsize_details += "-";
                           gold_details += "-";
                           silver_details += "-";
@@ -710,6 +710,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                       print(silver_details);
                       print(bronze_details);
                       print(other_details);
+                      print(entryfee_details);
 
                       final ChallengeDetails = CreateChallengeDetails(
                           USERID: obtianedEmail!.trim(),
