@@ -1,12 +1,11 @@
 import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class CreateChallengeTicket extends StatelessWidget {
-  final String Tournament_ID;
-  const CreateChallengeTicket({Key? key, required this.Tournament_ID})
-      : super(key: key);
+  const CreateChallengeTicket({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +141,7 @@ class CreateChallengeTicket extends StatelessWidget {
                                   Expanded(
                                     flex: 6,
                                     child: Text(
-                                      "${Tournament_ID}",
+                                      "123456789",
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -163,7 +162,7 @@ class CreateChallengeTicket extends StatelessWidget {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                Get.to(HomePage());
+                                Get.to(HostedChallenges());
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),

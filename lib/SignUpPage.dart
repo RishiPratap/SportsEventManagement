@@ -616,68 +616,6 @@ class _SubmitPageState extends State<SubmitPage> {
                               ),
                             ),
                           ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: Academy,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText: '  Academy',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(
-                                  deviceWidth * 0.04,
-                                  deviceWidth * 0.02,
-                                  deviceWidth * 0.04,
-                                  deviceWidth * 0.03),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: Intersted_Sports,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText:
-                                          '  Interested sports(Cricket,Football etc..)',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -696,9 +634,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                 date_of_birth.text.isNotEmpty &&
                                 state.text.isNotEmpty &&
                                 city.text.isNotEmpty &&
-                                selectedGender!.isNotEmpty &&
-                                Academy.text.isNotEmpty &&
-                                Intersted_Sports.text.isNotEmpty) {
+                                selectedGender!.isNotEmpty) {
                               final Details = UserDetails(
                                   USERID: emailController.text.toString(),
                                   PHONE: mobileController.text.toString(),
@@ -709,10 +645,9 @@ class _SubmitPageState extends State<SubmitPage> {
                                   DOB: date_of_birth.text.toString(),
                                   CITY: city.text.toString(),
                                   STATE: state.text.toString(),
-                                  SPORTS_ACADEMY: Academy.text.toString(),
+                                  SPORTS_ACADEMY: "NULL",
                                   PROFILE_ID: emailController.text.toString(),
-                                  INTERESTED_SPORTS:
-                                      Intersted_Sports.text.toString());
+                                  INTERESTED_SPORTS: "NULL");
                               final DetailMap = Details.toMap();
                               final json = jsonEncode(DetailMap);
                               var url = "http://44.202.65.121:443/createUser";

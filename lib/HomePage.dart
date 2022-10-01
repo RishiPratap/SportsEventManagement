@@ -618,7 +618,7 @@ class _HomePageState extends State<HomePage> {
                             flex: 1,
                             child: InkWell(
                               onTap: () {
-                                Get.to(Menu());
+                                Get.to(() => Menu());
                               },
                               child: Container(
                                 width: deviceWidth * 0.04,

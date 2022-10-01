@@ -392,11 +392,11 @@ class _ticketState extends State<ticket> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    Get.to(HomePage());
+                    Get.to(MyBookings());
                   },
                   child: Center(
                     child: Text(
-                      "Go to Homepage >",
+                      "Go to My Booking >",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,

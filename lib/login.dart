@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:ardent_sports/PoolDetails.dart';
-import 'PoolView.dart';
-import 'package:ardent_sports/PoolView.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
