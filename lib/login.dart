@@ -258,7 +258,7 @@ class _loginState extends State<login> {
                         onPressed: () {},
                         child: const Text('Terms & Conditions'),
                       ),
-                    ),
+                    ),  
                   ),
                 ),
               ],
