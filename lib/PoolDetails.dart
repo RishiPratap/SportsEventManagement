@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -153,6 +154,8 @@ class details {
 }
 
 class _PoolDetailsState extends State<PoolDetails> {
+  PageController pageController = PageController(viewportFraction: 0.9);
+  double _currPageValue = 0.0;
   List<String> PoolSizes = ['8', '16', '32', '64'];
   String? SelectedPoolSize;
 
@@ -583,6 +586,20 @@ class _PoolDetailsState extends State<PoolDetails> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    pageController.addListener(() {
+      setState(() {
+        _currPageValue = pageController.page!;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+  }
+
   Widget build(BuildContext context) {
     bool isLoading = false;
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -635,10 +652,26 @@ class _PoolDetailsState extends State<PoolDetails> {
                   color: Colors.white,
                 ),
                 Expanded(
+                    flex: 1,
                     child: PageView(
-                  children: AllPools(widget.AllCategoryDetails.length,
-                      deviceWidth, deviceHeight),
-                )),
+                      controller: pageController,
+                      children: AllPools(widget.AllCategoryDetails.length,
+                          deviceWidth, deviceHeight),
+                    )),
+                SizedBox(
+                  height: 30,
+                ),
+                DotsIndicator(
+                  dotsCount: widget.AllCategoryDetails.length,
+                  position: _currPageValue,
+                  decorator: DotsDecorator(
+                    activeColor: Colors.white,
+                    size: const Size.square(9.0),
+                    activeSize: const Size(18.0, 9.0),
+                    activeShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                  ),
+                ),
                 SizedBox(
                   height: 30,
                 ),
