@@ -350,7 +350,13 @@ class _CreateChallengeState extends State<CreateChallenge> {
                 width: deviceWidth * 0.8,
                 margin: EdgeInsets.fromLTRB(
                     deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
-                child: RaisedButton(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(deviceWidth * 0.06)),
+                  ),
                   onPressed: () {
                     if (SelectedSport == null ||
                         SelectedEvent == null ||
@@ -374,13 +380,10 @@ class _CreateChallengeState extends State<CreateChallenge> {
                       print(SelectedSport);
                     }
                   },
-                  color: Colors.red,
                   child: Text(
                     'Next',
                     style: TextStyle(color: Colors.white),
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
                 ),
               ),
               SizedBox(

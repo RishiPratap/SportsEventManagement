@@ -225,9 +225,12 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           height: 40,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(20.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xffE74545),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20.0),
+                              ),
                             ),
                             onPressed: () {
                               if (sport_name == "Badminton") {
@@ -254,7 +257,6 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                               }
                             },
                             child: Text("Ok"),
-                            color: Color(0xffE74545),
                           ),
                         ),
                       )

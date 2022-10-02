@@ -505,17 +505,20 @@ class _PoolDetailsState extends State<PoolDetails> {
                 width: deviceWidth * 0.8,
                 margin: EdgeInsets.fromLTRB(
                     deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () async {
                     Get.to(WebViewSpots(spots: SelectedPoolSize));
                   },
-                  color: Colors.red,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(deviceWidth * 0.06)),
+                  ),
                   child: Text(
                     'Preview Fixture',
                     style: TextStyle(color: Colors.white),
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
                 ),
               ),
               const SizedBox(
@@ -525,7 +528,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                 width: deviceWidth * 0.8,
                 margin: EdgeInsets.fromLTRB(
                     deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () async {
                     // EasyLoading.show(
                     //   status: 'Loading...',
@@ -564,13 +567,16 @@ class _PoolDetailsState extends State<PoolDetails> {
                       EasyLoading.showError("All fields are required");
                     }
                   },
-                  color: Colors.green,
                   child: Text(
                     'Submit Category Details',
                     style: TextStyle(color: Colors.white),
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(deviceWidth * 0.06)),
+                  ),
                 ),
               ),
               SizedBox(

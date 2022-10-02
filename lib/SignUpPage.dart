@@ -238,7 +238,7 @@ class _SignUpPage extends State<SignUpPage> {
                             ButtonTheme(
                               height: deviceWidth * 0.1,
                               minWidth: deviceWidth * 0.4,
-                              child: RaisedButton(
+                              child: ElevatedButton(
                                 onPressed: () {
                                   if (emailController.text.trim().isNotEmpty &&
                                       mobileController.text.trim().isNotEmpty &&
@@ -268,14 +268,16 @@ class _SignUpPage extends State<SignUpPage> {
                                     ));
                                   }
                                 },
-                                color: Color(0xffE74545),
                                 child: Text(
                                   'Sign Up',
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        deviceWidth * 0.06)),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xffE74545),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06)),
+                                ),
                               ),
                             ),
                           ],
@@ -622,7 +624,7 @@ class _SubmitPageState extends State<SubmitPage> {
                     Container(
                       margin: EdgeInsets.fromLTRB(0, deviceWidth * 0.05, 0, 0),
                       child: Center(
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () async {
                             final SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
@@ -683,14 +685,16 @@ class _SubmitPageState extends State<SubmitPage> {
                               ));
                             }
                           },
-                          color: Color(0xffE74545),
                           child: Text(
                             'Submit',
                             style: TextStyle(color: Colors.white),
                           ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.06)),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xffE74545),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06)),
+                          ),
                         ),
                       ),
                     ),

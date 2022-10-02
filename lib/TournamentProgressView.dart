@@ -43,11 +43,13 @@ class _TournamentProgressViewState extends State<TournamentProgressView> {
           margin: EdgeInsets.only(top: top_push),
           width: 70,
           height: 25,
-          child: RaisedButton(
+          child: ElevatedButton(
             onPressed: () {},
-            color: Color(0xff6EBC55),
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xff6EBC55),
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(5.0),
+              ),
             ),
             child: Text(
               "",
@@ -61,11 +63,13 @@ class _TournamentProgressViewState extends State<TournamentProgressView> {
           margin: EdgeInsets.only(top: dist_between_spots),
           width: 70,
           height: 25,
-          child: RaisedButton(
+          child: ElevatedButton(
             onPressed: () {},
-            color: Color(0xff6EBC55),
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xff6EBC55),
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(5.0),
+              ),
             ),
             child: Text(
               "",

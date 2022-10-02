@@ -136,10 +136,16 @@ class _loginState extends State<login> {
                               width: deviceWidth * 0.4,
                               margin: EdgeInsets.fromLTRB(
                                   deviceWidth * 0.04, 0.05 * cardheight, 0, 0),
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.04),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  padding: EdgeInsets.all(deviceWidth * 0.03),
+                                  // splashColor: Colors.grey,
+                                  backgroundColor: Color(0xffE74545),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                  ),
                                 ),
                                 child: Text(
                                   "Login",
@@ -193,10 +199,6 @@ class _loginState extends State<login> {
                                     prefs.setString('email', emaild.text);
                                   }
                                 },
-                                color: Color(0xffE74545),
-                                textColor: Colors.white,
-                                padding: EdgeInsets.all(deviceWidth * 0.03),
-                                splashColor: Colors.grey,
                               ),
                             ),
                             Container(
@@ -258,7 +260,7 @@ class _loginState extends State<login> {
                         onPressed: () {},
                         child: const Text('Terms & Conditions'),
                       ),
-                    ),  
+                    ),
                   ),
                 ),
               ],

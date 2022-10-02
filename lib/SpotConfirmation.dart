@@ -156,11 +156,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
             Container(
               width: deviceWidth * 0.34,
               height: deviceWidth * 0.08,
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {},
-                color: Color(0xff03C289),
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(deviceWidth * 0.08),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff03C289),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(deviceWidth * 0.08),
+                  ),
                 ),
                 child: Text(
                   "Spot No : ${widget.SpotNo}",
@@ -369,7 +371,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
             Container(
               width: deviceWidth * 0.6,
               height: deviceWidth * 0.08,
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -389,9 +391,11 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             name: mapUserResponse?['username'],
                           )));
                 },
-                color: const Color(0xffE74745),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(deviceWidth * 0.05),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffE74745),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.05),
+                  ),
                 ),
                 child: Text(
                   "Confirm & Pay",

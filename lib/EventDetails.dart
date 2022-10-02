@@ -511,7 +511,13 @@ class _EventDetailsState extends State<EventDetails> {
                     SizedBox(
                       height: deviceWidth * 0.02,
                     ),
-                    RaisedButton(
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(deviceWidth * 0.06)),
+                      ),
                       onPressed: () {
                         CategorieDetails detail =
                             CategorieDetails(SelectedCategory!, SelectedAge!);
@@ -532,14 +538,10 @@ class _EventDetailsState extends State<EventDetails> {
                           AllAddedCategories.add(row);
                         });
                       },
-                      color: Colors.red,
                       child: Text(
                         'Add',
                         style: TextStyle(color: Colors.white),
                       ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.06)),
                     ),
                     Column(
                       children: AllAddedCategories,
@@ -666,7 +668,12 @@ class _EventDetailsState extends State<EventDetails> {
               width: deviceWidth * 0.8,
               margin: EdgeInsets.fromLTRB(
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
-              child: RaisedButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
+                ),
                 onPressed: () {
                   if (EventName.text.isNotEmpty &&
                       startdateinput.text.isNotEmpty &&
@@ -712,7 +719,7 @@ class _EventDetailsState extends State<EventDetails> {
                             title: Text("Error"),
                             content: Text("Please fill all the fields"),
                             actions: <Widget>[
-                              FlatButton(
+                              ElevatedButton(
                                 child: Text("OK"),
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -723,13 +730,10 @@ class _EventDetailsState extends State<EventDetails> {
                         });
                   }
                 },
-                color: Colors.red,
                 child: Text(
                   'Next',
                   style: TextStyle(color: Colors.white),
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
               ),
             ),
           ],
