@@ -1,5 +1,7 @@
 // ignore: file_names
 // ignore: camel_case_types
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -298,13 +300,12 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   connect(double deviceWidth) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
-    bool isBooked = false;
     socket.on('spot-clicked-return', (data) {
       Map<String, dynamic> spot_cliclked_return_details = jsonDecode(data);
       var details = json_decode_spot_clicked_return
           .fromJson(spot_cliclked_return_details);
       String spotnumber = details.spot_number;
-      var timer = 30;
+
       final socket_number =
           send_socket_number_(spotnumber, widget.tourneyId, finalEmail);
       print(spotnumber);

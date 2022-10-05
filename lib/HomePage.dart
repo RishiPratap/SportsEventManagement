@@ -576,154 +576,121 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Expanded(
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              width: deviceWidth * 0.6,
-                              height: deviceHeight * 0.07,
-                              decoration: BoxDecoration(
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: deviceWidth * 0.6,
+                          height: deviceHeight * 0.07,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/AARDENT_LOGO.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: deviceWidth * 0.6,
+                          height: deviceHeight * 0.08,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/Ardent_Sport_Text.png"),
+                                  fit: BoxFit.fitWidth)),
+                        ),
+                        Container(
+                          width: double.infinity,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => Menu());
+                          },
+                          child: Container(
+                            width: deviceWidth * 0.04,
+                            height: deviceHeight * 0.02,
+                            decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/AARDENT_LOGO.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+                                    image: AssetImage("assets/menu_bar.png"),
+                                    fit: BoxFit.fitHeight)),
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              width: deviceWidth * 0.6,
-                              height: deviceHeight * 0.08,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/Ardent_Sport_Text.png"),
-                                      fit: BoxFit.fitWidth)),
-                            ),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.white,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            print("pressed");
+                            Get.to(Profile(
+                              name: mapUserInfo?['Name'],
+                              points: mapUserInfo?['Points'],
+                            ));
+                          },
+                          child: Container(
+                            width: deviceWidth * 0.08,
+                            height: deviceHeight * 0.05,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage("assets/Profile_Image.png"),
+                                    fit: BoxFit.fitHeight)),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              width: double.infinity,
+                        ),
+                        Container(
+                          width: double.infinity,
+                        ),
+                        Container(
+                          width: deviceWidth * 0.08,
+                          height: deviceHeight * 0.05,
+                          decoration: BoxDecoration(),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: deviceWidth * 0.01),
+                          child: Center(
+                              child: Text(
+                                  "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}")),
+                        ),
+                        Container(
+                          width: double.infinity,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: deviceWidth * 0.03),
+                          child: Text(""),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    FutureBuilder(
+                      future: futures,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.data == null) {
+                          print("In Null");
+                          return Container(
+                            child: const Center(
+                              child: CircularProgressIndicator(),
                             ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: InkWell(
-                              onTap: () {
-                                Get.to(() => Menu());
-                              },
-                              child: Container(
-                                width: deviceWidth * 0.04,
-                                height: deviceHeight * 0.02,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image:
-                                            AssetImage("assets/menu_bar.png"),
-                                        fit: BoxFit.fitHeight)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: InkWell(
-                              onTap: () {
-                                print("pressed");
-                                Get.to(Profile(
-                                  name: mapUserInfo?['Name'],
-                                  points: mapUserInfo?['Points'],
-                                ));
-                              },
-                              child: Container(
-                                width: deviceWidth * 0.08,
-                                height: deviceHeight * 0.05,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/Profile_Image.png"),
-                                        fit: BoxFit.fitHeight)),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              width: double.infinity,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              width: deviceWidth * 0.08,
-                              height: deviceHeight * 0.05,
-                              decoration: BoxDecoration(),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.01),
-                              child: Center(
-                                  child: Text(
-                                      "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}")),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              width: double.infinity,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                              child: Text(""),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      FutureBuilder(
-                        future: futures,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.data == null) {
-                            print("In Null");
-                            return Container(
-                              child: const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          } else {
-                            return Column(
-                              children: snapshot.data,
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                          );
+                        } else {
+                          return Column(
+                            children: snapshot.data,
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

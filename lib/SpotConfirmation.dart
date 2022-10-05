@@ -121,6 +121,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
+                      
                       child: Text(
                         "<",
                         style: TextStyle(color: Colors.white, fontSize: 35),
