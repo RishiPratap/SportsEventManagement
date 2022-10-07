@@ -298,7 +298,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                               child: TextButton(
                                 style: TextButton.styleFrom(
                                   backgroundColor: Colors.red,
-                                  foregroundColor: Color(0xffE74545),
+                                  foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: new BorderRadius.circular(
                                         deviceWidth * 0.04),

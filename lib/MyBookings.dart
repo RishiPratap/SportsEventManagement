@@ -377,33 +377,33 @@ class _MyBookings extends State<MyBookings> {
                                   fontWeight: FontWeight.bold)),
                         )),
                     Container(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE74545),
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.04),
-                        ),
-                        child: TextButton(
-                          onPressed: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            var id = prefs.getString('email');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => WebViewTest(
-                                  userId: id,
-                                  Tourney_id: userdata[i].TOURNAMENT_ID,
-                                ),
+                      height: MediaQuery.of(context).size.height * 0.055,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffE74545),
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                      ),
+                      child: TextButton(
+                        onPressed: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          var id = prefs.getString('email');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WebViewTest(
+                                userId: id,
+                                Tourney_id: userdata[i].TOURNAMENT_ID,
                               ),
-                            );
-                          },
-                          child: Text("View Fixtures >",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: deviceWidth * 0.03,
-                                  fontWeight: FontWeight.bold)),
-                        )),
+                            ),
+                          );
+                        },
+                        child: Text("View Fixtures >",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: deviceWidth * 0.03,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
                   ],
                 )
               ],

@@ -61,7 +61,11 @@ class _MenuState extends State<Menu> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Yet To be implemented"),
+                        ));
+                      },
                       child: Text(
                         "Settings",
                         style: TextStyle(color: Colors.white),
@@ -218,7 +222,11 @@ class _MenuState extends State<Menu> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Yet To be implemented"),
+                        ));
+                      },
                       child: Text(
                         "Contact Us",
                         style: TextStyle(color: Colors.white),

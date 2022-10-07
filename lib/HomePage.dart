@@ -625,49 +625,54 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            print("pressed");
-                            Get.to(Profile(
-                              name: mapUserInfo?['Name'],
-                              points: mapUserInfo?['Points'],
-                            ));
-                          },
-                          child: Container(
-                            width: deviceWidth * 0.08,
-                            height: deviceHeight * 0.05,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/Profile_Image.png"),
-                                    fit: BoxFit.fitHeight)),
+                        Expanded(
+                          flex: 1,
+                          child: InkWell(
+                            onTap: () {
+                              print("pressed");
+                              Get.to(Profile(
+                                name: mapUserInfo?['Name'],
+                                points: mapUserInfo?['Points'],
+                              ));
+                            },
+                            child: Container(
+                              width: deviceWidth * 0.08,
+                              height: deviceHeight * 0.05,
+                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/Profile_Image.png"),
+                                      fit: BoxFit.fitHeight)),
+                            ),
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                        ),
-                        Container(
-                          width: deviceWidth * 0.08,
-                          height: deviceHeight * 0.05,
-                          decoration: BoxDecoration(),
+                        Expanded(
+                          flex: 5,
+                          child: Container(
+                            width: double.infinity,
+                          ),
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(left: deviceWidth * 0.01),
-                          child: Center(
-                              child: Text(
-                                  "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}")),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            margin: EdgeInsets.only(left: deviceWidth * 0.01),
+                            child: Center(
+                                child: Text(
+                                    "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}")),
+                          ),
                         ),
-                        Container(
-                          width: double.infinity,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                          child: Text(""),
+                        Expanded(
+                          flex: 5,
+                          child: Container(
+                            width: double.infinity,
+                          ),
                         ),
                       ],
                     ),
