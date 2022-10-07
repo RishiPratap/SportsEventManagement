@@ -467,96 +467,84 @@ class _MyBookings extends State<MyBookings> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.18,
-                            height: deviceWidth * 0.1,
-                            margin: EdgeInsets.fromLTRB(
-                                0, deviceWidth * 0.03, 0, 0),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                              image: AssetImage('assets/AARDENT_LOGO.png'),
-                              fit: BoxFit.cover,
-                            )),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.026,
-                            height: deviceWidth * 0.08,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/Ardent_Sport_Text.png"),
-                                    fit: BoxFit.fitWidth)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: double.infinity,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: deviceWidth * 0.06,
-                    ),
-                    TextButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(deviceWidth * 0.04))),
-                        onPressed: () {
-                          Get.to(HomePage());
-                        },
-                        child: Text(
-                          "Join a Tournament",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: deviceWidth * 0.03),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: deviceWidth * 0.2,
+                        height: deviceHeight * 0.07,
+                        margin:
+                            EdgeInsets.fromLTRB(0, deviceWidth * 0.03, 0, 0),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: AssetImage('assets/AARDENT_LOGO.png'),
+                          fit: BoxFit.cover,
                         )),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.fromLTRB(
-                                deviceWidth * 0.03, 0, 0, 0),
-                            child: Text("My Bookings")),
-                        FutureBuilder(
-                          future: futures,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            if (snapshot.data == null) {
-                              print("In Null");
-                              return Container(
-                                child: Center(
-                                  child: Text("Loading..."),
-                                ),
-                              );
-                            } else {
-                              return Column(
-                                children: snapshot.data,
-                              );
-                            }
-                          },
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                      Container(
+                        width: deviceWidth * 0.2,
+                        height: deviceHeight * 0.08,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    AssetImage("assets/Ardent_Sport_Text.png"),
+                                fit: BoxFit.fitWidth)),
+                      ),
+                      Container(
+                        width: double.infinity,
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    height: deviceWidth * 0.06,
+                  ),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04))),
+                      onPressed: () {
+                        Get.to(HomePage());
+                      },
+                      child: Text(
+                        "Join a Tournament",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: deviceWidth * 0.03),
+                      )),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          margin:
+                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
+                          child: Text("My Bookings")),
+                      FutureBuilder(
+                        future: futures,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.data == null) {
+                            print("In Null");
+                            return Container(
+                              child: Center(
+                                child: Text("Loading..."),
+                              ),
+                            );
+                          } else {
+                            return Column(
+                              children: snapshot.data,
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
