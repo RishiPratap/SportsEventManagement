@@ -84,7 +84,12 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
       height: deviceWidth * 0.1,
       margin: EdgeInsets.fromLTRB(deviceHeight * 0.02, deviceHeight * 0.02,
           deviceWidth * 0.02, deviceWidth * 0.02),
-      child: RaisedButton(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xffD15858),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(deviceWidth * 0.02)),
+        ),
         onPressed: () {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -94,9 +99,6 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
           Navigator.pop(context, false);
         },
         child: Text("Submit"),
-        color: Color(0xffD15858),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(deviceWidth * 0.02)),
       ),
     );
     totalPlayers.add(submit);
@@ -256,7 +258,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                   height: deviceWidth * 0.07,
                                   margin: EdgeInsets.fromLTRB(
                                       deviceWidth * 0.08, 0, 0, 0),
-                                  child: FlatButton(
+                                  child: ElevatedButton(
                                     onPressed: () {
                                       showDialog(
                                           context: context,
@@ -310,7 +312,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                   height: deviceWidth * 0.07,
                                   margin: EdgeInsets.fromLTRB(
                                       deviceWidth * 0.08, 0, 0, 0),
-                                  child: FlatButton(
+                                  child: ElevatedButton(
                                     onPressed: () {
                                       showDialog(
                                           context: context,
@@ -335,7 +337,12 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: deviceWidth * 0.15,
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xffD15858),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -344,9 +351,6 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                         CricketTossDetails()));
                           },
                           child: Text("Next"),
-                          color: Color(0xffD15858),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
                         ),
                       )
                     ],

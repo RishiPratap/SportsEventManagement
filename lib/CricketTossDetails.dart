@@ -270,7 +270,13 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           height: deviceWidth * 0.15,
-                          child: RaisedButton(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xffD15858),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      deviceWidth * 0.04)),
+                            ),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -280,10 +286,6 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                               );
                             },
                             child: Text("Next"),
-                            color: Color(0xffD15858),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(deviceWidth * 0.04)),
                           ),
                         ),
                       ),

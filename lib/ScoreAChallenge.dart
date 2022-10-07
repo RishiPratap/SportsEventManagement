@@ -295,9 +295,12 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                             padding: EdgeInsets.all(10),
                             width: MediaQuery.of(context).size.width - 50,
                             height: 40,
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(20.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xffE74545),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(20.0),
+                                ),
                               ),
                               onPressed: () {
                                 if (sport_name == "Badminton") {
@@ -335,7 +338,6 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                 }
                               },
                               child: Text("Ok"),
-                              color: Color(0xffE74545),
                             ),
                           ),
                         )

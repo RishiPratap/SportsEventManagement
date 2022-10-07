@@ -67,156 +67,147 @@ class _loginState extends State<login> {
             child: Column(
               children: [
                 Center(
-                  child: Expanded(
-                    child: Image.asset("assets/AARDENT.png"),
-                  ),
+                  child: Image.asset("assets/AARDENT.png"),
                 ),
                 Center(
-                  child: Expanded(
-                    child: Container(
-                      height: cardheight,
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      padding: EdgeInsets.fromLTRB(deviceWidth * 0.04, 0,
-                          deviceWidth * 0.04, deviceWidth * 0.04),
-                      child: Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        color: Colors.white.withOpacity(0.2),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.04, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: TextField(
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: emaild,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.08)),
-                                    hintText: 'Email',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                    ),
-                                  ),
+                  child: Container(
+                    height: cardheight,
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    padding: EdgeInsets.fromLTRB(deviceWidth * 0.04, 0,
+                        deviceWidth * 0.04, deviceWidth * 0.04),
+                    child: Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      color: Colors.white.withOpacity(0.2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.04, deviceWidth * 0.04, 0),
+                            child: TextField(
+                              keyboardType: TextInputType.emailAddress,
+                              controller: emaild,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.08)),
+                                hintText: 'Email',
+                                hintStyle: TextStyle(
+                                    color: Colors.white.withOpacity(0.5)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                 ),
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.04, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: TextField(
-                                  obscureText: true,
-                                  controller: password,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.08)),
-                                    hintText: 'Password',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                    ),
-                                  ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.04, deviceWidth * 0.04, 0),
+                            child: TextField(
+                              obscureText: true,
+                              controller: password,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.08)),
+                                hintText: 'Password',
+                                hintStyle: TextStyle(
+                                    color: Colors.white.withOpacity(0.5)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(deviceWidth * 0.06),
                                 ),
                               ),
                             ),
-                            Container(
-                              width: deviceWidth * 0.4,
-                              margin: EdgeInsets.fromLTRB(
-                                  deviceWidth * 0.04, 0.05 * cardheight, 0, 0),
-                              child: RaisedButton(
+                          ),
+                          Container(
+                            width: deviceWidth * 0.4,
+                            margin: EdgeInsets.fromLTRB(
+                                deviceWidth * 0.04, 0.05 * cardheight, 0, 0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                padding: EdgeInsets.all(deviceWidth * 0.03),
+                                // splashColor: Colors.grey,
+                                backgroundColor: Color(0xffE74545),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(deviceWidth * 0.04),
                                 ),
-                                child: Text(
-                                  "Login",
-                                  style:
-                                      TextStyle(fontSize: deviceWidth * 0.05),
-                                ),
-                                onPressed: () async {
-                                  if (emaild.text.trim().isNotEmpty ||
-                                      password.text.trim().isNotEmpty) {
-                                    final logindetails = LoginDetails(
-                                        EmailId: emaild.text.toString().trim(),
-                                        Password:
-                                            password.text.toString().trim());
-                                    final logindetailsmap =
-                                        logindetails.toMap();
-                                    final json = jsonEncode(logindetailsmap);
-                                    var url =
-                                        "http://44.202.65.121:443/userLogin";
-                                    var response = await post(Uri.parse(url),
-                                        headers: {
-                                          "Accept": "application/json",
-                                          "Content-Type": "application/json"
-                                        },
-                                        body: json,
-                                        encoding: Encoding.getByName("utf-8"));
-                                    final jsonResponse =
-                                        jsonDecode(response.body);
-                                    if (jsonResponse['Message'] ==
-                                        "USER Verified") {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomePage()));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text("Logged in successfully"),
-                                      ));
-                                    } else if (jsonResponse['Message'] ==
-                                        'Incorrect Pwd') {
-                                      final msg = "Incorrect Password";
-                                      Fluttertoast.showToast(msg: msg);
-                                    } else if (jsonResponse['Message'] ==
-                                        "Invalid USERID") {
-                                      final msg = "Invalid UserID";
-                                      Fluttertoast.showToast(msg: msg);
-                                    }
-
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    prefs.setString('email', emaild.text);
+                              ),
+                              child: Text(
+                                "Login",
+                                style: TextStyle(fontSize: deviceWidth * 0.05),
+                              ),
+                              onPressed: () async {
+                                if (emaild.text.trim().isNotEmpty ||
+                                    password.text.trim().isNotEmpty) {
+                                  final logindetails = LoginDetails(
+                                      EmailId: emaild.text.toString().trim(),
+                                      Password:
+                                          password.text.toString().trim());
+                                  final logindetailsmap = logindetails.toMap();
+                                  final json = jsonEncode(logindetailsmap);
+                                  var url =
+                                      "http://44.202.65.121:443/userLogin";
+                                  var response = await post(Uri.parse(url),
+                                      headers: {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json"
+                                      },
+                                      body: json,
+                                      encoding: Encoding.getByName("utf-8"));
+                                  final jsonResponse =
+                                      jsonDecode(response.body);
+                                  if (jsonResponse['Message'] ==
+                                      "USER Verified") {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomePage()));
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text("Logged in successfully"),
+                                    ));
+                                  } else if (jsonResponse['Message'] ==
+                                      'Incorrect Pwd') {
+                                    final msg = "Incorrect Password";
+                                    Fluttertoast.showToast(msg: msg);
+                                  } else if (jsonResponse['Message'] ==
+                                      "Invalid USERID") {
+                                    final msg = "Invalid UserID";
+                                    Fluttertoast.showToast(msg: msg);
                                   }
-                                },
-                                color: Color(0xffE74545),
-                                textColor: Colors.white,
-                                padding: EdgeInsets.all(deviceWidth * 0.03),
-                                splashColor: Colors.grey,
-                              ),
+
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setString('email', emaild.text);
+                                }
+                              },
                             ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(
-                                  0, 0.1 * cardheight, 0, 0),
-                              child: Center(
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    primary: Colors.white,
-                                    textStyle: const TextStyle(
-                                      fontSize: 15,
-                                    ),
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.fromLTRB(0, 0.1 * cardheight, 0, 0),
+                            child: Center(
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  primary: Colors.white,
+                                  textStyle: const TextStyle(
+                                    fontSize: 15,
                                   ),
-                                  onPressed: () {},
-                                  child: const Text('Forgot Password ?'),
                                 ),
+                                onPressed: () {},
+                                child: const Text('Forgot Password ?'),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -245,20 +236,18 @@ class _loginState extends State<login> {
                 ),
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: Expanded(
-                    child: Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          primary: Colors.white.withOpacity(0.5),
-                          textStyle: const TextStyle(
-                            fontSize: 15,
-                          ),
+                  child: Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white.withOpacity(0.5),
+                        textStyle: const TextStyle(
+                          fontSize: 15,
                         ),
-                        onPressed: () {},
-                        child: const Text('Terms & Conditions'),
                       ),
-                    ),  
+                      onPressed: () {},
+                      child: const Text('Terms & Conditions'),
+                    ),
                   ),
                 ),
               ],

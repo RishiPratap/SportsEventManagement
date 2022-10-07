@@ -481,7 +481,14 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                   children: [
                                     Container(
                                       width: 350,
-                                      child: RaisedButton(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xffD15858),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(20.0),
+                                          ),
+                                        ),
                                         onPressed: () {
                                           if ((score_1_first > score_1_second && score_2_first > score_2_second) ||
                                               (score_1_first > score_1_second &&
@@ -521,11 +528,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                         )));
                                           }
                                         },
-                                        color: Color(0xffD15858),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(20.0),
-                                        ),
                                         child: Text(
                                           "Submit",
                                           style: TextStyle(fontSize: 20),
@@ -1487,11 +1489,18 @@ class _SubmitState extends State<Submit> {
                                     children: [
                                       Container(
                                         width: 350,
-                                        child: RaisedButton(
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffD15858),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      20.0),
+                                            ),
+                                          ),
                                           onPressed: () async {
                                             print(widget.MatchId);
                                             print(widget.Tournament_ID);
-
                                             var url =
                                                 "http://44.202.65.121:443/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
                                             print(url);
@@ -1506,11 +1515,6 @@ class _SubmitState extends State<Submit> {
 
                                             print(response.body);
                                           },
-                                          color: Color(0xffD15858),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(20.0),
-                                          ),
                                           child: Text(
                                             "Confirm",
                                             style: TextStyle(fontSize: 20),

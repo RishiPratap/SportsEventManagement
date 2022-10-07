@@ -43,7 +43,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
               children: [
                 Row(
                   children: [
-                    FlatButton(
+                    TextButton(
                       onPressed: () {},
                       child: Image.asset("assets/back.png"),
                     ),
@@ -295,10 +295,14 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04, 0,
                                   deviceWidth * 0.04, deviceWidth * 0.02),
                               height: deviceWidth * 0.08,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(
-                                      deviceWidth * 0.04),
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(
+                                        deviceWidth * 0.04),
+                                  ),
                                 ),
                                 onPressed: () {
                                   if (city.text.isEmpty) {
@@ -333,7 +337,6 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                   }
                                 },
                                 child: Text("Next"),
-                                color: Color(0xffE74545),
                               ),
                             ),
                           )

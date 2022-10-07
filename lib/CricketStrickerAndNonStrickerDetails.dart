@@ -253,7 +253,13 @@ class _CricketStrickerAndNonStrickerDetailsState
                         flex: 2,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          child: RaisedButton(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xffD15858),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      deviceWidth * 0.04)),
+                            ),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -296,10 +302,6 @@ class _CricketStrickerAndNonStrickerDetailsState
                             //   ));
                             // },
                             child: Text("Start Scoring"),
-                            color: Color(0xffD15858),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(deviceWidth * 0.04)),
                           ),
                         ),
                       ),

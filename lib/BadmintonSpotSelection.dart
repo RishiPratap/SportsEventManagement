@@ -1,5 +1,7 @@
 // ignore: file_names
 // ignore: camel_case_types
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -126,7 +128,13 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           margin: EdgeInsets.only(top: deviceWidth * 0.02),
           width: deviceWidth * 0.2,
           height: deviceWidth * 0.07,
-          child: RaisedButton(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xff6EBC55),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(deviceWidth * 0.01),
+              ),
+            ),
             onPressed: () async {
               final SharedPreferences prefs =
                   await SharedPreferences.getInstance();
@@ -222,10 +230,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 });
               });
             },
-            color: Color(0xff6EBC55),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-            ),
             child: Text(
               spotname,
               style: TextStyle(fontSize: deviceWidth * 0.03),
@@ -238,7 +242,13 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           margin: EdgeInsets.only(top: deviceWidth * 0.02),
           width: deviceWidth * 0.2,
           height: deviceWidth * 0.07,
-          child: RaisedButton(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xff808080),
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
+              ),
+            ),
             onPressed: () {
               const msg = "Spot Already Booked Please Try To Book Another Spot";
               Fluttertoast.showToast(
@@ -250,10 +260,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   textColor: Colors.white,
                   fontSize: deviceWidth * 0.033);
             },
-            color: Color(0xff808080),
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
-            ),
             child: Text(
               spotname,
               style: TextStyle(fontSize: deviceWidth * 0.03),
@@ -266,17 +272,19 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           margin: EdgeInsets.only(top: deviceWidth * 0.02),
           width: deviceWidth * 0.2,
           height: deviceWidth * 0.07,
-          child: RaisedButton(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xffFFFF00).withOpacity(0.8),
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
+              ),
+            ),
             onPressed: () {
               final msg =
                   'Someone is currently booking the spot please try to book another spot or wait for some-time';
               Fluttertoast.showToast(msg: msg);
             },
-            color: Color(0xffFFFF00).withOpacity(0.8),
             key: Key(color1.toString()),
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
-            ),
             child: Text(
               spotname,
               style: TextStyle(fontSize: deviceWidth * 0.03),
@@ -292,13 +300,12 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   connect(double deviceWidth) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
-    bool isBooked = false;
     socket.on('spot-clicked-return', (data) {
       Map<String, dynamic> spot_cliclked_return_details = jsonDecode(data);
       var details = json_decode_spot_clicked_return
           .fromJson(spot_cliclked_return_details);
       String spotnumber = details.spot_number;
-      var timer = 30;
+
       final socket_number =
           send_socket_number_(spotnumber, widget.tourneyId, finalEmail);
       print(spotnumber);
