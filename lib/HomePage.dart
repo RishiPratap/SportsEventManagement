@@ -581,35 +581,37 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          width: deviceWidth * 0.6,
-                          height: deviceHeight * 0.07,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/AARDENT_LOGO.png'),
-                              fit: BoxFit.cover,
+                        Row(
+                          children: [
+                            Container(
+                              width: deviceWidth * 0.2,
+                              height: deviceHeight * 0.07,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('assets/AARDENT_LOGO.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          width: deviceWidth * 0.6,
-                          height: deviceHeight * 0.08,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/Ardent_Sport_Text.png"),
-                                  fit: BoxFit.fitWidth)),
-                        ),
-                        Container(
-                          width: double.infinity,
+                            Container(
+                              width: deviceWidth * 0.2,
+                              height: deviceHeight * 0.08,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/Ardent_Sport_Text.png"),
+                                      fit: BoxFit.fitWidth)),
+                            ),
+                          ],
                         ),
                         InkWell(
                           onTap: () {
                             Get.to(() => Menu());
                           },
                           child: Container(
-                            width: deviceWidth * 0.04,
+                            width: deviceWidth * 0.1,
                             height: deviceHeight * 0.02,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
