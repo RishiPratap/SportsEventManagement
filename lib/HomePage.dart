@@ -662,10 +662,12 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 2,
                           child: Container(
-                            margin: EdgeInsets.only(left: deviceWidth * 0.01),
-                            child: Center(
-                                child: Text(
-                                    "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}")),
+                            margin: EdgeInsets.only(right: deviceWidth * 0.05),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                  "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}"),
+                            ),
                           ),
                         ),
                         Expanded(

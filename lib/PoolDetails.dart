@@ -679,9 +679,19 @@ class _PoolDetailsState extends State<PoolDetails> {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 40,
                 ),
                 TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.04,
+                          deviceWidth * 0.02,
+                          deviceWidth * 0.04,
+                          deviceWidth * 0.02),
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
                     onPressed: () async {
                       String poolsize_details = "";
                       String gold_details = "";
@@ -789,7 +799,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                           EasyLoading.dismiss();
                         } else {
                           EasyLoading.dismiss();
-                          EasyLoading.showError("Something went wrong");
+                          EasyLoading.showError("Error in Tournament Creation");
                         }
                       } catch (e) {
                         print(e);
@@ -797,7 +807,11 @@ class _PoolDetailsState extends State<PoolDetails> {
                         EasyLoading.dismiss();
                       }
                     },
-                    child: Text("ok")),
+                    child: Text("Create Tournament",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold))),
               ],
             ),
           ),
