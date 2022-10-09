@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/LiveMaintainer.dart';
-import 'package:ardent_sports/PoolDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import 'SignUpPage.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'UserDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
@@ -145,6 +144,12 @@ class _loginState extends State<login> {
                                 style: TextStyle(fontSize: deviceWidth * 0.05),
                               ),
                               onPressed: () async {
+                                EasyLoading.show(
+                                    status: 'Loading...',
+                                    indicator: SpinKitThreeBounce(
+                                      color: Color(0xFFE74545),
+                                    ),
+                                    maskType: EasyLoadingMaskType.black);
                                 if (emaild.text.trim().isNotEmpty ||
                                     password.text.trim().isNotEmpty) {
                                   final logindetails = LoginDetails(
@@ -166,6 +171,7 @@ class _loginState extends State<login> {
                                       jsonDecode(response.body);
                                   if (jsonResponse['Message'] ==
                                       "USER Verified") {
+                                    EasyLoading.dismiss();
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -174,20 +180,24 @@ class _loginState extends State<login> {
                                         .showSnackBar(SnackBar(
                                       content: Text("Logged in successfully"),
                                     ));
+                                    EasyLoading.dismiss();
                                   } else if (jsonResponse['Message'] ==
                                       'Incorrect Pwd') {
                                     final msg = "Incorrect Password";
                                     Fluttertoast.showToast(msg: msg);
+                                    EasyLoading.dismiss();
                                   } else if (jsonResponse['Message'] ==
                                       "Invalid USERID") {
                                     final msg = "Invalid UserID";
                                     Fluttertoast.showToast(msg: msg);
+                                    EasyLoading.dismiss();
                                   }
 
                                   SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   prefs.setString('email', emaild.text);
                                 }
+                                EasyLoading.dismiss();
                               },
                             ),
                           ),
@@ -197,7 +207,7 @@ class _loginState extends State<login> {
                             child: Center(
                               child: TextButton(
                                 style: TextButton.styleFrom(
-                                  primary: Colors.white,
+                                  foregroundColor: Colors.white,
                                   textStyle: const TextStyle(
                                     fontSize: 15,
                                   ),
