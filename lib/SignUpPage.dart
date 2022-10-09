@@ -382,21 +382,17 @@ class _SubmitPageState extends State<SubmitPage> {
                               child: Row(
                                 children: [
                                   Center(
-                                    child: Expanded(
-                                      child: Image.asset(
-                                          "assets/profile-avatar 1.png"),
-                                    ),
+                                    child: Image.asset(
+                                        "assets/profile-avatar 1.png"),
                                   ),
                                   Center(
-                                    child: Expanded(
-                                      child: Text(
-                                        "Set Up Your Profile",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 22.0,
-                                        ),
+                                    child: Text(
+                                      "Set Up Your Profile",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 22.0,
                                       ),
                                     ),
                                   ),
@@ -408,24 +404,22 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: first_name,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText: '  First name',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
+                              child: Container(
+                                height: deviceWidth * 0.14,
+                                child: TextFormField(
+                                  controller: first_name,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
+                                            deviceWidth * 0.06)),
+                                    hintText: '  First name',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
@@ -437,24 +431,22 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: last_name,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText: '  Last Name',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
+                              child: Container(
+                                height: deviceWidth * 0.14,
+                                child: TextFormField(
+                                  controller: last_name,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
+                                            deviceWidth * 0.06)),
+                                    hintText: '  Last Name',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
@@ -466,151 +458,40 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: date_of_birth,
-                                    readOnly: true,
-                                    onTap: () async {
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(1900),
-                                              lastDate: DateTime(2100));
+                              child: Container(
+                                height: deviceWidth * 0.14,
+                                child: TextFormField(
+                                  controller: date_of_birth,
+                                  readOnly: true,
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100));
 
-                                      if (pickedDate != null) {
-                                        String formattedDate =
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(pickedDate);
-                                        setState(() {
-                                          date_of_birth.text =
-                                              formattedDate.toString();
-                                        });
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText: '  Date of Birth (dd-mm-yy)',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: state,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText: '  State',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: TextFormField(
-                                    controller: city,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText: '  City',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Expanded(
-                                child: Container(
-                                  height: deviceWidth * 0.14,
-                                  child: DropdownButtonFormField(
-                                    value: selectedGender,
-                                    items: gender
-                                        .map((value) => DropdownMenuItem(
-                                              child: Text(value),
-                                              value: value,
-                                            ))
-                                        .toList(),
-                                    onChanged: (value) {
+                                    if (pickedDate != null) {
+                                      String formattedDate =
+                                          DateFormat('dd-MM-yyyy')
+                                              .format(pickedDate);
                                       setState(() {
-                                        selectedGender = value as String;
+                                        date_of_birth.text =
+                                            formattedDate.toString();
                                       });
-                                    },
-                                    hint: Text("Select Gender",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: deviceWidth * 0.04,
-                                        )),
-                                    icon: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.red,
-                                    ),
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.06)),
-                                      hintText: '  Gender',
-                                      hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.5)),
-                                      focusedBorder: OutlineInputBorder(
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06),
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                        ),
+                                            deviceWidth * 0.06)),
+                                    hintText: '  Date of Birth (dd-mm-yy)',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
@@ -618,6 +499,111 @@ class _SubmitPageState extends State<SubmitPage> {
                               ),
                             ),
                           ),
+                          Center(
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                              child: Container(
+                                height: deviceWidth * 0.14,
+                                child: TextFormField(
+                                  controller: state,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06)),
+                                    hintText: '  State',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                              child: Container(
+                                height: deviceWidth * 0.14,
+                                child: TextFormField(
+                                  controller: city,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06)),
+                                    hintText: '  City',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                              child: Container(
+                                height: deviceWidth * 0.14,
+                                child: DropdownButtonFormField(
+                                  value: selectedGender,
+                                  items: gender
+                                      .map((value) => DropdownMenuItem(
+                                            child: Text(value),
+                                            value: value,
+                                          ))
+                                      .toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedGender = value as String;
+                                    });
+                                  },
+                                  hint: Text("Select Gender",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: deviceWidth * 0.04,
+                                      )),
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.red,
+                                  ),
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            deviceWidth * 0.06)),
+                                    hintText: '  Gender',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white.withOpacity(0.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          )
                         ],
                       ),
                     ),
@@ -700,19 +686,17 @@ class _SubmitPageState extends State<SubmitPage> {
                     ),
                     Container(
                       alignment: Alignment.bottomCenter,
-                      child: Expanded(
-                        child: Align(
-                          alignment: FractionalOffset.bottomCenter,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.white.withOpacity(0.5),
-                              textStyle: const TextStyle(
-                                fontSize: 15,
-                              ),
+                      child: Align(
+                        alignment: FractionalOffset.bottomCenter,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            primary: Colors.white.withOpacity(0.5),
+                            textStyle: const TextStyle(
+                              fontSize: 15,
                             ),
-                            onPressed: () {},
-                            child: const Text('Terms & Conditions'),
                           ),
+                          onPressed: () {},
+                          child: const Text('Terms & Conditions'),
                         ),
                       ),
                     ),
