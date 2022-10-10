@@ -792,10 +792,15 @@ class _PoolDetailsState extends State<PoolDetails> {
                         Map<String, dynamic> jsonData =
                             jsonDecode(response.body);
                         debugPrint('Response body:$json');
-                        print(response.body);
+                        print(jsonData["TOURNAMENT_ID"]);
+                        var tournament_id_arr =
+                            jsonData["TOURNAMENT_ID"].toString().split(',');
                         if (response.statusCode == 200) {
                           EasyLoading.dismiss();
-                          Get.to(CreateChallengeTicket());
+                          Get.to(CreateChallengeTicket(
+                            Tournament_ID: tournament_id_arr,
+                            CategorieNames: widget.AllCategoryDetails,
+                          ));
                           EasyLoading.dismiss();
                         } else {
                           EasyLoading.dismiss();
