@@ -1,3 +1,5 @@
+import 'dart:ui';
+import 'package:ardent_sports/CategoryDetails.dart';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:flutter/material.dart';
@@ -5,10 +7,31 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class CreateChallengeTicket extends StatelessWidget {
-  const CreateChallengeTicket({Key? key}) : super(key: key);
+  final List<String> Tournament_ID;
+  final List<CategorieDetails> CategorieNames;
+  const CreateChallengeTicket(
+      {Key? key, required this.Tournament_ID, required this.CategorieNames})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Container> getAllTicketIds() {
+      List<Container> AllIds = [];
+      for (int i = 0; i < Tournament_ID.length; i++) {
+        var container = Container(
+          child: Row(
+            children: [
+              Text(
+                  "     ${CategorieNames[i].CategoryName} ${CategorieNames[i].AgeCategory} :    "),
+              Text("${Tournament_ID[i]}"),
+            ],
+          ),
+        );
+        AllIds.add(container);
+      }
+      return AllIds;
+    }
+
     Future<bool> ok;
     return WillPopScope(
       onWillPop: () {
@@ -126,45 +149,20 @@ class CreateChallengeTicket extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.08,
                                 decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.2),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                        flex: 2,
-                                        child: Center(
-                                          child: Text(
-                                            "ID:",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.05,
-                                            ),
-                                          ),
-                                        )),
-                                    Expanded(
-                                      flex: 6,
-                                      child: Text(
-                                        "123456789",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.05,
-                                        ),
-                                      ),
+                                child: Card(
+                                  color: Colors.black.withOpacity(0.2),
+                                  child: ExpansionTile(
+                                    title: Row(
+                                      children: [
+                                        Text("Category Name :   "),
+                                        Text("Tournament ID")
+                                      ],
                                     ),
-                                  ],
+                                    children: getAllTicketIds(),
+                                  ),
                                 ),
                               ),
                             ),
