@@ -147,7 +147,7 @@ class _loginState extends State<login> {
                               onPressed: () async {
                                 EasyLoading.show(
                                     status: 'Loading...',
-                                    indicator: SpinKitThreeBounce(
+                                    indicator: const SpinKitThreeBounce(
                                       color: Color(0xFFE74545),
                                     ),
                                     maskType: EasyLoadingMaskType.black);
