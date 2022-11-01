@@ -410,95 +410,93 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Expanded(
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.18,
-                            height: deviceWidth * 0.1,
-                            margin: EdgeInsets.fromLTRB(
-                                0, deviceWidth * 0.03, 0, 0),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                              image: AssetImage('assets/AARDENT_LOGO.png'),
-                              fit: BoxFit.cover,
-                            )),
-                          ),
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          width: deviceWidth * 0.18,
+                          height: deviceWidth * 0.1,
+                          margin:
+                              EdgeInsets.fromLTRB(0, deviceWidth * 0.03, 0, 0),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: AssetImage('assets/AARDENT_LOGO.png'),
+                            fit: BoxFit.cover,
+                          )),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.26,
-                            height: deviceWidth * 0.08,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/Ardent_Sport_Text.png"),
-                                    fit: BoxFit.fitWidth)),
-                          ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          width: deviceWidth * 0.26,
+                          height: deviceWidth * 0.08,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/Ardent_Sport_Text.png"),
+                                  fit: BoxFit.fitWidth)),
                         ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: double.infinity,
-                          ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          width: double.infinity,
                         ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: deviceWidth * 0.06,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.fromLTRB(
-                                deviceWidth * 0.03, 0, 0, 0),
-                            child: const Text(
-                              "Past Hosted Challenges",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.red,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w800,
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    height: deviceWidth * 0.06,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          margin:
+                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
+                          child: const Text(
+                            "Past Hosted Challenges",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.red,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          )),
+                      SizedBox(
+                        height: deviceWidth * 0.05,
+                      ),
+                      FutureBuilder(
+                        future: futures,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.data == null) {
+                            print("In Null");
+                            return Container(
+                              child: Center(
+                                child:
+                                    Text("You don't have any past challenges"),
                               ),
-                            )),
-                        SizedBox(
-                          height: deviceWidth * 0.05,
-                        ),
-                        FutureBuilder(
-                          future: futures,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            if (snapshot.data == null) {
-                              print("In Null");
-                              return Container(
-                                child: Center(
-                                  child: Text(
-                                      "You don't have any past challenges"),
-                                ),
-                              );
-                            } else {
-                              return Column(
-                                children: snapshot.data,
-                              );
-                            }
-                          },
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                            );
+                          } else {
+                            return Column(
+                              children: snapshot.data,
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
