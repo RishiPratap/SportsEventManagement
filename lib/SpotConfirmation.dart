@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:ardent_sports/Payment.dart';
+import 'Payment.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+
+import 'PaymentPage.dart';
 
 class jsonSpotNumber {
   late int spotNumber;
@@ -121,7 +123,6 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      
                       child: Text(
                         "<",
                         style: TextStyle(color: Colors.white, fontSize: 35),
@@ -373,24 +374,41 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               width: deviceWidth * 0.6,
               height: deviceWidth * 0.08,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   Navigator.push(
-                      context,
+                      this.context,
                       PageTransition(
-                          type: PageTransitionType.rightToLeftWithFade,
-                          child: Payment(
-                            Spot_Price: mapUserResponse?['fee'],
-                            Spot_Number: widget.SpotNo,
-                            socket: widget.socket,
-                            btnId: widget.btnId,
-                            tourneyId: widget.tournament_id,
-                            location: mapUserResponse?['tournament_city'],
-                            eventName: mapUserResponse?['tournament_name'],
-                            category: mapUserResponse?['cat'],
-                            date: widget.Date,
-                            sport: widget.sport,
-                            name: mapUserResponse?['username'],
-                          )));
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: PaymentPage(
+                          userId: widget.userEmail,
+                          tourneyId: widget.tournament_id,
+                          tourneyName: mapUserResponse?['tournament_name'],
+                          entryFee: mapUserResponse?['fee'],
+                          sportName: widget.sport,
+                          location: mapUserResponse?['tournament_city'],
+                          date: widget.Date,
+                          spotNo: widget.SpotNo,
+                          category: mapUserResponse?['cat'],
+                          socket: widget.socket,
+                        ),
+                      ));
+                  // Navigator.push(
+                  //     context,
+                  //     PageTransition(
+                  //         type: PageTransitionType.rightToLeftWithFade,
+                  //         child: Payment(
+                  //           Spot_Price: mapUserResponse?['fee'],
+                  //           Spot_Number: widget.SpotNo,
+                  //           socket: widget.socket,
+                  //           btnId: widget.btnId,
+                  //           tourneyId: widget.tournament_id,
+                  //           location: mapUserResponse?['tournament_city'],
+                  //           eventName: mapUserResponse?['tournament_name'],
+                  //           category: mapUserResponse?['cat'],
+                  //           date: widget.Date,
+                  //           sport: widget.sport,
+                  //           name: mapUserResponse?['username'],
+                  //         )));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffE74745),
