@@ -452,54 +452,6 @@ class _PoolDetailsState extends State<PoolDetails> {
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
-              Container(
-                margin: EdgeInsets.all(deviceWidth * 0.04),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black.withOpacity(0.3),
-                ),
-                child: DropdownButtonFormField(
-                  hint: Text("Per Match Estimated Time",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontSize: deviceWidth * 0.04,
-                      )),
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.red,
-                  ),
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-                      )),
-                  value: SelectedPerMatchEstimatedTime,
-                  items: PerMatchEstimatedTime.map((value) => DropdownMenuItem(
-                        child: Text(value),
-                        value: value,
-                      )).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      SelectedPerMatchEstimatedTime = value as String;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(
-                height: deviceWidth * 0.02,
-              ),
               Row(),
               Container(
                 width: deviceWidth * 0.8,
