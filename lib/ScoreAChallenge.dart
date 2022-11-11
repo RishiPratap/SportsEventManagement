@@ -346,7 +346,7 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                   ));
                                 }
                               },
-                              child: Text("Ok"),
+                              child: Text("Submit"),
                             ),
                           ),
                         )

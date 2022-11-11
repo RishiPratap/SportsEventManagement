@@ -616,28 +616,6 @@ class _EventDetailsState extends State<EventDetails> {
                     child: Container(
                       margin: EdgeInsets.fromLTRB(
                           deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
-                      // child: TextField(
-                      //   controller: noofcourts,
-                      //   keyboardType: TextInputType.number,
-                      //   style: TextStyle(color: Colors.white),
-                      //   decoration: InputDecoration(
-                      //       enabledBorder: OutlineInputBorder(
-                      //         borderRadius:
-                      //             BorderRadius.circular(deviceWidth * 0.01),
-                      //         borderSide: BorderSide(),
-                      //       ),
-                      //       focusedBorder: OutlineInputBorder(
-                      //         borderRadius:
-                      //             BorderRadius.circular(deviceWidth * 0.02),
-                      //         borderSide: BorderSide(),
-                      //       ),
-                      //       hintText: "No of Courts",
-                      //       hintStyle: TextStyle(color: Colors.white),
-                      //       border: OutlineInputBorder(
-                      //         borderRadius:
-                      //             BorderRadius.circular(deviceWidth * 0.02),
-                      //       )),
-                      // ),
                       child: DropdownButtonFormField(
                         hint: Text("No of courts",
                             style: TextStyle(

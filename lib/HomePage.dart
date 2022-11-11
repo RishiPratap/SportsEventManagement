@@ -221,13 +221,15 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent.withOpacity(0.2),
               child: Container(
                 child: ExpansionTile(
-                  iconColor: Colors.red,
+                  iconColor: Colors.transparent,
+                  collapsedIconColor: Colors.transparent,
+                  collapsedBackgroundColor: Colors.transparent,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
                           margin: EdgeInsets.only(left: deviceWidth * 0.02),
-                          child: Text(
+                          child: const Text(
                             "Category",
                             style: TextStyle(
                                 color: Colors.white,
