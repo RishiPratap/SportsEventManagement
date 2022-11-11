@@ -5,7 +5,8 @@ import 'LiveMaintainerMatchSelection.dart';
 import 'Menu.dart';
 
 class ScoreAChallenge extends StatefulWidget {
-  const ScoreAChallenge({Key? key}) : super(key: key);
+  final String? name;
+  const ScoreAChallenge({Key? key, required this.name}) : super(key: key);
 
   @override
   State<ScoreAChallenge> createState() => _ScoreAChallengeState();
@@ -14,7 +15,11 @@ class ScoreAChallenge extends StatefulWidget {
 class _ScoreAChallengeState extends State<ScoreAChallenge> {
   Future<Null> _refreshScore() async {
     Navigator.pushReplacement(
-        context, PageRouteBuilder(pageBuilder: (a, b, c) => ScoreAChallenge()));
+        context,
+        PageRouteBuilder(
+            pageBuilder: (a, b, c) => ScoreAChallenge(
+                  name: widget.name,
+                )));
   }
 
   @override
@@ -73,8 +78,12 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                       flex: 1,
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Menu()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Menu(
+                                        name: widget.name,
+                                      )));
                         },
                         child: Container(
                           width: 20,
@@ -105,22 +114,22 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Container(
                         width: double.infinity,
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/money_bag.png"),
-                                fit: BoxFit.fitHeight)),
-                      ),
-                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: Container(
+                    //     width: 40,
+                    //     height: 40,
+                    //     decoration: BoxDecoration(
+                    //         image: DecorationImage(
+                    //             image: AssetImage("assets/money_bag.png"),
+                    //             fit: BoxFit.fitHeight)),
+                    //   ),
+                    // ),
                   ],
                 ),
                 Row(
@@ -128,8 +137,8 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        margin: EdgeInsets.only(left: 15),
-                        child: Text("Shubham"),
+                        margin: EdgeInsets.only(left: 30),
+                        child: Text("${widget.name}"),
                       ),
                     ),
                     Expanded(
@@ -138,13 +147,13 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                         width: double.infinity,
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 15.0),
-                        child: Text("₹15,000"),
-                      ),
-                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: Container(
+                    //     margin: EdgeInsets.only(left: 15.0),
+                    //     child: Text("₹15,000"),
+                    //   ),
+                    // ),
                   ],
                 ),
                 Container(

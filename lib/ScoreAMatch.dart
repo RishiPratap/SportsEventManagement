@@ -60,8 +60,12 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                     flex: 1,
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Menu()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Menu(
+                                      name: "",
+                                    )));
                       },
                       child: Container(
                         width: 20,

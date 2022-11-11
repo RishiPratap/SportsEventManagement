@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
@@ -98,8 +96,8 @@ class _PaymentPageState extends State<PaymentPage> {
               );
             } else {
               AlertDialog(
-                title: Text('Payment Failed'),
-                content: Text('Please try again'),
+                title: const Text('Payment Failed'),
+                content: const Text('Please try again'),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -110,7 +108,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       );
                     },
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               );

@@ -12,7 +12,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'ScoreAChallenge.dart';
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key}) : super(key: key);
+  final String? name;
+  const Menu({
+    Key? key,
+    required this.name,
+  }) : super(key: key);
 
   @override
   State<Menu> createState() => _MenuState();
@@ -120,7 +124,9 @@ class _MenuState extends State<Menu> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ScoreAChallenge()));
+                                builder: (context) => ScoreAChallenge(
+                                      name: widget.name,
+                                    )));
                       },
                       child: Text(
                         "Score a challenge",
