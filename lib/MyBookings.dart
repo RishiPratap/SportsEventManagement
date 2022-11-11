@@ -452,7 +452,11 @@ class _MyBookings extends State<MyBookings> {
     double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+        //         builder: (context) => BadmintonSpotSelection(
+        //           tourneyId: userdata[i].TOURNAMENT_ID,
+        //         )));
         return false;
       },
       child: Scaffold(
