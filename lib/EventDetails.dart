@@ -34,8 +34,10 @@ class _EventDetailsState extends State<EventDetails> {
     'U19',
     '35+',
     '40+',
-    '50+'
+    '50+',
+    'Open'
   ];
+  List<String> RegCloses = ['6hrs', '12hrs'];
   String? SelectedAge;
 
   @override
@@ -562,37 +564,22 @@ class _EventDetailsState extends State<EventDetails> {
               child: TextField(
                 controller: registrationclosedateinput,
                 keyboardType: TextInputType.number,
-
                 style: TextStyle(color: Colors.white),
-                // onTap: () async {
-                //   DateTime? pickedDate = await showDatePicker(
-                //       context: context,
-                //       initialDate: DateTime.now(),
-                //       firstDate: DateTime(2000),
-                //       lastDate: DateTime(2100));
-                //   if (pickedDate != null) {
-                //     String formattedDate =
-                //         DateFormat('dd-MM-yyyy').format(pickedDate);
-                //     setState(() {
-                //       registrationclosedateinput.text =
-                //           formattedDate.toString();
-                //     });
-                //   }
-                // },
                 decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                      borderSide: BorderSide(),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                      borderSide: BorderSide(),
-                    ),
-                    hintText: "Registration Closes",
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                    )),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.01),
+                    borderSide: BorderSide(),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                    borderSide: BorderSide(),
+                  ),
+                  hintText: "Registration Closes",
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                  ),
+                ),
               ),
             ),
             SizedBox(

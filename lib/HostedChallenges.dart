@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'HomePage.dart';
 import 'PastHostedChallenges.dart';
 
 class HostedChallenges extends StatefulWidget {
@@ -438,7 +439,8 @@ class _HostedChallengesState extends State<HostedChallenges> {
     double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
         return false;
       },
       child: Scaffold(
