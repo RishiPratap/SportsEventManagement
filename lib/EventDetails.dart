@@ -38,7 +38,10 @@ class _EventDetailsState extends State<EventDetails> {
     'Open'
   ];
   List<String> RegCloses = ['6hrs', '12hrs'];
+  List<String> NoOfCourts = ['1', '2', '3', '4', '5', '6', '7', '8'];
   String? SelectedAge;
+  String? RegClosesHrs;
+  String? Courts;
 
   @override
   TextEditingController EventName = TextEditingController();
@@ -561,25 +564,44 @@ class _EventDetailsState extends State<EventDetails> {
             Container(
               margin: EdgeInsets.fromLTRB(
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
-              child: TextField(
-                controller: registrationclosedateinput,
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                    borderSide: BorderSide(),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                    borderSide: BorderSide(),
-                  ),
-                  hintText: "Registration Closes",
-                  hintStyle: TextStyle(color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+              decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.circular(deviceWidth * 0.04)),
+              child: DropdownButtonFormField(
+                hint: Text(
+                  "Registration Closes Before",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontSize: deviceWidth * 0.04,
                   ),
                 ),
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.red,
+                ),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.06),
+                    )),
+                value: RegClosesHrs,
+                items: RegCloses.map((value) => DropdownMenuItem(
+                      child: Text(value),
+                      value: value,
+                    )).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    RegClosesHrs = value as String;
+                  });
+                },
               ),
             ),
             SizedBox(
@@ -591,32 +613,70 @@ class _EventDetailsState extends State<EventDetails> {
               child: Row(
                 children: [
                   Flexible(
-                      child: Container(
-                    margin: EdgeInsets.fromLTRB(
-                        deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
-                    child: TextField(
-                      controller: noofcourts,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(deviceWidth * 0.01),
-                            borderSide: BorderSide(),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(deviceWidth * 0.02),
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: "No of Courts",
-                          hintStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(deviceWidth * 0.02),
-                          )),
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
+                      // child: TextField(
+                      //   controller: noofcourts,
+                      //   keyboardType: TextInputType.number,
+                      //   style: TextStyle(color: Colors.white),
+                      //   decoration: InputDecoration(
+                      //       enabledBorder: OutlineInputBorder(
+                      //         borderRadius:
+                      //             BorderRadius.circular(deviceWidth * 0.01),
+                      //         borderSide: BorderSide(),
+                      //       ),
+                      //       focusedBorder: OutlineInputBorder(
+                      //         borderRadius:
+                      //             BorderRadius.circular(deviceWidth * 0.02),
+                      //         borderSide: BorderSide(),
+                      //       ),
+                      //       hintText: "No of Courts",
+                      //       hintStyle: TextStyle(color: Colors.white),
+                      //       border: OutlineInputBorder(
+                      //         borderRadius:
+                      //             BorderRadius.circular(deviceWidth * 0.02),
+                      //       )),
+                      // ),
+                      child: DropdownButtonFormField(
+                        hint: Text("No of courts",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal,
+                              fontSize: deviceWidth * 0.04,
+                            )),
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.red,
+                        ),
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.01),
+                              borderSide: BorderSide(),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
+                              borderSide: BorderSide(),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.02),
+                            )),
+                        value: Courts,
+                        items: NoOfCourts.map((value) => DropdownMenuItem(
+                              child: Text(value),
+                              value: value,
+                            )).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            Courts = value as String;
+                          });
+                        },
+                      ),
                     ),
-                  )),
+                  ),
                   Flexible(
                     child: Container(
                       margin: EdgeInsets.fromLTRB(
@@ -665,39 +725,39 @@ class _EventDetailsState extends State<EventDetails> {
                   if (EventName.text.isNotEmpty &&
                       startdateinput.text.isNotEmpty &&
                       enddateinput.text.isNotEmpty &&
-                      registrationclosedateinput.text.isNotEmpty &&
+                      RegClosesHrs != Null &&
                       starttime.text.isNotEmpty &&
                       endtime.text.isNotEmpty &&
                       city.text.isNotEmpty &&
                       Address.text.isNotEmpty &&
                       SelectedAge.toString().isNotEmpty &&
                       SelectedCategory.toString().isNotEmpty &&
-                      noofcourts.text.isNotEmpty &&
+                      Courts != Null &&
                       breaktime.text.isNotEmpty) {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PoolDetails(
-                                  SportName: widget.SportName,
-                                  EventManagerName: widget.EventManagerName,
-                                  EventManagerMobileNo:
-                                      widget.EventManagerMobileNo,
-                                  EventType: widget.EventType,
-                                  EventName: EventName.text,
-                                  StartDate: startdateinput.text,
-                                  EndDate: enddateinput.text,
-                                  RegistrationCloses:
-                                      registrationclosedateinput.text,
-                                  StartTime: starttime.text,
-                                  EndTime: endtime.text,
-                                  City: city.text,
-                                  Address: Address.text,
-                                  Category: SelectedCategory,
-                                  AgeCategory: SelectedAge,
-                                  NoofCourts: noofcourts.text,
-                                  BreakTime: breaktime.text,
-                                  AllCategoryDetails: AllCategories,
-                                )));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PoolDetails(
+                          SportName: widget.SportName,
+                          EventManagerName: widget.EventManagerName,
+                          EventManagerMobileNo: widget.EventManagerMobileNo,
+                          EventType: widget.EventType,
+                          EventName: EventName.text,
+                          StartDate: startdateinput.text,
+                          EndDate: enddateinput.text,
+                          RegistrationCloses: RegClosesHrs![0],
+                          StartTime: starttime.text,
+                          EndTime: endtime.text,
+                          City: city.text,
+                          Address: Address.text,
+                          Category: SelectedCategory,
+                          AgeCategory: SelectedAge,
+                          NoofCourts: Courts!!,
+                          BreakTime: breaktime.text,
+                          AllCategoryDetails: AllCategories,
+                        ),
+                      ),
+                    );
                   } else {
                     showDialog(
                         context: context,
