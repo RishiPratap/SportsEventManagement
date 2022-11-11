@@ -221,6 +221,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent.withOpacity(0.2),
               child: Container(
                 child: ExpansionTile(
+                  iconColor: Colors.red,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -232,17 +233,13 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           )),
-                      TextButton(
-                          onPressed: () {
-                            //userData();
-                          },
-                          child: Text(
-                            "V",
-                            style: TextStyle(
-                              fontSize: deviceWidth * 0.04,
-                              color: Color(0xffE74545),
-                            ),
-                          )),
+                      Text(
+                        "V",
+                        style: TextStyle(
+                          fontSize: deviceWidth * 0.04,
+                          color: Color(0xffE74545),
+                        ),
+                      ),
                       Container(
                         margin: EdgeInsets.only(right: deviceWidth * 0.02),
                         child: Text(
@@ -608,7 +605,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(() => Menu());
+                            Get.to(() => Menu(
+                                  name: mapUserInfo?['Name'],
+                                ));
                           },
                           child: Container(
                             width: deviceWidth * 0.1,

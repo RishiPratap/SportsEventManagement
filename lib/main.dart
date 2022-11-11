@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             Match_Id: '',
             Player_1_name: '',
             Player_2_name: ''),
-        '/scoreChallenge': (context) => ScoreAChallenge()
+        // '/scoreChallenge': (context) => ScoreAChallenge()
       },
     );
   }

@@ -704,6 +704,14 @@ class _PoolDetailsState extends State<PoolDetails> {
                       print(widget.EventName);
                       print(widget.City);
 
+                      var prizePool = gold_details +
+                          "-" +
+                          silver_details +
+                          "-" +
+                          bronze_details +
+                          "-" +
+                          other_details;
+
                       final ChallengeDetails = CreateChallengeDetails(
                           USERID: obtianedEmail!.trim(),
                           TOURNAMENT_ID: "123456",
@@ -714,7 +722,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                           SILVER: silver_details,
                           BRONZE: bronze_details,
                           OTHER: other_details,
-                          PRIZE_POOL: "1800-1200-1300",
+                          PRIZE_POOL: prizePool,
                           TOURNAMENT_NAME: widget.EventName,
                           CITY: widget.City,
                           TYPE: widget.EventType,
