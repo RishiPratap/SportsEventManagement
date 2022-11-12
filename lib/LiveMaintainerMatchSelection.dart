@@ -350,6 +350,43 @@ class _LiveMaintainerMatchSelectionState
     return AllMatches;
   }
 
+  Map? mapUserInfo;
+  Map? mapUserInfo2;
+
+  // Future _getDetails2() async {
+  //   var name2 = matchesData2?.PLAYER2_NAME;
+
+  //   final uri = 'http://44.202.65.121:443/userDetails?USERID=${name2}';
+
+  //   http.Response response;
+
+  //   response = await http.get(Uri.parse(uri));
+
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       mapUserInfo2 = json.decode(response.body);
+  //     });
+  //   }
+  // }
+
+  // Future _getDetails() async {
+  //   // final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   // var email = prefs.getString('email');
+
+  //   var name1 = matchesData2?.PLAYER1_NAME;
+  //   final uri = 'http://44.202.65.121:443/userDetails?USERID=${name1}';
+
+  //   http.Response response;
+
+  //   response = await http.get(Uri.parse(uri));
+
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       mapUserInfo = json.decode(response.body);
+  //     });
+  //   }
+  // }
+
   getAllHostedMatches() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
@@ -379,6 +416,8 @@ class _LiveMaintainerMatchSelectionState
   void initState() {
     super.initState();
     futures = getAllHostedMatches();
+    // _getDetails();
+    // _getDetails2();
   }
 
   @override

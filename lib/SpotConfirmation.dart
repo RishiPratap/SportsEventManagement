@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 // import 'Payment.dart';
+import 'package:ardent_sports/Payment.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -379,7 +380,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       this.context,
                       PageTransition(
                         type: PageTransitionType.rightToLeftWithFade,
-                        child: PaymentPage(
+                        child: Payment(
                           userId: widget.userEmail,
                           tourneyId: widget.tournament_id,
                           tourneyName: mapUserResponse?['tournament_name'],
