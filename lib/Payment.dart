@@ -263,7 +263,8 @@ class _PaymentState extends State<Payment> {
 
   _startPayment(String orderID, String amount) {
     var options = {
-      'key': 'rzp_live_4JAecB352A9wtt',
+      //rzp_live_4JAecB352A9wtt
+      'key': 'rzp_test_FCRNgxh9PnQklS',
       'amount': amount,
       'order_id': orderID,
       'name': 'Ardent Sports',
