@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
@@ -127,6 +128,7 @@ class _ProfileState extends State<Profile> {
       if (response.statusCode == 200) {
         setState(() {
           isLoading = false;
+          mapUserImage = response.data;
         });
       } else {
         setState(() {
@@ -134,17 +136,13 @@ class _ProfileState extends State<Profile> {
         });
       }
     } catch (e) {
-      print(e);
-      setState(() {
-        isLoading = false;
-      });
+      EasyLoading.showError("Error uploading image");
     }
   }
 
   @override
   void initState() {
     getImage();
-
     super.initState();
   }
 
