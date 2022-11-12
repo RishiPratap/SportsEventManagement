@@ -7,11 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-
-import 'PaymentPage.dart';
 
 class jsonSpotNumber {
   late int spotNumber;
