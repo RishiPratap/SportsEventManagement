@@ -752,7 +752,7 @@ class _EventDetailsState extends State<EventDetails> {
                           Address: Address.text,
                           Category: SelectedCategory,
                           AgeCategory: SelectedAge,
-                          NoofCourts: Courts!!,
+                          NoofCourts: Courts!,
                           BreakTime: breaktime.text,
                           AllCategoryDetails: AllCategories,
                         ),

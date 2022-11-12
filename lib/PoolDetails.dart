@@ -140,17 +140,16 @@ class details {
   late String others;
   late String entryfee;
   late String pointsystem;
-  late String PerMatchEstimatedTime;
 
-  details(
-      {required this.PoolSize,
-      required this.gold,
-      required this.silver,
-      required this.bronze,
-      required this.others,
-      required this.entryfee,
-      required this.pointsystem,
-      required this.PerMatchEstimatedTime});
+  details({
+    required this.PoolSize,
+    required this.gold,
+    required this.silver,
+    required this.bronze,
+    required this.others,
+    required this.entryfee,
+    required this.pointsystem,
+  });
 }
 
 class _PoolDetailsState extends State<PoolDetails> {
@@ -159,7 +158,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   List<String> PoolSizes = ['8', '16', '32', '64'];
   String? SelectedPoolSize;
 
-  List<String> PointSystems = ['8', '16', '32', '64', '128'];
+  List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
   String? SelectedPointSystem;
 
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
@@ -444,7 +443,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                       )).toList(),
                   onChanged: (value) {
                     setState(() {
-                      SelectedPointSystem = value as String;
+                      String x = value.toString();
+                      SelectedPointSystem = "${x[0]}${x[1]}_${x[11]}";
                     });
                   },
                 ),
@@ -489,20 +489,18 @@ class _PoolDetailsState extends State<PoolDetails> {
                     if (PoolSizes.isNotEmpty &&
                         EntryFeeController.text.isNotEmpty &&
                         PointSystems.isNotEmpty &&
-                        PerMatchEstimatedTime.isNotEmpty &&
                         gold.text.isNotEmpty &&
                         silver.text.isNotEmpty &&
                         bronze.text.isNotEmpty) {
                       var pool = details(
-                          PoolSize: SelectedPoolSize!,
-                          gold: gold.text,
-                          silver: silver.text,
-                          bronze: bronze.text,
-                          others: others.text,
-                          entryfee: EntryFeeController.text,
-                          pointsystem: SelectedPointSystem!,
-                          PerMatchEstimatedTime:
-                              SelectedPerMatchEstimatedTime!);
+                        PoolSize: SelectedPoolSize!,
+                        gold: gold.text,
+                        silver: silver.text,
+                        bronze: bronze.text,
+                        others: others.text,
+                        entryfee: EntryFeeController.text,
+                        pointsystem: SelectedPointSystem!,
+                      );
                       poolDetails?.add(pool);
                       setState(() {
                         String? ok;
@@ -513,8 +511,9 @@ class _PoolDetailsState extends State<PoolDetails> {
                         EntryFeeController.text = "";
                         others.text = "";
                         SelectedPointSystem = ok;
-                        SelectedPerMatchEstimatedTime = ok;
                       });
+                      EasyLoading.showError(
+                          "Details Have been successfully saved");
                     } else {
                       EasyLoading.showError("All fields are required");
                     }
@@ -662,8 +661,6 @@ class _PoolDetailsState extends State<PoolDetails> {
                         entryfee_details += poolDetails![i].entryfee;
                         selected_point_system_details +=
                             poolDetails![i].pointsystem;
-                        per_match_estimated_time +=
-                            poolDetails![i].PerMatchEstimatedTime;
                         if (i != poolDetails!.length - 1) {
                           poolsize_details += "-";
                           gold_details += "-";
