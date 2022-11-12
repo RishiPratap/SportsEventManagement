@@ -55,6 +55,8 @@ class PoolDetails extends StatefulWidget {
 }
 
 class CreateChallengeDetails {
+  late String ORGANIZER_NAME;
+  late String ORGANIZER_ID;
   late String USERID;
   late String TOURNAMENT_ID;
   late String? CATEGORY;
@@ -80,7 +82,9 @@ class CreateChallengeDetails {
   late String? SPORT;
 
   CreateChallengeDetails(
-      {required this.USERID,
+      {required this.ORGANIZER_NAME,
+      required this.ORGANIZER_ID,
+      required this.USERID,
       required this.TOURNAMENT_ID,
       required this.CATEGORY,
       required this.NO_OF_KNOCKOUT_ROUNDS,
@@ -105,6 +109,8 @@ class CreateChallengeDetails {
       required this.SPORT});
   Map<String, dynamic> toMap() {
     return {
+      "ORGANIZER_NAME": this.ORGANIZER_NAME,
+      "ORGANIZER_ID": this.ORGANIZER_ID,
       "USERID": this.USERID,
       "TOURNAMENT_ID": this.TOURNAMENT_ID,
       "CATEGORY": this.CATEGORY,
@@ -160,6 +166,7 @@ class _PoolDetailsState extends State<PoolDetails> {
 
   List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
   String? SelectedPointSystem;
+  String? Points;
 
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
   String? SelectedPerMatchEstimatedTime;
@@ -444,7 +451,9 @@ class _PoolDetailsState extends State<PoolDetails> {
                   onChanged: (value) {
                     setState(() {
                       String x = value.toString();
-                      SelectedPointSystem = "${x[0]}${x[1]}_${x[11]}";
+                      SelectedPointSystem = value as String;
+                      Points = "${x[0]}${x[1]}_${x[11]}";
+                      print(x[0]);
                     });
                   },
                 ),
@@ -499,7 +508,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                         bronze: bronze.text,
                         others: others.text,
                         entryfee: EntryFeeController.text,
-                        pointsystem: SelectedPointSystem!,
+                        pointsystem: Points!,
                       );
                       poolDetails?.add(pool);
                       setState(() {
@@ -511,6 +520,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                         EntryFeeController.text = "";
                         others.text = "";
                         SelectedPointSystem = ok;
+                        Points = ok;
                       });
                       EasyLoading.showError(
                           "Details Have been successfully saved");
@@ -710,6 +720,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                           other_details;
 
                       final ChallengeDetails = CreateChallengeDetails(
+                          ORGANIZER_NAME: widget.EventManagerName,
+                          ORGANIZER_ID: widget.EventManagerMobileNo,
                           USERID: obtianedEmail!.trim(),
                           TOURNAMENT_ID: "123456",
                           CATEGORY: Category,
