@@ -55,6 +55,8 @@ class PoolDetails extends StatefulWidget {
 }
 
 class CreateChallengeDetails {
+  late String ORGANIZER_NAME;
+  late String ORGANIZER_ID;
   late String USERID;
   late String TOURNAMENT_ID;
   late String? CATEGORY;
@@ -80,7 +82,9 @@ class CreateChallengeDetails {
   late String? SPORT;
 
   CreateChallengeDetails(
-      {required this.USERID,
+      {required this.ORGANIZER_NAME,
+      required this.ORGANIZER_ID,
+      required this.USERID,
       required this.TOURNAMENT_ID,
       required this.CATEGORY,
       required this.NO_OF_KNOCKOUT_ROUNDS,
@@ -105,6 +109,8 @@ class CreateChallengeDetails {
       required this.SPORT});
   Map<String, dynamic> toMap() {
     return {
+      "ORGANIZER_NAME": this.ORGANIZER_NAME,
+      "ORGANIZER_ID": this.ORGANIZER_ID,
       "USERID": this.USERID,
       "TOURNAMENT_ID": this.TOURNAMENT_ID,
       "CATEGORY": this.CATEGORY,
@@ -140,17 +146,16 @@ class details {
   late String others;
   late String entryfee;
   late String pointsystem;
-  late String PerMatchEstimatedTime;
 
-  details(
-      {required this.PoolSize,
-      required this.gold,
-      required this.silver,
-      required this.bronze,
-      required this.others,
-      required this.entryfee,
-      required this.pointsystem,
-      required this.PerMatchEstimatedTime});
+  details({
+    required this.PoolSize,
+    required this.gold,
+    required this.silver,
+    required this.bronze,
+    required this.others,
+    required this.entryfee,
+    required this.pointsystem,
+  });
 }
 
 class _PoolDetailsState extends State<PoolDetails> {
@@ -159,8 +164,9 @@ class _PoolDetailsState extends State<PoolDetails> {
   List<String> PoolSizes = ['8', '16', '32', '64'];
   String? SelectedPoolSize;
 
-  List<String> PointSystems = ['8', '16', '32', '64', '128'];
+  List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
   String? SelectedPointSystem;
+  String? Points;
 
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
   String? SelectedPerMatchEstimatedTime;
@@ -444,55 +450,10 @@ class _PoolDetailsState extends State<PoolDetails> {
                       )).toList(),
                   onChanged: (value) {
                     setState(() {
+                      String x = value.toString();
                       SelectedPointSystem = value as String;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(
-                height: deviceWidth * 0.02,
-              ),
-              Container(
-                margin: EdgeInsets.all(deviceWidth * 0.04),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black.withOpacity(0.3),
-                ),
-                child: DropdownButtonFormField(
-                  hint: Text("Per Match Estimated Time",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontSize: deviceWidth * 0.04,
-                      )),
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.red,
-                  ),
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-                      )),
-                  value: SelectedPerMatchEstimatedTime,
-                  items: PerMatchEstimatedTime.map((value) => DropdownMenuItem(
-                        child: Text(value),
-                        value: value,
-                      )).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      SelectedPerMatchEstimatedTime = value as String;
+                      Points = "${x[0]}${x[1]}_${x[11]}";
+                      print(x[0]);
                     });
                   },
                 ),
@@ -537,20 +498,18 @@ class _PoolDetailsState extends State<PoolDetails> {
                     if (PoolSizes.isNotEmpty &&
                         EntryFeeController.text.isNotEmpty &&
                         PointSystems.isNotEmpty &&
-                        PerMatchEstimatedTime.isNotEmpty &&
                         gold.text.isNotEmpty &&
                         silver.text.isNotEmpty &&
                         bronze.text.isNotEmpty) {
                       var pool = details(
-                          PoolSize: SelectedPoolSize!,
-                          gold: gold.text,
-                          silver: silver.text,
-                          bronze: bronze.text,
-                          others: others.text,
-                          entryfee: EntryFeeController.text,
-                          pointsystem: SelectedPointSystem!,
-                          PerMatchEstimatedTime:
-                              SelectedPerMatchEstimatedTime!);
+                        PoolSize: SelectedPoolSize!,
+                        gold: gold.text,
+                        silver: silver.text,
+                        bronze: bronze.text,
+                        others: others.text,
+                        entryfee: EntryFeeController.text,
+                        pointsystem: Points!,
+                      );
                       poolDetails?.add(pool);
                       setState(() {
                         String? ok;
@@ -561,8 +520,10 @@ class _PoolDetailsState extends State<PoolDetails> {
                         EntryFeeController.text = "";
                         others.text = "";
                         SelectedPointSystem = ok;
-                        SelectedPerMatchEstimatedTime = ok;
+                        Points = ok;
                       });
+                      EasyLoading.showError(
+                          "Details Have been successfully saved");
                     } else {
                       EasyLoading.showError("All fields are required");
                     }
@@ -710,8 +671,6 @@ class _PoolDetailsState extends State<PoolDetails> {
                         entryfee_details += poolDetails![i].entryfee;
                         selected_point_system_details +=
                             poolDetails![i].pointsystem;
-                        per_match_estimated_time +=
-                            poolDetails![i].PerMatchEstimatedTime;
                         if (i != poolDetails!.length - 1) {
                           poolsize_details += "-";
                           gold_details += "-";
@@ -761,6 +720,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                           other_details;
 
                       final ChallengeDetails = CreateChallengeDetails(
+                          ORGANIZER_NAME: widget.EventManagerName,
+                          ORGANIZER_ID: widget.EventManagerMobileNo,
                           USERID: obtianedEmail!.trim(),
                           TOURNAMENT_ID: "123456",
                           CATEGORY: Category,
