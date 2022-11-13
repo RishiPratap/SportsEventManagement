@@ -638,7 +638,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                   INTERESTED_SPORTS: "NULL");
                               final DetailMap = Details.toMap();
                               final json = jsonEncode(DetailMap);
-                              var url = "http://44.202.65.  121:443/createUser";
+                              var url = "http://44.202.65.121:443/createUser";
                               var response = await post(Uri.parse(url),
                                   headers: {
                                     "Accept": "application/json",

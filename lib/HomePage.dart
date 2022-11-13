@@ -59,6 +59,8 @@ class UserData {
   late int PRIZE_POOL;
   late int ENTRY_FEE;
   late String IMG_URL;
+  late String ORGANIZER_NAME;
+  late String ORGANIZER_ID;
   late List MATCHES;
   late int __v;
   late List spotStatusArray;
@@ -83,6 +85,8 @@ class UserData {
     this.PRIZE_POOL,
     this.ENTRY_FEE,
     this.IMG_URL,
+    this.ORGANIZER_NAME,
+    this.ORGANIZER_ID,
     this.MATCHES,
     this.__v,
     this.spotStatusArray,
@@ -109,6 +113,8 @@ class UserData {
     PRIZE_POOL = json['PRIZE_POOL'];
     ENTRY_FEE = json['ENTRY_FEE'];
     IMG_URL = json['IMG_URL'];
+    ORGANIZER_NAME = json['ORGANIZER_NAME'];
+    ORGANIZER_ID = json['ORGANIZER_ID'];
     MATCHES = json['MATCHES'];
     __v = json['__v'];
     spotStatusArray = json['spotStatusArrays'];
@@ -141,7 +147,14 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.only(top: deviceWidth * 0.002),
               height: MediaQuery.of(context).size.height * 0.075,
               child: InkWell(
-                onTap: () async {},
+                onTap: () async {
+                  EasyLoading.instance.displayDuration =
+                      Duration(milliseconds: 15000);
+                  EasyLoading.instance.radius = 15;
+                  EasyLoading.showInfo(
+                      "Organizer Name : ${userdata[i].ORGANIZER_NAME}\nOrganizer Number: ${userdata[i].ORGANIZER_ID}",
+                      dismissOnTap: true);
+                },
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.04),
