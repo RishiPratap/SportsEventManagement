@@ -213,7 +213,6 @@ class _PaymentState extends State<Payment> {
   }
 
   _paymentButton(double w) {
-    //Payment Button
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.8,
       left: w * 0.2,
