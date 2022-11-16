@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ardent_sports/WebViewTournamentDetails.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -322,9 +323,10 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   onPressed: () async {
                     final url =
                         "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-
+                    EasyLoading.show(status: 'Starting');
                     var response = await get(Uri.parse(url));
                     if (response.statusCode == 200) {
+                      EasyLoading.dismiss();
                       const msg = 'Tournament has Successfully Started!';
                       Fluttertoast.showToast(msg: msg);
                     } else {
