@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ardent_sports/WebViewTournamentDetails.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,6 +99,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
       AllTournaments.add(card);
     } else {
       for (int i = array_length - 1; i >= 0; i--) {
+        bool isStarted = userdata[i].STATUS;
         var card = Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(deviceWidth * 0.03),
@@ -320,15 +322,22 @@ class _HostedChallengesState extends State<HostedChallenges> {
               ),
               TextButton(
                   onPressed: () async {
-                    final url =
-                        "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-
-                    var response = await get(Uri.parse(url));
-                    if (response.statusCode == 200) {
-                      const msg = 'Tournament has Successfully Started!';
-                      Fluttertoast.showToast(msg: msg);
+                    if (isStarted) {
+                      final url =
+                          "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                      EasyLoading.show(status: 'Starting');
+                      var response = await get(Uri.parse(url));
+                      if (response.statusCode == 200) {
+                        EasyLoading.dismiss();
+                        const msg = 'Tournament has Successfully Started!';
+                        Fluttertoast.showToast(msg: msg);
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Failed to start Tournament");
+                      }
                     } else {
-                      Fluttertoast.showToast(msg: "Failed to start Tournament");
+                      const msg = 'Tournament has Already Started!';
+                      Fluttertoast.showToast(msg: msg);
                     }
                   },
                   child: Container(
@@ -336,7 +345,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                     width: MediaQuery.of(context).size.width * 0.3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.green,
+                      color: isStarted ? Colors.green : Colors.grey,
                     ),
                     child: Container(
                       margin: EdgeInsets.only(top: 15),

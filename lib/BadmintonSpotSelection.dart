@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
+import 'package:ardent_sports/WebViewSpots.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +26,13 @@ class BadmintonSpotSelection extends StatefulWidget {
   final String tourneyId;
   final String sport;
   final String Date;
+  final int spots;
   const BadmintonSpotSelection(
       {Key? key,
       required this.tourneyId,
       required this.sport,
-      required this.Date})
+      required this.Date,
+      required this.spots})
       : super(key: key);
 
   @override
@@ -440,6 +443,21 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                         child: Text(
                           "<",
                           style: TextStyle(color: Colors.white, fontSize: 35),
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                  child: WebViewSpots(
+                                    spots: "${widget.spots}",
+                                  )));
+                        },
+                        child: Text(
+                          "Fixtures",
+                          style:
+                              TextStyle(color: Color(0xffD15858), fontSize: 20),
                         )),
                     TextButton(
                         onPressed: () {},
