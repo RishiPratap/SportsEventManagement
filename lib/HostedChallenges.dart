@@ -325,7 +325,9 @@ class _HostedChallengesState extends State<HostedChallenges> {
                     if (isStarted) {
                       final url =
                           "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-                      EasyLoading.show(status: 'Starting');
+                      EasyLoading.show(
+                          status: 'Starting',
+                          maskType: EasyLoadingMaskType.black);
                       var response = await get(Uri.parse(url));
                       if (response.statusCode == 200) {
                         EasyLoading.dismiss();
