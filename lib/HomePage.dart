@@ -433,6 +433,7 @@ class _HomePageState extends State<HomePage> {
                                   tourneyId: spotStatusArray[i]['id'],
                                   sport: spotStatusArray[i]['SPORT'],
                                   Date: Date,
+                                  spots: x,
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
