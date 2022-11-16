@@ -331,6 +331,9 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         EasyLoading.dismiss();
                         const msg = 'Tournament has Successfully Started!';
                         Fluttertoast.showToast(msg: msg);
+                        setState(() {
+                          userdata[i].STATUS = false;
+                        });
                       } else {
                         Fluttertoast.showToast(
                             msg: "Failed to start Tournament");
