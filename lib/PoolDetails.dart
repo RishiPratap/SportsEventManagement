@@ -8,8 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CategoryDetails.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'WebViewSpots.dart';
 import 'package:get/get.dart';
+import 'orderAPI/ModelOrderID.dart';
+import 'orderAPI/serviceWrapper.dart';
 
 class PoolDetails extends StatefulWidget {
   final String? SportName;
@@ -163,7 +166,6 @@ class _PoolDetailsState extends State<PoolDetails> {
   double _currPageValue = 0.0;
   List<String> PoolSizes = ['8', '16', '32', '64'];
   String? SelectedPoolSize;
-
   List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
   String? SelectedPointSystem;
   String? Points;
@@ -184,6 +186,8 @@ class _PoolDetailsState extends State<PoolDetails> {
   final others = TextEditingController();
 
   List<Card> AllPools(int count, double deviceWidth, double deviceHeight) {
+    late Razorpay _razrorpay;
+
     List<Card> AllDetails = [];
     for (int i = 0; i < count; i++) {
       var card = Card(
@@ -552,9 +556,16 @@ class _PoolDetailsState extends State<PoolDetails> {
     return AllDetails;
   }
 
+  late Razorpay _razorpay;
+  var tournament_id_arr;
+
   @override
   void initState() {
     super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     pageController.addListener(() {
       setState(() {
         _currPageValue = pageController.page!;
@@ -762,14 +773,15 @@ class _PoolDetailsState extends State<PoolDetails> {
                             jsonDecode(response.body);
                         debugPrint('Response body:$json');
                         print(jsonData["TOURNAMENT_ID"]);
-                        var tournament_id_arr =
+                        tournament_id_arr =
                             jsonData["TOURNAMENT_ID"].toString().split(',');
                         if (response.statusCode == 200) {
                           EasyLoading.dismiss();
-                          Get.to(CreateChallengeTicket(
-                            Tournament_ID: tournament_id_arr,
-                            CategorieNames: widget.AllCategoryDetails,
-                          ));
+                          _getorderId('2');
+                          // Get.to(CreateChallengeTicket(
+                          //   Tournament_ID: tournament_id_arr,
+                          //   CategorieNames: widget.AllCategoryDetails,
+                          // ));
                           EasyLoading.dismiss();
                         } else {
                           EasyLoading.dismiss();
@@ -790,5 +802,64 @@ class _PoolDetailsState extends State<PoolDetails> {
             ),
           ),
         ));
+  }
+
+  _getorderId(String amount) async {
+    print(" call start here");
+    servicewrapper wrapper = new servicewrapper();
+    Map<String, dynamic> response = await wrapper.call_order_api(amount);
+    final model = ModelOrderID.fromJson(response);
+    print(" response here");
+    if (model != null) {
+      if (model.status == 1) {
+        print(" order id is  - " + model.orderID.toString());
+        _startPayment(model.orderID.toString(), amount);
+      } else {
+        print(" status zero");
+      }
+    } else {
+      print(" model null for category api");
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+    Get.to(CreateChallengeTicket(
+      Tournament_ID: tournament_id_arr,
+      CategorieNames: widget.AllCategoryDetails,
+    ));
+    print(
+        " RazorSuccess : " + response.paymentId! + " -- " + response.orderId!);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+    print(" RazorpayError : " +
+        response.code.toString() +
+        " -- " +
+        response.message!);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+    print(" RazorWallet : " + response.walletName!);
+  }
+
+  _startPayment(String orderID, String amount) {
+    var options = {
+      //rzp_live_4JAecB352A9wtt
+      'key': 'rzp_test_MKSizWXlqa0LsE',
+      'amount': '2',
+      'order_id': orderID,
+      'name': 'Ardent Sports',
+      'description': 'Payment for Spot Booking',
+      'prefill': {'contact': '9999999999', 'email': 'ardentsports1@gmail.com'}
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      print(" razorpay error " + e.toString());
+    }
   }
 }
