@@ -526,7 +526,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                         SelectedPointSystem = ok;
                         Points = ok;
                       });
-                      EasyLoading.showError(
+                      EasyLoading.showInfo(
                           "Details Have been successfully saved");
                     } else {
                       EasyLoading.showError("All fields are required");
@@ -848,7 +848,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   _startPayment(String orderID, String amount) {
     var options = {
       //rzp_live_4JAecB352A9wtt
-      'key': 'rzp_test_MKSizWXlqa0LsE',
+      'key': 'rzp_live_4JAecB352A9wtt',
       'amount': '2',
       'order_id': orderID,
       'name': 'Ardent Sports',
