@@ -445,6 +445,11 @@ class _HostedChallengesState extends State<HostedChallenges> {
     // futures_past_hosted_challenges = getAllPastHostedTournaments();
   }
 
+  Future<Null> _refreshScreen() async {
+    Navigator.pushReplacement(context,
+        PageRouteBuilder(pageBuilder: (a, b, c) => HostedChallenges()));
+  }
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -457,139 +462,142 @@ class _HostedChallengesState extends State<HostedChallenges> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/Homepage.png"),
-                fit: BoxFit.cover,
+        body: RefreshIndicator(
+          onRefresh: () => _refreshScreen(),
+          child: SafeArea(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/Homepage.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: deviceWidth * 0.2,
-                            height: deviceHeight * 0.07,
-                            margin: EdgeInsets.fromLTRB(
-                                0, deviceWidth * 0.03, 0, 0),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                              image: AssetImage('assets/AARDENT_LOGO.png'),
-                              fit: BoxFit.cover,
-                            )),
-                          ),
-                          Container(
-                            width: deviceWidth * 0.2,
-                            height: deviceHeight * 0.08,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/Ardent_Sport_Text.png"),
-                                    fit: BoxFit.fitWidth)),
-                          ),
-                          Container(
-                            width: double.infinity,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    height: deviceWidth * 0.06,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          margin:
-                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-                          child: const Text(
-                            "Upcoming Hosted Challenges",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.red,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w800,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: deviceWidth * 0.2,
+                              height: deviceHeight * 0.07,
+                              margin: EdgeInsets.fromLTRB(
+                                  0, deviceWidth * 0.03, 0, 0),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                image: AssetImage('assets/AARDENT_LOGO.png'),
+                                fit: BoxFit.cover,
+                              )),
                             ),
-                          )),
-                      SizedBox(
-                        height: deviceWidth * 0.05,
-                      ),
-                      FutureBuilder(
-                        future: futures,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.data == null) {
-                            print("In Null");
-                            return Container(
-                              child: Center(
-                                child:
-                                    Text("You Dont Have any Hosted Challenges"),
-                              ),
-                            );
-                          } else {
-                            return Column(
-                              children: snapshot.data,
-                            );
-                          }
-                        },
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.red,
-                          ),
-                          margin:
-                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-                          child: TextButton(
-                            onPressed: () {
-                              Get.to(PastHostedChallenges());
-                            },
-                            child: Text(
-                              "Past Hosted Challenges >",
+                            Container(
+                              width: deviceWidth * 0.2,
+                              height: deviceHeight * 0.08,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/Ardent_Sport_Text.png"),
+                                      fit: BoxFit.fitWidth)),
+                            ),
+                            Container(
+                              width: double.infinity,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      height: deviceWidth * 0.06,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.fromLTRB(
+                                deviceWidth * 0.03, 0, 0, 0),
+                            child: const Text(
+                              "Upcoming Hosted Challenges",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.white,
+                                color: Colors.red,
                                 fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.w800,
                               ),
+                            )),
+                        SizedBox(
+                          height: deviceWidth * 0.05,
+                        ),
+                        FutureBuilder(
+                          future: futures,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<dynamic> snapshot) {
+                            if (snapshot.data == null) {
+                              print("In Null");
+                              return Container(
+                                child: Center(
+                                  child: Text(
+                                      "You Dont Have any Hosted Challenges"),
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                children: snapshot.data,
+                              );
+                            }
+                          },
+                        ),
+                        Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.red,
                             ),
-                          )),
-                      // FutureBuilder(
-                      //   future: getAllPastHostedTournaments(),
-                      //   builder: (BuildContext context,
-                      //       AsyncSnapshot<dynamic> snapshot) {
-                      //     if (snapshot.data == null) {
-                      //       print("In Null");
-                      //       return Container(
-                      //         child: Center(
-                      //           child: Text(
-                      //               "You Dont Have any past hosted challenges"),
-                      //         ),
-                      //       );
-                      //     } else {
-                      //       return Column(
-                      //         children: snapshot.data,
-                      //       );
-                      //     }
-                      //   },
-                      // ),
-                    ],
-                  )
-                ],
+                            margin: EdgeInsets.fromLTRB(
+                                deviceWidth * 0.03, 0, 0, 0),
+                            child: TextButton(
+                              onPressed: () {
+                                Get.to(PastHostedChallenges());
+                              },
+                              child: Text(
+                                "Past Hosted Challenges >",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            )),
+                        // FutureBuilder(
+                        //   future: getAllPastHostedTournaments(),
+                        //   builder: (BuildContext context,
+                        //       AsyncSnapshot<dynamic> snapshot) {
+                        //     if (snapshot.data == null) {
+                        //       print("In Null");
+                        //       return Container(
+                        //         child: Center(
+                        //           child: Text(
+                        //               "You Dont Have any past hosted challenges"),
+                        //         ),
+                        //       );
+                        //     } else {
+                        //       return Column(
+                        //         children: snapshot.data,
+                        //       );
+                        //     }
+                        //   },
+                        // ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
