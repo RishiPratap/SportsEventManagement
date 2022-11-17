@@ -27,13 +27,17 @@ class BadmintonSpotSelection extends StatefulWidget {
   final String sport;
   final String Date;
   final int spots;
-  const BadmintonSpotSelection(
-      {Key? key,
-      required this.tourneyId,
-      required this.sport,
-      required this.Date,
-      required this.spots})
-      : super(key: key);
+  final String Organiser_Name;
+  final String Organiser_Number;
+  const BadmintonSpotSelection({
+    Key? key,
+    required this.tourneyId,
+    required this.sport,
+    required this.Date,
+    required this.spots,
+    required this.Organiser_Name,
+    required this.Organiser_Number,
+  }) : super(key: key);
 
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
@@ -444,21 +448,32 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                           "<",
                           style: TextStyle(color: Colors.white, fontSize: 35),
                         )),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.rightToLeftWithFade,
-                                  child: WebViewSpots(
-                                    spots: "${widget.spots}",
-                                  )));
-                        },
-                        child: Text(
-                          "Fixtures",
-                          style:
-                              TextStyle(color: Color(0xffD15858), fontSize: 20),
-                        )),
+                    Container(
+                      width: deviceWidth * 0.2,
+                      height: deviceWidth * 0.07,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xffD15858),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.01),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type:
+                                        PageTransitionType.rightToLeftWithFade,
+                                    child: WebViewSpots(
+                                      spots: "${widget.spots}",
+                                    )));
+                          },
+                          child: Text(
+                            "Fixtures",
+                            style: TextStyle(fontSize: 10),
+                          )),
+                    ),
                     TextButton(
                         onPressed: () {},
                         child: Text(
@@ -691,6 +706,36 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "Spots Cannot be changed once selected",
+                style: TextStyle(color: Color(0xffFFFFFF)),
+              ),
+            ),
+            SizedBox(
+              height: deviceWidth * 0.02,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: deviceWidth * 0.06),
+              child: Text(
+                "Organizer Details :",
+                style: TextStyle(color: Color(0xffD15858)),
+              ),
+            ),
+            SizedBox(
+              height: deviceWidth * 0.02,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
+              child: Text(
+                "Organizer Name : ${widget.Organiser_Name}",
+                style: TextStyle(color: Color(0xffFFFFFF)),
+              ),
+            ),
+            SizedBox(
+              height: deviceWidth * 0.02,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
+              child: Text(
+                "Organizer Number : ${widget.Organiser_Number}",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),

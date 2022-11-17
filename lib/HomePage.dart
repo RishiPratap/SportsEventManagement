@@ -234,9 +234,6 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent.withOpacity(0.2),
               child: Container(
                 child: ExpansionTile(
-                  iconColor: Colors.transparent,
-                  collapsedIconColor: Colors.transparent,
-                  collapsedBackgroundColor: Colors.transparent,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -249,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.bold),
                           )),
                       Text(
-                        "V",
+                        "v",
                         style: TextStyle(
                           fontSize: deviceWidth * 0.04,
                           color: Color(0xffE74545),
@@ -266,7 +263,10 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   children: getAllTournamentCategories(
-                      userdata[i].spotStatusArray, userdata[i].START_DATE),
+                      userdata[i].spotStatusArray,
+                      userdata[i].START_DATE,
+                      userdata[i].ORGANIZER_NAME,
+                      userdata[i].ORGANIZER_ID),
                 ),
               ),
             ),
@@ -391,8 +391,8 @@ class _HomePageState extends State<HomePage> {
     return AllTournaments;
   }
 
-  List<Container> getAllTournamentCategories(
-      List spotStatusArray, String Date) {
+  List<Container> getAllTournamentCategories(List spotStatusArray, String Date,
+      String Organizer_Name, String Organizer_Number) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     List<Container> AllCategories = [];
@@ -434,6 +434,8 @@ class _HomePageState extends State<HomePage> {
                                   sport: spotStatusArray[i]['SPORT'],
                                   Date: Date,
                                   spots: x,
+                                  Organiser_Name: Organizer_Name,
+                                  Organiser_Number: Organizer_Number,
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
