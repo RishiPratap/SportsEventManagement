@@ -129,6 +129,8 @@ class _HomePageState extends State<HomePage> {
   List<Card> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
+    print(deviceWidth);
+    print(deviceHeight);
     for (int i = array_length - 1; i >= 0; i--) {
       var container = Card(
         margin: EdgeInsets.all(deviceWidth * 0.04),

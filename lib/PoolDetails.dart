@@ -169,6 +169,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
   String? SelectedPointSystem;
   String? Points;
+  bool isEnabled = true;
 
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
   String? SelectedPerMatchEstimatedTime;
@@ -187,6 +188,8 @@ class _PoolDetailsState extends State<PoolDetails> {
 
   List<Card> AllPools(int count, double deviceWidth, double deviceHeight) {
     late Razorpay _razrorpay;
+    List<bool> isCategoryDetailsAdded =
+        List<bool>.filled(widget.AllCategoryDetails.length, false);
 
     List<Card> AllDetails = [];
     for (int i = 0; i < count; i++) {
@@ -504,7 +507,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                         PointSystems.isNotEmpty &&
                         gold.text.isNotEmpty &&
                         silver.text.isNotEmpty &&
-                        bronze.text.isNotEmpty) {
+                        bronze.text.isNotEmpty &&
+                        !isCategoryDetailsAdded[_currPageValue.toInt()]) {
                       var pool = details(
                         PoolSize: SelectedPoolSize!,
                         gold: gold.text,
@@ -528,6 +532,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                       });
                       EasyLoading.showInfo(
                           "Details Have been successfully saved");
+                    } else if (isCategoryDetailsAdded[_currPageValue.toInt()]) {
+                      EasyLoading.showError("Details Have ALredy Been Saved");
                     } else {
                       EasyLoading.showError("All fields are required");
                     }
