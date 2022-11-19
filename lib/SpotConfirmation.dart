@@ -189,16 +189,54 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: deviceWidth * 0.05,
-                          right: deviceWidth * 0.05,
-                          top: deviceWidth * 0.04),
-                      width: deviceWidth * 0.6,
-                      height: deviceWidth * 0.08,
-                      child: Text(
-                        "Name: ${mapUserResponse?['username']}",
-                        textAlign: TextAlign.start,
+                    Card(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: deviceWidth * 0.05,
+                            right: deviceWidth * 0.05,
+                            top: deviceWidth * 0.04),
+                        width: deviceWidth * 0.6,
+                        height: deviceWidth * 0.08,
+                        child: Text(
+                          "Name: ${mapUserResponse?['username']}",
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: deviceWidth * 0.01,
+            ),
+            Padding(
+              padding: EdgeInsets.all(deviceWidth * 0.02),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
+                    side: BorderSide(
+                      color: Color(0xff03C289),
+                    )),
+                elevation: 10,
+                color: Colors.black.withOpacity(0.3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Card(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: deviceWidth * 0.05,
+                            right: deviceWidth * 0.05,
+                            top: deviceWidth * 0.04),
+                        width: deviceWidth * 0.6,
+                        height: deviceWidth * 0.08,
+                        child: Text(
+                          "Event : ${mapUserResponse?['tournament_name']}",
+                          textAlign: TextAlign.start,
+                        ),
                       ),
                     )
                   ],
@@ -221,48 +259,19 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: deviceWidth * 0.05,
-                          right: deviceWidth * 0.05,
-                          top: deviceWidth * 0.04),
-                      width: deviceWidth * 0.6,
-                      height: deviceWidth * 0.08,
-                      child: Text(
-                        "Event : ${mapUserResponse?['tournament_name']}",
-                        textAlign: TextAlign.start,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: deviceWidth * 0.01,
-            ),
-            Padding(
-              padding: EdgeInsets.all(deviceWidth * 0.02),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(deviceWidth * 0.03),
-                    side: BorderSide(
-                      color: Color(0xff03C289),
-                    )),
-                elevation: 10,
-                color: Colors.black.withOpacity(0.3),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: deviceWidth * 0.05,
-                          right: deviceWidth * 0.05,
-                          top: deviceWidth * 0.04),
-                      width: deviceWidth * 0.6,
-                      height: deviceWidth * 0.08,
-                      child: Text(
-                        "Category : ${mapUserResponse?['cat']}",
-                        textAlign: TextAlign.start,
+                    Card(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: deviceWidth * 0.05,
+                            right: deviceWidth * 0.05,
+                            top: deviceWidth * 0.04),
+                        width: deviceWidth * 0.6,
+                        height: deviceWidth * 0.08,
+                        child: Text(
+                          "Category : ${mapUserResponse?['cat']}",
+                          textAlign: TextAlign.start,
+                        ),
                       ),
                     )
                   ],
@@ -285,16 +294,19 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: deviceWidth * 0.05,
-                          right: deviceWidth * 0.05,
-                          top: deviceWidth * 0.04),
-                      width: deviceWidth * 0.6,
-                      height: deviceWidth * 0.08,
-                      child: Text(
-                        "Date: ${widget.Date}",
-                        textAlign: TextAlign.start,
+                    Card(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: deviceWidth * 0.05,
+                            right: deviceWidth * 0.05,
+                            top: deviceWidth * 0.04),
+                        width: deviceWidth * 0.6,
+                        height: deviceWidth * 0.08,
+                        child: Text(
+                          "Date: ${widget.Date}",
+                          textAlign: TextAlign.start,
+                        ),
                       ),
                     )
                   ],
@@ -317,16 +329,19 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: deviceWidth * 0.05,
-                          right: deviceWidth * 0.02,
-                          top: deviceWidth * 0.04),
-                      width: deviceWidth * 0.6,
-                      height: deviceWidth * 0.18,
-                      child: Text(
-                        "Address : ${mapUserResponse?['address']}",
-                        textAlign: TextAlign.start,
+                    Card(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: deviceWidth * 0.05,
+                            right: deviceWidth * 0.02,
+                            top: deviceWidth * 0.04),
+                        width: deviceWidth * 0.6,
+                        height: deviceWidth * 0.18,
+                        child: Text(
+                          "Address : ${mapUserResponse?['address']}",
+                          textAlign: TextAlign.start,
+                        ),
                       ),
                     )
                   ],
@@ -349,16 +364,19 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: deviceWidth * 0.05,
-                          right: deviceWidth * 0.05,
-                          top: deviceWidth * 0.04),
-                      width: deviceWidth * 0.6,
-                      height: deviceWidth * 0.08,
-                      child: Text(
-                        "City : ${mapUserResponse?['tournament_city']}",
-                        textAlign: TextAlign.start,
+                    Card(
+                      color: Colors.black.withOpacity(0.3),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: deviceWidth * 0.05,
+                            right: deviceWidth * 0.05,
+                            top: deviceWidth * 0.04),
+                        width: deviceWidth * 0.6,
+                        height: deviceWidth * 0.08,
+                        child: Text(
+                          "City : ${mapUserResponse?['tournament_city']}",
+                          textAlign: TextAlign.start,
+                        ),
                       ),
                     )
                   ],
