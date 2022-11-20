@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                               height: deviceWidth * 0.01,
                             ),
                             Text(
-                              userdata[i].CITY,
+                              "Click on ℹ️ to know more",
                               style: TextStyle(
                                 fontSize: deviceWidth * 0.027,
                                 fontWeight: FontWeight.w400,
@@ -235,6 +235,10 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent.withOpacity(0.2),
               child: Container(
                 child: ExpansionTile(
+                  trailing: Icon(
+                    Icons.info,
+                    color: Colors.blue,
+                  ),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -246,13 +250,13 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           )),
-                      Text(
-                        "v",
-                        style: TextStyle(
-                          fontSize: deviceWidth * 0.04,
-                          color: Color(0xffE74545),
-                        ),
-                      ),
+                      // Text(
+                      //   "V",
+                      //   style: TextStyle(
+                      //     fontSize: deviceWidth * 0.04,
+                      //     color: Color(0xffE74545),
+                      //   ),
+                      // ),
                       Container(
                         margin: EdgeInsets.only(right: deviceWidth * 0.02),
                         child: Text(

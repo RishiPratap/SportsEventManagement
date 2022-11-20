@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:page_transition/page_transition.dart';
+
 import 'orderAPI/ModelOrderID.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +59,8 @@ class Tourney_Id {
 
 class _PaymentState extends State<Payment> {
   late Razorpay _razorpay;
+  late double _progress;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -243,7 +247,9 @@ class _PaymentState extends State<Payment> {
   }
 
   _getorderId(String amount) async {
-   
+    _progress = 0;
+    EasyLoading.show(status: 'loading...', maskType: EasyLoadingMaskType.black);
+
     print(" call start here");
     servicewrapper wrapper = new servicewrapper();
     Map<String, dynamic> response = await wrapper.call_order_api(amount);
@@ -251,7 +257,8 @@ class _PaymentState extends State<Payment> {
     print(" response here");
     if (model != null) {
       if (model.status == 1) {
-        EasyLoading.dismiss();
+        EasyLoading.dismiss(animation: true);
+
         print(" order id is  - " + model.orderID.toString());
         _startPayment(model.orderID.toString(), amount);
       } else {

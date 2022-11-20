@@ -88,7 +88,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
   @override
   void initState() {
     super.initState();
-    socket = io("http://44.202.65.121:443", <String, dynamic>{
+    socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
       "forceNew": true,
