@@ -129,6 +129,7 @@ class _HomePageState extends State<HomePage> {
   List<Card> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
+    late Color color = Colors.blue;
     print(deviceWidth);
     print(deviceHeight);
     for (int i = array_length - 1; i >= 0; i--) {
@@ -234,6 +235,10 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent.withOpacity(0.2),
               child: Container(
                 child: ExpansionTile(
+                  trailing: Icon(
+                    Icons.arrow_drop_down_circle,
+                    color: Colors.blue,
+                  ),
                   // trailing: IconButton(
                   //   icon: Icon(Icons.arrow_drop_down_circle_rounded),
                   //   onPressed: () {},

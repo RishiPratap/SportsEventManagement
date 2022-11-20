@@ -9,13 +9,14 @@ class EventDetails extends StatefulWidget {
   final String EventManagerName;
   final String EventManagerMobileNo;
   final String? EventType;
-  const EventDetails(
-      {Key? key,
-      required this.SportName,
-      required this.EventManagerName,
-      required this.EventManagerMobileNo,
-      required this.EventType})
-      : super(key: key);
+
+  const EventDetails({
+    Key? key,
+    required this.SportName,
+    required this.EventManagerName,
+    required this.EventManagerMobileNo,
+    required this.EventType,
+  }) : super(key: key);
 
   @override
   State<EventDetails> createState() => _EventDetailsState();

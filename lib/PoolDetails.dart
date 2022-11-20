@@ -169,14 +169,13 @@ class _PoolDetailsState extends State<PoolDetails> {
   List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
   String? SelectedPointSystem;
   String? Points;
-  bool isEnabled = true;
 
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
   String? SelectedPerMatchEstimatedTime;
 
   List<details>? poolDetails = [];
 
-  bool isLoading = false;
+  bool isPaymentDone = false;
 
   final EntryFeeController = TextEditingController();
   // final PrizePoolController = TextEditingController();
@@ -566,6 +565,12 @@ class _PoolDetailsState extends State<PoolDetails> {
   var tournament_id_arr;
 
   @override
+  _saveBool() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('paymentDone', true);
+  }
+
+  @override
   void initState() {
     super.initState();
     _razorpay = Razorpay();
@@ -585,7 +590,6 @@ class _PoolDetailsState extends State<PoolDetails> {
   }
 
   Widget build(BuildContext context) {
-    bool isLoading = false;
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -659,8 +663,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                 SizedBox(
                   height: 40,
                 ),
-                TextButton(
-                    style: TextButton.styleFrom(
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.fromLTRB(
                           deviceWidth * 0.04,
                           deviceWidth * 0.02,
@@ -670,140 +674,172 @@ class _PoolDetailsState extends State<PoolDetails> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    onPressed: () async {
-                      String poolsize_details = "";
-                      String gold_details = "";
-                      String silver_details = "";
-                      String bronze_details = "";
-                      String other_details = "";
-                      String entryfee_details = "";
-                      String selected_point_system_details = "";
-                      String per_match_estimated_time = "";
-                      for (int i = 0; i < poolDetails!.length; i++) {
-                        poolsize_details += poolDetails![i].PoolSize;
-                        gold_details += poolDetails![i].gold;
-                        silver_details += poolDetails![i].silver;
-                        bronze_details += poolDetails![i].bronze;
-                        other_details += poolDetails![i].others;
-                        entryfee_details += poolDetails![i].entryfee;
-                        selected_point_system_details +=
-                            poolDetails![i].pointsystem;
-                        if (i != poolDetails!.length - 1) {
-                          poolsize_details += "-";
-                          gold_details += "-";
-                          silver_details += "-";
-                          bronze_details += "-";
-                          other_details += "-";
-                          entryfee_details += "-";
-                          selected_point_system_details += "-";
-                          per_match_estimated_time += "-";
-                        }
-                      }
-                      EasyLoading.show(
-                        status: 'Loading...',
-                        maskType: EasyLoadingMaskType.black,
-                      );
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      var obtianedEmail = prefs.getString('email');
-                      print(obtianedEmail);
-                      String Category = "";
-                      String AgeCategory = "";
-                      for (int i = 0;
-                          i < widget.AllCategoryDetails.length;
-                          i++) {
-                        Category += widget.AllCategoryDetails[i].CategoryName;
-                        AgeCategory += widget.AllCategoryDetails[i].AgeCategory;
-                        if (i != widget.AllCategoryDetails.length - 1) {
-                          Category += "-";
-                          AgeCategory += "-";
-                        }
-                      }
-                      print(Category);
-                      print(gold_details);
-                      print(silver_details);
-                      print(bronze_details);
-                      print(other_details);
-                      print(entryfee_details);
-                      print(widget.EventName);
-                      print(widget.City);
+                    onPressed: isPaymentDone == false
+                        ? null
+                        : () async {
+                            String poolsize_details = "";
+                            String gold_details = "";
+                            String silver_details = "";
+                            String bronze_details = "";
+                            String other_details = "";
+                            String entryfee_details = "";
+                            String selected_point_system_details = "";
+                            String per_match_estimated_time = "";
+                            for (int i = 0; i < poolDetails!.length; i++) {
+                              poolsize_details += poolDetails![i].PoolSize;
+                              gold_details += poolDetails![i].gold;
+                              silver_details += poolDetails![i].silver;
+                              bronze_details += poolDetails![i].bronze;
+                              other_details += poolDetails![i].others;
+                              entryfee_details += poolDetails![i].entryfee;
+                              selected_point_system_details +=
+                                  poolDetails![i].pointsystem;
+                              if (i != poolDetails!.length - 1) {
+                                poolsize_details += "-";
+                                gold_details += "-";
+                                silver_details += "-";
+                                bronze_details += "-";
+                                other_details += "-";
+                                entryfee_details += "-";
+                                selected_point_system_details += "-";
+                                per_match_estimated_time += "-";
+                              }
+                            }
+                            EasyLoading.show(
+                              status: 'Loading...',
+                              maskType: EasyLoadingMaskType.black,
+                            );
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            var obtianedEmail = prefs.getString('email');
+                            print(obtianedEmail);
+                            String Category = "";
+                            String AgeCategory = "";
+                            for (int i = 0;
+                                i < widget.AllCategoryDetails.length;
+                                i++) {
+                              Category +=
+                                  widget.AllCategoryDetails[i].CategoryName;
+                              AgeCategory +=
+                                  widget.AllCategoryDetails[i].AgeCategory;
+                              if (i != widget.AllCategoryDetails.length - 1) {
+                                Category += "-";
+                                AgeCategory += "-";
+                              }
+                            }
+                            print(Category);
+                            print(gold_details);
+                            print(silver_details);
+                            print(bronze_details);
+                            print(other_details);
+                            print(entryfee_details);
+                            print(widget.EventName);
+                            print(widget.City);
 
-                      var prizePool = gold_details +
-                          "-" +
-                          silver_details +
-                          "-" +
-                          bronze_details +
-                          "-" +
-                          other_details;
+                            var prizePool = gold_details +
+                                "-" +
+                                silver_details +
+                                "-" +
+                                bronze_details +
+                                "-" +
+                                other_details;
 
-                      final ChallengeDetails = CreateChallengeDetails(
-                          ORGANIZER_NAME: widget.EventManagerName,
-                          ORGANIZER_ID: widget.EventManagerMobileNo,
-                          USERID: obtianedEmail!.trim(),
-                          TOURNAMENT_ID: "123456",
-                          CATEGORY: Category,
-                          NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
-                          ENTRY_FEE: entryfee_details,
-                          GOLD: gold_details,
-                          SILVER: silver_details,
-                          BRONZE: bronze_details,
-                          OTHER: other_details,
-                          PRIZE_POOL: prizePool,
-                          TOURNAMENT_NAME: widget.EventName,
-                          CITY: widget.City,
-                          TYPE: widget.EventType,
-                          LOCATION: widget.Address,
-                          START_DATE: widget.StartDate,
-                          END_DATE: widget.EndDate,
-                          START_TIME: widget.StartTime,
-                          END_TIME: widget.EndTime,
-                          REGISTRATION_CLOSES_BEFORE: 6,
-                          AGE_CATEGORY: AgeCategory,
-                          NO_OF_COURTS: widget.NoofCourts,
-                          BREAK_TIME: widget.BreakTime,
-                          SPORT: widget.SportName);
-                      final DetailMap = ChallengeDetails.toMap();
-                      final json = jsonEncode(DetailMap);
-                      var url =
-                          "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
+                            final ChallengeDetails = CreateChallengeDetails(
+                                ORGANIZER_NAME: widget.EventManagerName,
+                                ORGANIZER_ID: widget.EventManagerMobileNo,
+                                USERID: obtianedEmail!.trim(),
+                                TOURNAMENT_ID: "123456",
+                                CATEGORY: Category,
+                                NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
+                                ENTRY_FEE: entryfee_details,
+                                GOLD: gold_details,
+                                SILVER: silver_details,
+                                BRONZE: bronze_details,
+                                OTHER: other_details,
+                                PRIZE_POOL: prizePool,
+                                TOURNAMENT_NAME: widget.EventName,
+                                CITY: widget.City,
+                                TYPE: widget.EventType,
+                                LOCATION: widget.Address,
+                                START_DATE: widget.StartDate,
+                                END_DATE: widget.EndDate,
+                                START_TIME: widget.StartTime,
+                                END_TIME: widget.EndTime,
+                                REGISTRATION_CLOSES_BEFORE: 6,
+                                AGE_CATEGORY: AgeCategory,
+                                NO_OF_COURTS: widget.NoofCourts,
+                                BREAK_TIME: widget.BreakTime,
+                                SPORT: widget.SportName);
+                            final DetailMap = ChallengeDetails.toMap();
+                            final json = jsonEncode(DetailMap);
+                            var url =
+                                "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
 
-                      try {
-                        var response = await post(Uri.parse(url),
-                            headers: {
-                              "Accept": "application/json",
-                              "Content-Type": "application/json"
-                            },
-                            body: json,
-                            encoding: Encoding.getByName("utf-8"));
-                        Map<String, dynamic> jsonData =
-                            jsonDecode(response.body);
-                        debugPrint('Response body:$json');
-                        print(jsonData["TOURNAMENT_ID"]);
-                        tournament_id_arr =
-                            jsonData["TOURNAMENT_ID"].toString().split(',');
-                        if (response.statusCode == 200) {
-                          EasyLoading.dismiss();
-                          _getorderId('2');
-                          // Get.to(CreateChallengeTicket(
-                          //   Tournament_ID: tournament_id_arr,
-                          //   CategorieNames: widget.AllCategoryDetails,
-                          // ));
-                          EasyLoading.dismiss();
-                        } else {
-                          EasyLoading.dismiss();
-                          EasyLoading.showError("Error in Tournament Creation");
-                        }
-                      } catch (e) {
-                        print(e);
-                        EasyLoading.showError(e.toString());
-                        EasyLoading.dismiss();
-                      }
-                    },
+                            try {
+                              var response = await post(Uri.parse(url),
+                                  headers: {
+                                    "Accept": "application/json",
+                                    "Content-Type": "application/json"
+                                  },
+                                  body: json,
+                                  encoding: Encoding.getByName("utf-8"));
+                              Map<String, dynamic> jsonData =
+                                  jsonDecode(response.body);
+                              debugPrint('Response body:$json');
+                              print(jsonData["TOURNAMENT_ID"]);
+                              tournament_id_arr = jsonData["TOURNAMENT_ID"]
+                                  .toString()
+                                  .split(',');
+                              if (response.statusCode == 200) {
+                                EasyLoading.dismiss();
+                                Get.to(CreateChallengeTicket(
+                                  Tournament_ID: tournament_id_arr,
+                                  CategorieNames: widget.AllCategoryDetails,
+                                ));
+                                EasyLoading.dismiss();
+                              } else {
+                                EasyLoading.dismiss();
+                                EasyLoading.showError(
+                                    "Error in Tournament Creation");
+                              }
+                            } catch (e) {
+                              print(e);
+                              EasyLoading.showError(e.toString());
+                              EasyLoading.dismiss();
+                            }
+                          },
                     child: Text("Create Tournament",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold))),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.fromLTRB(
+                          deviceWidth * 0.04,
+                          deviceWidth * 0.02,
+                          deviceWidth * 0.04,
+                          deviceWidth * 0.02),
+                    ),
+                    child: Text("Make Payment",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                    onPressed: isPaymentDone == true
+                        ? null
+                        : () {
+                            _getorderId('2');
+                          }),
+                const SizedBox(
+                  height: 20,
+                )
               ],
             ),
           ),
@@ -811,6 +847,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   }
 
   _getorderId(String amount) async {
+    EasyLoading.show(maskType: EasyLoadingMaskType.black, status: 'Loading...');
     print(" call start here");
     servicewrapper wrapper = new servicewrapper();
     Map<String, dynamic> response = await wrapper.call_order_api(amount);
@@ -818,6 +855,7 @@ class _PoolDetailsState extends State<PoolDetails> {
     print(" response here");
     if (model != null) {
       if (model.status == 1) {
+        EasyLoading.dismiss();
         print(" order id is  - " + model.orderID.toString());
         _startPayment(model.orderID.toString(), amount);
       } else {
@@ -830,10 +868,10 @@ class _PoolDetailsState extends State<PoolDetails> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
-    Get.to(CreateChallengeTicket(
-      Tournament_ID: tournament_id_arr,
-      CategorieNames: widget.AllCategoryDetails,
-    ));
+
+    setState(() {
+      isPaymentDone = true;
+    });
     print(
         " RazorSuccess : " + response.paymentId! + " -- " + response.orderId!);
   }
@@ -854,7 +892,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   _startPayment(String orderID, String amount) {
     var options = {
       //rzp_live_4JAecB352A9wtt
-      'key': 'rzp_live_4JAecB352A9wtt',
+      'key': 'rzp_test_MKSizWXlqa0LsE',
       'amount': '2',
       'order_id': orderID,
       'name': 'Ardent Sports',
