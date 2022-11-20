@@ -177,13 +177,11 @@ class _HomePageState extends State<HomePage> {
                               shape: BoxShape.circle,
                               color: Colors.transparent.withOpacity(0.6),
                               backgroundBlendMode: BlendMode.darken),
-                          child: Positioned(
-                            child: Image(
-                              image: NetworkImage(userdata[i].IMG_URL),
-                              height: deviceWidth * 0.04,
-                              width: deviceWidth * 0.04,
-                              fit: BoxFit.fill,
-                            ),
+                          child: Image(
+                            image: NetworkImage(userdata[i].IMG_URL),
+                            height: deviceWidth * 0.04,
+                            width: deviceWidth * 0.04,
+                            fit: BoxFit.cover,
                           ),
                         ),
                         SizedBox(
@@ -194,15 +192,15 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              userdata[i].TOURNAMENT_NAME.length > 26
+                              userdata[i].TOURNAMENT_NAME.length > 25
                                   ? userdata[i]
                                           .TOURNAMENT_NAME
-                                          .substring(0, 26) +
+                                          .substring(0, 25) +
                                       '...'
                                   : userdata[i].TOURNAMENT_NAME,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: deviceWidth * 0.04,
+                                  fontSize: deviceWidth * 0.035,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
@@ -236,10 +234,10 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent.withOpacity(0.2),
               child: Container(
                 child: ExpansionTile(
-                  trailing: IconButton(
-                    icon: Icon(Icons.arrow_drop_down_circle_rounded),
-                    onPressed: () {},
-                  ),
+                  // trailing: IconButton(
+                  //   icon: Icon(Icons.arrow_drop_down_circle_rounded),
+                  //   onPressed: () {},
+                  // ),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
