@@ -269,10 +269,13 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   children: getAllTournamentCategories(
-                      userdata[i].spotStatusArray,
-                      userdata[i].START_DATE,
-                      userdata[i].ORGANIZER_NAME,
-                      userdata[i].ORGANIZER_ID),
+                    userdata[i].spotStatusArray,
+                    userdata[i].START_DATE,
+                    userdata[i].ORGANIZER_NAME,
+                    userdata[i].ORGANIZER_ID,
+                    userdata[i].SPORT,
+                    userdata[i].LOCATION,
+                  ),
                 ),
               ),
             ),
@@ -353,8 +356,8 @@ class _HomePageState extends State<HomePage> {
                         dismissOnTap: true);
                   },
                   child: Text(
-                    userdata[i].LOCATION.length > 25
-                        ? userdata[i].LOCATION.substring(0, 25) + '...'
+                    userdata[i].LOCATION.length > 20
+                        ? userdata[i].LOCATION.substring(0, 20) + '...'
                         : userdata[i].LOCATION,
                     style: TextStyle(
                         color: Colors.white, fontSize: deviceWidth * 0.03),
@@ -407,8 +410,13 @@ class _HomePageState extends State<HomePage> {
     return AllTournaments;
   }
 
-  List<Container> getAllTournamentCategories(List spotStatusArray, String Date,
-      String Organizer_Name, String Organizer_Number) {
+  List<Container> getAllTournamentCategories(
+      List spotStatusArray,
+      String Date,
+      String Organizer_Name,
+      String Organizer_Number,
+      String tournament,
+      String Address) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     List<Container> AllCategories = [];
@@ -452,6 +460,7 @@ class _HomePageState extends State<HomePage> {
                                   spots: x,
                                   Organiser_Name: Organizer_Name,
                                   Organiser_Number: Organizer_Number,
+                                  Address: Address,
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
@@ -490,7 +499,9 @@ class _HomePageState extends State<HomePage> {
                   height: deviceHeight * 0.03,
                   width: deviceWidth * 0.4,
                   decoration: BoxDecoration(
-                      color: Color(0xff6BB8FF),
+                      color: tournament == 'Badminton'
+                          ? Color(0xff6BB8FF)
+                          : Color(0xff03C289),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       boxShadow: [
                         BoxShadow(

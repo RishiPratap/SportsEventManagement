@@ -30,6 +30,7 @@ class BadmintonSpotSelection extends StatefulWidget {
   final int spots;
   final String Organiser_Name;
   final String Organiser_Number;
+  final String Address;
   const BadmintonSpotSelection({
     Key? key,
     required this.tourneyId,
@@ -38,6 +39,7 @@ class BadmintonSpotSelection extends StatefulWidget {
     required this.spots,
     required this.Organiser_Name,
     required this.Organiser_Number,
+    required this.Address,
   }) : super(key: key);
 
   @override
@@ -174,6 +176,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       tournament_id: widget.tourneyId,
                       userEmail: obtianedEmail!,
                       sport: widget.sport,
+                      color: widget.sport == 'Badminton'
+                          ? Color(0xff6BB8FF)
+                          : Color(0xff03C289),
                     ),
                   ),
                 );
@@ -734,10 +739,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: deviceWidth * 0.06),
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "Note :",
-                style: TextStyle(color: Color(0xffD15858)),
+                style: TextStyle(
+                    color: Color(0xffD15858), fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -748,7 +754,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               child: RichText(
                 text: TextSpan(
                   children: <TextSpan>[
-                    TextSpan(text: 'Match will be played according to the '),
+                    TextSpan(
+                        text: '->  Match will be played according to the '),
                     TextSpan(
                       text: 'Fixtures',
                       style: TextStyle(
@@ -777,7 +784,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
-                "Spots Cannot be changed once selected",
+                "-> Spots Cannot be changed once selected",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
@@ -785,10 +792,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               height: deviceWidth * 0.02,
             ),
             Container(
-              margin: EdgeInsets.only(left: deviceWidth * 0.06),
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "Organizer Details :",
-                style: TextStyle(color: Color(0xffD15858)),
+                style: TextStyle(
+                    color: Color(0xffD15858), fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -797,7 +805,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
-                "Organizer Name : ${widget.Organiser_Name}",
+                "-> Organizer Name : ${widget.Organiser_Name}",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
@@ -807,7 +815,17 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
-                "Organizer Number : ${widget.Organiser_Number}",
+                "-> Organizer Number : ${widget.Organiser_Number}",
+                style: TextStyle(color: Color(0xffFFFFFF)),
+              ),
+            ),
+            SizedBox(
+              height: deviceWidth * 0.02,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
+              child: Text(
+                "-> Address : ${widget.Address}",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
