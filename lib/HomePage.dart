@@ -165,7 +165,6 @@ class _HomePageState extends State<HomePage> {
                       ? Color(0xff6BB8FF)
                       : Color(0xff03C289),
                   child: Container(
-                    margin: EdgeInsets.only(top: deviceWidth * 0.022),
                     child: Row(
                       children: [
                         SizedBox(
@@ -175,7 +174,6 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.center,
                           height: deviceHeight * 0.09,
                           width: deviceWidth * 0.09,
-                          padding: EdgeInsets.only(bottom: 5),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.transparent.withOpacity(0.6),
@@ -195,16 +193,16 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              userdata[i].TOURNAMENT_NAME.length >= 35
+                              userdata[i].TOURNAMENT_NAME.length > 25
                                   ? userdata[i]
                                           .TOURNAMENT_NAME
-                                          .substring(0, 35) +
+                                          .substring(0, 25) +
                                       '...'
                                   : userdata[i].TOURNAMENT_NAME,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: deviceWidth * 0.027,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: deviceWidth * 0.035,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
                             SizedBox(
@@ -213,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               userdata[i].CITY,
                               style: TextStyle(
-                                fontSize: deviceWidth * 0.027,
+                                fontSize: deviceWidth * 0.035,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
@@ -241,6 +239,10 @@ class _HomePageState extends State<HomePage> {
                     Icons.arrow_drop_down_circle,
                     color: Colors.blue,
                   ),
+                  // trailing: IconButton(
+                  //   icon: Icon(Icons.arrow_drop_down_circle_rounded),
+                  //   onPressed: () {},
+                  // ),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -270,10 +272,13 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   children: getAllTournamentCategories(
-                      userdata[i].spotStatusArray,
-                      userdata[i].START_DATE,
-                      userdata[i].ORGANIZER_NAME,
-                      userdata[i].ORGANIZER_ID),
+                    userdata[i].spotStatusArray,
+                    userdata[i].START_DATE,
+                    userdata[i].ORGANIZER_NAME,
+                    userdata[i].ORGANIZER_ID,
+                    userdata[i].SPORT,
+                    userdata[i].LOCATION,
+                  ),
                 ),
               ),
             ),
@@ -354,8 +359,8 @@ class _HomePageState extends State<HomePage> {
                         dismissOnTap: true);
                   },
                   child: Text(
-                    userdata[i].LOCATION.length > 25
-                        ? userdata[i].LOCATION.substring(0, 25) + '...'
+                    userdata[i].LOCATION.length > 20
+                        ? userdata[i].LOCATION.substring(0, 20) + '...'
                         : userdata[i].LOCATION,
                     style: TextStyle(
                         color: Colors.white, fontSize: deviceWidth * 0.03),
@@ -408,8 +413,13 @@ class _HomePageState extends State<HomePage> {
     return AllTournaments;
   }
 
-  List<Container> getAllTournamentCategories(List spotStatusArray, String Date,
-      String Organizer_Name, String Organizer_Number) {
+  List<Container> getAllTournamentCategories(
+      List spotStatusArray,
+      String Date,
+      String Organizer_Name,
+      String Organizer_Number,
+      String tournament,
+      String Address) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     List<Container> AllCategories = [];
@@ -453,6 +463,7 @@ class _HomePageState extends State<HomePage> {
                                   spots: x,
                                   Organiser_Name: Organizer_Name,
                                   Organiser_Number: Organizer_Number,
+                                  Address: Address,
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
@@ -491,7 +502,9 @@ class _HomePageState extends State<HomePage> {
                   height: deviceHeight * 0.03,
                   width: deviceWidth * 0.4,
                   decoration: BoxDecoration(
-                      color: Color(0xff6BB8FF),
+                      color: tournament == 'Badminton'
+                          ? Color(0xff6BB8FF)
+                          : Color(0xff03C289),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       boxShadow: [
                         BoxShadow(

@@ -35,16 +35,18 @@ class SpotConfirmation extends StatefulWidget {
   final Socket socket;
   final String btnId;
   final String sport;
-  SpotConfirmation(
-      {Key? key,
-      required this.SpotNo,
-      required this.userEmail,
-      required this.tournament_id,
-      required this.Date,
-      required this.socket,
-      required this.btnId,
-      required this.sport})
-      : super(key: key);
+  final Color color;
+  SpotConfirmation({
+    Key? key,
+    required this.SpotNo,
+    required this.userEmail,
+    required this.tournament_id,
+    required this.Date,
+    required this.socket,
+    required this.btnId,
+    required this.sport,
+    required this.color,
+  }) : super(key: key);
 
   @override
   State<SpotConfirmation> createState() => _SpotConfirmationState();
@@ -143,7 +145,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(deviceWidth * 0.03),
             side: BorderSide(
-              color: Color(0xff03C289),
+              color: widget.color,
             )),
         elevation: 10,
         color: Colors.white.withOpacity(0.1),
@@ -159,7 +161,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff03C289),
+                  backgroundColor: widget.color,
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(deviceWidth * 0.08),
                   ),
@@ -183,7 +185,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
-                      color: Color(0xff03C289),
+                      color: widget.color,
                     )),
                 color: Colors.black.withOpacity(0.3),
                 child: Column(
@@ -198,10 +200,15 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             top: deviceWidth * 0.04),
                         width: deviceWidth * 0.6,
                         height: deviceWidth * 0.08,
-                        child: Text(
-                          "Name: ${mapUserResponse?['username']}",
-                          textAlign: TextAlign.start,
-                        ),
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "Name : ",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                            text: "${mapUserResponse?['username']}",
+                          ),
+                        ])),
                       ),
                     ),
                   ],
@@ -217,7 +224,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
-                      color: Color(0xff03C289),
+                      color: widget.color,
                     )),
                 elevation: 10,
                 color: Colors.black.withOpacity(0.3),
@@ -228,15 +235,21 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       color: Colors.black.withOpacity(0.3),
                       child: Container(
                         margin: EdgeInsets.only(
-                            left: deviceWidth * 0.05,
-                            right: deviceWidth * 0.05,
-                            top: deviceWidth * 0.04),
-                        width: deviceWidth * 0.6,
-                        height: deviceWidth * 0.08,
-                        child: Text(
-                          "Event : ${mapUserResponse?['tournament_name']}",
-                          textAlign: TextAlign.start,
+                          left: deviceWidth * 0.05,
+                          right: deviceWidth * 0.05,
+                          top: deviceWidth * 0.04,
+                          bottom: deviceWidth * 0.04,
                         ),
+                        width: deviceWidth * 0.6,
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "Event : ",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                            text: "${mapUserResponse?['tournament_name']}",
+                          ),
+                        ])),
                       ),
                     )
                   ],
@@ -252,7 +265,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
-                      color: Color(0xff03C289),
+                      color: widget.color,
                     )),
                 elevation: 10,
                 color: Colors.black.withOpacity(0.3),
@@ -268,10 +281,15 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             top: deviceWidth * 0.04),
                         width: deviceWidth * 0.6,
                         height: deviceWidth * 0.08,
-                        child: Text(
-                          "Category : ${mapUserResponse?['cat']}",
-                          textAlign: TextAlign.start,
-                        ),
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "Category : ",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                            text: "${mapUserResponse?['cat']}",
+                          ),
+                        ])),
                       ),
                     )
                   ],
@@ -287,7 +305,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
-                      color: Color(0xff03C289),
+                      color: widget.color,
                     )),
                 elevation: 10,
                 color: Colors.black.withOpacity(0.3),
@@ -303,10 +321,15 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             top: deviceWidth * 0.04),
                         width: deviceWidth * 0.6,
                         height: deviceWidth * 0.08,
-                        child: Text(
-                          "Date: ${widget.Date}",
-                          textAlign: TextAlign.start,
-                        ),
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "Date : ",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                            text: "${widget.Date}",
+                          ),
+                        ])),
                       ),
                     )
                   ],
@@ -322,7 +345,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
-                      color: Color(0xff03C289),
+                      color: widget.color,
                     )),
                 elevation: 10,
                 color: Colors.black.withOpacity(0.3),
@@ -334,14 +357,20 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       child: Container(
                         margin: EdgeInsets.only(
                             left: deviceWidth * 0.05,
-                            right: deviceWidth * 0.02,
-                            top: deviceWidth * 0.04),
+                            right: deviceWidth * 0.05,
+                            top: deviceWidth * 0.04,
+                            bottom: deviceWidth * 0.04),
                         width: deviceWidth * 0.6,
-                        height: deviceWidth * 0.18,
-                        child: Text(
-                          "Address : ${mapUserResponse?['address']}",
-                          textAlign: TextAlign.start,
-                        ),
+                        height: deviceWidth * 0.08,
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "Address : ",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                            text: "${mapUserResponse?['address']}",
+                          ),
+                        ])),
                       ),
                     )
                   ],
@@ -357,7 +386,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.03),
                     side: BorderSide(
-                      color: Color(0xff03C289),
+                      color: widget.color,
                     )),
                 elevation: 10,
                 color: Colors.black.withOpacity(0.3),
@@ -373,10 +402,15 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                             top: deviceWidth * 0.04),
                         width: deviceWidth * 0.6,
                         height: deviceWidth * 0.08,
-                        child: Text(
-                          "City : ${mapUserResponse?['tournament_city']}",
-                          textAlign: TextAlign.start,
-                        ),
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "City : ",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                            text: "${mapUserResponse?['tournament_city']}",
+                          ),
+                        ])),
                       ),
                     )
                   ],

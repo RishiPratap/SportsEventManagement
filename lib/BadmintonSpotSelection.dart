@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:ardent_sports/WebViewSpots.dart';
+import 'package:flutter/gestures.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class BadmintonSpotSelection extends StatefulWidget {
   final int spots;
   final String Organiser_Name;
   final String Organiser_Number;
+  final String Address;
   const BadmintonSpotSelection({
     Key? key,
     required this.tourneyId,
@@ -37,6 +39,7 @@ class BadmintonSpotSelection extends StatefulWidget {
     required this.spots,
     required this.Organiser_Name,
     required this.Organiser_Number,
+    required this.Address,
   }) : super(key: key);
 
   @override
@@ -173,6 +176,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       tournament_id: widget.tourneyId,
                       userEmail: obtianedEmail!,
                       sport: widget.sport,
+                      color: widget.sport == 'Badminton'
+                          ? Color(0xff6BB8FF)
+                          : Color(0xff03C289),
                     ),
                   ),
                 );
@@ -448,32 +454,33 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                           "<",
                           style: TextStyle(color: Colors.white, fontSize: 35),
                         )),
-                    Container(
-                      width: deviceWidth * 0.2,
-                      height: deviceWidth * 0.07,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xffD15858),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.01),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type:
-                                        PageTransitionType.rightToLeftWithFade,
-                                    child: WebViewSpots(
-                                      spots: "${widget.spots}",
-                                    )));
-                          },
-                          child: Text(
-                            "Fixtures",
-                            style: TextStyle(fontSize: 10),
-                          )),
-                    ),
+                    // Container(
+                    //   width: deviceWidth * 0.3,
+                    //   height: deviceWidth * 0.07,
+                    //   child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         backgroundColor: Color(0xffD15858),
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius:
+                    //               BorderRadius.circular(deviceWidth * 0.01),
+                    //         ),
+                    //       ),
+                    //       onPressed: () {
+                    //         Navigator.push(
+                    //             context,
+                    //             PageTransition(
+                    //                 type:
+                    //                     PageTransitionType.rightToLeftWithFade,
+                    //                 child: WebViewSpots(
+                    //                   spots: "${widget.spots}",
+                    //                 )));
+                    //       },
+                    //       child: Text(
+                    //         "Fixtures",
+                    //         style: TextStyle(
+                    //             fontSize: 14, fontWeight: FontWeight.bold),
+                    //       )),
+                    // ),
                     TextButton(
                         onPressed: () {},
                         child: Text(
@@ -508,111 +515,132 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     );
   }
 
-  Widget buildSpotsAvailableCard(double deviceWidth) => Card(
-        elevation: 10,
-        color: Color(0xff03c289),
-        child: Row(
-          children: [
-            SizedBox(
-              width: deviceWidth * 0.02,
-            ),
-            Column(
-              children: [
-                Text(
-                  "Prize Pool",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: deviceWidth * 0.03,
-                  ),
-                ),
-                Container(
-                  width: deviceWidth * 0.25,
-                  height: deviceWidth * 0.07,
-                  child: Card(
-                    elevation: 10,
-                    shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.circular(1.0)),
-                    color: Colors.black.withOpacity(0.25),
+  Widget buildSpotsAvailableCard(double deviceWidth) => Container(
+        height: 77,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 10,
+          color: widget.sport == 'Badminton'
+              ? Color(0xff6BB8FF)
+              : Color(0xff03C289),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: deviceWidth * 0.02,
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
                     child: Text(
-                      "₹$prizepool",
-                      textAlign: TextAlign.center,
+                      "Prize Pool",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                        fontSize: deviceWidth * 0.04,
+                      ),
                     ),
                   ),
-                )
-              ],
-            ),
-            SizedBox(
-              width: deviceWidth * 0.05,
-            ),
-            Column(
-              children: [
-                Text(
-                  "Men's Single",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: deviceWidth * 0.03,
-                  ),
-                ),
-                Text(
-                  "Draw",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: deviceWidth * 0.03,
-                  ),
-                ),
-                Container(
-                  width: deviceWidth * 0.25,
-                  height: deviceWidth * 0.07,
-                  child: Card(
-                    elevation: 10,
-                    shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.circular(1.0)),
-                    color: Colors.black.withOpacity(0.25),
+                  Container(
+                    width: deviceWidth * 0.25,
+                    height: deviceWidth * 0.07,
+                    child: Card(
+                      elevation: 10,
+                      shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(1.0)),
+                      color: Colors.black.withOpacity(0.25),
+                      child: Text(
+                        "₹$prizepool",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                width: deviceWidth * 0.05,
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
                     child: Text(
-                      "$freespots/$totalspots",
-                      textAlign: TextAlign.center,
+                      "Men's Single",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: deviceWidth * 0.045,
+                      ),
                     ),
                   ),
-                )
-              ],
-            ),
-            SizedBox(
-              width: deviceWidth * 0.09,
-            ),
-            Column(
-              children: [
-                Text(
-                  "Entry Fees",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: deviceWidth * 0.03,
-                  ),
-                ),
-                Container(
-                  width: deviceWidth * 0.15,
-                  height: deviceWidth * 0.07,
-                  child: Card(
-                    elevation: 10,
-                    shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.circular(1.0)),
-                    color: Colors.black.withOpacity(0.25),
-                    child: Text(
-                      "₹$entryfee",
-                      textAlign: TextAlign.center,
+                  Text(
+                    "Draw",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold,
+                      fontSize: deviceWidth * 0.045,
                     ),
                   ),
-                )
-              ],
-            )
-          ],
+                  Container(
+                    width: deviceWidth * 0.25,
+                    height: deviceWidth * 0.07,
+                    child: Card(
+                      elevation: 10,
+                      shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(1.0)),
+                      color: Colors.black.withOpacity(0.25),
+                      child: Text(
+                        "$freespots/$totalspots",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                width: deviceWidth * 0.07,
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Text(
+                      "Entry Fees",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                        fontSize: deviceWidth * 0.04,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: deviceWidth * 0.15,
+                    height: deviceWidth * 0.07,
+                    child: Card(
+                      elevation: 10,
+                      shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(1.0)),
+                      color: Colors.black.withOpacity(0.25),
+                      child: Text(
+                        "₹$entryfee",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       );
   Widget buildAvailableSpotsCard(double deviceWidth) => Card(
@@ -682,11 +710,72 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             SizedBox(
               height: deviceWidth * 0.02,
             ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: deviceWidth * 0.3,
+                height: deviceWidth * 0.07,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffD15858),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.01),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeftWithFade,
+                              child: WebViewSpots(
+                                spots: "${widget.spots}",
+                              )));
+                    },
+                    child: Text(
+                      "Fixtures",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
+              ),
+            ),
             Container(
-              margin: EdgeInsets.only(left: deviceWidth * 0.06),
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "Note :",
-                style: TextStyle(color: Color(0xffD15858)),
+                style: TextStyle(
+                    color: Color(0xffD15858), fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: deviceWidth * 0.02,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
+              child: RichText(
+                text: TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: '->  Match will be played according to the '),
+                    TextSpan(
+                      text: 'Fixtures',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeftWithFade,
+                              child: WebViewSpots(
+                                spots: "${widget.spots}",
+                              ),
+                            ),
+                          );
+                        },
+                    ),
+                    TextSpan(text: ' so select the spot accordingly '),
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -695,7 +784,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
-                "Matches Will be played according to the draws shown above,so please select your spot accordingly",
+                "-> Spots Cannot be changed once selected",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
@@ -704,19 +793,10 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             ),
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
-              child: Text(
-                "Spots Cannot be changed once selected",
-                style: TextStyle(color: Color(0xffFFFFFF)),
-              ),
-            ),
-            SizedBox(
-              height: deviceWidth * 0.02,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: deviceWidth * 0.06),
               child: Text(
                 "Organizer Details :",
-                style: TextStyle(color: Color(0xffD15858)),
+                style: TextStyle(
+                    color: Color(0xffD15858), fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -725,7 +805,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
-                "Organizer Name : ${widget.Organiser_Name}",
+                "-> Organizer Name : ${widget.Organiser_Name}",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
@@ -735,7 +815,17 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
-                "Organizer Number : ${widget.Organiser_Number}",
+                "-> Organizer Number : ${widget.Organiser_Number}",
+                style: TextStyle(color: Color(0xffFFFFFF)),
+              ),
+            ),
+            SizedBox(
+              height: deviceWidth * 0.02,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: deviceWidth * 0.05),
+              child: Text(
+                "-> Address : ${widget.Address}",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
