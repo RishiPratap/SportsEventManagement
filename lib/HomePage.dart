@@ -129,6 +129,7 @@ class _HomePageState extends State<HomePage> {
   List<Card> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
+    late Color color = Colors.blue;
     print(deviceWidth);
     print(deviceHeight);
     for (int i = array_length - 1; i >= 0; i--) {
@@ -145,7 +146,6 @@ class _HomePageState extends State<HomePage> {
           children: [
             ListTile(
                 title: Container(
-              margin: EdgeInsets.only(top: deviceWidth * 0.002),
               height: MediaQuery.of(context).size.height * 0.075,
               child: InkWell(
                 onTap: () async {
@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                       Duration(milliseconds: 15000);
                   EasyLoading.instance.radius = 15;
                   EasyLoading.showInfo(
-                      "Organizer Name : ${userdata[i].ORGANIZER_NAME}\nOrganizer Number: ${userdata[i].ORGANIZER_ID}",
+                      "Tournament Name : ${userdata[i].TOURNAMENT_NAME}",
                       dismissOnTap: true);
                 },
                 child: Card(
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                       ? Color(0xff6BB8FF)
                       : Color(0xff03C289),
                   child: Container(
-                    margin: EdgeInsets.only(top: deviceWidth * 0.021),
+                    margin: EdgeInsets.only(top: deviceWidth * 0.022),
                     child: Row(
                       children: [
                         SizedBox(
@@ -173,8 +173,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Container(
                           alignment: Alignment.center,
-                          height: deviceHeight * 0.1,
-                          width: deviceWidth * 0.1,
+                          height: deviceHeight * 0.09,
+                          width: deviceWidth * 0.09,
+                          padding: EdgeInsets.only(bottom: 5),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.transparent.withOpacity(0.6),
@@ -191,12 +192,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              userdata[i].TOURNAMENT_NAME.length >= 13
+                              userdata[i].TOURNAMENT_NAME.length >= 35
                                   ? userdata[i]
                                           .TOURNAMENT_NAME
-                                          .substring(0, 13) +
+                                          .substring(0, 35) +
                                       '...'
                                   : userdata[i].TOURNAMENT_NAME,
                               textAlign: TextAlign.center,
@@ -209,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                               height: deviceWidth * 0.01,
                             ),
                             Text(
-                              "Click on ℹ️ to know more",
+                              userdata[i].CITY,
                               style: TextStyle(
                                 fontSize: deviceWidth * 0.027,
                                 fontWeight: FontWeight.w400,
@@ -236,11 +238,11 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 child: ExpansionTile(
                   trailing: Icon(
-                    Icons.info,
+                    Icons.arrow_drop_down_circle,
                     color: Colors.blue,
                   ),
                   title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                           margin: EdgeInsets.only(left: deviceWidth * 0.02),
@@ -251,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.bold),
                           )),
                       // Text(
-                      //   "V",
+                      //   "v",
                       //   style: TextStyle(
                       //     fontSize: deviceWidth * 0.04,
                       //     color: Color(0xffE74545),
@@ -342,12 +344,22 @@ class _HomePageState extends State<HomePage> {
                     image: AssetImage("assets/Location.png"),
                   ),
                 ),
-                Text(
-                  userdata[i].LOCATION.length > 20
-                      ? userdata[i].LOCATION.substring(0, 12) + '...'
-                      : userdata[i].LOCATION,
-                  style: TextStyle(
-                      color: Colors.white, fontSize: deviceWidth * 0.03),
+                InkWell(
+                  onTap: () {
+                    EasyLoading.instance.displayDuration =
+                        Duration(milliseconds: 15000);
+                    EasyLoading.instance.radius = 15;
+                    EasyLoading.showInfo(
+                        "Tournament Address : ${userdata[i].LOCATION}",
+                        dismissOnTap: true);
+                  },
+                  child: Text(
+                    userdata[i].LOCATION.length > 25
+                        ? userdata[i].LOCATION.substring(0, 25) + '...'
+                        : userdata[i].LOCATION,
+                    style: TextStyle(
+                        color: Colors.white, fontSize: deviceWidth * 0.03),
+                  ),
                 ),
                 Flexible(fit: FlexFit.tight, child: SizedBox()),
                 Container(
@@ -475,23 +487,33 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
                 child: Container(
-                    margin: EdgeInsets.only(left: deviceWidth * 0.02),
-                    height: deviceHeight * 0.03,
-                    width: deviceWidth * 0.4,
-                    decoration: BoxDecoration(
-                        color: Colors.lightBlue,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    child: new Center(
-                      child: new Text(
-                        spotStatusArray[i]['category'],
-                        style: TextStyle(color: Colors.black),
-                        textAlign: TextAlign.center,
-                      ),
-                    )),
+                  margin: EdgeInsets.only(left: deviceWidth * 0.02),
+                  height: deviceHeight * 0.03,
+                  width: deviceWidth * 0.4,
+                  decoration: BoxDecoration(
+                      color: Color(0xff6BB8FF),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          spreadRadius: 1,
+                          blurRadius: 8,
+                          offset: Offset(4, 4),
+                        ),
+                      ]),
+                  child: new Center(
+                    child: new Text(
+                      spotStatusArray[i]['category'],
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
+            Container(
+              margin: EdgeInsets.only(right: deviceWidth * 0.22222222),
               child: Text(
                 "$y/$x",
                 style: TextStyle(

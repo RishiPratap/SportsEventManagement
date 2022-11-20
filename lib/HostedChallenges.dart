@@ -1,11 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/WebViewTournamentDetails.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'HomePage.dart';
 import 'PastHostedChallenges.dart';
 
@@ -313,19 +318,57 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   ),
                 ],
               ),
-              Text(
-                "TournamentID:${userdata[i].TOURNAMENT_ID}",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: deviceWidth * 0.03,
-                    fontWeight: FontWeight.w800),
+
+              TextButton.icon(
+                onPressed: () {
+                  Clipboard.setData(
+                          ClipboardData(text: userdata[i].TOURNAMENT_ID))
+                      .then((value) =>
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Copied to Clipboard"),
+                            duration: Duration(seconds: 1),
+                          )));
+                },
+                icon: Icon(
+                  Icons.copy,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  "ScorerID: ${userdata[i].TOURNAMENT_ID}",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: deviceWidth * 0.03,
+                      fontWeight: FontWeight.w800),
+                ),
               ),
+
+              // InkWell(
+              //   onTap: () {
+              //     Clipboard.setData(
+              //             ClipboardData(text: userdata[i].TOURNAMENT_ID))
+              //         .then((value) =>
+              //             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              //               content: Text("Copied to Clipboard"),
+              //               duration: Duration(seconds: 1),
+              //             )));
+              //   },
+              //   child: Text(
+              //     "TournamentID:${userdata[i].TOURNAMENT_ID}",
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: deviceWidth * 0.03,
+              //         fontWeight: FontWeight.w800),
+              //   ),
+
+              // ),
               TextButton(
                   onPressed: () async {
                     if (isStarted) {
                       final url =
                           "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-                      EasyLoading.show(status: 'Starting');
+                      EasyLoading.show(
+                          status: 'Starting',
+                          maskType: EasyLoadingMaskType.black);
                       var response = await get(Uri.parse(url));
                       if (response.statusCode == 200) {
                         EasyLoading.dismiss();
@@ -390,6 +433,23 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       ),
                     ),
                   )),
+              IconButton(
+                icon: Icon(
+                  Icons.download,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  final Uri toLaunch = Uri(
+                      scheme: 'https',
+                      host: "ardentsportsapis.herokuapp.com",
+                      path: "/download",
+                      queryParameters: {
+                        'TOURNAMENT_ID': userdata[i].TOURNAMENT_ID,
+                      });
+
+                  _launchInBrowser(toLaunch);
+                },
+              )
             ],
           ),
         );
@@ -448,6 +508,15 @@ class _HostedChallengesState extends State<HostedChallenges> {
   Future<Null> _refreshScreen() async {
     Navigator.pushReplacement(context,
         PageRouteBuilder(pageBuilder: (a, b, c) => HostedChallenges()));
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
