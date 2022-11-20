@@ -164,7 +164,6 @@ class _HomePageState extends State<HomePage> {
                       ? Color(0xff6BB8FF)
                       : Color(0xff03C289),
                   child: Container(
-                    margin: EdgeInsets.only(top: deviceWidth * 0.022),
                     child: Row(
                       children: [
                         SizedBox(
@@ -174,16 +173,17 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.center,
                           height: deviceHeight * 0.09,
                           width: deviceWidth * 0.09,
-                          padding: EdgeInsets.only(bottom: 5),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.transparent.withOpacity(0.6),
                               backgroundBlendMode: BlendMode.darken),
-                          child: Image(
-                            image: NetworkImage(userdata[i].IMG_URL),
-                            height: deviceWidth * 0.04,
-                            width: deviceWidth * 0.04,
-                            fit: BoxFit.cover,
+                          child: Positioned(
+                            child: Image(
+                              image: NetworkImage(userdata[i].IMG_URL),
+                              height: deviceWidth * 0.04,
+                              width: deviceWidth * 0.04,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -194,16 +194,16 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              userdata[i].TOURNAMENT_NAME.length >= 35
+                              userdata[i].TOURNAMENT_NAME.length > 26
                                   ? userdata[i]
                                           .TOURNAMENT_NAME
-                                          .substring(0, 35) +
+                                          .substring(0, 26) +
                                       '...'
                                   : userdata[i].TOURNAMENT_NAME,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: deviceWidth * 0.027,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: deviceWidth * 0.04,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
                             SizedBox(
@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               userdata[i].CITY,
                               style: TextStyle(
-                                fontSize: deviceWidth * 0.027,
+                                fontSize: deviceWidth * 0.035,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
@@ -236,6 +236,10 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent.withOpacity(0.2),
               child: Container(
                 child: ExpansionTile(
+                  trailing: IconButton(
+                    icon: Icon(Icons.arrow_drop_down_circle_rounded),
+                    onPressed: () {},
+                  ),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
