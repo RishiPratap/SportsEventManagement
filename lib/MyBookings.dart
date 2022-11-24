@@ -341,7 +341,7 @@ class _MyBookings extends State<MyBookings> {
                                 await SharedPreferences.getInstance();
                             var obtianedEmail = prefs.getString('email');
                             var url =
-                                "http://44.202.65.121:443/ticket?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}&USERID=$obtianedEmail";
+                                "https://ardentsportsapis.herokuapp.com/ticket?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}&USERID=$obtianedEmail";
                             var response = await get(Uri.parse(url));
                             Map<String, dynamic> jsonData =
                                 jsonDecode(response.body);

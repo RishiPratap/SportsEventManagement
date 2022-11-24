@@ -104,7 +104,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
       AllTournaments.add(card);
     } else {
       for (int i = array_length - 1; i >= 0; i--) {
-        bool isStarted = userdata[i].STATUS;
+        // bool isStarted = userdata[i].STATUS;
         var card = Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(deviceWidth * 0.03),
@@ -361,50 +361,38 @@ class _HostedChallengesState extends State<HostedChallenges> {
               //   ),
 
               // ),
-              TextButton(
-                  onPressed: () async {
-                    if (isStarted) {
-                      final url =
-                          "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-                      EasyLoading.show(
-                          status: 'Starting',
-                          maskType: EasyLoadingMaskType.black);
-                      var response = await get(Uri.parse(url));
-                      if (response.statusCode == 200) {
-                        EasyLoading.dismiss();
-                        const msg = 'Tournament has Successfully Started!';
-                        Fluttertoast.showToast(msg: msg);
-                        setState(() {
-                          userdata[i].STATUS = false;
-                        });
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "Failed to start Tournament");
-                      }
-                    } else {
-                      const msg = 'Tournament has Already Started!';
-                      Fluttertoast.showToast(msg: msg);
-                    }
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: isStarted ? Colors.green : Colors.grey,
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
                     ),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 15),
-                      child: Text(
-                        "Start Challenge",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                  )),
+                  ),
+                  onPressed: userdata[i].STATUS == true
+                      ? () async {
+                          final url =
+                              "https://ardentsportsapis.herokuapp.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                          EasyLoading.show(
+                              status: 'Starting',
+                              maskType: EasyLoadingMaskType.black);
+                          var response = await get(Uri.parse(url));
+                          if (response.statusCode == 200) {
+                            EasyLoading.dismiss();
+                            const msg = 'Tournament has Successfully Started!';
+                            Fluttertoast.showToast(msg: msg);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Failed to start Tournament");
+                          }
+
+                          if (userdata[i].STATUS == false) {
+                            const msg = 'Tournament has Already Started!';
+                            Fluttertoast.showToast(msg: msg);
+                          }
+                        }
+                      : null,
+                  child: Text("Start Challenge")),
+
               TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -463,7 +451,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "http://44.202.65.121:443/hostedTournaments?USERID=$obtianedEmail";
+        "https://ardentsportsapis.herokuapp.com/hostedTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
@@ -502,6 +490,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
   void initState() {
     super.initState();
     futures = getAllHostedTournaments();
+
     // futures_past_hosted_challenges = getAllPastHostedTournaments();
   }
 
@@ -521,6 +510,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
 
   @override
   Widget build(BuildContext context) {
+    bool isStarted = false;
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(

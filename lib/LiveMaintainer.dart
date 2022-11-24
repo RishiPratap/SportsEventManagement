@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 import 'package:ardent_sports/LiveMaintainerMatchSelection.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
@@ -1469,15 +1471,13 @@ class _SubmitState extends State<Submit> {
                                           backgroundColor: Color(0xffD15858),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                new BorderRadius.circular(20.0),
+                                                BorderRadius.circular(20.0),
                                           ),
                                         ),
                                         onPressed: () async {
-                                          print(widget.MatchId);
-                                          print(widget.Tournament_ID);
                                           var url =
-                                              "http://44.202.65.121:443/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
-                                          print(url);
+                                              "https://ardentsportsapis.herokuapp.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
+
                                           http.Response response;
                                           response = await get(Uri.parse(url));
                                           setState(() {
@@ -1485,10 +1485,8 @@ class _SubmitState extends State<Submit> {
                                                 json.decode(response.body);
                                           });
                                           print(UserResponse?['WINNER']);
-
-                                          print(response.body);
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           "Confirm",
                                           style: TextStyle(fontSize: 20),
                                         ),

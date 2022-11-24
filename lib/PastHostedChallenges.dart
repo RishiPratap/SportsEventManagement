@@ -368,7 +368,8 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
   getAllPastHostedTournaments() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
-    var url = "http://44.202.65.121:443/pastTournaments?USERID=$obtianedEmail";
+    var url =
+        "https://ardentsportsapis.herokuapp.com/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 

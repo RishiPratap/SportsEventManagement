@@ -447,7 +447,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       maskType: EasyLoadingMaskType.black);
                   var url =
-                      "http://44.202.65.121:443/isTimeExceeded?TOURNAMENT_ID=${spotStatusArray[i]['id']}";
+                      "https://ardentsportsapis.herokuapp.com/isTimeExceeded?TOURNAMENT_ID=${spotStatusArray[i]['id']}";
                   var response = await get(Uri.parse(url));
 
                   Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -581,7 +581,8 @@ class _HomePageState extends State<HomePage> {
   Future _getDetails() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var email = prefs.getString('email');
-    final uri = 'http://44.202.65.121:443/userDetails?USERID=${email!.trim()}';
+    final uri =
+        'https://ardentsportsapis.herokuapp.com/userDetails?USERID=${email!.trim()}';
 
     http.Response response;
     response = await http.get(Uri.parse(uri));
