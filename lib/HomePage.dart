@@ -472,7 +472,8 @@ class _HomePageState extends State<HomePage> {
                                   Organiser_Name: Organizer_Name,
                                   Organiser_Number: Organizer_Number,
                                   Address: Address,
-                                  subTournamentType: category,
+                                  subTournamentType: spotStatusArray[i]
+                                      ['category_name'],
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
