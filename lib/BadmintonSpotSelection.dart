@@ -31,16 +31,18 @@ class BadmintonSpotSelection extends StatefulWidget {
   final String Organiser_Name;
   final String Organiser_Number;
   final String Address;
-  const BadmintonSpotSelection({
-    Key? key,
-    required this.tourneyId,
-    required this.sport,
-    required this.Date,
-    required this.spots,
-    required this.Organiser_Name,
-    required this.Organiser_Number,
-    required this.Address,
-  }) : super(key: key);
+  final String subTournamentType;
+  const BadmintonSpotSelection(
+      {Key? key,
+      required this.tourneyId,
+      required this.sport,
+      required this.Date,
+      required this.spots,
+      required this.Organiser_Name,
+      required this.Organiser_Number,
+      required this.Address,
+      required this.subTournamentType})
+      : super(key: key);
 
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
@@ -570,7 +572,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   Container(
                     margin: EdgeInsets.only(top: 5),
                     child: Text(
-                      "Men's Single",
+                      widget.subTournamentType,
                       style: TextStyle(
                         color: Colors.black,
                         fontStyle: FontStyle.normal,

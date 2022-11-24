@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -52,6 +53,7 @@ class UserData {
   late String END_TIME;
   late String SPORT;
   late bool CANCELLATION_STATUS;
+  late String CATEGORY;
   late List PARTICIPANTS;
   late int NO_OF_KNOCKOUT_ROUNDS;
   late List SPOT_STATUS_ARRAY;
@@ -78,6 +80,7 @@ class UserData {
     this.END_TIME,
     this.SPORT,
     this.CANCELLATION_STATUS,
+    this.CATEGORY,
     this.PARTICIPANTS,
     this.NO_OF_KNOCKOUT_ROUNDS,
     this.SPOT_STATUS_ARRAY,
@@ -106,6 +109,7 @@ class UserData {
     END_TIME = json['END_TIME'];
     SPORT = json['SPORT'];
     CANCELLATION_STATUS = json['CANCELLATION_STATUS'];
+    CATEGORY = json['CATEGORY'];
     PARTICIPANTS = ['PARTICIPANTS'];
     NO_OF_KNOCKOUT_ROUNDS = json['NO_OF_KNOCKOUT_ROUNDS'];
     SPOT_STATUS_ARRAY = json['SPOT_STATUS_ARRAY'];
@@ -272,13 +276,13 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   children: getAllTournamentCategories(
-                    userdata[i].spotStatusArray,
-                    userdata[i].START_DATE,
-                    userdata[i].ORGANIZER_NAME,
-                    userdata[i].ORGANIZER_ID,
-                    userdata[i].SPORT,
-                    userdata[i].LOCATION,
-                  ),
+                      userdata[i].spotStatusArray,
+                      userdata[i].START_DATE,
+                      userdata[i].ORGANIZER_NAME,
+                      userdata[i].ORGANIZER_ID,
+                      userdata[i].SPORT,
+                      userdata[i].LOCATION,
+                      userdata[i].CATEGORY),
                 ),
               ),
             ),
@@ -414,12 +418,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Container> getAllTournamentCategories(
-      List spotStatusArray,
-      String Date,
-      String Organizer_Name,
-      String Organizer_Number,
-      String tournament,
-      String Address) {
+    List spotStatusArray,
+    String Date,
+    String Organizer_Name,
+    String Organizer_Number,
+    String tournament,
+    String Address,
+    String category,
+  ) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     List<Container> AllCategories = [];
@@ -464,6 +470,7 @@ class _HomePageState extends State<HomePage> {
                                   Organiser_Name: Organizer_Name,
                                   Organiser_Number: Organizer_Number,
                                   Address: Address,
+                                  subTournamentType: category,
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
