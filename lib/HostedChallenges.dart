@@ -649,40 +649,35 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   children: [
                     Row(
                       children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Container(
-                                width: deviceWidth * 0.2,
-                                height: deviceHeight * 0.07,
-                                margin: EdgeInsets.fromLTRB(
-                                    0, deviceWidth * 0.03, 0, 0),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                  image: AssetImage('assets/AARDENT_LOGO.png'),
-                                  fit: BoxFit.cover,
-                                )),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  width: deviceWidth * 0.2,
-                                  height: deviceHeight * 0.08,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/Ardent_Sport_Text.png"),
-                                          fit: BoxFit.fitWidth)),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  width: double.infinity,
-                                ),
-                              ),
-                            ],
-                          ),
+                        Row(
+                          ///USE EXPANDED HERE TO DEBUG
+                          children: [
+                            Container(
+                              width: deviceWidth * 0.2,
+                              height: deviceHeight * 0.07,
+                              margin: EdgeInsets.fromLTRB(
+                                  0, deviceWidth * 0.03, 0, 0),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                image: AssetImage('assets/AARDENT_LOGO.png'),
+                                fit: BoxFit.cover,
+                              )),
+                            ),
+                            Container(
+                              //USE EXPANDED HERE TO DEBUG
+                              width: deviceWidth * 0.2,
+                              height: deviceHeight * 0.08,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/Ardent_Sport_Text.png"),
+                                      fit: BoxFit.fitWidth)),
+                            ),
+                            Container(
+                              //USE EXPANDED HERE TO DEBUG
+                              width: double.infinity,
+                            ),
+                          ],
                         ),
                       ],
                     ),
