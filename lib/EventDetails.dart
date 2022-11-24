@@ -1,6 +1,9 @@
+import 'package:ardent_sports/AgeCategoryItem.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'AgeCategoryDataClass.dart';
 import 'CategoryDetails.dart';
 import 'PoolDetails.dart';
 
@@ -23,10 +26,22 @@ class EventDetails extends StatefulWidget {
 }
 
 class _EventDetailsState extends State<EventDetails> {
-  List<String> Categories = ["Men's Single", "Women's Single"];
+  List<String> Categories = [
+    "Men's Singles",
+    "Women's Singles",
+    "Men's Doubles",
+    "Women's Doubles",
+    "Mixed Doubles",
+    "Boys Singles",
+    "Girls Singles",
+    "Boys Doubles",
+    "Girls Doubles"
+  ];
   String? SelectedCategory;
+  Map<Map<String, String>, int> check = {};
 
   List<String> AgeCategory = [
+    'Open',
     'U11',
     'U12',
     'U13',
@@ -36,7 +51,6 @@ class _EventDetailsState extends State<EventDetails> {
     '35+',
     '40+',
     '50+',
-    'Open'
   ];
   List<String> RegCloses = ['6hrs', '12hrs'];
   List<String> NoOfCourts = ['1', '2', '3', '4', '5', '6', '7', '8'];
@@ -69,6 +83,7 @@ class _EventDetailsState extends State<EventDetails> {
     }
   }
 
+  List<AgeCategoryDataClass> _alladdedCategories = [];
   List<Row> AllAddedCategories = [];
   List<CategorieDetails> AllCategories = [];
 
@@ -525,36 +540,69 @@ class _EventDetailsState extends State<EventDetails> {
                                 BorderRadius.circular(deviceWidth * 0.06)),
                       ),
                       onPressed: () {
-                        CategorieDetails detail =
-                            CategorieDetails(SelectedCategory!, SelectedAge!);
-                        AllCategories.add(detail);
-                        var row = Row(
-                          children: [
-                            Text("  "),
-                            Image(image: AssetImage("assets/Menu.png")),
-                            SelectedCategory == null
-                                ? Text("")
-                                : Text("  $SelectedCategory "),
-                            SelectedAge == null
-                                ? Text("")
-                                : Text("   $SelectedAge")
-                          ],
-                        );
-                        setState(() {
-                          AllAddedCategories.add(row);
-                        });
+                        // CategorieDetails detail =
+                        //     CategorieDetails(SelectedCategory!, SelectedAge!);
+                        // AllCategories.add(detail);
+                        // var row = Row(
+                        //   children: [
+                        //     Text("  "),
+                        //     Image(image: AssetImage("assets/Menu.png")),
+                        //     SelectedCategory == null
+                        //         ? Text("")
+                        //         : Text("  $SelectedCategory "),
+                        //     SelectedAge == null
+                        //         ? Text("")
+                        //         : Text("   $SelectedAge")
+                        //   ],
+                        // );
+                        // Map<String, String> m = {
+                        //   "$SelectedCategory": "$SelectedAge"
+                        // };
+                        // print(m);
+                        // print(check[m]);
+                        // if (check[m] == null) {
+                        //   setState(() {
+                        //     check[m] = 1;
+                        //     AllAddedCategories.add(row);
+                        //   });
+                        // } else {
+                        //   EasyLoading.instance.displayDuration =
+                        //       Duration(milliseconds: 15000);
+                        //   EasyLoading.instance.radius = 15;
+                        //   EasyLoading.showInfo("Category Already Added",
+                        //       dismissOnTap: true);
+                        // }
+
+                        var categoryItem = AgeCategoryDataClass(
+                            Category: SelectedCategory,
+                            AgeCategory: SelectedAge);
+                        bool isCategoryAdded = false;
+                        for (AgeCategoryDataClass details
+                            in _alladdedCategories) {
+                          if (details.Category == categoryItem.Category &&
+                              details.AgeCategory == categoryItem.AgeCategory) {
+                            isCategoryAdded = true;
+                            print("1");
+                            break;
+                          }
+                        }
+                        if (!isCategoryAdded) {
+                          _addAgeCategoryItem(SelectedCategory!, SelectedAge!);
+                        }
                       },
                       child: Text(
                         'Add',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    Column(
-                      children: AllAddedCategories,
-                    ),
                     SizedBox(
-                      height: deviceWidth * 0.02,
-                    )
+                      height: 5,
+                    ),
+                    for (AgeCategoryDataClass details in _alladdedCategories)
+                      AgeCategoryItem(
+                        data: details,
+                        onDeleteItem: _deleteAgeCategoryItem,
+                      )
                   ],
                 ),
               ),
@@ -656,34 +704,6 @@ class _EventDetailsState extends State<EventDetails> {
                       ),
                     ),
                   ),
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(
-                          deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
-                      child: TextField(
-                        controller: breaktime,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.01),
-                              borderSide: BorderSide(),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(),
-                            ),
-                            hintText: "Break Time (In Minutes)",
-                            hintStyle: TextStyle(color: Colors.white),
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.02),
-                            )),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -711,8 +731,7 @@ class _EventDetailsState extends State<EventDetails> {
                       Address.text.isNotEmpty &&
                       SelectedAge.toString().isNotEmpty &&
                       SelectedCategory.toString().isNotEmpty &&
-                      Courts != Null &&
-                      breaktime.text.isNotEmpty) {
+                      Courts != Null) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -765,4 +784,24 @@ class _EventDetailsState extends State<EventDetails> {
           ],
         ),
       );
+
+  void _addAgeCategoryItem(String Category, String AgeCatogery) {
+    setState(() {
+      _alladdedCategories.add(AgeCategoryDataClass(
+        Category: Category,
+        AgeCategory: AgeCatogery,
+      ));
+      AllCategories.add(CategorieDetails(Category, AgeCatogery));
+    });
+  }
+
+  void _deleteAgeCategoryItem(String Category, String AgeCatogery) {
+    setState(() {
+      _alladdedCategories.removeWhere((item) =>
+          item.Category == Category && item.AgeCategory == AgeCatogery);
+      AllCategories.removeWhere((element) =>
+          element.CategoryName == Category &&
+          element.AgeCategory == AgeCatogery);
+    });
+  }
 }

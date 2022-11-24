@@ -241,7 +241,9 @@ class _HomePageState extends State<HomePage> {
                 child: ExpansionTile(
                   trailing: Icon(
                     Icons.arrow_drop_down_circle,
-                    color: Colors.blue,
+                    color: userdata[i].SPORT == 'Badminton'
+                        ? Color(0xff6BB8FF)
+                        : Color(0xff03C289),
                   ),
                   // trailing: IconButton(
                   //   icon: Icon(Icons.arrow_drop_down_circle_rounded),
@@ -470,7 +472,8 @@ class _HomePageState extends State<HomePage> {
                                   Organiser_Name: Organizer_Name,
                                   Organiser_Number: Organizer_Number,
                                   Address: Address,
-                                  subTournamentType: category,
+                                  subTournamentType: spotStatusArray[i]
+                                      ['category_name'],
                                 )));
                     EasyLoading.dismiss();
                   } else if (spotStatusArray[i]['STATUS'] == false) {
@@ -741,8 +744,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: deviceWidth * 0.083333,
                     ),
                     FutureBuilder(
                       future: futures,

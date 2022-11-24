@@ -52,30 +52,6 @@ class _MenuState extends State<Menu> {
               SizedBox(
                 height: deviceWidth * 0.06,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: deviceWidth * 0.08,
-                    height: deviceWidth * 0.08,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/gear.png"),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Yet To be implemented"),
-                        ));
-                      },
-                      child: Text(
-                        "Settings",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ],
-              ),
               SizedBox(
                 height: deviceWidth * 0.06,
               ),
@@ -141,34 +117,6 @@ class _MenuState extends State<Menu> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: deviceWidth * 0.08,
-                    height: deviceWidth * 0.08,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/score 1.png"),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ScoreAMatch()));
-                      },
-                      child: Text(
-                        "Score a Match",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ],
-              ),
-              SizedBox(
-                height: deviceWidth * 0.06,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
                     width: deviceWidth * 0.06,
                     height: deviceWidth * 0.06,
                     decoration: BoxDecoration(
@@ -208,33 +156,6 @@ class _MenuState extends State<Menu> {
                       },
                       child: Text(
                         "My Hosted Challenges",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ],
-              ),
-              SizedBox(
-                height: deviceWidth * 0.06,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: deviceWidth * 0.08,
-                    height: deviceWidth * 0.08,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/contacts.png"),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Yet To be implemented"),
-                        ));
-                      },
-                      child: Text(
-                        "Contact Us",
                         style: TextStyle(color: Colors.white),
                       )),
                 ],

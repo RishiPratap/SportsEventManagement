@@ -518,10 +518,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               : Color(0xff03C289),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: deviceWidth * 0.02,
-              ),
+              // SizedBox(
+              //   width: deviceWidth * 0.02,
+              // ),
               Column(
                 children: [
                   Container(
@@ -553,9 +554,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   )
                 ],
               ),
-              SizedBox(
-                width: deviceWidth * 0.05,
-              ),
+              // SizedBox(
+              //   width: deviceWidth * 0.03,
+              // ),
               Column(
                 children: [
                   Container(
@@ -596,15 +597,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   )
                 ],
               ),
-              SizedBox(
-                width: deviceWidth * 0.07,
-              ),
+              // SizedBox(
+              //   width: deviceWidth * 0.05,
+              // ),
               Column(
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Text(
-                      "Entry Fees",
+                      "Entry Fees  ",
                       style: TextStyle(
                         color: Colors.white,
                         fontStyle: FontStyle.normal,
