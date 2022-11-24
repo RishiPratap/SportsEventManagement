@@ -727,7 +727,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: Container(
                             margin: EdgeInsets.only(right: deviceWidth * 0.05),
                             child: Align(

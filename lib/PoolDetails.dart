@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 import 'dart:convert';
 import 'dart:io';
+import 'package:ardent_sports/AgeCategoryItem.dart';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
+import 'package:ardent_sports/PoolDetailsDataClass.dart';
+import 'package:ardent_sports/PoolDetailsItem.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
@@ -174,6 +177,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   String? SelectedPerMatchEstimatedTime;
 
   List<details>? poolDetails = [];
+  List<PoolDetailsItem> pools = [];
 
   bool isPaymentDone = false;
 
@@ -582,6 +586,14 @@ class _PoolDetailsState extends State<PoolDetails> {
         _currPageValue = pageController.page!;
       });
     });
+
+    for (CategorieDetails details in widget.AllCategoryDetails) {
+      var poolData = PoolDetailsDataClass();
+      pools.add(PoolDetailsItem(
+        details: details,
+        pooldata: poolData,
+      ));
+    }
   }
 
   @override
@@ -593,257 +605,442 @@ class _PoolDetailsState extends State<PoolDetails> {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
-          child: SafeArea(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: 90,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/AARDENT_LOGO.png"),
-                                fit: BoxFit.cover)),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: 130,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image:
-                                    AssetImage("assets/Ardent_Sport_Text.png"),
-                                fit: BoxFit.fitWidth)),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        width: double.infinity,
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(
-                  color: Colors.white,
-                ),
-                Expanded(
-                    flex: 1,
-                    child: PageView(
-                      controller: pageController,
-                      children: AllPools(widget.AllCategoryDetails.length,
-                          deviceWidth, deviceHeight),
-                    )),
-                SizedBox(
-                  height: 30,
-                ),
-                DotsIndicator(
-                  dotsCount: widget.AllCategoryDetails.length,
-                  position: _currPageValue,
-                  decorator: DotsDecorator(
-                    activeColor: Colors.white,
-                    size: const Size.square(9.0),
-                    activeSize: const Size(18.0, 9.0),
-                    activeShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.fromLTRB(
-                          deviceWidth * 0.04,
-                          deviceWidth * 0.02,
-                          deviceWidth * 0.04,
-                          deviceWidth * 0.02),
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                    onPressed: isPaymentDone == false
-                        ? null
-                        : () async {
-                            String poolsize_details = "";
-                            String gold_details = "";
-                            String silver_details = "";
-                            String bronze_details = "";
-                            String other_details = "";
-                            String entryfee_details = "";
-                            String selected_point_system_details = "";
-                            String per_match_estimated_time = "";
-                            for (int i = 0; i < poolDetails!.length; i++) {
-                              poolsize_details += poolDetails![i].PoolSize;
-                              gold_details += poolDetails![i].gold;
-                              silver_details += poolDetails![i].silver;
-                              bronze_details += poolDetails![i].bronze;
-                              other_details += poolDetails![i].others;
-                              entryfee_details += poolDetails![i].entryfee;
-                              selected_point_system_details +=
-                                  poolDetails![i].pointsystem;
-                              if (i != poolDetails!.length - 1) {
-                                poolsize_details += "-";
-                                gold_details += "-";
-                                silver_details += "-";
-                                bronze_details += "-";
-                                other_details += "-";
-                                entryfee_details += "-";
-                                selected_point_system_details += "-";
-                                per_match_estimated_time += "-";
-                              }
-                            }
-                            EasyLoading.show(
-                              status: 'Loading...',
-                              maskType: EasyLoadingMaskType.black,
-                            );
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            var obtianedEmail = prefs.getString('email');
-                            print(obtianedEmail);
-                            String Category = "";
-                            String AgeCategory = "";
-                            for (int i = 0;
-                                i < widget.AllCategoryDetails.length;
-                                i++) {
-                              Category +=
-                                  widget.AllCategoryDetails[i].CategoryName;
-                              AgeCategory +=
-                                  widget.AllCategoryDetails[i].AgeCategory;
-                              if (i != widget.AllCategoryDetails.length - 1) {
-                                Category += "-";
-                                AgeCategory += "-";
-                              }
-                            }
-                            print(Category);
-                            print(gold_details);
-                            print(silver_details);
-                            print(bronze_details);
-                            print(other_details);
-                            print(entryfee_details);
-                            print(widget.EventName);
-                            print(widget.City);
-
-                            var prizePool = gold_details +
-                                "-" +
-                                silver_details +
-                                "-" +
-                                bronze_details +
-                                "-" +
-                                other_details;
-
-                            final ChallengeDetails = CreateChallengeDetails(
-                                ORGANIZER_NAME: widget.EventManagerName,
-                                ORGANIZER_ID: widget.EventManagerMobileNo,
-                                USERID: obtianedEmail!.trim(),
-                                TOURNAMENT_ID: "123456",
-                                CATEGORY: Category,
-                                NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
-                                ENTRY_FEE: entryfee_details,
-                                GOLD: gold_details,
-                                SILVER: silver_details,
-                                BRONZE: bronze_details,
-                                OTHER: other_details,
-                                PRIZE_POOL: prizePool,
-                                TOURNAMENT_NAME: widget.EventName,
-                                CITY: widget.City,
-                                TYPE: widget.EventType,
-                                LOCATION: widget.Address,
-                                START_DATE: widget.StartDate,
-                                END_DATE: widget.EndDate,
-                                START_TIME: widget.StartTime,
-                                END_TIME: widget.EndTime,
-                                REGISTRATION_CLOSES_BEFORE: 6,
-                                AGE_CATEGORY: AgeCategory,
-                                NO_OF_COURTS: widget.NoofCourts,
-                                BREAK_TIME: widget.BreakTime,
-                                SPORT: widget.SportName);
-                            final DetailMap = ChallengeDetails.toMap();
-                            final json = jsonEncode(DetailMap);
-                            var url =
-                                "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
-
-                            try {
-                              var response = await post(Uri.parse(url),
-                                  headers: {
-                                    "Accept": "application/json",
-                                    "Content-Type": "application/json"
-                                  },
-                                  body: json,
-                                  encoding: Encoding.getByName("utf-8"));
-                              Map<String, dynamic> jsonData =
-                                  jsonDecode(response.body);
-                              debugPrint('Response body:$json');
-                              print(jsonData["TOURNAMENT_ID"]);
-                              tournament_id_arr = jsonData["TOURNAMENT_ID"]
-                                  .toString()
-                                  .split(',');
-                              if (response.statusCode == 200) {
-                                EasyLoading.dismiss();
-                                Get.to(CreateChallengeTicket(
-                                  Tournament_ID: tournament_id_arr,
-                                  CategorieNames: widget.AllCategoryDetails,
-                                ));
-                                EasyLoading.dismiss();
-                              } else {
-                                EasyLoading.dismiss();
-                                EasyLoading.showError(
-                                    "Error in Tournament Creation");
-                              }
-                            } catch (e) {
-                              print(e);
-                              EasyLoading.showError(e.toString());
-                              EasyLoading.dismiss();
-                            }
-                          },
-                    child: Text("Create Tournament",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold))),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: EdgeInsets.fromLTRB(
-                          deviceWidth * 0.04,
-                          deviceWidth * 0.02,
-                          deviceWidth * 0.04,
-                          deviceWidth * 0.02),
-                    ),
-                    child: Text("Make Payment",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold)),
-                    onPressed: isPaymentDone == true
-                        ? null
-                        : () {
-                            _getorderId('2');
-                          }),
-                const SizedBox(
-                  height: 20,
-                )
-              ],
+      resizeToAvoidBottomInset: true,
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
+        // child: SafeArea(
+        //   child: Column(
+        //     children: [
+        //       Row(
+        //         children: [
+        //           Expanded(
+        //             flex: 1,
+        //             child: Container(
+        //               width: 90,
+        //               height: 50,
+        //               decoration: BoxDecoration(
+        //                   image: DecorationImage(
+        //                       image: AssetImage("assets/AARDENT_LOGO.png"),
+        //                       fit: BoxFit.cover)),
+        //             ),
+        //           ),
+        //           Expanded(
+        //             flex: 1,
+        //             child: Container(
+        //               width: 130,
+        //               height: 40,
+        //               decoration: BoxDecoration(
+        //                   image: DecorationImage(
+        //                       image: AssetImage("assets/Ardent_Sport_Text.png"),
+        //                       fit: BoxFit.fitWidth)),
+        //             ),
+        //           ),
+        //           Expanded(
+        //             flex: 2,
+        //             child: Container(
+        //               width: double.infinity,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //       Divider(
+        //         color: Colors.white,
+        //       ),
+        //       Expanded(
+        //           flex: 1,
+        //           child: PageView(
+        //             controller: pageController,
+        //             children: AllPools(widget.AllCategoryDetails.length,
+        //                 deviceWidth, deviceHeight),
+        //           )),
+        //       SizedBox(
+        //         height: 30,
+        //       ),
+        //       DotsIndicator(
+        //         dotsCount: widget.AllCategoryDetails.length,
+        //         position: _currPageValue,
+        //         decorator: DotsDecorator(
+        //           activeColor: Colors.white,
+        //           size: const Size.square(9.0),
+        //           activeSize: const Size(18.0, 9.0),
+        //           activeShape: RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.circular(5.0)),
+        //         ),
+        //       ),
+        //       SizedBox(
+        //         height: 40,
+        //       ),
+        //       ElevatedButton(
+        //           style: ElevatedButton.styleFrom(
+        //             padding: EdgeInsets.fromLTRB(
+        //                 deviceWidth * 0.04,
+        //                 deviceWidth * 0.02,
+        //                 deviceWidth * 0.04,
+        //                 deviceWidth * 0.02),
+        //             backgroundColor: Colors.red,
+        //             shape: RoundedRectangleBorder(
+        //                 borderRadius: BorderRadius.circular(20)),
+        //           ),
+        //           onPressed: isPaymentDone == false
+        //               ? null
+        //               : () async {
+        //                   String poolsize_details = "";
+        //                   String gold_details = "";
+        //                   String silver_details = "";
+        //                   String bronze_details = "";
+        //                   String other_details = "";
+        //                   String entryfee_details = "";
+        //                   String selected_point_system_details = "";
+        //                   String per_match_estimated_time = "";
+        //                   for (int i = 0; i < poolDetails!.length; i++) {
+        //                     poolsize_details += poolDetails![i].PoolSize;
+        //                     gold_details += poolDetails![i].gold;
+        //                     silver_details += poolDetails![i].silver;
+        //                     bronze_details += poolDetails![i].bronze;
+        //                     other_details += poolDetails![i].others;
+        //                     entryfee_details += poolDetails![i].entryfee;
+        //                     selected_point_system_details +=
+        //                         poolDetails![i].pointsystem;
+        //                     if (i != poolDetails!.length - 1) {
+        //                       poolsize_details += "-";
+        //                       gold_details += "-";
+        //                       silver_details += "-";
+        //                       bronze_details += "-";
+        //                       other_details += "-";
+        //                       entryfee_details += "-";
+        //                       selected_point_system_details += "-";
+        //                       per_match_estimated_time += "-";
+        //                     }
+        //                   }
+        //                   EasyLoading.show(
+        //                     status: 'Loading...',
+        //                     maskType: EasyLoadingMaskType.black,
+        //                   );
+        //                   final SharedPreferences prefs =
+        //                       await SharedPreferences.getInstance();
+        //                   var obtianedEmail = prefs.getString('email');
+        //                   print(obtianedEmail);
+        //                   String Category = "";
+        //                   String AgeCategory = "";
+        //                   for (int i = 0;
+        //                       i < widget.AllCategoryDetails.length;
+        //                       i++) {
+        //                     Category +=
+        //                         widget.AllCategoryDetails[i].CategoryName;
+        //                     AgeCategory +=
+        //                         widget.AllCategoryDetails[i].AgeCategory;
+        //                     if (i != widget.AllCategoryDetails.length - 1) {
+        //                       Category += "-";
+        //                       AgeCategory += "-";
+        //                     }
+        //                   }
+        //                   print(Category);
+        //                   print(gold_details);
+        //                   print(silver_details);
+        //                   print(bronze_details);
+        //                   print(other_details);
+        //                   print(entryfee_details);
+        //                   print(widget.EventName);
+        //                   print(widget.City);
+        //
+        //                   var prizePool = gold_details +
+        //                       "-" +
+        //                       silver_details +
+        //                       "-" +
+        //                       bronze_details +
+        //                       "-" +
+        //                       other_details;
+        //
+        //                   final ChallengeDetails = CreateChallengeDetails(
+        //                       ORGANIZER_NAME: widget.EventManagerName,
+        //                       ORGANIZER_ID: widget.EventManagerMobileNo,
+        //                       USERID: obtianedEmail!.trim(),
+        //                       TOURNAMENT_ID: "123456",
+        //                       CATEGORY: Category,
+        //                       NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
+        //                       ENTRY_FEE: entryfee_details,
+        //                       GOLD: gold_details,
+        //                       SILVER: silver_details,
+        //                       BRONZE: bronze_details,
+        //                       OTHER: other_details,
+        //                       PRIZE_POOL: prizePool,
+        //                       TOURNAMENT_NAME: widget.EventName,
+        //                       CITY: widget.City,
+        //                       TYPE: widget.EventType,
+        //                       LOCATION: widget.Address,
+        //                       START_DATE: widget.StartDate,
+        //                       END_DATE: widget.EndDate,
+        //                       START_TIME: widget.StartTime,
+        //                       END_TIME: widget.EndTime,
+        //                       REGISTRATION_CLOSES_BEFORE: 6,
+        //                       AGE_CATEGORY: AgeCategory,
+        //                       NO_OF_COURTS: widget.NoofCourts,
+        //                       BREAK_TIME: widget.BreakTime,
+        //                       SPORT: widget.SportName);
+        //                   final DetailMap = ChallengeDetails.toMap();
+        //                   final json = jsonEncode(DetailMap);
+        //                   var url =
+        //                       "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
+        //
+        //                   try {
+        //                     var response = await post(Uri.parse(url),
+        //                         headers: {
+        //                           "Accept": "application/json",
+        //                           "Content-Type": "application/json"
+        //                         },
+        //                         body: json,
+        //                         encoding: Encoding.getByName("utf-8"));
+        //                     Map<String, dynamic> jsonData =
+        //                         jsonDecode(response.body);
+        //                     debugPrint('Response body:$json');
+        //                     print(jsonData["TOURNAMENT_ID"]);
+        //                     tournament_id_arr =
+        //                         jsonData["TOURNAMENT_ID"].toString().split(',');
+        //                     if (response.statusCode == 200) {
+        //                       EasyLoading.dismiss();
+        //                       Get.to(CreateChallengeTicket(
+        //                         Tournament_ID: tournament_id_arr,
+        //                         CategorieNames: widget.AllCategoryDetails,
+        //                       ));
+        //                       EasyLoading.dismiss();
+        //                     } else {
+        //                       EasyLoading.dismiss();
+        //                       EasyLoading.showError(
+        //                           "Error in Tournament Creation");
+        //                     }
+        //                   } catch (e) {
+        //                     print(e);
+        //                     EasyLoading.showError(e.toString());
+        //                     EasyLoading.dismiss();
+        //                   }
+        //                 },
+        //           child: Text("Create Tournament",
+        //               style: TextStyle(
+        //                   color: Colors.white,
+        //                   fontSize: 20,
+        //                   fontWeight: FontWeight.bold))),
+        //       const SizedBox(
+        //         height: 20,
+        //       ),
+        //       ElevatedButton(
+        //           style: ElevatedButton.styleFrom(
+        //             backgroundColor: Colors.red,
+        //             shape: RoundedRectangleBorder(
+        //                 borderRadius: BorderRadius.circular(20)),
+        //             padding: EdgeInsets.fromLTRB(
+        //                 deviceWidth * 0.04,
+        //                 deviceWidth * 0.02,
+        //                 deviceWidth * 0.04,
+        //                 deviceWidth * 0.02),
+        //           ),
+        //           child: Text("Make Payment",
+        //               style: TextStyle(
+        //                   color: Colors.white,
+        //                   fontSize: 20,
+        //                   fontWeight: FontWeight.bold)),
+        //           onPressed: isPaymentDone == true
+        //               ? null
+        //               : () {
+        //                   _getorderId('2');
+        //                 }),
+        //       const SizedBox(
+        //         height: 20,
+        //       )
+        //     ],
+        //   ),
+        // ),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                addAutomaticKeepAlives: true,
+                itemCount: pools.length,
+                itemBuilder: (_, i) => pools[i],
+              ),
             ),
-          ),
-        ));
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.fromLTRB(
+                      deviceWidth * 0.04,
+                      deviceWidth * 0.02,
+                      deviceWidth * 0.04,
+                      deviceWidth * 0.02),
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                ),
+                onPressed: isPaymentDone == false
+                    ? null
+                    : () async {
+                        var data = pools.map((it) => it.pooldata).toList();
+
+                        String poolsize_details = "";
+                        String gold_details = "";
+                        String silver_details = "";
+                        String bronze_details = "";
+                        String other_details = "";
+                        String entryfee_details = "";
+                        String selected_point_system_details = "";
+                        String per_match_estimated_time = "";
+                        for (int i = 0; i < data.length; i++) {
+                          poolsize_details += data[i].PoolSize;
+                          gold_details += data[i].Gold;
+                          silver_details += pools[i].pooldata.Silver;
+                          bronze_details += pools[i].pooldata.Bronze;
+                          other_details += "0";
+                          entryfee_details += pools[i].pooldata.EntryFee;
+                          selected_point_system_details +=
+                              pools[i].pooldata.PointSystem;
+                          if (i != pools.length - 1) {
+                            poolsize_details += "-";
+                            gold_details += "-";
+                            silver_details += "-";
+                            bronze_details += "-";
+                            other_details += "-";
+                            entryfee_details += "-";
+                            selected_point_system_details += "-";
+                            per_match_estimated_time += "-";
+                          }
+                        }
+                        EasyLoading.show(
+                          status: 'Loading...',
+                          maskType: EasyLoadingMaskType.black,
+                        );
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        var obtianedEmail = prefs.getString('email');
+                        print(obtianedEmail);
+                        String Category = "";
+                        String AgeCategory = "";
+                        for (int i = 0;
+                            i < widget.AllCategoryDetails.length;
+                            i++) {
+                          Category += widget.AllCategoryDetails[i].CategoryName;
+                          AgeCategory +=
+                              widget.AllCategoryDetails[i].AgeCategory;
+                          if (i != widget.AllCategoryDetails.length - 1) {
+                            Category += "-";
+                            AgeCategory += "-";
+                          }
+                        }
+                        print(Category);
+                        print(gold_details);
+                        print(silver_details);
+                        print(bronze_details);
+                        print(other_details);
+                        print(entryfee_details);
+                        print(widget.EventName);
+                        print(widget.City);
+
+                        var prizePool = gold_details +
+                            "-" +
+                            silver_details +
+                            "-" +
+                            bronze_details +
+                            "-" +
+                            other_details;
+
+                        final ChallengeDetails = CreateChallengeDetails(
+                            ORGANIZER_NAME: widget.EventManagerName,
+                            ORGANIZER_ID: widget.EventManagerMobileNo,
+                            USERID: obtianedEmail!.trim(),
+                            TOURNAMENT_ID: "123456",
+                            CATEGORY: Category,
+                            NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
+                            ENTRY_FEE: entryfee_details,
+                            GOLD: gold_details,
+                            SILVER: silver_details,
+                            BRONZE: bronze_details,
+                            OTHER: other_details,
+                            PRIZE_POOL: prizePool,
+                            TOURNAMENT_NAME: widget.EventName,
+                            CITY: widget.City,
+                            TYPE: widget.EventType,
+                            LOCATION: widget.Address,
+                            START_DATE: widget.StartDate,
+                            END_DATE: widget.EndDate,
+                            START_TIME: widget.StartTime,
+                            END_TIME: widget.EndTime,
+                            REGISTRATION_CLOSES_BEFORE: 6,
+                            AGE_CATEGORY: AgeCategory,
+                            NO_OF_COURTS: widget.NoofCourts,
+                            BREAK_TIME: widget.BreakTime,
+                            SPORT: widget.SportName);
+                        final DetailMap = ChallengeDetails.toMap();
+                        final json = jsonEncode(DetailMap);
+                        var url =
+                            "https://ardentsportsapis.herokuapp.com/createMultipleTournament";
+
+                        try {
+                          var response = await post(Uri.parse(url),
+                              headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                              },
+                              body: json,
+                              encoding: Encoding.getByName("utf-8"));
+                          Map<String, dynamic> jsonData =
+                              jsonDecode(response.body);
+                          debugPrint('Response body:$json');
+                          print(jsonData["TOURNAMENT_ID"]);
+                          tournament_id_arr =
+                              jsonData["TOURNAMENT_ID"].toString().split(',');
+                          if (response.statusCode == 200) {
+                            EasyLoading.dismiss();
+                            Get.to(CreateChallengeTicket(
+                              Tournament_ID: tournament_id_arr,
+                              CategorieNames: widget.AllCategoryDetails,
+                            ));
+                            EasyLoading.dismiss();
+                          } else {
+                            EasyLoading.dismiss();
+                            EasyLoading.showError(
+                                "Error in Tournament Creation");
+                          }
+                        } catch (e) {
+                          print(e);
+                          EasyLoading.showError(e.toString());
+                          EasyLoading.dismiss();
+                        }
+                      },
+                child: Text("Create Tournament",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold))),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  padding: EdgeInsets.fromLTRB(
+                      deviceWidth * 0.04,
+                      deviceWidth * 0.02,
+                      deviceWidth * 0.04,
+                      deviceWidth * 0.02),
+                ),
+                child: Text("Make Payment",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+                onPressed: isPaymentDone == true
+                    ? null
+                    : () {
+                        _getorderId('2');
+                      }),
+            const SizedBox(
+              height: 20,
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   _getorderId(String amount) async {
