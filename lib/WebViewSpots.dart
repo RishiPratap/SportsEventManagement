@@ -36,7 +36,8 @@ class _WebViewSpotsState extends State<WebViewSpots> {
                 print(message.message);
               }),
         ].toSet(),
-        initialUrl: 'http://44.202.65.121:443/?no_of_spots=${widget.spots}',
+        initialUrl:
+            'https://ardentsportsapis.herokuapp.com/?no_of_spots=${widget.spots}',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

@@ -3,7 +3,10 @@
 import 'dart:convert';
 import 'package:ardent_sports/LiveMaintainerMatchSelection.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
@@ -70,17 +73,46 @@ class Score_LiveMaintainer {
   }
 }
 
+class WalkOver {
+  WalkOver({
+    required this.TOURNAMENTID,
+    required this.MATCHID,
+    required this.WINNER_ID,
+  });
+  late final String TOURNAMENTID;
+  late final String MATCHID;
+  late final String WINNER_ID;
+
+  WalkOver.fromJson(Map<String, dynamic> json) {
+    TOURNAMENTID = json['TOURNAMENT_ID'];
+    MATCHID = json['MATCHID'];
+    WINNER_ID = json['WINNNER_ID'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "TOURNAMENT_ID": this.TOURNAMENTID,
+      "MATCHID": this.MATCHID,
+      "WINNER_ID": this.WINNER_ID,
+    };
+  }
+}
+
 class LiveMaintainer extends StatefulWidget {
   final String Tournament_ID;
   final String Match_Id;
   final String Player_1_name;
   final String Player_2_name;
+  final String Player1_ID;
+  final String Player2_ID;
   const LiveMaintainer(
       {Key? key,
       required this.Tournament_ID,
       required this.Match_Id,
       required this.Player_1_name,
-      required this.Player_2_name})
+      required this.Player_2_name,
+      required this.Player1_ID,
+      required this.Player2_ID})
       : super(key: key);
   @override
   LiveMaintainer1 createState() => LiveMaintainer1();
@@ -111,6 +143,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
   }
 
   Widget build(BuildContext context) {
+    print("Player 1 ID: " + widget.Player1_ID);
     return WillPopScope(
       onWillPop: () {
         showDialog(
@@ -165,7 +198,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                   children: [
                     Center(
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
+                        height: MediaQuery.of(context).size.height * 0.55,
                         width: MediaQuery.of(context).size.width * 0.95,
                         margin: EdgeInsets.only(
                             top: MediaQuery.of(context).size.height * 0.08),
@@ -267,7 +300,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                         Player_2_name: widget
                                                             .Player_2_name,
                                                       );
-                                                      ;
                                                     });
                                               },
                                             ),
@@ -514,6 +546,247 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                         style: TextStyle(fontSize: 20),
                                       ),
                                     ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffD15858),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      20.0),
+                                            ),
+                                          ),
+                                          child: Text("Walk Over Player 1"),
+                                          onPressed: () async {
+                                            showDialog(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                      title:
+                                                          Text("Confirmation"),
+                                                      content: Text(
+                                                          "${widget.Player_1_name} will be declared as Winner!"),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(ctx)
+                                                                .pop();
+                                                          },
+                                                          child: Text(
+                                                            "Cancel",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            const url =
+                                                                'https://ardentsportsapis.herokuapp.com/walkover';
+
+                                                            final walkOver = WalkOver(
+                                                                MATCHID: widget
+                                                                    .Match_Id,
+                                                                WINNER_ID: widget
+                                                                    .Player1_ID,
+                                                                TOURNAMENTID: widget
+                                                                    .Tournament_ID);
+
+                                                            final walkOverMap =
+                                                                walkOver
+                                                                    .toMap();
+                                                            final json =
+                                                                jsonEncode(
+                                                                    walkOverMap);
+                                                            EasyLoading.show(
+                                                                status:
+                                                                    'loading...',
+                                                                maskType:
+                                                                    EasyLoadingMaskType
+                                                                        .black);
+                                                            var response = await post(
+                                                                Uri.parse(url),
+                                                                headers: {
+                                                                  "Content-Type":
+                                                                      "application/json",
+                                                                  "Accept":
+                                                                      "application/json",
+                                                                },
+                                                                body: json,
+                                                                encoding: Encoding
+                                                                    .getByName(
+                                                                        "utf-8"));
+
+                                                            final jsonResponse =
+                                                                jsonDecode(
+                                                                    response
+                                                                        .body);
+
+                                                            if (jsonResponse[
+                                                                    'Message'] ==
+                                                                'Success') {
+                                                              EasyLoading
+                                                                  .dismiss();
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            LiveMaintainerMatchSelection(
+                                                                              Tournament_id: widget.Tournament_ID,
+                                                                            )),
+                                                              );
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                msg:
+                                                                    "${widget.Player_1_name} has been declared as winner",
+                                                              );
+                                                            } else {
+                                                              EasyLoading
+                                                                  .dismiss();
+                                                              Navigator.pop(
+                                                                  context);
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Failed to do Walk Over");
+                                                            }
+                                                          },
+                                                          child: Text(
+                                                            "Yes",
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                        )
+
+                                                        // },
+                                                      ],
+                                                    ));
+                                          }),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffD15858),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      20.0),
+                                            ),
+                                          ),
+                                          child: Text("Walk Over Player 2"),
+                                          onPressed: () async {
+                                            showDialog(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                      title:
+                                                          Text("Confirmation"),
+                                                      content: Text(
+                                                          "${widget.Player_2_name} will be declared as Winner!"),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(ctx)
+                                                                .pop();
+                                                          },
+                                                          child: Text(
+                                                            "Cancel",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            const url =
+                                                                'https://ardentsportsapis.herokuapp.com/walkover';
+
+                                                            final walkOver = WalkOver(
+                                                                MATCHID: widget
+                                                                    .Match_Id,
+                                                                WINNER_ID: widget
+                                                                    .Player2_ID,
+                                                                TOURNAMENTID: widget
+                                                                    .Tournament_ID);
+
+                                                            final walkOverMap =
+                                                                walkOver
+                                                                    .toMap();
+                                                            final json =
+                                                                jsonEncode(
+                                                                    walkOverMap);
+                                                            EasyLoading.show(
+                                                                status:
+                                                                    'loading...',
+                                                                maskType:
+                                                                    EasyLoadingMaskType
+                                                                        .black);
+                                                            var response = await post(
+                                                                Uri.parse(url),
+                                                                headers: {
+                                                                  "Content-Type":
+                                                                      "application/json",
+                                                                  "Accept":
+                                                                      "application/json",
+                                                                },
+                                                                body: json,
+                                                                encoding: Encoding
+                                                                    .getByName(
+                                                                        "utf-8"));
+
+                                                            final jsonResponse =
+                                                                jsonDecode(
+                                                                    response
+                                                                        .body);
+
+                                                            if (jsonResponse[
+                                                                    'Message'] ==
+                                                                'Success') {
+                                                              EasyLoading
+                                                                  .dismiss();
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            LiveMaintainerMatchSelection(
+                                                                              Tournament_id: widget.Tournament_ID,
+                                                                            )),
+                                                              );
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                msg:
+                                                                    "${widget.Player_2_name} has been declared as winner",
+                                                              );
+                                                            } else {
+                                                              EasyLoading
+                                                                  .dismiss();
+                                                              Navigator.pop(
+                                                                  context);
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Failed to do Walk Over");
+                                                            }
+                                                          },
+                                                          child: Text(
+                                                            "Yes",
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                        )
+
+                                                        // },
+                                                      ],
+                                                    ));
+                                          }),
+                                    ],
                                   )
                                 ],
                               )
@@ -705,6 +978,8 @@ class _Editbutton1State extends State<Editbutton1> {
                             Match_Id: widget.Match_Id,
                             Player_1_name: widget.Player_1_name,
                             Player_2_name: widget.Player_2_name,
+                            Player1_ID: "",
+                            Player2_ID: "",
                           ),
                         ),
                       );
@@ -920,6 +1195,8 @@ class _Editbutton2State extends State<Editbutton2> {
                             Match_Id: widget.Match_Id,
                             Player_1_name: widget.Player_1_name,
                             Player_2_name: widget.Player_2_name,
+                            Player1_ID: "",
+                            Player2_ID: "",
                           ),
                         ),
                       );
@@ -1130,6 +1407,8 @@ class _Editbutton3State extends State<Editbutton3> {
                               Match_Id: widget.Match_Id,
                               Player_1_name: widget.Player_1_name,
                               Player_2_name: widget.Player_2_name,
+                              Player1_ID: "",
+                              Player2_ID: "",
                             ),
                           ),
                         ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
@@ -1189,6 +1468,20 @@ class Submit extends StatefulWidget {
 }
 
 class _SubmitState extends State<Submit> {
+  final controller = ConfettiController(duration: const Duration(seconds: 1));
+  bool isPlaying = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+
+    controller.addListener(() => setState(() {
+          isPlaying = controller.state == ConfettiControllerState.playing;
+        }));
+  }
+
   @override
   Map? UserResponse;
   String? x;
@@ -1378,82 +1671,92 @@ class _SubmitState extends State<Submit> {
                                         Container(
                                           width: 125,
                                           height: 240,
-                                          child: Card(
-                                            elevation: 5,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            color:
-                                                Colors.white.withOpacity(0.2),
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: 112,
-                                                  height: 60,
-                                                  child: Card(
-                                                    elevation: 5,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8)),
-                                                    color: Color(0xff252626),
-                                                    child: Center(
-                                                      child: Text(
-                                                          "${widget.p2_name}"),
+                                          child: ConfettiWidget(
+                                            confettiController: controller,
+                                            shouldLoop: false,
+                                            blastDirection: -3.14 / 2,
+                                            blastDirectionality:
+                                                BlastDirectionality.explosive,
+                                            numberOfParticles: 40,
+                                            gravity: 0.1,
+                                            child: Card(
+                                              elevation: 5,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              color:
+                                                  Colors.white.withOpacity(0.2),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: 112,
+                                                    height: 60,
+                                                    child: Card(
+                                                      elevation: 5,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                      color: Color(0xff252626),
+                                                      child: Center(
+                                                        child: Text(
+                                                            "${widget.p2_name}"),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  height: 16,
-                                                ),
-                                                Center(
-                                                  child: Text(
-                                                    "$score_1_second",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 25.0,
+                                                  SizedBox(
+                                                    height: 16,
+                                                  ),
+                                                  Center(
+                                                    child: Text(
+                                                      "$score_1_second",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 25.0,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Center(
-                                                  child: Text(
-                                                    "$score_2_second",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 25.0,
+                                                  SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  Center(
+                                                    child: Text(
+                                                      "$score_2_second",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 25.0,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Center(
-                                                  child: Text(
-                                                    "$score_3_second",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 25.0,
+                                                  SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  Center(
+                                                    child: Text(
+                                                      "$score_3_second",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 25.0,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1475,6 +1778,12 @@ class _SubmitState extends State<Submit> {
                                           ),
                                         ),
                                         onPressed: () async {
+                                          if (isPlaying) {
+                                            controller.stop();
+                                          } else {
+                                            controller.play();
+                                          }
+
                                           var url =
                                               "https://ardentsportsapis.herokuapp.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
 

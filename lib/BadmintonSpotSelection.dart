@@ -1,6 +1,6 @@
 // ignore: file_names
 // ignore: camel_case_types
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
 import 'dart:convert';
@@ -9,6 +9,8 @@ import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:ardent_sports/WebViewSpots.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:http/http.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +73,18 @@ class SpotClickedDetails {
       "btnID": this.index,
       "USERID": this.USER
     };
+  }
+}
+
+class Prize {
+  late String gold;
+  late String silver;
+  late String bronze;
+
+  Prize({required this.gold, required this.silver, required this.bronze});
+
+  Map<String, dynamic> toMap() {
+    return {"gold": this.gold, "silver": this.silver, "bronze": this.bronze};
   }
 }
 
@@ -419,6 +433,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
       socket.emit('join-booking', json_tournamentid);
     }
 
+    _getPrize();
+
     super.initState();
   }
 
@@ -456,33 +472,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                           "<",
                           style: TextStyle(color: Colors.white, fontSize: 35),
                         )),
-                    // Container(
-                    //   width: deviceWidth * 0.3,
-                    //   height: deviceWidth * 0.07,
-                    //   child: ElevatedButton(
-                    //       style: ElevatedButton.styleFrom(
-                    //         backgroundColor: Color(0xffD15858),
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius:
-                    //               BorderRadius.circular(deviceWidth * 0.01),
-                    //         ),
-                    //       ),
-                    //       onPressed: () {
-                    //         Navigator.push(
-                    //             context,
-                    //             PageTransition(
-                    //                 type:
-                    //                     PageTransitionType.rightToLeftWithFade,
-                    //                 child: WebViewSpots(
-                    //                   spots: "${widget.spots}",
-                    //                 )));
-                    //       },
-                    //       child: Text(
-                    //         "Fixtures",
-                    //         style: TextStyle(
-                    //             fontSize: 14, fontWeight: FontWeight.bold),
-                    //       )),
-                    // ),
                     TextButton(
                         onPressed: () {},
                         child: Text(
@@ -645,6 +634,37 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           ),
         ),
       );
+
+  var prizepool;
+  var prizepool2;
+  var prizepool3;
+
+  _getPrize() async {
+    EasyLoading.show(status: 'loading...', maskType: EasyLoadingMaskType.black);
+
+    var url = Uri.parse(
+        'https://ardentsportsapis.herokuapp.com/prizeMoney?TOURNAMENT_ID=${widget.tourneyId}');
+
+    var response = await get(url);
+
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      EasyLoading.dismiss();
+      setState(() {
+        prizepool = jsonData['GOLD'];
+        print(prizepool);
+        prizepool2 = jsonData['SILVER'];
+        print(prizepool2);
+        prizepool3 = jsonData['BRONZE'];
+        print(prizepool3);
+      });
+    } else {
+      EasyLoading.dismiss();
+      EasyLoading.showError('Something went wrong');
+    }
+  }
+
   Widget buildAvailableSpotsCard(double deviceWidth) => Card(
         elevation: 10,
         color: Colors.white.withOpacity(0.1),
@@ -832,9 +852,159 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               ),
             ),
             SizedBox(
-              height: deviceWidth * 0.02,
+              height: 20,
+            ),
+            Center(
+              child: Container(
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffD15858),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.01),
+                      ),
+                    ),
+                    onPressed: () {
+                      showSheet();
+                    },
+                    child: Text(
+                      "Show Prize Money",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
+              ),
+            ),
+            SizedBox(
+              height: 20,
             ),
           ],
         ),
       );
+
+  void showSheet() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+        ),
+        context: context,
+        builder: (BuildContext bc) {
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              Image(
+                image: AssetImage("assets/PrizeBackGround.png"),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 20,
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Text(
+                      "Gold",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    height: 70,
+                    width: 299,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset(
+                            'assets/GoldTrophy.png',
+                          ),
+                          Image.asset('assets/cross shape.png'),
+                          Text("₹ $prizepool",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20)),
+                        ]),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 20,
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                        color: Color(0xffCECECE),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Text(
+                      "Silver",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    height: 70,
+                    width: 299,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset(
+                            'assets/silver-cup 1.png',
+                          ),
+                          Image.asset('assets/cross shape.png'),
+                          Text("₹ $prizepool2",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20)),
+                        ]),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 20,
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                        color: Color(0xffCD7F32),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Text(
+                      "Bronze",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    height: 70,
+                    width: 299,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset(
+                            'assets/BronzeTrophy.png',
+                          ),
+                          Image.asset('assets/cross shape.png'),
+                          Text("₹ $prizepool3",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20)),
+                        ]),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
+  }
 }

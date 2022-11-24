@@ -22,6 +22,8 @@ class MatchesData {
   late String TOURNAMENT_ID;
   late String PLAYER1_NAME;
   late String PLAYER2_NAME;
+  late String PLAYER1_ID;
+  late String PLAYER2_ID;
   late String MATCHID;
   late String SPORT_NAME;
   late String LOCATION;
@@ -29,10 +31,13 @@ class MatchesData {
   late String TOURNAMENT_NAME;
   late String IMG_URL;
   late String PRIZE_POOL;
+
   MatchesData(
     this.TOURNAMENT_ID,
     this.PLAYER1_NAME,
     this.PLAYER2_NAME,
+    this.PLAYER1_ID,
+    this.PLAYER2_ID,
     this.MATCHID,
     this.SPORT_NAME,
     this.LOCATION,
@@ -46,6 +51,8 @@ class MatchesData {
     TOURNAMENT_ID = json['TOURNAMENT_ID'];
     PLAYER1_NAME = json['PLAYER1_NAME'];
     PLAYER2_NAME = json['PLAYER2_NAME'];
+    PLAYER1_ID = json['PLAYER1_ID'];
+    PLAYER2_ID = json['PLAYER2_ID'];
     MATCHID = json['MATCHID'];
     SPORT_NAME = json['SPORT_NAME'];
     LOCATION = json['LOCATION'];
@@ -315,6 +322,8 @@ class _LiveMaintainerMatchSelectionState
                                             matchesdata[i].PLAYER1_NAME,
                                         Player_2_name:
                                             matchesdata[i].PLAYER2_NAME,
+                                        Player1_ID: matchesdata[i].PLAYER1_ID,
+                                        Player2_ID: matchesdata[i].PLAYER2_ID,
                                       )));
                         },
                         child: Text("Start Scoring >",
@@ -349,43 +358,6 @@ class _LiveMaintainerMatchSelectionState
     }
     return AllMatches;
   }
-
-  Map? mapUserInfo;
-  Map? mapUserInfo2;
-
-  // Future _getDetails2() async {
-  //   var name2 = matchesData2?.PLAYER2_NAME;
-
-  //   final uri = 'http://44.202.65.121:443/userDetails?USERID=${name2}';
-
-  //   http.Response response;
-
-  //   response = await http.get(Uri.parse(uri));
-
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       mapUserInfo2 = json.decode(response.body);
-  //     });
-  //   }
-  // }
-
-  // Future _getDetails() async {
-  //   // final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   // var email = prefs.getString('email');
-
-  //   var name1 = matchesData2?.PLAYER1_NAME;
-  //   final uri = 'http://44.202.65.121:443/userDetails?USERID=${name1}';
-
-  //   http.Response response;
-
-  //   response = await http.get(Uri.parse(uri));
-
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       mapUserInfo = json.decode(response.body);
-  //     });
-  //   }
-  // }
 
   getAllHostedMatches() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

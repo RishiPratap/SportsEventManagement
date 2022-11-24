@@ -496,8 +496,6 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 ),
-
-                                //one min
                               ],
                             ));
                     EasyLoading.dismiss();

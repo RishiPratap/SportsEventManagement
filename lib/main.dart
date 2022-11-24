@@ -32,10 +32,13 @@ class MyApp extends StatelessWidget {
         '/': (context) => login(),
         '/homePage': (context) => HomePage(),
         '/live': (context) => LiveMaintainer(
-            Tournament_ID: '',
-            Match_Id: '',
-            Player_1_name: '',
-            Player_2_name: ''),
+              Tournament_ID: '',
+              Match_Id: '',
+              Player_1_name: '',
+              Player_2_name: '',
+              Player1_ID: '',
+              Player2_ID: '',
+            ),
         // '/scoreChallenge': (context) => ScoreAChallenge()
       },
     );

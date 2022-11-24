@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/LiveMaintainer.dart';
 import 'package:ardent_sports/Payment.dart';
@@ -48,6 +49,17 @@ class _loginState extends State<login> {
       }
     });
   }
+
+  // BadmintonSpotSelection(
+  //                     Address: '',
+  //                     Date: '',
+  //                     Organiser_Name: '',
+  //                     spots: 8,
+  //                     sport: '',
+  //                     tourneyId: '',
+  //                     Organiser_Number: '',
+  //                     subTournamentType: '',
+  //                   )
 
   final emaild = TextEditingController();
   final password = TextEditingController();

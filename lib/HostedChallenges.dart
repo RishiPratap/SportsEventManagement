@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
-import 'package:ardent_sports/BadmintonSpotSelection.dart';
+
 import 'package:ardent_sports/WebViewTournamentDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +15,7 @@ import 'HomePage.dart';
 import 'PastHostedChallenges.dart';
 
 class HostedChallenges extends StatefulWidget {
-  const HostedChallenges({Key? key}) : super(key: key);
+  HostedChallenges({Key? key}) : super(key: key);
 
   @override
   State<HostedChallenges> createState() => _HostedChallengesState();
@@ -89,10 +89,33 @@ class UserData {
   }
 }
 
+class Rules {
+  Rules({
+    required this.TOURNAMENTID,
+    required this.RULES,
+  });
+  late final String TOURNAMENTID;
+  late final String RULES;
+
+  Rules.fromJson(Map<String, dynamic> json) {
+    TOURNAMENTID = json['TOURNAMENT_ID'];
+    RULES = json['RULES'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "TOURNAMENT_ID": this.TOURNAMENTID,
+      "RULES": this.RULES,
+    };
+  }
+}
+
 class _HostedChallengesState extends State<HostedChallenges> {
   var futures;
   var futures_past_hosted_challenges;
   List<Card> AllTournaments = [];
+
+  var tourneyID;
 
   List<Card> getHostedTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -105,6 +128,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     } else {
       for (int i = array_length - 1; i >= 0; i--) {
         // bool isStarted = userdata[i].STATUS;
+        tourneyID = userdata[i].TOURNAMENT_ID;
         var card = Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(deviceWidth * 0.03),
@@ -200,42 +224,34 @@ class _HostedChallengesState extends State<HostedChallenges> {
                 height: deviceWidth * 0.018,
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.06,
+                height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(deviceWidth * 0.018),
                   ),
-                  elevation: 1,
-                  color: Colors.transparent.withOpacity(0.2),
-                  child: Container(
+                  elevation: 2,
+                  color: Color.fromRGBO(0, 0, 0, 0).withOpacity(0.2),
+                  child: SizedBox(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                            child: Text(
-                              "Category",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "V",
-                              style: TextStyle(
-                                fontSize: deviceWidth * 0.04,
-                                color: Color(0xffE74545),
-                              ),
-                            )),
-                        Container(
                             margin: EdgeInsets.only(right: deviceWidth * 0.07),
-                            child: Text(
-                              "Spots Left",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    userdata[i].SPORT == 'Badminton'
+                                        ? Color(0xff6BB8FF)
+                                        : Color(0xff03C289),
+                              ),
+                              onPressed: () => _showSheet(),
+                              child: Text(
+                                "Add/Edit Rules ",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ))
                       ],
                     ),
@@ -318,7 +334,6 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   ),
                 ],
               ),
-
               TextButton.icon(
                 onPressed: () {
                   Clipboard.setData(
@@ -341,90 +356,86 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       fontWeight: FontWeight.w800),
                 ),
               ),
-
-              // InkWell(
-              //   onTap: () {
-              //     Clipboard.setData(
-              //             ClipboardData(text: userdata[i].TOURNAMENT_ID))
-              //         .then((value) =>
-              //             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              //               content: Text("Copied to Clipboard"),
-              //               duration: Duration(seconds: 1),
-              //             )));
-              //   },
-              //   child: Text(
-              //     "TournamentID:${userdata[i].TOURNAMENT_ID}",
-              //     style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: deviceWidth * 0.03,
-              //         fontWeight: FontWeight.w800),
-              //   ),
-
-              // ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
-                    ),
-                  ),
-                  onPressed: userdata[i].STATUS == true
-                      ? () async {
-                          final url =
-                              "https://ardentsportsapis.herokuapp.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-                          EasyLoading.show(
-                              status: 'Starting',
-                              maskType: EasyLoadingMaskType.black);
-                          var response = await get(Uri.parse(url));
-                          if (response.statusCode == 200) {
-                            EasyLoading.dismiss();
-                            const msg = 'Tournament has Successfully Started!';
-                            Fluttertoast.showToast(msg: msg);
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Failed to start Tournament");
-                          }
-
-                          if (userdata[i].STATUS == false) {
-                            const msg = 'Tournament has Already Started!';
-                            Fluttertoast.showToast(msg: msg);
-                          }
-                        }
-                      : null,
-                  child: Text("Start Challenge")),
-
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WebViewTournamentDetails(
-                                  Tournament_Id: userdata[i].TOURNAMENT_ID,
-                                )));
-                  },
-                  child: Container(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     width: MediaQuery.of(context).size.width * 0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.red,
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 15),
-                      child: Text(
-                        "Details",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                  )),
-              IconButton(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: userdata[i].STATUS == true
+                            ? () async {
+                                final url =
+                                    "https://ardentsportsapis.herokuapp.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                                EasyLoading.show(
+                                    status: 'Starting',
+                                    maskType: EasyLoadingMaskType.black);
+                                var response = await get(Uri.parse(url));
+                                if (response.statusCode == 200) {
+                                  EasyLoading.dismiss();
+                                  const msg =
+                                      'Tournament has Successfully Started!';
+                                  Fluttertoast.showToast(msg: msg);
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Failed to start Tournament");
+                                }
+
+                                if (userdata[i].STATUS == false) {
+                                  const msg = 'Tournament has Already Started!';
+                                  Fluttertoast.showToast(msg: msg);
+                                }
+                              }
+                            : null,
+                        child: Text(
+                          "Start Challenge",
+                          style: TextStyle(fontSize: 12),
+                        )),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WebViewTournamentDetails(
+                                      Tournament_Id: userdata[i].TOURNAMENT_ID,
+                                    )));
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.red,
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 15),
+                          child: Text(
+                            "Details",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                      )),
+                ],
+              ),
+              TextButton.icon(
                 icon: Icon(
                   Icons.download,
                   color: Colors.red,
+                ),
+                label: Text(
+                  "Download",
+                  style: TextStyle(color: Colors.red),
                 ),
                 onPressed: () {
                   final Uri toLaunch = Uri(
@@ -444,7 +455,102 @@ class _HostedChallengesState extends State<HostedChallenges> {
         AllTournaments.add(card);
       }
     }
+
     return AllTournaments;
+  }
+
+  final rulesController = TextEditingController();
+
+  void _showSheet() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+        ),
+        context: context,
+        builder: (BuildContext bc) {
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(bc).size.height * 0.035,
+                ),
+                Text(
+                  "Enter Tournament Rules",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  controller: rulesController,
+                  maxLines: 5,
+                  maxLength: 500,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter your rules here',
+                    hintStyle: TextStyle(
+                      fontSize: 15,
+                    ),
+                    hintText:
+                        " Tournament Rules: \n 1.Umpire decision will be final.\n 2.Mavis 350 Shuttles will be used.",
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ValueListenableBuilder<TextEditingValue>(
+                  valueListenable: rulesController,
+                  builder: ((context, value, child) {
+                    return ElevatedButton(
+                      onPressed: value.text.isNotEmpty
+                          ? () {
+                              showSheet();
+                            }
+                          : null,
+                      child: Text("Add Rules"),
+                    );
+                  }),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  void showSheet() async {
+    final rules = Rules(RULES: rulesController.text, TOURNAMENTID: tourneyID);
+    final rulesMap = rules.toMap();
+    final json = jsonEncode(rulesMap);
+
+    EasyLoading.show(
+        status: 'Adding Rules', maskType: EasyLoadingMaskType.black);
+    var response =
+        await post(Uri.parse("https://ardentsportsapis.herokuapp.com/rules"),
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            },
+            body: json,
+            encoding: Encoding.getByName("utf-8"));
+
+    final jsonResponse = jsonDecode(response.body);
+
+    if (jsonResponse['Message'] == 'Success') {
+      EasyLoading.dismiss();
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Rules Added Successfully");
+    } else {
+      EasyLoading.dismiss();
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Failed to add Rules");
+    }
   }
 
   getAllHostedTournaments() async {
@@ -471,7 +577,8 @@ class _HostedChallengesState extends State<HostedChallenges> {
   getAllPastHostedTournaments() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
-    var url = "http://44.202.65.121:443/pastTournaments?USERID=$obtianedEmail";
+    var url =
+        "https://ardentsportsapis.herokuapp.com/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
@@ -508,6 +615,8 @@ class _HostedChallengesState extends State<HostedChallenges> {
     }
   }
 
+  final scaffoldState = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     bool isStarted = false;
@@ -520,6 +629,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
         return false;
       },
       child: Scaffold(
+        key: scaffoldState,
         resizeToAvoidBottomInset: false,
         body: RefreshIndicator(
           onRefresh: () => _refreshScreen(),
@@ -539,32 +649,40 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   children: [
                     Row(
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: deviceWidth * 0.2,
-                              height: deviceHeight * 0.07,
-                              margin: EdgeInsets.fromLTRB(
-                                  0, deviceWidth * 0.03, 0, 0),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                image: AssetImage('assets/AARDENT_LOGO.png'),
-                                fit: BoxFit.cover,
-                              )),
-                            ),
-                            Container(
-                              width: deviceWidth * 0.2,
-                              height: deviceHeight * 0.08,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/Ardent_Sport_Text.png"),
-                                      fit: BoxFit.fitWidth)),
-                            ),
-                            Container(
-                              width: double.infinity,
-                            ),
-                          ],
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                width: deviceWidth * 0.2,
+                                height: deviceHeight * 0.07,
+                                margin: EdgeInsets.fromLTRB(
+                                    0, deviceWidth * 0.03, 0, 0),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                  image: AssetImage('assets/AARDENT_LOGO.png'),
+                                  fit: BoxFit.cover,
+                                )),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  width: deviceWidth * 0.2,
+                                  height: deviceHeight * 0.08,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/Ardent_Sport_Text.png"),
+                                          fit: BoxFit.fitWidth)),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  width: double.infinity,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
