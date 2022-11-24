@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'EventDetails.dart';
 
@@ -37,9 +38,11 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: deviceWidth * 0.2,
+                  height: deviceHeight * 0.15,
                 ),
                 Text(
                   "Create Competition",
@@ -47,11 +50,11 @@ class _CreateChallengeState extends State<CreateChallenge> {
                     color: Colors.white,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
-                    fontSize: deviceWidth * 0.05,
+                    fontSize: deviceWidth * 0.07,
                   ),
                 ),
                 SizedBox(
-                  height: deviceWidth * 0.02,
+                  height: deviceWidth * 0.03,
                 ),
                 buildCard(deviceWidth),
               ],
@@ -125,17 +128,32 @@ class _CreateChallengeState extends State<CreateChallenge> {
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(
-                    deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
-                child: Text(
-                  "Event Manager Detail",
-                  style: TextStyle(
-                    fontSize: deviceWidth * 0.05,
-                    fontWeight: FontWeight.w600,
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(
+                        deviceWidth * 0.03, 0, deviceWidth * 0.01, 0),
+                    child: Text(
+                      "Event Manager Detail",
+                      style: TextStyle(
+                        fontSize: deviceWidth * 0.05,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                      onPressed: () {
+                        EasyLoading.instance.displayDuration =
+                            Duration(milliseconds: 15000);
+                        EasyLoading.instance.radius = 15;
+                        EasyLoading.showInfo(
+                            "The event manager details will be displayed to all the players",
+                            dismissOnTap: true);
+                      },
+                      icon: Icon(Icons.info)),
+                ],
               ),
+
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
@@ -230,121 +248,124 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.all(deviceWidth * 0.04),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black.withOpacity(0.3),
-                ),
-                child: DropdownButtonFormField(
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please Select a Event';
-                    } else {
-                      return null;
-                    }
-                  },
-                  alignment: Alignment.bottomCenter,
-                  hint: Text("Event Type",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                      )),
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.red,
-                  ),
-                  value: SelectedEvent,
-                  items: Event.map((value) => DropdownMenuItem(
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 15),
-                        ),
-                        value: value,
-                      )).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      SelectedEvent = value as String;
-                    });
-                  },
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      hintText: "Event Type",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-                      )),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(
-                    deviceWidth * 0.03, 10, deviceWidth * 0.03, 0),
-                child: Text(
-                  "Event Type",
-                  style: TextStyle(
-                      fontSize: deviceWidth * 0.05,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.all(deviceWidth * 0.04),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(20),
+              //     color: Colors.black.withOpacity(0.3),
+              //   ),
+              //   child: DropdownButtonFormField(
+              //     validator: (value) {
+              //       if (value == null) {
+              //         return 'Please Select a Event';
+              //       } else {
+              //         return null;
+              //       }
+              //     },
+              //     alignment: Alignment.bottomCenter,
+              //     hint: Text("Event Type",
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           fontStyle: FontStyle.normal,
+              //         )),
+              //     icon: Icon(
+              //       Icons.arrow_drop_down,
+              //       color: Colors.red,
+              //     ),
+              //     value: SelectedEvent,
+              //     items: Event.map((value) => DropdownMenuItem(
+              //           child: Text(
+              //             value,
+              //             style: TextStyle(
+              //                 color: Colors.white,
+              //                 fontStyle: FontStyle.normal,
+              //                 fontSize: 15),
+              //           ),
+              //           value: value,
+              //         )).toList(),
+              //     onChanged: (value) {
+              //       setState(() {
+              //         SelectedEvent = value as String;
+              //       });
+              //     },
+              //     style: TextStyle(color: Colors.white),
+              //     decoration: InputDecoration(
+              //         enabledBorder: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(20),
+              //           borderSide: BorderSide(
+              //             color: Colors.black.withOpacity(0.3),
+              //           ),
+              //         ),
+              //         focusedBorder: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+              //           borderSide: BorderSide(
+              //             color: Colors.black,
+              //           ),
+              //         ),
+              //         hintText: "Event Type",
+              //         border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(deviceWidth * 0.06),
+              //         )),
+              //   ),
+              // ),
+              // Container(
+              //   margin: EdgeInsets.fromLTRB(
+              //       deviceWidth * 0.03, 10, deviceWidth * 0.03, 0),
+              //   child: Text(
+              //     "Event Type",
+              //     style: TextStyle(
+              //         fontSize: deviceWidth * 0.05,
+              //         fontWeight: FontWeight.w600),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: deviceWidth * 0.02,
+              // ),
+              // Container(
+              //   margin: EdgeInsets.fromLTRB(
+              //       deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
+              //   child: Card(
+              //     color: Colors.black.withOpacity(0.3),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         SizedBox(
+              //           height: deviceWidth * 0.04,
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.fromLTRB(
+              //               deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
+              //           child: Text(
+              //             "Fixed Event: Prize Money is fixed irrespective of the number of players joining the challenge.",
+              //             style: TextStyle(
+              //                 color: Colors.white,
+              //                 fontSize: deviceWidth * 0.04,
+              //                 fontWeight: FontWeight.w400),
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           height: deviceWidth * 0.02,
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.fromLTRB(
+              //               deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
+              //           child: Text(
+              //             "Dynamic Event:Prize money increases with increase in number of players joining the challenge.",
+              //             style: TextStyle(
+              //                 color: Colors.white,
+              //                 fontSize: deviceWidth * 0.04,
+              //                 fontWeight: FontWeight.w400),
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           height: deviceWidth * 0.02,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SizedBox(
-                height: deviceWidth * 0.02,
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(
-                    deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
-                child: Card(
-                  color: Colors.black.withOpacity(0.3),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: deviceWidth * 0.04,
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(
-                            deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
-                        child: Text(
-                          "Fixed Event: Prize Money is fixed irrespective of the number of players joining the challenge.",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: deviceWidth * 0.04,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      SizedBox(
-                        height: deviceWidth * 0.02,
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(
-                            deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
-                        child: Text(
-                          "Dynamic Event:Prize money increases with increase in number of players joining the challenge.",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: deviceWidth * 0.04,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      SizedBox(
-                        height: deviceWidth * 0.02,
-                      ),
-                    ],
-                  ),
-                ),
+                height: deviceWidth * 0.03,
               ),
               Container(
                 width: deviceWidth * 0.8,
@@ -359,23 +380,22 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   ),
                   onPressed: () {
                     if (SelectedSport == null ||
-                        SelectedEvent == null ||
                         EventManagerNameController.text.isEmpty ||
                         MobileNumberController.text.isEmpty) {
                       final msg = "All Fields are Mandatory";
                       Fluttertoast.showToast(msg: msg);
                     } else {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EventDetails(
-                                    SportName: SelectedSport,
-                                    EventManagerName:
-                                        EventManagerNameController.text,
-                                    EventManagerMobileNo:
-                                        MobileNumberController.text,
-                                    EventType: SelectedEvent as String,
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EventDetails(
+                            SportName: SelectedSport,
+                            EventManagerName: EventManagerNameController.text,
+                            EventManagerMobileNo: MobileNumberController.text,
+                            EventType: "Fixed",
+                          ),
+                        ),
+                      );
                       print(SelectedEvent);
                       print(SelectedSport);
                     }

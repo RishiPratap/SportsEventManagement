@@ -241,7 +241,9 @@ class _HomePageState extends State<HomePage> {
                 child: ExpansionTile(
                   trailing: Icon(
                     Icons.arrow_drop_down_circle,
-                    color: Colors.blue,
+                    color: userdata[i].SPORT == 'Badminton'
+                        ? Color(0xff6BB8FF)
+                        : Color(0xff03C289),
                   ),
                   // trailing: IconButton(
                   //   icon: Icon(Icons.arrow_drop_down_circle_rounded),
@@ -725,7 +727,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Container(
                             margin: EdgeInsets.only(right: deviceWidth * 0.05),
                             child: Align(
@@ -743,8 +745,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: deviceWidth * 0.083333,
                     ),
                     FutureBuilder(
                       future: futures,
