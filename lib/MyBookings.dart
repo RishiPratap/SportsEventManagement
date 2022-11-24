@@ -103,7 +103,7 @@ class _MyBookings extends State<MyBookings> {
     } else {
       for (int i = array_length - 1; i >= 0; i--) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.41,
+          height: MediaQuery.of(context).size.height * 0.35,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -137,7 +137,6 @@ class _MyBookings extends State<MyBookings> {
                           ? Color(0xff6BB8FF)
                           : Color(0xff03C289),
                       child: Container(
-                        margin: EdgeInsets.only(top: deviceWidth * 0.021),
                         child: Row(
                           children: [
                             SizedBox(
@@ -145,8 +144,8 @@ class _MyBookings extends State<MyBookings> {
                             ),
                             Container(
                               alignment: Alignment.center,
-                              height: deviceWidth * 0.1,
-                              width: deviceWidth * 0.1,
+                              height: deviceHeight * 0.09,
+                              width: deviceWidth * 0.09,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.transparent.withOpacity(0.6),
@@ -163,18 +162,19 @@ class _MyBookings extends State<MyBookings> {
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  userdata[i].TOURNAMENT_NAME.length >= 17
+                                  userdata[i].TOURNAMENT_NAME.length > 25
                                       ? userdata[i]
                                               .TOURNAMENT_NAME
-                                              .substring(0, 15) +
+                                              .substring(0, 25) +
                                           '...'
                                       : userdata[i].TOURNAMENT_NAME,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: deviceWidth * 0.027,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: deviceWidth * 0.035,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.black),
                                 ),
                                 SizedBox(
@@ -183,7 +183,7 @@ class _MyBookings extends State<MyBookings> {
                                 Text(
                                   userdata[i].CITY,
                                   style: TextStyle(
-                                    fontSize: deviceWidth * 0.027,
+                                    fontSize: deviceWidth * 0.035,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
@@ -198,50 +198,6 @@ class _MyBookings extends State<MyBookings> {
                 )),
                 SizedBox(
                   height: deviceWidth * 0.018,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.018),
-                    ),
-                    elevation: 1,
-                    color: Colors.transparent.withOpacity(0.2),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                              child: Text(
-                                "Category",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "V",
-                                style: TextStyle(
-                                  fontSize: deviceWidth * 0.04,
-                                  color: Color(0xffE74545),
-                                ),
-                              )),
-                          Container(
-                              margin:
-                                  EdgeInsets.only(right: deviceWidth * 0.07),
-                              child: Text(
-                                "Spots Left",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ))
-                        ],
-                      ),
-                    ),
-                  ),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.09,
@@ -373,7 +329,7 @@ class _MyBookings extends State<MyBookings> {
                           child: Text("Ticket >",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: deviceWidth * 0.03,
+                                  fontSize: deviceWidth * 0.035,
                                   fontWeight: FontWeight.bold)),
                         )),
                     Container(
@@ -400,7 +356,7 @@ class _MyBookings extends State<MyBookings> {
                         child: Text("View Fixtures >",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: deviceWidth * 0.03,
+                                fontSize: deviceWidth * 0.035,
                                 fontWeight: FontWeight.bold)),
                       ),
                     ),
