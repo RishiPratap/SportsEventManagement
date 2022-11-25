@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart';
 
 import 'LiveMaintainerMatchSelection.dart';
 import 'Menu.dart';
@@ -10,6 +15,16 @@ class ScoreAChallenge extends StatefulWidget {
 
   @override
   State<ScoreAChallenge> createState() => _ScoreAChallengeState();
+}
+
+class TournamentIdCheck {
+  late String TOURNAMENT_ID;
+  late String SPORT;
+
+  TournamentIdCheck({required this.TOURNAMENT_ID, required this.SPORT});
+  Map<String, dynamic> toMap() {
+    return {"TOURNAMENT_ID": this.TOURNAMENT_ID, "SPORT": this.SPORT};
+  }
 }
 
 class _ScoreAChallengeState extends State<ScoreAChallenge> {
@@ -311,7 +326,7 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                   borderRadius: new BorderRadius.circular(20.0),
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (sport_name == "Badminton" ||
                                     sport_name == "Table Tennis") {
                                   if (challengeid.text.isEmpty) {
@@ -321,14 +336,49 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                           Text("Please Enter the challenge ID"),
                                     ));
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LiveMaintainerMatchSelection(
-                                                  Tournament_id:
-                                                      challengeid.text,
-                                                )));
+                                    final TournamentIdCheckdata =
+                                        TournamentIdCheck(
+                                            TOURNAMENT_ID: challengeid.text,
+                                            SPORT: sport_name);
+                                    final TournamentIdCheckMap =
+                                        TournamentIdCheckdata.toMap();
+                                    final json =
+                                        jsonEncode(TournamentIdCheckMap);
+                                    var url =
+                                        "https://ardentsportsapis.herokuapp.com/tourney_exists";
+
+                                    try {
+                                      EasyLoading.show(
+                                          status: 'Loading...',
+                                          maskType: EasyLoadingMaskType.black);
+                                      var response = await post(Uri.parse(url),
+                                          headers: {
+                                            "Accept": "application/json",
+                                            "Content-Type": "application/json"
+                                          },
+                                          body: json,
+                                          encoding:
+                                              Encoding.getByName("utf-8"));
+                                      Map<String, dynamic> jsonData =
+                                          jsonDecode(response.body);
+                                      if (jsonData["Message"] == "Success") {
+                                        EasyLoading.dismiss();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LiveMaintainerMatchSelection(
+                                                      Tournament_id:
+                                                          challengeid.text,
+                                                    )));
+                                      } else {
+                                        EasyLoading.dismiss();
+                                        EasyLoading.showError(
+                                            "Invalid Challenge ID or sport selected");
+                                      }
+                                    } catch (e) {
+                                      print(e);
+                                    }
                                   }
                                 } else if (sport_name == "Cricket") {
                                   ScaffoldMessenger.of(context)
