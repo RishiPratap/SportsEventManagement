@@ -312,7 +312,8 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                 ),
                               ),
                               onPressed: () {
-                                if (sport_name == "Badminton") {
+                                if (sport_name == "Badminton" ||
+                                    sport_name == "Table Tennis") {
                                   if (challengeid.text.isEmpty) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
@@ -329,11 +330,6 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                                       challengeid.text,
                                                 )));
                                   }
-                                } else if (sport_name == "Table Tennis") {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Yet To be implemented"),
-                                  ));
                                 } else if (sport_name == "Cricket") {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
