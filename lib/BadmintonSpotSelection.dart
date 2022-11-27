@@ -420,7 +420,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   //http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/
   var futures;
   void initState() {
-    socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
+    socket = io("https://ardent-api.onrender.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
       "forceNew": true,
@@ -644,7 +644,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     EasyLoading.show(status: 'loading...', maskType: EasyLoadingMaskType.black);
 
     var url = Uri.parse(
-        'https://ardentsportsapis.herokuapp.com/prizeMoney?TOURNAMENT_ID=${widget.tourneyId}');
+        'https://ardent-api.onrender.com/prizeMoney?TOURNAMENT_ID=${widget.tourneyId}');
 
     var response = await get(url);
 

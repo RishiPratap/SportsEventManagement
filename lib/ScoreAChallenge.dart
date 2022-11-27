@@ -345,7 +345,7 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                     final json =
                                         jsonEncode(TournamentIdCheckMap);
                                     var url =
-                                        "https://ardentsportsapis.herokuapp.com/tourney_exists";
+                                        "https://ardent-api.onrender.com/tourney_exists";
 
                                     try {
                                       EasyLoading.show(

@@ -393,7 +393,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         onPressed: userdata[i].STATUS == true
                             ? () async {
                                 final url =
-                                    "https://ardentsportsapis.herokuapp.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                                    "https://ardent-api.onrender.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
                                 EasyLoading.show(
                                     status: 'Starting',
                                     maskType: EasyLoadingMaskType.black);
@@ -479,7 +479,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                 onPressed: () {
                   final Uri toLaunch = Uri(
                       scheme: 'https',
-                      host: "ardentsportsapis.herokuapp.com",
+                      host: "ardent-api.onrender.com",
                       path: "/download",
                       queryParameters: {
                         'TOURNAMENT_ID': userdata[i].TOURNAMENT_ID,
@@ -571,7 +571,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     EasyLoading.show(
         status: 'Adding Rules', maskType: EasyLoadingMaskType.black);
     var response =
-        await post(Uri.parse("https://ardentsportsapis.herokuapp.com/rules"),
+        await post(Uri.parse("https://ardent-api.onrender.com/rules"),
             headers: {
               "Content-Type": "application/json",
               "Accept": "application/json",
@@ -596,7 +596,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardentsportsapis.herokuapp.com/hostedTournaments?USERID=$obtianedEmail";
+        "https://ardent-api.onrender.com/hostedTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
@@ -617,7 +617,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardentsportsapis.herokuapp.com/pastTournaments?USERID=$obtianedEmail";
+        "https://ardent-api.onrender.com/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class servicewrapper {
   call_order_api(String amount) async {
     dynamic jsonresponse = "[]";
-    var url = 'https://ardentsportsapis.herokuapp.com/rzp_payment';
+    var url = 'https://ardent-api.onrender.com/rzp_payment';
     final body = {'amount': amount};
 
     // without header
