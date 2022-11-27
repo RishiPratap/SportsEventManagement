@@ -130,6 +130,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
         // bool isStarted = userdata[i].STATUS;
         tourneyID = userdata[i].TOURNAMENT_ID;
         var card = Card(
+          margin: EdgeInsets.all(deviceWidth * 0.04),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(deviceWidth * 0.03),
           ),
@@ -152,69 +153,79 @@ class _HostedChallengesState extends State<HostedChallenges> {
                     //           tourneyId: userdata[i].TOURNAMENT_ID,
                     //         )));
                   },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
-                    ),
-                    elevation: 20,
-                    color: userdata[i].SPORT == 'Badminton'
-                        ? Color(0xff6BB8FF)
-                        : Color(0xff03C289),
-                    child: Container(
-                      margin: EdgeInsets.only(top: deviceWidth * 0.021),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: deviceWidth * 0.03,
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: deviceWidth * 0.1,
-                            width: deviceWidth * 0.1,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.transparent.withOpacity(0.6),
-                                backgroundBlendMode: BlendMode.darken),
-                            child: Image(
-                              image: NetworkImage(userdata[i].IMG_URL),
-                              height: deviceWidth * 0.04,
-                              width: deviceWidth * 0.04,
-                              fit: BoxFit.cover,
+                  child: InkWell(
+                    onTap: () {
+                      EasyLoading.instance.displayDuration =
+                          Duration(milliseconds: 15000);
+                      EasyLoading.instance.radius = 15;
+                      EasyLoading.showInfo(
+                          "Tournament Name : ${userdata[i].TOURNAMENT_NAME}",
+                          dismissOnTap: true);
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                      ),
+                      elevation: 20,
+                      color: userdata[i].SPORT == 'Badminton'
+                          ? Color(0xff6BB8FF)
+                          : Color(0xff03C289),
+                      child: Container(
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: deviceWidth * 0.03,
                             ),
-                          ),
-                          SizedBox(
-                            width: deviceWidth * 0.04,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                userdata[i].TOURNAMENT_NAME.length >= 15
-                                    ? userdata[i]
-                                            .TOURNAMENT_NAME
-                                            .substring(0, 12) +
-                                        '...'
-                                    : userdata[i].TOURNAMENT_NAME,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: deviceWidth * 0.027,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black),
+                            Container(
+                              alignment: Alignment.center,
+                              height: deviceWidth * 0.1,
+                              width: deviceWidth * 0.1,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.transparent.withOpacity(0.6),
+                                  backgroundBlendMode: BlendMode.darken),
+                              child: Image(
+                                image: NetworkImage(userdata[i].IMG_URL),
+                                height: deviceWidth * 0.04,
+                                width: deviceWidth * 0.04,
+                                fit: BoxFit.cover,
                               ),
-                              SizedBox(
-                                height: deviceWidth * 0.01,
-                              ),
-                              Text(
-                                userdata[i].CITY,
-                                style: TextStyle(
-                                  fontSize: deviceWidth * 0.027,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: deviceWidth * 0.04,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  userdata[i].TOURNAMENT_NAME.length >= 25
+                                      ? userdata[i]
+                                              .TOURNAMENT_NAME
+                                              .substring(0, 25) +
+                                          '...'
+                                      : userdata[i].TOURNAMENT_NAME,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: deviceWidth * 0.035,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                SizedBox(
+                                  height: deviceWidth * 0.01,
+                                ),
+                                Text(
+                                  userdata[i].CITY,
+                                  style: TextStyle(
+                                    fontSize: deviceWidth * 0.035,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -325,12 +336,22 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       image: AssetImage("assets/Location.png"),
                     ),
                   ),
-                  Text(
-                    userdata[i].LOCATION.length > 20
-                        ? userdata[i].LOCATION.substring(0, 12) + '...'
-                        : userdata[i].LOCATION,
-                    style: TextStyle(
-                        color: Colors.white, fontSize: deviceWidth * 0.03),
+                  InkWell(
+                    onTap: () {
+                      EasyLoading.instance.displayDuration =
+                          Duration(milliseconds: 15000);
+                      EasyLoading.instance.radius = 15;
+                      EasyLoading.showInfo(
+                          "Tournament Address : ${userdata[i].LOCATION}",
+                          dismissOnTap: true);
+                    },
+                    child: Text(
+                      userdata[i].LOCATION.length > 20
+                          ? userdata[i].LOCATION.substring(0, 20) + '...'
+                          : userdata[i].LOCATION,
+                      style: TextStyle(
+                          color: Colors.white, fontSize: deviceWidth * 0.03),
+                    ),
                   ),
                 ],
               ),
@@ -393,39 +414,57 @@ class _HostedChallengesState extends State<HostedChallenges> {
                                 }
                               }
                             : null,
-                        child: Text(
-                          "Start Challenge",
-                          style: TextStyle(fontSize: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Text(
+                                "Start",
+                                style:
+                                    TextStyle(fontSize: deviceWidth * 0.0333),
+                              ),
+                            ),
+                            Center(
+                              child: Text(
+                                "Challenge",
+                                style:
+                                    TextStyle(fontSize: deviceWidth * 0.0333),
+                              ),
+                            ),
+                          ],
                         )),
                   ),
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => WebViewTournamentDetails(
-                                      Tournament_Id: userdata[i].TOURNAMENT_ID,
-                                    )));
-                      },
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WebViewTournamentDetails(
+                                    Tournament_Id: userdata[i].TOURNAMENT_ID,
+                                  )));
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red,
+                      ),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.05,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.red,
-                        ),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 15),
+                        child: Center(
                           child: Text(
                             "Details",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 12,
+                                fontSize: deviceWidth * 0.033,
                                 fontWeight: FontWeight.w800),
                           ),
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               TextButton.icon(

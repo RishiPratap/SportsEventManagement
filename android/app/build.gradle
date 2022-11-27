@@ -18,6 +18,7 @@ if (flutterVersionCode == null) {
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
+
     flutterVersionName = '1.0.2'
 }
 
@@ -57,8 +58,8 @@ android {
         applicationId "com.ardent.ardent_sports"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 3
+        versionName '1.0.3'
         multiDexEnabled true
     }
 
