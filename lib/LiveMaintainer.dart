@@ -122,7 +122,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
   @override
   void initState() {
     super.initState();
-    socket = io("https://ardentsportsapis.herokuapp.com", <String, dynamic>{
+    socket = io("https://ardent-api.onrender.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
       "forceNew": true,
@@ -588,7 +588,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                         TextButton(
                                                           onPressed: () async {
                                                             const url =
-                                                                'https://ardentsportsapis.herokuapp.com/walkover';
+                                                                'https://ardent-api.onrender.com/walkover';
 
                                                             final walkOver = WalkOver(
                                                                 MATCHID: widget
@@ -704,7 +704,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                         TextButton(
                                                           onPressed: () async {
                                                             const url =
-                                                                'https://ardentsportsapis.herokuapp.com/walkover';
+                                                                'https://ardent-api.onrender.com/walkover';
 
                                                             final walkOver = WalkOver(
                                                                 MATCHID: widget
@@ -1786,7 +1786,7 @@ class _SubmitState extends State<Submit> {
                                           }
 
                                           var url =
-                                              "https://ardentsportsapis.herokuapp.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
+                                              "https://ardent-api.onrender.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
 
                                           http.Response response;
                                           response = await get(Uri.parse(url));

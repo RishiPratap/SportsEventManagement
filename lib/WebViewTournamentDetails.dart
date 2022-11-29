@@ -39,7 +39,7 @@ class _WebViewTournamentDetailsState extends State<WebViewTournamentDetails> {
               }),
         ].toSet(),
         initialUrl:
-            'https://ardentsportsapis.herokuapp.com/hosted?TOURNAMENT_ID=${widget.Tournament_Id}',
+            'https://ardent-api.onrender.com/hosted?TOURNAMENT_ID=${widget.Tournament_Id}',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

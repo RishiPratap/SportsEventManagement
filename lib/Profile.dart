@@ -89,8 +89,7 @@ class _ProfileState extends State<Profile> {
   Future getImage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var userName = prefs.getString('email');
-    var url =
-        'https://ardentsportsapis.herokuapp.com/profilePicUrl?USERID=$userName';
+    var url = 'https://ardent-api.onrender.com/profilePicUrl?USERID=$userName';
 
     try {
       Response response;
@@ -125,7 +124,7 @@ class _ProfileState extends State<Profile> {
       });
 
       Response response = await dio.post(
-        'https://ardentsportsapis.herokuapp.com/postProfilePic',
+        'https://ardent-api.onrender.com/postProfilePic',
         data: formData,
       );
 
