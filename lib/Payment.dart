@@ -198,24 +198,6 @@ class _PaymentState extends State<Payment> {
     );
   }
 
-  // _paymentContainer(double w) {
-  //   return Positioned(
-  //     top: MediaQuery.of(context).size.width * 1,
-  //     left: w * 0.01,
-  //     child: Container(
-  //       // margin: EdgeInsets.fromLTRB(75, 0, 0, 0),
-  //       // padding: EdgeInsets.all(15.0),
-  //       height: w * 0.57,
-  //       width: MediaQuery.of(context).size.width - 10,
-  //       //width: 360,
-  //       decoration: BoxDecoration(
-  //           shape: BoxShape.rectangle,
-  //           color: Colors.white.withOpacity(0.3),
-  //           borderRadius: BorderRadius.circular(w * 0.03)),
-  //     ),
-  //   );
-  // }
-
   _paymentButton(double w) {
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.8,

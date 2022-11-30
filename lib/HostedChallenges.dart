@@ -115,7 +115,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
   var futures_past_hosted_challenges;
   List<Card> AllTournaments = [];
 
-  var tourneyID;
+  var tounamentID;
 
   List<Card> getHostedTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -128,7 +128,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     } else {
       for (int i = array_length - 1; i >= 0; i--) {
         // bool isStarted = userdata[i].STATUS;
-        tourneyID = userdata[i].TOURNAMENT_ID;
+        tounamentID = userdata[i].TOURNAMENT_ID;
         var card = Card(
           margin: EdgeInsets.all(deviceWidth * 0.04),
           shape: RoundedRectangleBorder(
@@ -145,14 +145,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                 margin: EdgeInsets.only(top: deviceWidth * 0.002),
                 height: MediaQuery.of(context).size.height * 0.075,
                 child: InkWell(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => BadmintonSpotSelection(
-                    //           tourneyId: userdata[i].TOURNAMENT_ID,
-                    //         )));
-                  },
+                  onTap: () {},
                   child: InkWell(
                     onTap: () {
                       EasyLoading.instance.displayDuration =
@@ -256,7 +249,8 @@ class _HostedChallengesState extends State<HostedChallenges> {
                                         ? Color(0xff6BB8FF)
                                         : Color(0xff03C289),
                               ),
-                              onPressed: () => _showSheet(),
+                              onPressed: () =>
+                                  _showSheet(userdata[i].TOURNAMENT_ID),
                               child: Text(
                                 "Add/Edit Rules ",
                                 style: TextStyle(
@@ -500,7 +494,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
 
   final rulesController = TextEditingController();
 
-  void _showSheet() {
+  void _showSheet(String tourneyID) {
     showModalBottomSheet(
         isScrollControlled: true,
         shape: RoundedRectangleBorder(
@@ -550,7 +544,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                     return ElevatedButton(
                       onPressed: value.text.isNotEmpty
                           ? () {
-                              showSheet();
+                              showSheet(tourneyID);
                             }
                           : null,
                       child: Text("Add Rules"),
@@ -563,10 +557,12 @@ class _HostedChallengesState extends State<HostedChallenges> {
         });
   }
 
-  void showSheet() async {
+  void showSheet(String tourneyID) async {
     final rules = Rules(RULES: rulesController.text, TOURNAMENTID: tourneyID);
     final rulesMap = rules.toMap();
     final json = jsonEncode(rulesMap);
+
+    print("Tournament ID:$tourneyID");
 
     EasyLoading.show(
         status: 'Adding Rules', maskType: EasyLoadingMaskType.black);
@@ -688,35 +684,43 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   children: [
                     Row(
                       children: [
-                        Row(
-                          ///USE EXPANDED HERE TO DEBUG
-                          children: [
-                            Container(
-                              width: deviceWidth * 0.2,
-                              height: deviceHeight * 0.07,
-                              margin: EdgeInsets.fromLTRB(
-                                  0, deviceWidth * 0.03, 0, 0),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                image: AssetImage('assets/AARDENT_LOGO.png'),
-                                fit: BoxFit.cover,
-                              )),
-                            ),
-                            Container(
-                              //USE EXPANDED HERE TO DEBUG
-                              width: deviceWidth * 0.2,
-                              height: deviceHeight * 0.08,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/Ardent_Sport_Text.png"),
-                                      fit: BoxFit.fitWidth)),
-                            ),
-                            Container(
-                              //USE EXPANDED HERE TO DEBUG
-                              width: double.infinity,
-                            ),
-                          ],
+                        ///USE EXPANDED HERE TO DEBUG
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                width: deviceWidth * 0.2,
+                                height: deviceHeight * 0.07,
+                                margin: EdgeInsets.fromLTRB(
+                                    0, deviceWidth * 0.03, 0, 0),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                  image: AssetImage('assets/AARDENT_LOGO.png'),
+                                  fit: BoxFit.cover,
+                                )),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  //USE EXPANDED HERE TO DEBUG
+                                  width: deviceWidth * 0.2,
+                                  height: deviceHeight * 0.08,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/Ardent_Sport_Text.png"),
+                                          fit: BoxFit.fitWidth)),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  //USE EXPANDED HERE TO DEBUG
+                                  width: double.infinity,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

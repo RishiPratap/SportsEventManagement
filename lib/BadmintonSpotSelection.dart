@@ -10,13 +10,15 @@ import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:ardent_sports/WebViewSpots.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Rules.dart';
 
 int freespots = 0;
 int entryfee = 0;
@@ -473,7 +475,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                           style: TextStyle(color: Colors.white, fontSize: 35),
                         )),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => Rules(
+                                tourneyId: widget.tourneyId,
+                              ));
+                        },
                         child: Text(
                           "Rules >",
                           style:

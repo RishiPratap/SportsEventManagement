@@ -1468,7 +1468,7 @@ class Submit extends StatefulWidget {
 }
 
 class _SubmitState extends State<Submit> {
-  final controller = ConfettiController(duration: const Duration(seconds: 1));
+  final controller = ConfettiController(duration: const Duration(seconds: 3));
   bool isPlaying = false;
 
   @override
@@ -1484,6 +1484,7 @@ class _SubmitState extends State<Submit> {
 
   @override
   Map? UserResponse;
+
   String? x;
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -1793,7 +1794,8 @@ class _SubmitState extends State<Submit> {
                                             UserResponse =
                                                 json.decode(response.body);
                                           });
-                                          print(UserResponse?['WINNER']);
+                                          print(
+                                              'MATCH WINNER ${UserResponse?['WINNER']}');
                                         },
                                         child: const Text(
                                           "Confirm",
