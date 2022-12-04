@@ -155,7 +155,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         var newContainer = Container(
           margin: EdgeInsets.only(top: deviceWidth * 0.02),
           width: deviceWidth * 0.2,
-          height: deviceWidth * 0.07,
+          height: deviceHeight * 0.032,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xff6EBC55),
@@ -272,7 +272,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         var newContainer = Container(
           margin: EdgeInsets.only(top: deviceWidth * 0.02),
           width: deviceWidth * 0.2,
-          height: deviceWidth * 0.07,
+          height: deviceHeight * 0.032,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xff808080),
@@ -302,7 +302,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         var newContainer = Container(
           margin: EdgeInsets.only(top: deviceWidth * 0.02),
           width: deviceWidth * 0.2,
-          height: deviceWidth * 0.07,
+          height: deviceHeight * 0.032,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xffFFFF00).withOpacity(0.8),
@@ -328,7 +328,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     return totalspots;
   }
 
-  connect(double deviceWidth) async {
+  connect(double deviceWidth, double deviceHeight) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     socket.on('spot-clicked-return', (data) {
@@ -407,7 +407,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         Container(
           margin: EdgeInsets.only(
               left: deviceWidth * 0.05, right: deviceWidth * 0.05),
-          child: buildSpotsAvailableCard(deviceWidth),
+          child: buildSpotsAvailableCard(deviceWidth, deviceHeight),
         ),
         Container(
           margin: EdgeInsets.only(
@@ -490,7 +490,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   ],
                 ),
                 FutureBuilder(
-                  future: connect(deviceWidth),
+                  future: connect(deviceWidth, deviceHeight),
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.data == null) {
@@ -514,8 +514,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     );
   }
 
-  Widget buildSpotsAvailableCard(double deviceWidth) => Container(
-        height: 77,
+  Widget buildSpotsAvailableCard(double deviceWidth, double deviceHeight) =>
+      Container(
+        height: deviceHeight * 0.105,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
