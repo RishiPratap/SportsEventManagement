@@ -472,8 +472,9 @@ class _HostedChallengesState extends State<HostedChallenges> {
                 ),
                 onPressed: () {
                   final Uri toLaunch = Uri(
-                      scheme: 'https',
-                      host: "ardent-api.onrender.com",
+                      scheme: 'http',
+                      host:
+                          "ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000",
                       path: "/download",
                       queryParameters: {
                         'TOURNAMENT_ID': userdata[i].TOURNAMENT_ID,
