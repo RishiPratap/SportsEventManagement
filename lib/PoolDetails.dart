@@ -971,7 +971,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                         final DetailMap = ChallengeDetails.toMap();
                         final json = jsonEncode(DetailMap);
                         var url =
-                            "https://ardent-api.onrender.com/createMultipleTournament";
+                            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
 
                         try {
                           var response = await post(Uri.parse(url),

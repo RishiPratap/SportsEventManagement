@@ -369,7 +369,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardent-api.onrender.com/pastTournaments?USERID=$obtianedEmail";
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 

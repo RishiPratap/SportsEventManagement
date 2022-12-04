@@ -37,7 +37,7 @@ class _WebViewSpotsState extends State<WebViewSpots> {
               }),
         ].toSet(),
         initialUrl:
-            'https://ardent-api.onrender.com/?no_of_spots=${widget.spots}',
+            'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/?no_of_spots=${widget.spots}',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

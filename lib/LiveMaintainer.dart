@@ -122,11 +122,13 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
   @override
   void initState() {
     super.initState();
-    socket = io("https://ardent-api.onrender.com", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-      "forceNew": true,
-    });
+    socket = io(
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000",
+        <String, dynamic>{
+          "transports": ["websocket"],
+          "autoConnect": false,
+          "forceNew": true,
+        });
     socket.connect();
     socket.onConnect((data) => print("Connected"));
 
@@ -588,7 +590,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                         TextButton(
                                                           onPressed: () async {
                                                             const url =
-                                                                'https://ardent-api.onrender.com/walkover';
+                                                                'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
 
                                                             final walkOver = WalkOver(
                                                                 MATCHID: widget
@@ -704,7 +706,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                         TextButton(
                                                           onPressed: () async {
                                                             const url =
-                                                                'https://ardent-api.onrender.com/walkover';
+                                                                'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
 
                                                             final walkOver = WalkOver(
                                                                 MATCHID: widget
@@ -1786,7 +1788,7 @@ class _SubmitState extends State<Submit> {
                                           }
 
                                           var url =
-                                              "https://ardent-api.onrender.com/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
+                                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/endMatch?TOURNAMENT_ID=${widget.Tournament_ID}&MATCHID=Match-${widget.MatchId}";
 
                                           http.Response response;
                                           response = await get(Uri.parse(url));

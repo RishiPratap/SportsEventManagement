@@ -422,11 +422,13 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   //http://ardentsportsapis-env.eba-wixhrshv.ap-south-1.elasticbeanstalk.com/
   var futures;
   void initState() {
-    socket = io("https://ardent-api.onrender.com", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-      "forceNew": true,
-    });
+    socket = io(
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000",
+        <String, dynamic>{
+          "transports": ["websocket"],
+          "autoConnect": false,
+          "forceNew": true,
+        });
     socket.connect();
     final tournament_id1 = tournament_id(TOURNAMENT_ID: widget.tourneyId);
     final tournament_id1Map = tournament_id1.toMap();
@@ -650,7 +652,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
     EasyLoading.show(status: 'loading...', maskType: EasyLoadingMaskType.black);
 
     var url = Uri.parse(
-        'https://ardent-api.onrender.com/prizeMoney?TOURNAMENT_ID=${widget.tourneyId}');
+        'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/prizeMoney?TOURNAMENT_ID=${widget.tourneyId}');
 
     var response = await get(url);
 

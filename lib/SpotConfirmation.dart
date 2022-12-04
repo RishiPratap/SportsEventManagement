@@ -85,7 +85,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
   Future fetchUser() async {
     http.Response response;
     response = await http.get(Uri.parse(
-        'https://ardent-api.onrender.com/getConfirmationDetails?USERID=${widget.userEmail}&TOURNAMENT_ID=${widget.tournament_id}'));
+        'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getConfirmationDetails?USERID=${widget.userEmail}&TOURNAMENT_ID=${widget.tournament_id}'));
 
     if (response.statusCode == 200) {
       setState(() {

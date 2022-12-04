@@ -363,7 +363,7 @@ class _LiveMaintainerMatchSelectionState
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardent-api.onrender.com/allMatches?TOURNAMENT_ID=${widget.Tournament_id}";
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/allMatches?TOURNAMENT_ID=${widget.Tournament_id}";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 

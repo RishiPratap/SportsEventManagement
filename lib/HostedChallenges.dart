@@ -387,7 +387,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         onPressed: userdata[i].STATUS == true
                             ? () async {
                                 final url =
-                                    "https://ardent-api.onrender.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
                                 EasyLoading.show(
                                     status: 'Starting',
                                     maskType: EasyLoadingMaskType.black);
@@ -566,14 +566,15 @@ class _HostedChallengesState extends State<HostedChallenges> {
 
     EasyLoading.show(
         status: 'Adding Rules', maskType: EasyLoadingMaskType.black);
-    var response =
-        await post(Uri.parse("https://ardent-api.onrender.com/rules"),
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-            },
-            body: json,
-            encoding: Encoding.getByName("utf-8"));
+    var response = await post(
+        Uri.parse(
+            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/rules"),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: json,
+        encoding: Encoding.getByName("utf-8"));
 
     final jsonResponse = jsonDecode(response.body);
 
@@ -592,7 +593,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardent-api.onrender.com/hostedTournaments?USERID=$obtianedEmail";
+        "hhttp://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hostedTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
@@ -613,7 +614,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardent-api.onrender.com/pastTournaments?USERID=$obtianedEmail";
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
