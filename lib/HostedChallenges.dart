@@ -471,14 +471,17 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   style: TextStyle(color: Colors.red),
                 ),
                 onPressed: () {
-                  final Uri toLaunch = Uri(
-                      scheme: 'http',
-                      host:
-                          "ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000",
-                      path: "/download",
-                      queryParameters: {
-                        'TOURNAMENT_ID': userdata[i].TOURNAMENT_ID,
-                      });
+                  final Uri toLaunch = Uri.parse(
+                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/download?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}");
+
+                  // Uri(
+                  //     scheme: 'http',
+                  //     host:
+                  //         "ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000",
+                  //     path: "/download",
+                  //     queryParameters: {
+                  //       'TOURNAMENT_ID': userdata[i].TOURNAMENT_ID,
+                  //     });
 
                   _launchInBrowser(toLaunch);
                 },
@@ -594,7 +597,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "hhttp://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hostedTournaments?USERID=$obtianedEmail";
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hostedTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
