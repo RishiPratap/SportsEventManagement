@@ -448,87 +448,63 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       ),
                       child: Container(
                         child: Center(
-                          child: Text(
-                            "Details",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: deviceWidth * 0.033,
-                                fontWeight: FontWeight.w800),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Column(
+                            child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Center(
                               child: Text(
                                 "Tournament",
-                                style:
-                                    TextStyle(fontSize: deviceWidth * 0.0333),
+                                style: TextStyle(
+                                    fontSize: deviceWidth * 0.0333,
+                                    color: Colors.white),
                               ),
                             ),
                             Center(
                               child: Text(
                                 "Controls",
-                                style:
-                                    TextStyle(fontSize: deviceWidth * 0.0333),
+                                style: TextStyle(
+                                    fontSize: deviceWidth * 0.0333,
+                                    color: Colors.white),
                               ),
                             ),
                           ],
                         )),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return PerMatchEstimatedTimeEditText(
-                              TOURNAMENT_ID: userdata[i].TOURNAMENT_ID,
-                            );
-                          });
-                    },
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.red,
-                      ),
-                      child: Container(
-                        child: Center(
-                          child: Text(
-                            "Update Per Match Estimated Time",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: deviceWidth * 0.033,
-                                fontWeight: FontWeight.w800),
-                          ),
-                        ),
                       ),
                     ),
                   ),
                 ],
+              ),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return PerMatchEstimatedTimeEditText(
+                          TOURNAMENT_ID: userdata[i].TOURNAMENT_ID,
+                        );
+                      });
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.red,
+                  ),
+                  child: Container(
+                    child: Center(
+                      child: Text(
+                        "Update Per Match Estimated Time",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: deviceWidth * 0.033,
+                            fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               TextButton.icon(
                 icon: Icon(
