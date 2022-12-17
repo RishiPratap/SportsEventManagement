@@ -471,7 +471,6 @@ class _PoolDetailsState extends State<PoolDetails> {
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
-              Row(),
               Container(
                 width: deviceWidth * 0.8,
                 margin: EdgeInsets.fromLTRB(
