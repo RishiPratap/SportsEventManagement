@@ -58,8 +58,8 @@ android {
         applicationId "com.ardent.ardent_sports"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 4
-        versionName '1.0.4'
+        versionCode 9
+        versionName '1.0.9'
         multiDexEnabled true
     }
 

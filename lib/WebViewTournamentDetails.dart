@@ -39,7 +39,7 @@ class _WebViewTournamentDetailsState extends State<WebViewTournamentDetails> {
               }),
         ].toSet(),
         initialUrl:
-            'https://ardent-api.onrender.com/hosted?TOURNAMENT_ID=${widget.Tournament_Id}',
+            'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hosted?TOURNAMENT_ID=${widget.Tournament_Id}',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

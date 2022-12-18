@@ -639,7 +639,7 @@ class _SubmitPageState extends State<SubmitPage> {
                               final DetailMap = Details.toMap();
                               final json = jsonEncode(DetailMap);
                               var url =
-                                  "https://ardent-api.onrender.com/createUser";
+                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createUser";
                               var response = await post(Uri.parse(url),
                                   headers: {
                                     "Accept": "application/json",

@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:ardent_sports/PerMatchEstimatedTimeEditText.dart';
 import 'package:ardent_sports/WebViewTournamentDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -387,7 +388,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         onPressed: userdata[i].STATUS == true
                             ? () async {
                                 final url =
-                                    "https://ardent-api.onrender.com/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
                                 EasyLoading.show(
                                     status: 'Starting',
                                     maskType: EasyLoadingMaskType.black);
@@ -447,19 +448,63 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       ),
                       child: Container(
                         child: Center(
-                          child: Text(
-                            "Details",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: deviceWidth * 0.033,
-                                fontWeight: FontWeight.w800),
-                          ),
-                        ),
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Text(
+                                "Tournament",
+                                style: TextStyle(
+                                    fontSize: deviceWidth * 0.0333,
+                                    color: Colors.white),
+                              ),
+                            ),
+                            Center(
+                              child: Text(
+                                "Controls",
+                                style: TextStyle(
+                                    fontSize: deviceWidth * 0.0333,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        )),
                       ),
                     ),
                   ),
                 ],
+              ),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return PerMatchEstimatedTimeEditText(
+                          TOURNAMENT_ID: userdata[i].TOURNAMENT_ID,
+                        );
+                      });
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.red,
+                  ),
+                  child: Container(
+                    child: Center(
+                      child: Text(
+                        "Update Per Match Estimated Time",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: deviceWidth * 0.033,
+                            fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               TextButton.icon(
                 icon: Icon(
@@ -471,13 +516,17 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   style: TextStyle(color: Colors.red),
                 ),
                 onPressed: () {
-                  final Uri toLaunch = Uri(
-                      scheme: 'https',
-                      host: "ardent-api.onrender.com",
-                      path: "/download",
-                      queryParameters: {
-                        'TOURNAMENT_ID': userdata[i].TOURNAMENT_ID,
-                      });
+                  final Uri toLaunch = Uri.parse(
+                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/download?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}");
+
+                  // Uri(
+                  //     scheme: 'http',
+                  //     host:
+                  //         "ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000",
+                  //     path: "/download",
+                  //     queryParameters: {
+                  //       'TOURNAMENT_ID': userdata[i].TOURNAMENT_ID,
+                  //     });
 
                   _launchInBrowser(toLaunch);
                 },
@@ -566,14 +615,15 @@ class _HostedChallengesState extends State<HostedChallenges> {
 
     EasyLoading.show(
         status: 'Adding Rules', maskType: EasyLoadingMaskType.black);
-    var response =
-        await post(Uri.parse("https://ardent-api.onrender.com/rules"),
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-            },
-            body: json,
-            encoding: Encoding.getByName("utf-8"));
+    var response = await post(
+        Uri.parse(
+            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/rules"),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: json,
+        encoding: Encoding.getByName("utf-8"));
 
     final jsonResponse = jsonDecode(response.body);
 
@@ -592,7 +642,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardent-api.onrender.com/hostedTournaments?USERID=$obtianedEmail";
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hostedTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 
@@ -613,7 +663,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var obtianedEmail = prefs.getString('email');
     var url =
-        "https://ardent-api.onrender.com/pastTournaments?USERID=$obtianedEmail";
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/pastTournaments?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
     List<dynamic> jsonData = jsonDecode(response.body);
 

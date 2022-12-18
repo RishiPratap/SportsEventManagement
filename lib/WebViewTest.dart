@@ -39,7 +39,7 @@ class _WebViewTestState extends State<WebViewTest> {
         ),
         body: WebView(
           initialUrl:
-              'https://ardent-api.onrender.com/getBookingFixtures?TOURNAMENT_ID=${widget.Tourney_id}&USERID=${widget.userId}',
+              'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getBookingFixtures?TOURNAMENT_ID=${widget.Tourney_id}&USERID=${widget.userId}',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (controller) => _controller = controller,
         ),

@@ -89,7 +89,8 @@ class _ProfileState extends State<Profile> {
   Future getImage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var userName = prefs.getString('email');
-    var url = 'https://ardent-api.onrender.com/profilePicUrl?USERID=$userName';
+    var url =
+        'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/profilePicUrl?USERID=$userName';
 
     try {
       Response response;
@@ -124,7 +125,7 @@ class _ProfileState extends State<Profile> {
       });
 
       Response response = await dio.post(
-        'https://ardent-api.onrender.com/postProfilePic',
+        'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/postProfilePic',
         data: formData,
       );
 

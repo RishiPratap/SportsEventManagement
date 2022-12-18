@@ -19,7 +19,7 @@ class _RulesState extends State<Rules> {
   getRules() async {
     EasyLoading.show(status: "Loading...", maskType: EasyLoadingMaskType.black);
     final url = Uri.parse(
-        'https://ardent-api.onrender.com/getrules?TOURNAMENT_ID=${widget.tourneyId}');
+        'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getrules?TOURNAMENT_ID=${widget.tourneyId}');
 
     print(widget.tourneyId);
 
