@@ -31,7 +31,6 @@ class _RulesState extends State<Rules> {
         EasyLoading.dismiss();
         setState(() {
           rules = json.decode(response.body);
-          print(response.body);
         });
       } else if (response.statusCode == 400) {
         EasyLoading.dismiss();
