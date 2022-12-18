@@ -253,7 +253,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                               onPressed: () =>
                                   _showSheet(userdata[i].TOURNAMENT_ID),
                               child: Text(
-                                "Add/Edit Rules ",
+                                "Add Rules ",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -499,7 +499,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: deviceWidth * 0.033,
+                            fontSize: 12,
                             fontWeight: FontWeight.w800),
                       ),
                     ),

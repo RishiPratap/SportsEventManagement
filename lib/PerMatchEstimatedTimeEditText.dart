@@ -37,7 +37,7 @@ class _PerMatchEstimatedTimeEditTextState
     return Dialog(
       backgroundColor: Colors.black.withOpacity(0.5),
       child: Container(
-        height: 150,
+        height: deviceHeight * 0.2,
         child: Column(
           children: [
             Container(
@@ -90,7 +90,7 @@ class _PerMatchEstimatedTimeEditTextState
                 Navigator.pop(context);
               },
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery.of(context).size.height * 0.06,
                 width: MediaQuery.of(context).size.width * 0.3,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

@@ -702,6 +702,9 @@ class _HomePageState extends State<HomePage> {
                               Get.to(Profile(
                                 name: mapUserInfo?['Name'],
                                 points: mapUserInfo?['Points'],
+                                level: mapUserInfo?['Level'],
+                                pointsScored: mapUserInfo?['PointsScored'],
+                                totalPoints: mapUserInfo?['TotalPoints'],
                               ));
                             },
                             child: Container(

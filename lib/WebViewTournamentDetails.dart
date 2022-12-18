@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:ardent_sports/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -20,6 +22,7 @@ class _WebViewTournamentDetailsState extends State<WebViewTournamentDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Details'),
         actions: [
           IconButton(
@@ -31,6 +34,7 @@ class _WebViewTournamentDetailsState extends State<WebViewTournamentDetails> {
         ],
       ),
       body: WebView(
+        // ignore: prefer_collection_literals
         javascriptChannels: <JavascriptChannel>[
           JavascriptChannel(
               name: 'Print',

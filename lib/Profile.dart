@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +15,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Profile extends StatefulWidget {
   final String? name;
   final String? points;
-  const Profile({Key? key, required this.name, required this.points})
+  final String? pointsScored;
+  final String? totalPoints;
+  final String? level;
+  const Profile(
+      {Key? key,
+      required this.name,
+      required this.points,
+      required this.pointsScored,
+      required this.totalPoints,
+      required this.level})
       : super(key: key);
 
   @override
@@ -157,16 +168,24 @@ class _ProfileState extends State<Profile> {
             pageBuilder: (a, b, c) => Profile(
                   points: widget.points,
                   name: widget.name,
+                  pointsScored: widget.pointsScored,
+                  totalPoints: widget.totalPoints,
+                  level: widget.level,
                 )));
   }
 
   @override
   Widget build(BuildContext context) {
-    // return isLoaded == false
-    //     ? Center(
-    //         child: CircularProgressIndicator(),
-    //       )
-    //     :
+    double progress = 0.5;
+
+    Widget buildLinearProgress() => Text(
+          '${(progress * 100).toStringAsFixed(0)}/100',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        );
+
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: SafeArea(
@@ -178,7 +197,7 @@ class _ProfileState extends State<Profile> {
                   EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              color: Colors.black,
+              // color: Colors.black,
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
@@ -375,7 +394,7 @@ class _ProfileState extends State<Profile> {
                             child: Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Text(
-                                  "Points",
+                                  "Level:5",
                                   style: TextStyle(
                                     fontFamily: 'SNAP_ITC',
                                     fontSize: 22,
@@ -385,37 +404,46 @@ class _ProfileState extends State<Profile> {
                           Expanded(
                             flex: 3,
                             child: Center(
-                              child: Opacity(
-                                opacity: 0.1,
-                                child: Container(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Center(
-                                          child: Container(
-                                            child: Text(
-                                              "${widget.points}",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.italic,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 20),
-                                            ),
+                              child: Container(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                        child: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                          child: Stack(
+                                            fit: StackFit.expand,
+                                            // ignore: prefer_const_literals_to_create_immutables
+                                            children: [
+                                              LinearProgressIndicator(
+                                                value: progress,
+                                                backgroundColor: Color.fromARGB(
+                                                    255, 55, 54, 54),
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(Colors.green),
+                                              ),
+                                              Center(
+                                                  child: buildLinearProgress())
+                                            ],
                                           ),
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Container(),
-                                      )
-                                    ],
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            MediaQuery.of(context).size.height *
-                                                0.03)),
-                                  ),
+                                    ),
+                                  ],
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                          MediaQuery.of(context).size.height *
+                                              0.03)),
                                 ),
                               ),
                             ),
@@ -454,39 +482,34 @@ class _ProfileState extends State<Profile> {
                           Expanded(
                             flex: 3,
                             child: Center(
-                              child: Opacity(
-                                opacity: 0.2,
-                                child: Container(
-                                  child: Row(
-                                    //crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/award1.png')),
-                                              color:
-                                                  Colors.black.withOpacity(0.2),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.02)),
-                                        ),
+                              child: Container(
+                                child: Row(
+                                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/GoldTrophy.png')),
+                                            // color:
+                                            //     Colors.black.withOpacity(0.2),
+                                            borderRadius: BorderRadius.circular(
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.02)),
                                       ),
-                                    ],
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            MediaQuery.of(context).size.height *
-                                                0.03)),
-                                  ),
+                                    ),
+                                  ],
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                          MediaQuery.of(context).size.height *
+                                              0.03)),
                                 ),
                               ),
                             ),
@@ -523,16 +546,13 @@ class _ProfileState extends State<Profile> {
                           Expanded(
                             flex: 3,
                             child: Center(
-                              child: Opacity(
-                                opacity: 0.2,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            MediaQuery.of(context).size.height *
-                                                0.03)),
-                                  ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  // color: Colors.black,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                          MediaQuery.of(context).size.height *
+                                              0.03)),
                                 ),
                               ),
                             ),
@@ -563,58 +583,58 @@ class _ProfileState extends State<Profile> {
                               )),
                             ),
                           ),
-                          Expanded(
-                            flex: 3,
-                            child: Center(
-                              child: Opacity(
-                                opacity: 0.2,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            MediaQuery.of(context).size.height *
-                                                0.03)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
+                          // Expanded(
+                          //   flex: 3,
+                          //   child: Center(
+                          //     child: Opacity(
+                          //       opacity: 0.2,
+                          //       child: Container(
+                          //         decoration: BoxDecoration(
+                          //           color: Colors.black,
+                          //           borderRadius: BorderRadius.all(
+                          //               Radius.circular(
+                          //                   MediaQuery.of(context).size.height *
+                          //                       0.03)),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.16,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFDD3562),
-                        borderRadius: BorderRadius.all(Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03)),
-                      ),
-                      // child: Column(
-                      //   children: [
-                      //     Expanded(
-                      //       flex: 2,
-                      //       child: Center(
-                      //         child: InkWell(
-                      //           onTap: () {
-                      //             uploadImage();
-                      //             print("Pressed");
-                      //           },
-                      //           child: Container(
-                      //               child: Text(
-                      //             "Upload",
-                      //             style: TextStyle(
-                      //                 fontFamily: 'SNAP_ITC', fontSize: 22),
-                      //           )),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                    ),
+                    // Container(
+                    //   height: MediaQuery.of(context).size.height * 0.16,
+                    //   decoration: BoxDecoration(
+                    //     color: Color(0xFFDD3562),
+                    //     borderRadius: BorderRadius.all(Radius.circular(
+                    //         MediaQuery.of(context).size.height * 0.03)),
+                    //   ),
+                    //   // child: Column(
+                    //   //   children: [
+                    //   //     Expanded(
+                    //   //       flex: 2,
+                    //   //       child: Center(
+                    //   //         child: InkWell(
+                    //   //           onTap: () {
+                    //   //             uploadImage();
+                    //   //             print("Pressed");
+                    //   //           },
+                    //   //           child: Container(
+                    //   //               child: Text(
+                    //   //             "Upload",
+                    //   //             style: TextStyle(
+                    //   //                 fontFamily: 'SNAP_ITC', fontSize: 22),
+                    //   //           )),
+                    //   //         ),
+                    //   //       ),
+                    //   //     ),
+                    //   //   ],
+                    //   // ),
+                    // ),
                   ],
                 ),
               ),
