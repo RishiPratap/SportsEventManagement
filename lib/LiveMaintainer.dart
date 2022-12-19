@@ -145,7 +145,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
   }
 
   Widget build(BuildContext context) {
-    print("Player 1 ID: " + widget.Player1_ID);
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+    print("deviceWidth : ${deviceWidth}");
+    print("deviceHeight : ${deviceHeight}");
     return WillPopScope(
       onWillPop: () {
         showDialog(
@@ -200,11 +203,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                   children: [
                     Center(
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.55,
-                        width: MediaQuery.of(context).size.width * 0.95,
+                        height: deviceHeight * 0.60,
+                        width: deviceWidth * 0.95,
                         margin: EdgeInsets.only(
                             top: MediaQuery.of(context).size.height * 0.08),
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                         child: Card(
                           elevation: 10,
                           shape: RoundedRectangleBorder(
@@ -230,267 +232,283 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 329,
-                                height: 279,
-                                child: Card(
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  color: Color(0xff252626),
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 85,
-                                          ),
-                                          Container(
-                                            width: 40,
-                                            height: 50,
-                                            child: IconButton(
-                                              icon: Image.asset(
-                                                  'assets/edit_button.png'),
-                                              onPressed: () {
-                                                print("1");
-                                                update_score_1_first =
-                                                    score_1_first;
-                                                update_score_1_second =
-                                                    score_1_second;
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Editbutton1(
-                                                        Tournament_Id: widget
-                                                            .Tournament_ID,
-                                                        Match_Id:
-                                                            widget.Match_Id,
-                                                        Player_1_name: widget
-                                                            .Player_1_name,
-                                                        Player_2_name: widget
-                                                            .Player_2_name,
-                                                      );
-                                                      ;
-                                                    });
-                                              },
+                              Card(
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.027777)),
+                                color: Color(0xff252626),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 50,
+                                      height: 240,
+                                      child: Card(
+                                        color: Color(0xff252626),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 112,
+                                              height: 60,
+                                              child: Card(
+                                                color: Color(0xff252626),
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 40,
-                                            height: 50,
-                                            child: IconButton(
-                                              icon: Image.asset(
-                                                  'assets/edit_button.png'),
-                                              onPressed: () {
-                                                update_score_2_first =
-                                                    score_2_first;
-                                                update_score_2_second =
-                                                    score_2_second;
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Editbutton2(
-                                                        Tournament_ID: widget
-                                                            .Tournament_ID,
-                                                        Match_Id:
-                                                            widget.Match_Id,
-                                                        Player_1_name: widget
-                                                            .Player_1_name,
-                                                        Player_2_name: widget
-                                                            .Player_2_name,
-                                                      );
-                                                    });
-                                              },
+                                            SizedBox(
+                                              height: 4,
                                             ),
-                                          ),
-                                          Container(
-                                            width: 40,
-                                            height: 50,
-                                            child: IconButton(
-                                              icon: Image.asset(
-                                                  'assets/edit_button.png'),
-                                              onPressed: () {
-                                                update_score_3_first =
-                                                    score_3_first;
-                                                update_score_3_second =
-                                                    score_3_second;
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Editbutton3(
-                                                        Tournament_ID: widget
-                                                            .Tournament_ID,
-                                                        Match_Id:
-                                                            widget.Match_Id,
-                                                        Player_1_name: widget
-                                                            .Player_1_name,
-                                                        Player_2_name: widget
-                                                            .Player_2_name,
-                                                      );
-                                                    });
-                                              },
+                                            Center(
+                                              child: Container(
+                                                width: 40,
+                                                height: 50,
+                                                child: IconButton(
+                                                  icon: Image.asset(
+                                                      'assets/edit_button.png'),
+                                                  onPressed: () {
+                                                    print("1");
+                                                    update_score_1_first =
+                                                        score_1_first;
+                                                    update_score_1_second =
+                                                        score_1_second;
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return Editbutton1(
+                                                            Tournament_Id: widget
+                                                                .Tournament_ID,
+                                                            Match_Id:
+                                                                widget.Match_Id,
+                                                            Player_1_name: widget
+                                                                .Player_1_name,
+                                                            Player_2_name: widget
+                                                                .Player_2_name,
+                                                          );
+                                                          ;
+                                                        });
+                                                  },
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 7,
-                                      ),
-                                      Container(
-                                        width: 125,
-                                        height: 240,
-                                        child: Card(
-                                          elevation: 5,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          color: Colors.white.withOpacity(0.2),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: 112,
-                                                height: 60,
-                                                child: Card(
-                                                  elevation: 5,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                  color: Color(0xff252626),
-                                                  child: Center(
-                                                    child: Text(
-                                                        "${widget.Player_1_name}"),
-                                                  ),
+                                            Center(
+                                              child: Container(
+                                                width: 40,
+                                                height: 50,
+                                                child: IconButton(
+                                                  icon: Image.asset(
+                                                      'assets/edit_button.png'),
+                                                  onPressed: () {
+                                                    update_score_2_first =
+                                                        score_2_first;
+                                                    update_score_2_second =
+                                                        score_2_second;
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return Editbutton2(
+                                                            Tournament_ID: widget
+                                                                .Tournament_ID,
+                                                            Match_Id:
+                                                                widget.Match_Id,
+                                                            Player_1_name: widget
+                                                                .Player_1_name,
+                                                            Player_2_name: widget
+                                                                .Player_2_name,
+                                                          );
+                                                        });
+                                                  },
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 16,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  "$score_1_first",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 25.0,
-                                                  ),
+                                            ),
+                                            Center(
+                                              child: Container(
+                                                width: 40,
+                                                height: 50,
+                                                child: IconButton(
+                                                  icon: Image.asset(
+                                                      'assets/edit_button.png'),
+                                                  onPressed: () {
+                                                    update_score_3_first =
+                                                        score_3_first;
+                                                    update_score_3_second =
+                                                        score_3_second;
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return Editbutton3(
+                                                            Tournament_ID: widget
+                                                                .Tournament_ID,
+                                                            Match_Id:
+                                                                widget.Match_Id,
+                                                            Player_1_name: widget
+                                                                .Player_1_name,
+                                                            Player_2_name: widget
+                                                                .Player_2_name,
+                                                          );
+                                                        });
+                                                  },
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  "${score_2_first}",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 25.0,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  "$score_3_first",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 25.0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 17,
-                                      ),
-                                      Container(
-                                        width: 125,
-                                        height: 240,
-                                        child: Card(
-                                          elevation: 5,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          color: Colors.white.withOpacity(0.2),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: 112,
-                                                height: 60,
-                                                child: Card(
-                                                  elevation: 5,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                  color: Color(0xff252626),
-                                                  child: Center(
-                                                    child: Text(
-                                                        "${widget.Player_2_name}"),
-                                                  ),
+                                    ),
+                                    SizedBox(
+                                      width: 7,
+                                    ),
+                                    Container(
+                                      width: 125,
+                                      height: 240,
+                                      child: Card(
+                                        elevation: 5,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        color: Colors.white.withOpacity(0.2),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 112,
+                                              height: 60,
+                                              child: Card(
+                                                elevation: 5,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8)),
+                                                color: Color(0xff252626),
+                                                child: Center(
+                                                  child: Text(
+                                                      "${widget.Player_1_name}"),
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 16,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  "$score_1_second",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 25.0,
-                                                  ),
+                                            ),
+                                            SizedBox(
+                                              height: 16,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                "$score_1_first",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 25.0,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  "$score_2_second",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 25.0,
-                                                  ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                "${score_2_first}",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 25.0,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  "$score_3_second",
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 25.0,
-                                                  ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                "$score_3_first",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 25.0,
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(
+                                      width: 17,
+                                    ),
+                                    Container(
+                                      width: 125,
+                                      height: 240,
+                                      child: Card(
+                                        elevation: 5,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        color: Colors.white.withOpacity(0.2),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 112,
+                                              height: 60,
+                                              child: Card(
+                                                elevation: 5,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8)),
+                                                color: Color(0xff252626),
+                                                child: Center(
+                                                  child: Text(
+                                                      "${widget.Player_2_name}"),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 16,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                "$score_1_second",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 25.0,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                "$score_2_second",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 25.0,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                "$score_3_second",
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 25.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Column(
@@ -498,6 +516,8 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                 children: [
                                   Container(
                                     width: 350,
+                                    margin:
+                                        EdgeInsets.only(left: 10, right: 10),
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Color(0xffD15858),
