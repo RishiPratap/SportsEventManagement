@@ -36,17 +36,19 @@ class BadmintonSpotSelection extends StatefulWidget {
   final String Organiser_Number;
   final String Address;
   final String subTournamentType;
-  const BadmintonSpotSelection(
-      {Key? key,
-      required this.tourneyId,
-      required this.sport,
-      required this.Date,
-      required this.spots,
-      required this.Organiser_Name,
-      required this.Organiser_Number,
-      required this.Address,
-      required this.subTournamentType})
-      : super(key: key);
+  final String CategoryType;
+  const BadmintonSpotSelection({
+    Key? key,
+    required this.tourneyId,
+    required this.sport,
+    required this.Date,
+    required this.spots,
+    required this.Organiser_Name,
+    required this.Organiser_Number,
+    required this.Address,
+    required this.subTournamentType,
+    required this.CategoryType,
+  }) : super(key: key);
 
   @override
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
@@ -168,98 +170,388 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   await SharedPreferences.getInstance();
               var obtianedEmail = prefs.getString('email');
 
-              debugPrint("EmailFromSocket: $obtianedEmail");
-              debugPrint("tournamentIDDDDDD:${widget.tourneyId}");
-              final tournament_id1 = SpotClickedDetails(
-                TOURNAMENT_ID: widget.tourneyId,
-                index: (i - 1).toString(),
-                USER: obtianedEmail,
-              );
-              final tournament_id1Map = tournament_id1.toMap();
-
-              final json_tournamentid = jsonEncode(tournament_id1Map);
-
-              if (!isTournamentBooked) {
-                socket.emit('spot-clicked', json_tournamentid);
-                print(widget.sport);
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeftWithFade,
-                    child: SpotConfirmation(
-                      SpotNo: i.toString(),
-                      Date: widget.Date,
-                      socket: socket,
-                      btnId: (i - 1).toString(),
-                      tournament_id: widget.tourneyId,
-                      userEmail: obtianedEmail!,
-                      sport: widget.sport,
-                      color: widget.sport == 'Badminton'
-                          ? Color(0xff6BB8FF)
-                          : Color(0xff03C289),
-                    ),
-                  ),
-                );
-              } else {
+              if (widget.CategoryType == "DOUBLES") {
+                TextEditingController searchValue = TextEditingController();
+                String addName = "Add +";
+                String name = "Name";
                 showDialog(
-                  context: context,
-                  builder: (ctx) => AlertDialog(
-                    title:
-                        const Text("You Have Already Booked this Tournament"),
-                    content: const Text("Do you want to go to my booking?"),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(14),
-                          child: const Text(
-                            "NO",
-                            style: TextStyle(color: Colors.white),
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        backgroundColor: Colors.black,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image(
+                              image:
+                                  AssetImage("assets/AddPlayerBackground.png"),
+                            ),
+                            Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Add your partner",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(deviceWidth * 0.04),
+                                    child: TextField(
+                                      controller: searchValue,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.04),
+                                          borderSide: BorderSide(
+                                            color:
+                                                Colors.white.withOpacity(0.3),
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.04),
+                                          borderSide: BorderSide(
+                                            color:
+                                                Colors.white.withOpacity(0.3),
+                                          ),
+                                        ),
+                                        hintText: "Enter Mobile/Username",
+                                        hintStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.02),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        name = "PKOJOJ";
+                                      });
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Color(0xffD15858),
+                                      ),
+                                      child: Container(
+                                        child: Center(
+                                          child: Text(
+                                            "Search",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: deviceWidth * 0.033,
+                                                fontWeight: FontWeight.w800),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.black,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            child: Text(name)),
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              addName = "Added";
+                                              print(addName);
+                                            });
+                                          },
+                                          child: Text(
+                                            addName,
+                                            style: TextStyle(
+                                                color: Color(0xffD15858)),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Or",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    width: 198,
+                                    height: 64,
+                                    margin: EdgeInsets.only(top: 15),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Color(0xff6bb8ff),
+                                    ),
+                                    child: Center(
+                                      child: InkWell(
+                                        onTap: () {
+                                          print("1");
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Center(
+                                                  child: Text(
+                                                    "Partner not yet",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize: 18),
+                                                  ),
+                                                ),
+                                                Center(
+                                                  child: Text(
+                                                    "decided",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize: 18),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            Text(
+                                              ">",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 35),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {},
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Color(0xffd15858),
+                                      ),
+                                      child: Container(
+                                        child: Center(
+                                          child: Text(
+                                            "Confirm",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: deviceWidth * 0.033,
+                                                fontWeight: FontWeight.w800),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                          ],
+                        ),
+                        // child: Container(
+                        //   height: 300,
+                        //   child: Card(
+                        //     color: Colors.black.withOpacity(0.6),
+                        //     child: Column(children: [
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Text(
+                        //         "Add your partner",
+                        //         style: TextStyle(fontWeight: FontWeight.bold),
+                        //       ),
+                        //       Container(
+                        //         margin: EdgeInsets.all(deviceWidth * 0.04),
+                        //         child: TextField(
+                        //           controller: searchValue,
+                        //           style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontWeight: FontWeight.bold),
+                        //           decoration: InputDecoration(
+                        //               enabledBorder: OutlineInputBorder(
+                        //                 borderRadius: BorderRadius.circular(
+                        //                     deviceWidth * 0.04),
+                        //                 borderSide: BorderSide(
+                        //                   color: Colors.white.withOpacity(0.3),
+                        //                 ),
+                        //               ),
+                        //               focusedBorder: OutlineInputBorder(
+                        //                 borderRadius: BorderRadius.circular(
+                        //                     deviceWidth * 0.04),
+                        //                 borderSide: BorderSide(
+                        //                   color: Colors.white.withOpacity(0.3),
+                        //                 ),
+                        //               ),
+                        //               hintText: "Enter Mobile/Username",
+                        //               hintStyle: TextStyle(
+                        //                   color: Colors.white,
+                        //                   fontWeight: FontWeight.w700),
+                        //               border: OutlineInputBorder(
+                        //                 borderRadius: BorderRadius.circular(
+                        //                     deviceWidth * 0.02),
+                        //               )),
+                        //         ),
+                        //       ),
+                        //       TextButton(
+                        //         onPressed: () async {},
+                        //         child: Container(
+                        //           height:
+                        //               MediaQuery.of(context).size.height * 0.06,
+                        //           width:
+                        //               MediaQuery.of(context).size.width * 0.3,
+                        //           decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(10),
+                        //             color: Colors.red,
+                        //           ),
+                        //           child: Container(
+                        //             child: Center(
+                        //               child: Text(
+                        //                 "Search",
+                        //                 textAlign: TextAlign.center,
+                        //                 style: TextStyle(
+                        //                     color: Colors.white,
+                        //                     fontSize: deviceWidth * 0.033,
+                        //                     fontWeight: FontWeight.w800),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ]),
+                        //   ),
+                        // ),
+                      );
+                    });
+              } else {
+                debugPrint("EmailFromSocket: $obtianedEmail");
+                debugPrint("tournamentIDDDDDD:${widget.tourneyId}");
+                final tournament_id1 = SpotClickedDetails(
+                  TOURNAMENT_ID: widget.tourneyId,
+                  index: (i - 1).toString(),
+                  USER: obtianedEmail,
+                );
+                final tournament_id1Map = tournament_id1.toMap();
+
+                final json_tournamentid = jsonEncode(tournament_id1Map);
+
+                if (!isTournamentBooked) {
+                  socket.emit('spot-clicked', json_tournamentid);
+                  print(widget.sport);
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.rightToLeftWithFade,
+                      child: SpotConfirmation(
+                        SpotNo: i.toString(),
+                        Date: widget.Date,
+                        socket: socket,
+                        btnId: (i - 1).toString(),
+                        tournament_id: widget.tourneyId,
+                        userEmail: obtianedEmail!,
+                        sport: widget.sport,
+                        color: widget.sport == 'Badminton'
+                            ? Color(0xff6BB8FF)
+                            : Color(0xff03C289),
+                      ),
+                    ),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title:
+                          const Text("You Have Already Booked this Tournament"),
+                      content: const Text("Do you want to go to my booking?"),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(14),
+                            child: const Text(
+                              "NO",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
 
-                      //one min
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.rightToLeftWithFade,
-                                  child: MyBookings()));
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(14),
-                          child: const Text("YES",
-                              style: TextStyle(color: Colors.white)),
+                        //one min
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type:
+                                        PageTransitionType.rightToLeftWithFade,
+                                    child: MyBookings()));
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(14),
+                            child: const Text("YES",
+                                style: TextStyle(color: Colors.white)),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }
+                      ],
+                    ),
+                  );
+                }
 
-              // SOCKET ON
-              socket.on('spot-clicked-return', (data) {
-                Map<String, dynamic> spot_cliclked_return_details =
-                    jsonDecode(data);
-                var details = json_decode_spot_clicked_return
-                    .fromJson(spot_cliclked_return_details);
-                String spotnumber = details.spot_number;
-                var timer = 25;
-                final socket_number = send_socket_number_(
-                    spotnumber, widget.tourneyId, finalEmail);
-                print(spotnumber);
-                final socket_number_map = socket_number.toMap();
-                final json_socket_number = jsonEncode(socket_number_map);
+                // SOCKET ON
+                socket.on('spot-clicked-return', (data) {
+                  Map<String, dynamic> spot_cliclked_return_details =
+                      jsonDecode(data);
+                  var details = json_decode_spot_clicked_return
+                      .fromJson(spot_cliclked_return_details);
+                  String spotnumber = details.spot_number;
+                  var timer = 25;
+                  final socket_number = send_socket_number_(
+                      spotnumber, widget.tourneyId, finalEmail);
+                  print(spotnumber);
+                  final socket_number_map = socket_number.toMap();
+                  final json_socket_number = jsonEncode(socket_number_map);
 
-                setState(() {
-                  array1[int.parse(spotnumber)] = "${finalEmail}";
-                  debugPrint("Array:$array1");
+                  setState(() {
+                    array1[int.parse(spotnumber)] = "${finalEmail}";
+                    debugPrint("Array:$array1");
+                  });
                 });
-              });
+              }
             },
             child: Text(
               spotname,

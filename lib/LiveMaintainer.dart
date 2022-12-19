@@ -246,112 +246,101 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                       child: Card(
                                         color: Color(0xff252626),
                                         child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
-                                              width: 112,
                                               height: 60,
                                               child: Card(
                                                 color: Color(0xff252626),
                                               ),
                                             ),
+                                            Center(
+                                              child: IconButton(
+                                                icon: Image.asset(
+                                                    'assets/edit_button.png'),
+                                                onPressed: () {
+                                                  print("1");
+                                                  update_score_1_first =
+                                                      score_1_first;
+                                                  update_score_1_second =
+                                                      score_1_second;
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Editbutton1(
+                                                          Tournament_Id: widget
+                                                              .Tournament_ID,
+                                                          Match_Id:
+                                                              widget.Match_Id,
+                                                          Player_1_name: widget
+                                                              .Player_1_name,
+                                                          Player_2_name: widget
+                                                              .Player_2_name,
+                                                        );
+                                                        ;
+                                                      });
+                                                },
+                                              ),
+                                            ),
+                                            Center(
+                                              child: IconButton(
+                                                icon: Image.asset(
+                                                    'assets/edit_button.png'),
+                                                onPressed: () {
+                                                  update_score_2_first =
+                                                      score_2_first;
+                                                  update_score_2_second =
+                                                      score_2_second;
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Editbutton2(
+                                                          Tournament_ID: widget
+                                                              .Tournament_ID,
+                                                          Match_Id:
+                                                              widget.Match_Id,
+                                                          Player_1_name: widget
+                                                              .Player_1_name,
+                                                          Player_2_name: widget
+                                                              .Player_2_name,
+                                                        );
+                                                      });
+                                                },
+                                              ),
+                                            ),
+                                            Center(
+                                              child: IconButton(
+                                                icon: Image.asset(
+                                                    'assets/edit_button.png'),
+                                                onPressed: () {
+                                                  update_score_3_first =
+                                                      score_3_first;
+                                                  update_score_3_second =
+                                                      score_3_second;
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Editbutton3(
+                                                          Tournament_ID: widget
+                                                              .Tournament_ID,
+                                                          Match_Id:
+                                                              widget.Match_Id,
+                                                          Player_1_name: widget
+                                                              .Player_1_name,
+                                                          Player_2_name: widget
+                                                              .Player_2_name,
+                                                        );
+                                                      });
+                                                },
+                                              ),
+                                            ),
                                             SizedBox(
-                                              height: 4,
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                width: 40,
-                                                height: 50,
-                                                child: IconButton(
-                                                  icon: Image.asset(
-                                                      'assets/edit_button.png'),
-                                                  onPressed: () {
-                                                    print("1");
-                                                    update_score_1_first =
-                                                        score_1_first;
-                                                    update_score_1_second =
-                                                        score_1_second;
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return Editbutton1(
-                                                            Tournament_Id: widget
-                                                                .Tournament_ID,
-                                                            Match_Id:
-                                                                widget.Match_Id,
-                                                            Player_1_name: widget
-                                                                .Player_1_name,
-                                                            Player_2_name: widget
-                                                                .Player_2_name,
-                                                          );
-                                                          ;
-                                                        });
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                width: 40,
-                                                height: 50,
-                                                child: IconButton(
-                                                  icon: Image.asset(
-                                                      'assets/edit_button.png'),
-                                                  onPressed: () {
-                                                    update_score_2_first =
-                                                        score_2_first;
-                                                    update_score_2_second =
-                                                        score_2_second;
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return Editbutton2(
-                                                            Tournament_ID: widget
-                                                                .Tournament_ID,
-                                                            Match_Id:
-                                                                widget.Match_Id,
-                                                            Player_1_name: widget
-                                                                .Player_1_name,
-                                                            Player_2_name: widget
-                                                                .Player_2_name,
-                                                          );
-                                                        });
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                width: 40,
-                                                height: 50,
-                                                child: IconButton(
-                                                  icon: Image.asset(
-                                                      'assets/edit_button.png'),
-                                                  onPressed: () {
-                                                    update_score_3_first =
-                                                        score_3_first;
-                                                    update_score_3_second =
-                                                        score_3_second;
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return Editbutton3(
-                                                            Tournament_ID: widget
-                                                                .Tournament_ID,
-                                                            Match_Id:
-                                                                widget.Match_Id,
-                                                            Player_1_name: widget
-                                                                .Player_1_name,
-                                                            Player_2_name: widget
-                                                                .Player_2_name,
-                                                          );
-                                                        });
-                                                  },
-                                                ),
-                                              ),
-                                            ),
+                                              height: 10,
+                                            )
                                           ],
                                         ),
                                       ),
@@ -369,6 +358,8 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 BorderRadius.circular(10)),
                                         color: Colors.white.withOpacity(0.2),
                                         child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               width: 112,
@@ -386,9 +377,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 16,
-                                            ),
                                             Center(
                                               child: Text(
                                                 "$score_1_first",
@@ -399,9 +387,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                   fontSize: 25.0,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 20,
                                             ),
                                             Center(
                                               child: Text(
@@ -414,9 +399,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
                                             Center(
                                               child: Text(
                                                 "$score_3_first",
@@ -428,6 +410,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 ),
                                               ),
                                             ),
+                                            SizedBox(
+                                              height: 10,
+                                            )
                                           ],
                                         ),
                                       ),
@@ -445,6 +430,8 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 BorderRadius.circular(10)),
                                         color: Colors.white.withOpacity(0.2),
                                         child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               width: 112,
@@ -462,9 +449,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 16,
-                                            ),
                                             Center(
                                               child: Text(
                                                 "$score_1_second",
@@ -475,9 +459,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                   fontSize: 25.0,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 20,
                                             ),
                                             Center(
                                               child: Text(
@@ -490,9 +471,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
                                             Center(
                                               child: Text(
                                                 "$score_3_second",
@@ -504,6 +482,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 ),
                                               ),
                                             ),
+                                            SizedBox(
+                                              height: 10,
+                                            )
                                           ],
                                         ),
                                       ),
