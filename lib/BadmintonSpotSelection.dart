@@ -649,8 +649,171 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                         ),
                                         child: Center(
                                           child: InkWell(
-                                            onTap: () {
-                                              print("1");
+                                            onTap: () async {
+                                              final addPlayerDetails =
+                                                  addPartner(
+                                                      TOURNAMENT_ID:
+                                                          widget.tourneyId,
+                                                      SPOT_NUMBER:
+                                                          (i - 1).toString(),
+                                                      PLAYER_1: obtianedEmail!,
+                                                      PLAYER_2: "N/A");
+                                              final addPlayerDetailsMap =
+                                                  addPlayerDetails.toMap();
+                                              final json = jsonEncode(
+                                                  addPlayerDetailsMap);
+
+                                              var url =
+                                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addDoublesPartner";
+                                              var response = await post(
+                                                  Uri.parse(url),
+                                                  headers: {
+                                                    "Accept":
+                                                        "application/json",
+                                                    "Content-Type":
+                                                        "application/json"
+                                                  },
+                                                  body: json,
+                                                  encoding: Encoding.getByName(
+                                                      "utf-8"));
+                                              Map<String, dynamic> jsonData1 =
+                                                  jsonDecode(response.body);
+                                              print(response.body);
+                                              if (jsonData1["Message"] ==
+                                                  "Player added") {
+                                                debugPrint(
+                                                    "EmailFromSocket: $obtianedEmail");
+                                                debugPrint(
+                                                    "tournamentIDDDDDD:${widget.tourneyId}");
+                                                final tournament_id1 =
+                                                    SpotClickedDetails(
+                                                  TOURNAMENT_ID:
+                                                      widget.tourneyId,
+                                                  index: (i - 1).toString(),
+                                                  USER: obtianedEmail,
+                                                );
+                                                final tournament_id1Map =
+                                                    tournament_id1.toMap();
+
+                                                final json_tournamentid =
+                                                    jsonEncode(
+                                                        tournament_id1Map);
+
+                                                if (!isTournamentBooked) {
+                                                  socket.emit('spot-clicked',
+                                                      json_tournamentid);
+                                                  print(widget.sport);
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType
+                                                          .rightToLeftWithFade,
+                                                      child: SpotConfirmation(
+                                                        SpotNo: i.toString(),
+                                                        Date: widget.Date,
+                                                        socket: socket,
+                                                        btnId:
+                                                            (i - 1).toString(),
+                                                        tournament_id:
+                                                            widget.tourneyId,
+                                                        userEmail:
+                                                            obtianedEmail!,
+                                                        sport: widget.sport,
+                                                        color: widget.sport ==
+                                                                'Badminton'
+                                                            ? Color(0xff6BB8FF)
+                                                            : Color(0xff03C289),
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (ctx) =>
+                                                        AlertDialog(
+                                                      title: const Text(
+                                                          "You Have Already Booked this Tournament"),
+                                                      content: const Text(
+                                                          "Do you want to go to my booking?"),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(14),
+                                                            child: const Text(
+                                                              "NO",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ),
+                                                        ),
+
+                                                        //one min
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                                context,
+                                                                PageTransition(
+                                                                    type: PageTransitionType
+                                                                        .rightToLeftWithFade,
+                                                                    child:
+                                                                        MyBookings()));
+                                                          },
+                                                          child: Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(14),
+                                                            child: const Text(
+                                                                "YES",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white)),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
+
+                                                // SOCKET ON
+                                                socket.on('spot-clicked-return',
+                                                    (data) {
+                                                  Map<String, dynamic>
+                                                      spot_cliclked_return_details =
+                                                      jsonDecode(data);
+                                                  var details =
+                                                      json_decode_spot_clicked_return
+                                                          .fromJson(
+                                                              spot_cliclked_return_details);
+                                                  String spotnumber =
+                                                      details.spot_number;
+                                                  var timer = 25;
+                                                  final socket_number =
+                                                      send_socket_number_(
+                                                          spotnumber,
+                                                          widget.tourneyId,
+                                                          finalEmail);
+                                                  print(spotnumber);
+                                                  final socket_number_map =
+                                                      socket_number.toMap();
+                                                  final json_socket_number =
+                                                      jsonEncode(
+                                                          socket_number_map);
+
+                                                  setState(() {
+                                                    array1[int.parse(
+                                                            spotnumber)] =
+                                                        "${finalEmail}";
+                                                    debugPrint("Array:$array1");
+                                                  });
+                                                });
+                                              }
                                             },
                                             child: Row(
                                               mainAxisAlignment:
