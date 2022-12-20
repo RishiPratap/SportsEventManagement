@@ -144,6 +144,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   int totalspots = 0;
   var count = 0;
   var isTournamentBooked = false;
+  var isAdded = false;
   late Socket socket;
   @override
   List<Container> getTotalSpots(int start, int end, List<dynamic> array) {
@@ -177,211 +178,250 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return Dialog(
-                        backgroundColor: Colors.black,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image(
-                              image:
-                                  AssetImage("assets/AddPlayerBackground.png"),
-                            ),
-                            Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Add your partner",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.all(deviceWidth * 0.04),
-                                    child: TextField(
-                                      controller: searchValue,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.04),
-                                          borderSide: BorderSide(
-                                            color:
-                                                Colors.white.withOpacity(0.3),
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.04),
-                                          borderSide: BorderSide(
-                                            color:
-                                                Colors.white.withOpacity(0.3),
-                                          ),
-                                        ),
-                                        hintText: "Enter Mobile/Username",
-                                        hintStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              deviceWidth * 0.02),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      setState(() {
-                                        name = "PKOJOJ";
-                                      });
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.3,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Color(0xffD15858),
-                                      ),
-                                      child: Container(
-                                        child: Center(
-                                          child: Text(
-                                            "Search",
-                                            textAlign: TextAlign.center,
+                      return SingleChildScrollView(
+                        child: Container(
+                          margin: EdgeInsets.only(top: deviceWidth * 0.3),
+                          child: Dialog(
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                      "assets/AddPlayerBackground.png"),
+                                ),
+                                Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Image(
+                                                image: AssetImage(
+                                                    "assets/back_edit.png"),
+                                              )),
+                                          Text(
+                                            "Add your partner",
                                             style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(""),
+                                          Text(""),
+                                          Text(""),
+                                        ],
+                                      ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.all(deviceWidth * 0.04),
+                                        child: TextField(
+                                          controller: searchValue,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      deviceWidth * 0.04),
+                                              borderSide: BorderSide(
+                                                color: Colors.white
+                                                    .withOpacity(0.3),
+                                              ),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      deviceWidth * 0.04),
+                                              borderSide: BorderSide(
+                                                color: Colors.white
+                                                    .withOpacity(0.3),
+                                              ),
+                                            ),
+                                            hintText: "Enter Mobile/Username",
+                                            hintStyle: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: deviceWidth * 0.033,
-                                                fontWeight: FontWeight.w800),
+                                                fontWeight: FontWeight.w700),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      deviceWidth * 0.02),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.black,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: Text(name)),
-                                        TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              addName = "Added";
-                                              print(addName);
-                                            });
-                                          },
-                                          child: Text(
-                                            addName,
-                                            style: TextStyle(
-                                                color: Color(0xffD15858)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    "Or",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    width: 198,
-                                    height: 64,
-                                    margin: EdgeInsets.only(top: 15),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: Color(0xff6bb8ff),
-                                    ),
-                                    child: Center(
-                                      child: InkWell(
-                                        onTap: () {
-                                          print("1");
+                                      TextButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            name = "PKOJOJ";
+                                          });
                                         },
+                                        child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Color(0xffD15858),
+                                          ),
+                                          child: Container(
+                                            child: Center(
+                                              child: Text(
+                                                "Search",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize:
+                                                        deviceWidth * 0.033,
+                                                    fontWeight:
+                                                        FontWeight.w800),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 250,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.black,
+                                        ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Center(
-                                                  child: Text(
-                                                    "Partner not yet",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontSize: 18),
-                                                  ),
-                                                ),
-                                                Center(
-                                                  child: Text(
-                                                    "decided",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontSize: 18),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                            Text(
-                                              ">",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 35),
+                                            Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
+                                                child: Text(name)),
+                                            TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  isAdded = !isAdded;
+                                                });
+                                              },
+                                              child: Text(
+                                                isAdded ? "Added" : "Add +",
+                                                style: TextStyle(
+                                                    color: Color(0xffD15858)),
+                                              ),
                                             )
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {},
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.3,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Color(0xffd15858),
+                                      SizedBox(
+                                        height: 10,
                                       ),
-                                      child: Container(
+                                      Text(
+                                        "Or",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Container(
+                                        width: 198,
+                                        height: 64,
+                                        margin: EdgeInsets.only(top: 15),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Color(0xff6bb8ff),
+                                        ),
                                         child: Center(
-                                          child: Text(
-                                            "Confirm",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: deviceWidth * 0.033,
-                                                fontWeight: FontWeight.w800),
+                                          child: InkWell(
+                                            onTap: () {
+                                              print("1");
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Center(
+                                                      child: Text(
+                                                        "Partner not yet",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 18),
+                                                      ),
+                                                    ),
+                                                    Center(
+                                                      child: Text(
+                                                        "decided",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 18),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  width: 15,
+                                                ),
+                                                Text(
+                                                  ">",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 35),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ]),
-                          ],
+                                      TextButton(
+                                        onPressed: () async {},
+                                        child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Color(0xffd15858),
+                                          ),
+                                          child: Container(
+                                            child: Center(
+                                              child: Text(
+                                                "Confirm",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: deviceWidth * 0.033,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     });
