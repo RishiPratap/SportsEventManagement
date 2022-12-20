@@ -125,6 +125,35 @@ class json_decode_confirm_clicked_return {
   }
 }
 
+class Search {
+  late String USERID;
+  Search({required this.USERID});
+  Map<String, dynamic> toMap() {
+    return {"PLAYER_2": this.USERID};
+  }
+}
+
+class addPartner {
+  late String TOURNAMENT_ID;
+  late String SPOT_NUMBER;
+  late String PLAYER_1;
+  late String PLAYER_2;
+
+  addPartner(
+      {required this.TOURNAMENT_ID,
+      required this.SPOT_NUMBER,
+      required this.PLAYER_1,
+      required this.PLAYER_2});
+  Map<String, dynamic> toMap() {
+    return {
+      "TOURNAMENT_ID": this.TOURNAMENT_ID,
+      "SPOT_NUMBER": this.SPOT_NUMBER,
+      "PLAYER_1": this.PLAYER_1,
+      "PLAYER_2": this.PLAYER_2
+    };
+  }
+}
+
 class send_socket_number_ {
   late String spot_number;
   late String tourney_id;
@@ -257,9 +286,319 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                       ),
                                       TextButton(
                                         onPressed: () async {
-                                          setState(() {
-                                            name = "PKOJOJ";
-                                          });
+                                          final Search_details =
+                                              Search(USERID: searchValue.text);
+                                          final Search_detailsMap =
+                                              Search_details.toMap();
+                                          final json =
+                                              jsonEncode(Search_detailsMap);
+
+                                          var url =
+                                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/searchDoublesPartner";
+                                          EasyLoading.show(
+                                              status: 'Searching...',
+                                              maskType:
+                                                  EasyLoadingMaskType.black);
+                                          var response = await post(
+                                              Uri.parse(url),
+                                              headers: {
+                                                "Accept": "application/json",
+                                                "Content-Type":
+                                                    "application/json"
+                                              },
+                                              body: json,
+                                              encoding:
+                                                  Encoding.getByName("utf-8"));
+                                          EasyLoading.dismiss();
+                                          Map<String, dynamic> jsonData =
+                                              jsonDecode(response.body);
+                                          print(response.body);
+                                          if (jsonData["Message"] ==
+                                              "User Found") {
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext cotext) {
+                                                  return Dialog(
+                                                    child: Container(
+                                                      width: 75,
+                                                      height: 130,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        color: Colors.black
+                                                            .withOpacity(0.6),
+                                                      ),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    top: 10),
+                                                            child: Text(
+                                                                "Name : ${jsonData["NAME"]}"),
+                                                          ),
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    top: 10),
+                                                            child: Text(
+                                                                "User Id : ${jsonData["USERID"]}"),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              final addPlayerDetails = addPartner(
+                                                                  TOURNAMENT_ID:
+                                                                      widget
+                                                                          .tourneyId,
+                                                                  SPOT_NUMBER: (i -
+                                                                          1)
+                                                                      .toString(),
+                                                                  PLAYER_1:
+                                                                      obtianedEmail!,
+                                                                  PLAYER_2:
+                                                                      jsonData[
+                                                                          "USERID"]);
+                                                              final addPlayerDetailsMap =
+                                                                  addPlayerDetails
+                                                                      .toMap();
+                                                              final json =
+                                                                  jsonEncode(
+                                                                      addPlayerDetailsMap);
+
+                                                              var url =
+                                                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addDoublesPartner";
+                                                              var response = await post(
+                                                                  Uri.parse(
+                                                                      url),
+                                                                  headers: {
+                                                                    "Accept":
+                                                                        "application/json",
+                                                                    "Content-Type":
+                                                                        "application/json"
+                                                                  },
+                                                                  body: json,
+                                                                  encoding: Encoding
+                                                                      .getByName(
+                                                                          "utf-8"));
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  jsonData1 =
+                                                                  jsonDecode(
+                                                                      response
+                                                                          .body);
+                                                              print(response
+                                                                  .body);
+                                                              if (jsonData1[
+                                                                      "Message"] ==
+                                                                  "Player added") {
+                                                                debugPrint(
+                                                                    "EmailFromSocket: $obtianedEmail");
+                                                                debugPrint(
+                                                                    "tournamentIDDDDDD:${widget.tourneyId}");
+                                                                final tournament_id1 =
+                                                                    SpotClickedDetails(
+                                                                  TOURNAMENT_ID:
+                                                                      widget
+                                                                          .tourneyId,
+                                                                  index: (i - 1)
+                                                                      .toString(),
+                                                                  USER:
+                                                                      obtianedEmail,
+                                                                );
+                                                                final tournament_id1Map =
+                                                                    tournament_id1
+                                                                        .toMap();
+
+                                                                final json_tournamentid =
+                                                                    jsonEncode(
+                                                                        tournament_id1Map);
+
+                                                                if (!isTournamentBooked) {
+                                                                  socket.emit(
+                                                                      'spot-clicked',
+                                                                      json_tournamentid);
+                                                                  print(widget
+                                                                      .sport);
+                                                                  Navigator
+                                                                      .push(
+                                                                    context,
+                                                                    PageTransition(
+                                                                      type: PageTransitionType
+                                                                          .rightToLeftWithFade,
+                                                                      child:
+                                                                          SpotConfirmation(
+                                                                        SpotNo:
+                                                                            i.toString(),
+                                                                        Date: widget
+                                                                            .Date,
+                                                                        socket:
+                                                                            socket,
+                                                                        btnId: (i -
+                                                                                1)
+                                                                            .toString(),
+                                                                        tournament_id:
+                                                                            widget.tourneyId,
+                                                                        userEmail:
+                                                                            obtianedEmail!,
+                                                                        sport: widget
+                                                                            .sport,
+                                                                        color: widget.sport ==
+                                                                                'Badminton'
+                                                                            ? Color(0xff6BB8FF)
+                                                                            : Color(0xff03C289),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                } else {
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (ctx) =>
+                                                                            AlertDialog(
+                                                                      title: const Text(
+                                                                          "You Have Already Booked this Tournament"),
+                                                                      content:
+                                                                          const Text(
+                                                                              "Do you want to go to my booking?"),
+                                                                      actions: <
+                                                                          Widget>[
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            padding:
+                                                                                const EdgeInsets.all(14),
+                                                                            child:
+                                                                                const Text(
+                                                                              "NO",
+                                                                              style: TextStyle(color: Colors.white),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+
+                                                                        //one min
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.push(context,
+                                                                                PageTransition(type: PageTransitionType.rightToLeftWithFade, child: MyBookings()));
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            padding:
+                                                                                const EdgeInsets.all(14),
+                                                                            child:
+                                                                                const Text("YES", style: TextStyle(color: Colors.white)),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  );
+                                                                }
+
+                                                                // SOCKET ON
+                                                                socket.on(
+                                                                    'spot-clicked-return',
+                                                                    (data) {
+                                                                  Map<String,
+                                                                          dynamic>
+                                                                      spot_cliclked_return_details =
+                                                                      jsonDecode(
+                                                                          data);
+                                                                  var details =
+                                                                      json_decode_spot_clicked_return
+                                                                          .fromJson(
+                                                                              spot_cliclked_return_details);
+                                                                  String
+                                                                      spotnumber =
+                                                                      details
+                                                                          .spot_number;
+                                                                  var timer =
+                                                                      25;
+                                                                  final socket_number = send_socket_number_(
+                                                                      spotnumber,
+                                                                      widget
+                                                                          .tourneyId,
+                                                                      finalEmail);
+                                                                  print(
+                                                                      spotnumber);
+                                                                  final socket_number_map =
+                                                                      socket_number
+                                                                          .toMap();
+                                                                  final json_socket_number =
+                                                                      jsonEncode(
+                                                                          socket_number_map);
+
+                                                                  setState(() {
+                                                                    array1[int.parse(
+                                                                            spotnumber)] =
+                                                                        "${finalEmail}";
+                                                                    debugPrint(
+                                                                        "Array:$array1");
+                                                                  });
+                                                                });
+                                                              }
+                                                            },
+                                                            child: Container(
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  0.06,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.3,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                color: Color(
+                                                                    0xffd15858),
+                                                              ),
+                                                              child: Container(
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    "Confirm",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          deviceWidth *
+                                                                              0.033,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                          }
                                         },
                                         child: Container(
                                           height: MediaQuery.of(context)
@@ -289,37 +628,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 250,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.black,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 10),
-                                                child: Text(name)),
-                                            TextButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  isAdded = !isAdded;
-                                                });
-                                              },
-                                              child: Text(
-                                                isAdded ? "Added" : "Add +",
-                                                style: TextStyle(
-                                                    color: Color(0xffD15858)),
-                                              ),
-                                            )
-                                          ],
                                         ),
                                       ),
                                       SizedBox(
@@ -357,7 +665,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                         "Partner not yet",
                                                         style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight.w700,
+                                                                FontWeight.w500,
                                                             fontSize: 18),
                                                       ),
                                                     ),
@@ -366,7 +674,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                         "decided",
                                                         style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight.w700,
+                                                                FontWeight.w500,
                                                             fontSize: 18),
                                                       ),
                                                     ),
@@ -375,45 +683,10 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                 SizedBox(
                                                   width: 15,
                                                 ),
-                                                Text(
-                                                  ">",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 35),
-                                                )
+                                                Image(
+                                                    image: AssetImage(
+                                                        "assets/right_back.png"))
                                               ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () async {},
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.06,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.3,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Color(0xffd15858),
-                                          ),
-                                          child: Container(
-                                            child: Center(
-                                              child: Text(
-                                                "Confirm",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: deviceWidth * 0.033,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
                                             ),
                                           ),
                                         ),
@@ -732,9 +1005,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text(
-                          "<",
-                          style: TextStyle(color: Colors.white, fontSize: 35),
+                        child: Image(
+                          image: AssetImage("assets/back_edit.png"),
                         )),
                     TextButton(
                         onPressed: () {

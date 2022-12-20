@@ -90,6 +90,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
     if (response.statusCode == 200) {
       setState(() {
         mapUserResponse = json.decode(response.body);
+        print(response.body);
       });
     }
   }
