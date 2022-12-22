@@ -21,7 +21,9 @@ class LiveMaintainerMatchSelection extends StatefulWidget {
 class MatchesData {
   late String TOURNAMENT_ID;
   late String PLAYER1_NAME;
+  late String PLAYER1_PARTNER;
   late String PLAYER2_NAME;
+  late String PLAYER2_PARTNER;
   late String PLAYER1_ID;
   late String PLAYER2_ID;
   late String MATCHID;
@@ -35,7 +37,9 @@ class MatchesData {
   MatchesData(
     this.TOURNAMENT_ID,
     this.PLAYER1_NAME,
+    this.PLAYER1_PARTNER,
     this.PLAYER2_NAME,
+    this.PLAYER2_PARTNER,
     this.PLAYER1_ID,
     this.PLAYER2_ID,
     this.MATCHID,
@@ -50,7 +54,9 @@ class MatchesData {
   MatchesData.fromJson(Map<String, dynamic> json) {
     TOURNAMENT_ID = json['TOURNAMENT_ID'];
     PLAYER1_NAME = json['PLAYER1_NAME'];
+    PLAYER1_PARTNER = json['PLAYER1_PARTNER'];
     PLAYER2_NAME = json['PLAYER2_NAME'];
+    PLAYER2_PARTNER = json['PLAYER2_PARTNER'];
     PLAYER1_ID = json['PLAYER1_ID'];
     PLAYER2_ID = json['PLAYER2_ID'];
     MATCHID = json['MATCHID'];
@@ -83,7 +89,6 @@ class _LiveMaintainerMatchSelectionState
     } else {
       for (int i = 0; i < array_length; i++) {
         var container = Container(
-          height: MediaQuery.of(context).size.height * 0.43,
           padding: EdgeInsets.all(deviceWidth * 0.018),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -117,7 +122,6 @@ class _LiveMaintainerMatchSelectionState
                           ? Color(0xff6BB8FF)
                           : Color(0xff03C289),
                       child: Container(
-                        margin: EdgeInsets.only(top: deviceWidth * 0.021),
                         child: Row(
                           children: [
                             SizedBox(
@@ -143,18 +147,19 @@ class _LiveMaintainerMatchSelectionState
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  matchesdata[i].TOURNAMENT_NAME.length >= 17
+                                  matchesdata[i].TOURNAMENT_NAME.length > 25
                                       ? matchesdata[i]
                                               .TOURNAMENT_NAME
-                                              .substring(0, 15) +
+                                              .substring(0, 25) +
                                           '...'
                                       : matchesdata[i].TOURNAMENT_NAME,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: deviceWidth * 0.027,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: deviceWidth * 0.035,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.black),
                                 ),
                                 SizedBox(
@@ -163,7 +168,7 @@ class _LiveMaintainerMatchSelectionState
                                 Text(
                                   matchesdata[i].CITY,
                                   style: TextStyle(
-                                    fontSize: deviceWidth * 0.027,
+                                    fontSize: deviceWidth * 0.035,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
@@ -179,38 +184,55 @@ class _LiveMaintainerMatchSelectionState
                 SizedBox(
                   height: deviceWidth * 0.018,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.018),
-                    ),
-                    elevation: 1,
-                    color: Colors.transparent.withOpacity(0.2),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.018),
+                  ),
+                  elevation: 1,
+                  color: Colors.transparent.withOpacity(0.2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.08),
+                              margin: EdgeInsets.only(
+                                  left: deviceWidth * 0.08,
+                                  top: deviceWidth * 0.02),
                               child: Text(
                                 matchesdata[i].PLAYER1_NAME,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               )),
-                          TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Vs",
-                                style: TextStyle(
-                                  fontSize: deviceWidth * 0.04,
-                                  color: Color(0xffE74545),
-                                ),
-                              )),
                           Container(
-                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                              margin: EdgeInsets.only(
+                                  left: deviceWidth * 0.08,
+                                  top: deviceWidth * 0.02,
+                                  bottom: deviceWidth * 0.02),
+                              child: Text(
+                                matchesdata[i].PLAYER1_PARTNER,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                        ],
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Vs",
+                            style: TextStyle(
+                              fontSize: deviceWidth * 0.04,
+                              color: Color(0xffE74545),
+                            ),
+                          )),
+                      Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(
+                                right: deviceWidth * 0.07,
+                                top: deviceWidth * 0.02),
                             child: Text(
                               matchesdata[i].PLAYER2_NAME,
                               style: TextStyle(
@@ -218,9 +240,21 @@ class _LiveMaintainerMatchSelectionState
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                right: deviceWidth * 0.07,
+                                top: deviceWidth * 0.02,
+                                bottom: deviceWidth * 0.02),
+                            child: Text(
+                              matchesdata[i].PLAYER2_PARTNER,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ],
-                      ),
-                    ),
+                      )
+                    ],
                   ),
                 ),
                 Container(

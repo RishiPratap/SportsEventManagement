@@ -198,7 +198,8 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                         margin: EdgeInsets.only(
                             left: deviceWidth * 0.05,
                             right: deviceWidth * 0.05,
-                            top: deviceWidth * 0.04),
+                            top: deviceWidth * 0.04,
+                            bottom: deviceWidth * 0.04),
                         width: deviceWidth * 0.6,
                         height: deviceWidth * 0.08,
                         child: RichText(
