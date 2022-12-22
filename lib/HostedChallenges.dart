@@ -475,36 +475,72 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   ),
                 ],
               ),
-              TextButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return PerMatchEstimatedTimeEditText(
-                          TOURNAMENT_ID: userdata[i].TOURNAMENT_ID,
-                        );
-                      });
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.red,
-                  ),
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                        "Update Per Match Estimated Time",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PerMatchEstimatedTimeEditText(
+                              TOURNAMENT_ID: userdata[i].TOURNAMENT_ID,
+                            );
+                          });
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green,
+                      ),
+                      child: Container(
+                        child: Center(
+                          child: Text(
+                            "Update Per Match Estimated Time",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  TextButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PerMatchEstimatedTimeEditText(
+                              TOURNAMENT_ID: userdata[i].TOURNAMENT_ID,
+                            );
+                          });
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red,
+                      ),
+                      child: Container(
+                        child: Center(
+                          child: Text(
+                            "Update Per Match Estimated Time",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               TextButton.icon(
                 icon: Icon(

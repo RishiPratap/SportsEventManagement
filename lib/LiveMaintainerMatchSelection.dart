@@ -346,19 +346,20 @@ class _LiveMaintainerMatchSelectionState
                       child: TextButton(
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LiveMaintainer(
-                                        Tournament_ID:
-                                            matchesdata[i].TOURNAMENT_ID,
-                                        Match_Id: matchesdata[i].MATCHID,
-                                        Player_1_name:
-                                            matchesdata[i].PLAYER1_NAME,
-                                        Player_2_name:
-                                            matchesdata[i].PLAYER2_NAME,
-                                        Player1_ID: matchesdata[i].PLAYER1_ID,
-                                        Player2_ID: matchesdata[i].PLAYER2_ID,
-                                      )));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LiveMaintainer(
+                                Tournament_ID: matchesdata[i].TOURNAMENT_ID,
+                                Match_Id: matchesdata[i].MATCHID,
+                                Player_1_name: matchesdata[i].PLAYER1_NAME,
+                                Player1_Partner: matchesdata[i].PLAYER1_PARTNER,
+                                Player_2_name: matchesdata[i].PLAYER2_NAME,
+                                Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
+                                Player1_ID: matchesdata[i].PLAYER1_ID,
+                                Player2_ID: matchesdata[i].PLAYER2_ID,
+                              ),
+                            ),
+                          );
                         },
                         child: Text("Start Scoring >",
                             style: TextStyle(
