@@ -756,6 +756,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                         //one min
                                                         TextButton(
                                                           onPressed: () {
+                                                            print("pressed");
                                                             Navigator.push(
                                                                 context,
                                                                 PageTransition(
@@ -780,7 +781,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                   );
                                                 }
 
-                                                // SOCKET ON
+                                                // SOCKET  ON
                                                 socket.on('spot-clicked-return',
                                                     (data) {
                                                   Map<String, dynamic>
