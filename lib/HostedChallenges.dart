@@ -127,6 +127,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
       );
       AllTournaments.add(card);
     } else {
+      print("${array_length} is printed");
       for (int i = array_length - 1; i >= 0; i--) {
         // bool isStarted = userdata[i].STATUS;
         tounamentID = userdata[i].TOURNAMENT_ID;
@@ -688,27 +689,6 @@ class _HostedChallengesState extends State<HostedChallenges> {
           jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
       int array_length = userdata.length;
       print(userdata);
-      getAllPastHostedTournaments();
-      return getHostedTournaments(userdata, array_length);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  getAllPastHostedTournaments() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var obtianedEmail = prefs.getString('email');
-    var url =
-        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/pastTournaments?USERID=$obtianedEmail";
-    var response = await get(Uri.parse(url));
-    List<dynamic> jsonData = jsonDecode(response.body);
-
-    print(jsonData);
-    try {
-      List<UserData> userdata =
-          jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
-      int array_length = userdata.length;
-      print(userdata);
       return getHostedTournaments(userdata, array_length);
     } catch (e) {
       print(e);
@@ -718,8 +698,6 @@ class _HostedChallengesState extends State<HostedChallenges> {
   void initState() {
     super.initState();
     futures = getAllHostedTournaments();
-
-    // futures_past_hosted_challenges = getAllPastHostedTournaments();
   }
 
   Future<Null> _refreshScreen() async {
