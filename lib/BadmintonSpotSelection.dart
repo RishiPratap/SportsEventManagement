@@ -397,7 +397,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                   .body);
                                                               if (jsonData1[
                                                                       "Message"] ==
-                                                                  "Player added") {
+                                                                  "Added a player") {
                                                                 debugPrint(
                                                                     "EmailFromSocket: $obtianedEmail");
                                                                 debugPrint(
@@ -679,7 +679,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                   jsonDecode(response.body);
                                               print(response.body);
                                               if (jsonData1["Message"] ==
-                                                  "Player added") {
+                                                  "Added a player") {
                                                 debugPrint(
                                                     "EmailFromSocket: $obtianedEmail");
                                                 debugPrint(
