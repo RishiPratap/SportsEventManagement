@@ -102,7 +102,9 @@ class LiveMaintainer extends StatefulWidget {
   final String Tournament_ID;
   final String Match_Id;
   final String Player_1_name;
+  final String Player1_Partner;
   final String Player_2_name;
+  final String Player2_Partner;
   final String Player1_ID;
   final String Player2_ID;
   const LiveMaintainer(
@@ -110,7 +112,9 @@ class LiveMaintainer extends StatefulWidget {
       required this.Tournament_ID,
       required this.Match_Id,
       required this.Player_1_name,
+      required this.Player1_Partner,
       required this.Player_2_name,
+      required this.Player2_Partner,
       required this.Player1_ID,
       required this.Player2_ID})
       : super(key: key);
@@ -278,6 +282,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player_1_name,
                                                           Player_2_name: widget
                                                               .Player_2_name,
+                                                          Player1_Partner: widget
+                                                              .Player1_Partner,
+                                                          Player2_Partner: widget
+                                                              .Player2_Partner,
                                                         );
                                                         ;
                                                       });
@@ -306,6 +314,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player_1_name,
                                                           Player_2_name: widget
                                                               .Player_2_name,
+                                                          Player1_Partner: widget
+                                                              .Player1_Partner,
+                                                          Player2_Partner: widget
+                                                              .Player2_Partner,
                                                         );
                                                       });
                                                 },
@@ -333,6 +345,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player_1_name,
                                                           Player_2_name: widget
                                                               .Player_2_name,
+                                                          Player1_Partner: widget
+                                                              .Player1_Partner,
+                                                          Player2_Partner: widget
+                                                              .Player2_Partner,
                                                         );
                                                       });
                                                 },
@@ -373,7 +389,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 color: Color(0xff252626),
                                                 child: Center(
                                                   child: Text(
-                                                      "${widget.Player_1_name}"),
+                                                      "${widget.Player_1_name}\n${widget.Player1_Partner}"),
                                                 ),
                                               ),
                                             ),
@@ -445,7 +461,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 color: Color(0xff252626),
                                                 child: Center(
                                                   child: Text(
-                                                      "${widget.Player_2_name}"),
+                                                      "${widget.Player_2_name}\n${widget.Player2_Partner}"),
                                                 ),
                                               ),
                                             ),
@@ -812,12 +828,16 @@ class Editbutton1 extends StatefulWidget {
   final String Match_Id;
   final String Player_1_name;
   final String Player_2_name;
+  final String Player1_Partner;
+  final String Player2_Partner;
   const Editbutton1(
       {Key? key,
       required this.Tournament_Id,
       required this.Match_Id,
       required this.Player_1_name,
-      required this.Player_2_name})
+      required this.Player_2_name,
+      required this.Player1_Partner,
+      required this.Player2_Partner})
       : super(key: key);
 
   @override
@@ -980,7 +1000,9 @@ class _Editbutton1State extends State<Editbutton1> {
                             Tournament_ID: widget.Tournament_Id,
                             Match_Id: widget.Match_Id,
                             Player_1_name: widget.Player_1_name,
+                            Player1_Partner: widget.Player1_Partner,
                             Player_2_name: widget.Player_2_name,
+                            Player2_Partner: widget.Player2_Partner,
                             Player1_ID: "",
                             Player2_ID: "",
                           ),
@@ -1026,12 +1048,16 @@ class Editbutton2 extends StatefulWidget {
   final String Match_Id;
   final String Player_1_name;
   final String Player_2_name;
+  final String Player1_Partner;
+  final String Player2_Partner;
   const Editbutton2(
       {Key? key,
       required this.Tournament_ID,
       required this.Match_Id,
       required this.Player_1_name,
-      required this.Player_2_name})
+      required this.Player_2_name,
+      required this.Player1_Partner,
+      required this.Player2_Partner})
       : super(key: key);
 
   @override
@@ -1197,7 +1223,9 @@ class _Editbutton2State extends State<Editbutton2> {
                             Tournament_ID: widget.Tournament_ID,
                             Match_Id: widget.Match_Id,
                             Player_1_name: widget.Player_1_name,
+                            Player1_Partner: widget.Player1_Partner,
                             Player_2_name: widget.Player_2_name,
+                            Player2_Partner: widget.Player2_Partner,
                             Player1_ID: "",
                             Player2_ID: "",
                           ),
@@ -1244,13 +1272,17 @@ class Editbutton3 extends StatefulWidget {
   final String Match_Id;
   final String Player_1_name;
   final String Player_2_name;
-  const Editbutton3(
-      {Key? key,
-      required this.Tournament_ID,
-      required this.Match_Id,
-      required this.Player_1_name,
-      required this.Player_2_name})
-      : super(key: key);
+  final String Player1_Partner;
+  final String Player2_Partner;
+  const Editbutton3({
+    Key? key,
+    required this.Tournament_ID,
+    required this.Match_Id,
+    required this.Player_1_name,
+    required this.Player_2_name,
+    required this.Player1_Partner,
+    required this.Player2_Partner,
+  }) : super(key: key);
   @override
   State<Editbutton3> createState() => _Editbutton3State();
 }
@@ -1409,7 +1441,9 @@ class _Editbutton3State extends State<Editbutton3> {
                               Tournament_ID: widget.Tournament_ID,
                               Match_Id: widget.Match_Id,
                               Player_1_name: widget.Player_1_name,
+                              Player1_Partner: widget.Player1_Partner,
                               Player_2_name: widget.Player_2_name,
+                              Player2_Partner: widget.Player2_Partner,
                               Player1_ID: "",
                               Player2_ID: "",
                             ),

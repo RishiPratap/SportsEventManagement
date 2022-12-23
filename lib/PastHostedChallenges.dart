@@ -131,7 +131,6 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                           ? Color(0xff6BB8FF)
                           : Color(0xff03C289),
                       child: Container(
-                        margin: EdgeInsets.only(top: deviceWidth * 0.021),
                         child: Row(
                           children: [
                             SizedBox(
@@ -159,16 +158,16 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  userdata[i].TOURNAMENT_NAME.length >= 15
+                                  userdata[i].TOURNAMENT_NAME.length > 25
                                       ? userdata[i]
                                               .TOURNAMENT_NAME
-                                              .substring(0, 12) +
+                                              .substring(0, 25) +
                                           '...'
                                       : userdata[i].TOURNAMENT_NAME,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: deviceWidth * 0.027,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: deviceWidth * 0.035,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.black),
                                 ),
                                 SizedBox(
@@ -177,7 +176,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                                 Text(
                                   userdata[i].CITY,
                                   style: TextStyle(
-                                    fontSize: deviceWidth * 0.027,
+                                    fontSize: deviceWidth * 0.035,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
