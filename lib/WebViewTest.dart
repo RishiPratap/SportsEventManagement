@@ -6,7 +6,12 @@ import 'HomePage.dart';
 class WebViewTest extends StatefulWidget {
   final String Tourney_id;
   final String? userId;
-  const WebViewTest({Key? key, required this.Tourney_id, required this.userId})
+  final String SpotNo;
+  const WebViewTest(
+      {Key? key,
+      required this.Tourney_id,
+      required this.userId,
+      required this.SpotNo})
       : super(key: key);
 
   @override
