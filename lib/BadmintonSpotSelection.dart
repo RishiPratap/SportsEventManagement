@@ -424,8 +424,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                   socket.emit(
                                                                       'spot-clicked',
                                                                       json_tournamentid);
-                                                                  print(widget
-                                                                      .sport);
+
                                                                   Navigator
                                                                       .push(
                                                                     context,

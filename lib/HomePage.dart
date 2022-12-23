@@ -700,7 +700,6 @@ class _HomePageState extends State<HomePage> {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              print("pressed");
                               Get.to(Profile(
                                 name: mapUserInfo?['Name'],
                                 points: mapUserInfo?['Points'],
