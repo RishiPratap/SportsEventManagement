@@ -136,8 +136,8 @@ class Search {
 class addPartner {
   late String TOURNAMENT_ID;
   late String SPOT_NUMBER;
-  late String PLAYER_1;
-  late String PLAYER_2;
+  String? PLAYER_1;
+  String PLAYER_2;
 
   addPartner(
       {required this.TOURNAMENT_ID,
@@ -445,7 +445,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                         tournament_id:
                                                                             widget.tourneyId,
                                                                         userEmail:
-                                                                            obtianedEmail!,
+                                                                            obtianedEmail,
                                                                         sport: widget
                                                                             .sport,
                                                                         color: widget.sport ==
@@ -655,7 +655,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                           widget.tourneyId,
                                                       SPOT_NUMBER:
                                                           (i - 1).toString(),
-                                                      PLAYER_1: obtianedEmail!,
+                                                      PLAYER_1: obtianedEmail,
                                                       PLAYER_2: "N/A");
                                               final addPlayerDetailsMap =
                                                   addPlayerDetails.toMap();
@@ -715,8 +715,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                             (i - 1).toString(),
                                                         tournament_id:
                                                             widget.tourneyId,
-                                                        userEmail:
-                                                            obtianedEmail!,
+                                                        userEmail: finalEmail,
                                                         sport: widget.sport,
                                                         color: widget.sport ==
                                                                 'Badminton'
@@ -886,7 +885,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                         socket: socket,
                         btnId: (i - 1).toString(),
                         tournament_id: widget.tourneyId,
-                        userEmail: obtianedEmail!,
+                        userEmail: obtianedEmail,
                         sport: widget.sport,
                         color: widget.sport == 'Badminton'
                             ? Color(0xff6BB8FF)

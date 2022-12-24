@@ -1,11 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
-// import 'Payment.dart';
 import 'package:ardent_sports/Payment.dart';
-import 'package:ardent_sports/ticket.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -29,7 +24,7 @@ class jsonSpotNumber {
 
 class SpotConfirmation extends StatefulWidget {
   final String SpotNo;
-  final String userEmail;
+  String? userEmail;
   final String tournament_id;
   final String Date;
   final Socket socket;
@@ -87,10 +82,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
     response = await http.get(Uri.parse(
         'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getConfirmationDetails?USERID=${widget.userEmail}&TOURNAMENT_ID=${widget.tournament_id}'));
 
+    print("userEmail: ${widget.userEmail}");
+    print("tournament_id: ${widget.tournament_id}");
+
     if (response.statusCode == 200) {
       setState(() {
         mapUserResponse = json.decode(response.body);
-        print(response.body);
+        print("ResponseBody:${response.body}");
       });
     }
   }
@@ -204,7 +202,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                         height: deviceWidth * 0.08,
                         child: RichText(
                             text: TextSpan(children: <TextSpan>[
-                          TextSpan(
+                          const TextSpan(
                               text: "Name : ",
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(
