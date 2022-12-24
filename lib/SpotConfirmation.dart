@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:ardent_sports/Payment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -78,13 +81,11 @@ Map? mapUserResponse;
 
 class _SpotConfirmationState extends State<SpotConfirmation> {
   Future fetchUser() async {
+    print("${widget.userEmail} ${widget.tournament_id}");
     http.Response response;
     response = await http.get(Uri.parse(
         'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getConfirmationDetails?USERID=${widget.userEmail}&TOURNAMENT_ID=${widget.tournament_id}'));
-
-    print("userEmail: ${widget.userEmail}");
-    print("tournament_id: ${widget.tournament_id}");
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
       setState(() {
         mapUserResponse = json.decode(response.body);
@@ -95,6 +96,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
 
   @override
   void initState() {
+    print("${widget.userEmail} okoko");
     fetchUser();
     super.initState();
   }

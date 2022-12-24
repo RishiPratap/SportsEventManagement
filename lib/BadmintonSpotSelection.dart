@@ -715,7 +715,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                             (i - 1).toString(),
                                                         tournament_id:
                                                             widget.tourneyId,
-                                                        userEmail: finalEmail,
+                                                        userEmail:
+                                                            obtianedEmail,
                                                         sport: widget.sport,
                                                         color: widget.sport ==
                                                                 'Badminton'

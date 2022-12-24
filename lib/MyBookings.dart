@@ -356,6 +356,7 @@ class _MyBookings extends State<MyBookings> {
                           var response = await get(Uri.parse(url));
                           Map<String, dynamic> jsonData =
                               jsonDecode(response.body);
+                          EasyLoading.dismiss();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
