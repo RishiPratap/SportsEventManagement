@@ -717,7 +717,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                         tournament_id:
                                                             widget.tourneyId,
                                                         userEmail:
-                                                            obtianedEmail!,
+                                                            obtianedEmail,
                                                         sport: widget.sport,
                                                         color: widget.sport ==
                                                                 'Badminton'
