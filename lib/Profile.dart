@@ -177,6 +177,8 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     double progress = 0.5;
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
 
     Widget buildLinearProgress() => Text(
           '${(progress * 100).toStringAsFixed(0)}/100',
@@ -564,27 +566,163 @@ class _ProfileState extends State<Profile> {
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     Container(
+                      width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.16,
                       decoration: BoxDecoration(
-                        color: Color(0xFFDD3562),
-                        borderRadius: BorderRadius.all(Radius.circular(
-                            MediaQuery.of(context).size.height * 0.03)),
-                      ),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.028),
+                          color: Colors.pinkAccent),
                       child: Column(
                         children: [
-                          Expanded(
-                            flex: 2,
-                            child: Center(
-                              child: Container(
-                                  child: Text(
-                                "Analytics",
-                                style: TextStyle(
-                                    fontFamily: 'SNAP_ITC', fontSize: 22),
-                              )),
-                            ),
+                          Center(
+                            child: Container(
+                                margin: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context).size.height *
+                                        0.0085),
+                                child: Text(
+                                  "Analytics",
+                                  style: TextStyle(
+                                      fontFamily: 'SNAP_ITC', fontSize: 22),
+                                )),
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: deviceWidth * 0.25,
+                                height: deviceWidth * 0.23,
+                                margin:
+                                    EdgeInsets.only(left: deviceWidth * 0.028),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(deviceWidth * 0.014),
+                                    ),
+                                    color: Colors.black.withOpacity(0.6)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          top: deviceWidth * 0.028),
+                                      child: Text(
+                                        "Points",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          bottom: deviceWidth * 0.028),
+                                      child: Text(
+                                        "3600",
+                                        style: TextStyle(
+                                            fontFamily: 'SNAP_ITC',
+                                            fontSize: 15),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: deviceWidth * 0.25,
+                                height: deviceWidth * 0.23,
+                                margin:
+                                    EdgeInsets.only(left: deviceWidth * 0.028),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(deviceWidth * 0.014),
+                                    ),
+                                    color: Colors.black.withOpacity(0.6)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          top: deviceWidth * 0.028),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Tournaments",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Won",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          bottom: deviceWidth * 0.028),
+                                      child: Text(
+                                        "3600",
+                                        style: TextStyle(
+                                            fontFamily: 'SNAP_ITC',
+                                            fontSize: 15),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: deviceWidth * 0.25,
+                                height: deviceWidth * 0.23,
+                                margin:
+                                    EdgeInsets.only(left: deviceWidth * 0.028),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(deviceWidth * 0.014),
+                                    ),
+                                    color: Colors.black.withOpacity(0.6)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          top: deviceWidth * 0.028),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Tournaments",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Played",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          bottom: deviceWidth * 0.028),
+                                      child: Text(
+                                        "3600",
+                                        style: TextStyle(
+                                            fontFamily: 'SNAP_ITC',
+                                            fontSize: 15),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
                           // Expanded(
-                          //   flex: 3,
+                          //   flex: 1,
                           //   child: Center(
                           //     child: Opacity(
                           //       opacity: 0.2,
