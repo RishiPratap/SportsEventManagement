@@ -3,7 +3,6 @@
 import 'dart:io';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +17,20 @@ class Profile extends StatefulWidget {
   final String? pointsScored;
   final String? totalPoints;
   final String? level;
-  const Profile(
-      {Key? key,
-      required this.name,
-      required this.points,
-      required this.pointsScored,
-      required this.totalPoints,
-      required this.level})
-      : super(key: key);
+  final String? totalTourney;
+  final String? tourneyWon;
+  final String? email;
+  const Profile({
+    Key? key,
+    required this.name,
+    required this.points,
+    required this.pointsScored,
+    required this.totalPoints,
+    required this.level,
+    required this.totalTourney,
+    required this.tourneyWon,
+    required this.email,
+  }) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -166,22 +171,26 @@ class _ProfileState extends State<Profile> {
         context,
         PageRouteBuilder(
             pageBuilder: (a, b, c) => Profile(
-                  points: widget.points,
                   name: widget.name,
+                  points: widget.points,
                   pointsScored: widget.pointsScored,
                   totalPoints: widget.totalPoints,
                   level: widget.level,
+                  totalTourney: widget.totalTourney,
+                  tourneyWon: widget.tourneyWon,
+                  email: widget.email,
                 )));
   }
 
   @override
   Widget build(BuildContext context) {
-    double progress = 0.5;
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
 
+    double progress = double.parse(widget.points!);
+
     Widget buildLinearProgress() => Text(
-          '${(progress * 100).toStringAsFixed(0)}/100',
+          '${(progress * 100).toStringAsFixed(0)}/${widget.totalPoints}',
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -296,9 +305,20 @@ class _ProfileState extends State<Profile> {
                                         Expanded(
                                           child: Center(
                                             child: Container(
+                                              child: Text(
+                                                "${widget.email}",
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Center(
+                                            child: Container(
                                                 child: Text(
                                               "Play Bold BE Ardent",
                                               style: TextStyle(
+                                                  fontFamily: 'SNAP_ITC',
                                                   fontSize:
                                                       MediaQuery.of(context)
                                                               .size
@@ -396,7 +416,7 @@ class _ProfileState extends State<Profile> {
                             child: Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Text(
-                                  "Level:5",
+                                  "Level:${widget.level}",
                                   style: TextStyle(
                                     fontFamily: 'SNAP_ITC',
                                     fontSize: 22,
@@ -424,13 +444,18 @@ class _ProfileState extends State<Profile> {
                                             fit: StackFit.expand,
                                             // ignore: prefer_const_literals_to_create_immutables
                                             children: [
-                                              LinearProgressIndicator(
-                                                value: progress,
-                                                backgroundColor: Color.fromARGB(
-                                                    255, 55, 54, 54),
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.green),
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15.0)),
+                                                child: LinearProgressIndicator(
+                                                  value: progress,
+                                                  backgroundColor:
+                                                      Color.fromARGB(
+                                                          255, 55, 54, 54),
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.green),
+                                                ),
                                               ),
                                               Center(
                                                   child: buildLinearProgress())
@@ -522,49 +547,49 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.16,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                            'assets/PurpRect.png',
-                          ),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Center(
-                              child: Container(
-                                  child: Text(
-                                "Missions and rewards",
-                                style: TextStyle(
-                                    fontFamily: 'SNAP_ITC', fontSize: 22),
-                              )),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Center(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  // color: Colors.black,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          MediaQuery.of(context).size.height *
-                                              0.03)),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
-                    ),
+                    // Container(
+                    //   height: MediaQuery.of(context).size.height * 0.16,
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       fit: BoxFit.cover,
+                    //       image: AssetImage(
+                    //         'assets/PurpRect.png',
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   child: Column(
+                    //     children: [
+                    //       // Expanded(
+                    //       //   flex: 2,
+                    //       //   child: Center(
+                    //       //     child: Container(
+                    //       //         child: Text(
+                    //       //       "Missions and rewards",
+                    //       //       style: TextStyle(
+                    //       //           fontFamily: 'SNAP_ITC', fontSize: 22),
+                    //       //     )),
+                    //       //   ),
+                    //       // ),
+                    //       // Expanded(
+                    //       //   flex: 3,
+                    //       //   child: Center(
+                    //       //     child: Container(
+                    //       //       decoration: BoxDecoration(
+                    //       //         // color: Colors.black,
+                    //       //         borderRadius: BorderRadius.all(
+                    //       //             Radius.circular(
+                    //       //                 MediaQuery.of(context).size.height *
+                    //       //                     0.03)),
+                    //       //       ),
+                    //       //     ),
+                    //       //   ),
+                    //       // )
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: MediaQuery.of(context).size.height * 0.01,
+                    // ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.16,
@@ -616,7 +641,7 @@ class _ProfileState extends State<Profile> {
                                       margin: EdgeInsets.only(
                                           bottom: deviceWidth * 0.028),
                                       child: Text(
-                                        "3600",
+                                        widget.pointsScored.toString(),
                                         style: TextStyle(
                                             fontFamily: 'SNAP_ITC',
                                             fontSize: 15),
@@ -663,7 +688,7 @@ class _ProfileState extends State<Profile> {
                                       margin: EdgeInsets.only(
                                           bottom: deviceWidth * 0.028),
                                       child: Text(
-                                        "3600",
+                                        widget.tourneyWon.toString(),
                                         style: TextStyle(
                                             fontFamily: 'SNAP_ITC',
                                             fontSize: 15),
@@ -710,7 +735,7 @@ class _ProfileState extends State<Profile> {
                                       margin: EdgeInsets.only(
                                           bottom: deviceWidth * 0.028),
                                       child: Text(
-                                        "3600",
+                                        widget.totalTourney.toString(),
                                         style: TextStyle(
                                             fontFamily: 'SNAP_ITC',
                                             fontSize: 15),

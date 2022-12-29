@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
@@ -588,10 +590,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Map? mapUserInfo;
+  dynamic email;
 
   Future _getDetails() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var email = prefs.getString('email');
+    email = prefs.getString('email');
     final uri =
         'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/userDetails?USERID=${email!.trim()}';
 
@@ -624,6 +627,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
+
+    double progress = double.parse(
+      mapUserInfo?['Points'] ?? '0',
+    );
+
+    String totalPoints = mapUserInfo?['TotalPoints'] ?? '0';
+
+    Widget buildLinearProgressIndicator() => Text(
+          '${(progress * 100).toStringAsFixed(0)}/$totalPoints',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        );
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
@@ -696,61 +713,72 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () {
-                              Get.to(Profile(
-                                name: mapUserInfo?['Name'],
-                                points: mapUserInfo?['Points'],
-                                level: mapUserInfo?['Level'],
-                                pointsScored: mapUserInfo?['PointsScored'],
-                                totalPoints: mapUserInfo?['TotalPoints'],
-                              ));
-                            },
-                            child: Container(
-                              width: deviceWidth * 0.08,
-                              height: deviceHeight * 0.05,
-                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/Profile_Image.png"),
-                                      fit: BoxFit.fitHeight)),
-                            ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(Profile(
+                              name: mapUserInfo?['Name'],
+                              email: email,
+                              level: mapUserInfo?['Level'],
+                              pointsScored: mapUserInfo?['PointsScored'],
+                              points: mapUserInfo?['Points'],
+                              totalPoints: mapUserInfo?['TotalPoints'],
+                              totalTourney: mapUserInfo?['TOTAL_TOURNAMENTS'],
+                              tourneyWon: mapUserInfo?['TROPHIES'],
+                            ));
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: deviceWidth * 0.10,
+                                height: deviceHeight * 0.05,
+                                margin:
+                                    EdgeInsets.only(left: deviceWidth * 0.02),
+                                padding:
+                                    EdgeInsets.only(left: deviceWidth * 0.02),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/Profile_Image.png"),
+                                        fit: BoxFit.fitHeight)),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: deviceWidth * 0.02,
+                                ),
+                                child: Text(
+                                    "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}"),
+                              )
+                            ],
                           ),
                         ),
-                        Expanded(
-                          flex: 5,
-                          child: Container(
-                            width: double.infinity,
-                          ),
+                        SizedBox(
+                          width: deviceWidth * 0.09,
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            margin: EdgeInsets.only(right: deviceWidth * 0.05),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                  "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}"),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: Container(
-                            width: double.infinity,
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0)),
+                                child: LinearProgressIndicator(
+                                  value: progress,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 55, 54, 54),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.green),
+                                ),
+                              ),
+                              Center(child: buildLinearProgressIndicator())
+                            ],
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: deviceWidth * 0.083333,
+                      height: deviceHeight * 0.02,
                     ),
                     FutureBuilder(
                       future: futures,
