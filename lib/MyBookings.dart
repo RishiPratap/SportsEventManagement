@@ -349,7 +349,6 @@ class _MyBookings extends State<MyBookings> {
                               maskType: EasyLoadingMaskType.black);
                           final prefs = await SharedPreferences.getInstance();
                           var id = prefs.getString('email');
-
                           var obtianedEmail = prefs.getString('email');
                           var url =
                               "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/ticket?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}&USERID=$obtianedEmail";
