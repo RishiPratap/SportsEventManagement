@@ -749,7 +749,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       height: deviceWidth * 0.06,
                     ),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                             margin: EdgeInsets.fromLTRB(

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/LiveMaintainerBadminton.dart';
 import 'package:ardent_sports/LiveMaintainerTableTennis.dart';
+import 'package:ardent_sports/WebViewLiveMaintainerPreviewFixture.dart';
 import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -586,7 +587,7 @@ class _LiveMaintainerMatchSelectionState
                       onPressed: () async {
                         final prefs = await SharedPreferences.getInstance();
                         var email = prefs.getString('email');
-                        Get.to(WebViewTest(
+                        Get.to(WebViewLiveMaintainerPreviewFixture(
                           Tourney_id: widget.Tournament_id,
                           userId: email,
                           SpotNo: "1",
