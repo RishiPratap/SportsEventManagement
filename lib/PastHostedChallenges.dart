@@ -304,12 +304,12 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                         image: AssetImage("assets/Location.png"),
                       ),
                     ),
-                    Text(
-                      userdata[i].LOCATION.length > 20
-                          ? userdata[i].LOCATION.substring(0, 12) + '...'
-                          : userdata[i].LOCATION,
-                      style: TextStyle(
-                          color: Colors.white, fontSize: deviceWidth * 0.03),
+                    Expanded(
+                      child: Text(
+                        userdata[i].LOCATION,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: deviceWidth * 0.03),
+                      ),
                     ),
                   ],
                 ),

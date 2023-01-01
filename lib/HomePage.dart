@@ -171,62 +171,58 @@ class _HomePageState extends State<HomePage> {
                   color: userdata[i].SPORT == 'Badminton'
                       ? Color(0xff6BB8FF)
                       : Color(0xff03C289),
-                  child: Container(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: deviceWidth * 0.03,
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          height: deviceHeight * 0.09,
-                          width: deviceWidth * 0.09,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.transparent.withOpacity(0.6),
-                              backgroundBlendMode: BlendMode.darken),
-                          child: Image(
-                            image: NetworkImage(userdata[i].IMG_URL),
-                            height: deviceWidth * 0.04,
-                            width: deviceWidth * 0.04,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: deviceWidth * 0.03,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        height: deviceHeight * 0.09,
+                        width: deviceWidth * 0.09,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.transparent.withOpacity(0.6),
+                            backgroundBlendMode: BlendMode.darken),
+                        child: Image(
+                          image: NetworkImage(userdata[i].IMG_URL),
+                          height: deviceWidth * 0.04,
                           width: deviceWidth * 0.04,
+                          fit: BoxFit.cover,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              userdata[i].TOURNAMENT_NAME.length > 25
-                                  ? userdata[i]
-                                          .TOURNAMENT_NAME
-                                          .substring(0, 25) +
-                                      '...'
-                                  : userdata[i].TOURNAMENT_NAME,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: deviceWidth * 0.035,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            SizedBox(
-                              height: deviceWidth * 0.01,
-                            ),
-                            Text(
-                              userdata[i].CITY,
-                              style: TextStyle(
+                      ),
+                      SizedBox(
+                        width: deviceWidth * 0.04,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            userdata[i].TOURNAMENT_NAME.length > 30
+                                ? userdata[i].TOURNAMENT_NAME.substring(0, 30) +
+                                    '...'
+                                : userdata[i].TOURNAMENT_NAME,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
                                 fontSize: deviceWidth * 0.035,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: deviceWidth * 0.01,
+                          ),
+                          Text(
+                            userdata[i].CITY,
+                            style: TextStyle(
+                              fontSize: deviceWidth * 0.035,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -631,6 +627,7 @@ class _HomePageState extends State<HomePage> {
     double progress = double.parse(
       mapUserInfo?['Points'] ?? '0',
     );
+    String Level = mapUserInfo?['Level'] ?? '0';
 
     String totalPoints = mapUserInfo?['TotalPoints'] ?? '0';
 
@@ -754,26 +751,41 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           width: deviceWidth * 0.09,
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0)),
-                                child: LinearProgressIndicator(
-                                  value: progress,
-                                  backgroundColor:
-                                      Color.fromARGB(255, 55, 54, 54),
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.green),
+                        Column(
+                          children: [
+                            Container(
+                              margin:
+                                  EdgeInsets.only(bottom: deviceWidth * 0.028),
+                              child: Text(
+                                "Level :${Level!}",
+                                style: TextStyle(
+                                  fontFamily: 'SNAP_ITC',
+                                  fontSize: 15,
                                 ),
                               ),
-                              Center(child: buildLinearProgressIndicator())
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.03,
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15.0)),
+                                    child: LinearProgressIndicator(
+                                      value: progress,
+                                      backgroundColor:
+                                          Color.fromARGB(255, 55, 54, 54),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.green),
+                                    ),
+                                  ),
+                                  Center(child: buildLinearProgressIndicator())
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
