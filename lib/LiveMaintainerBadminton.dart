@@ -20,12 +20,13 @@ var update_score_2_second = 0;
 var update_score_3_first = 0;
 var update_score_3_second = 0;
 
-var score_1_first = 0;
-var score_2_first = 0;
-var score_3_first = 0;
-var score_1_second = 0;
-var score_2_second = 0;
-var score_3_second = 0;
+// var score_1_first = 0;
+// var score_2_first = 0;
+// var score_3_first = 0;
+// var score_1_second = 0;
+// var score_2_second = 0;
+// var score_3_second = 0;
+
 late Socket socket;
 
 class player_score {
@@ -571,13 +572,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        if ((score_1_first > score_1_second && score_2_first > score_2_second) ||
-                                            (score_1_first > score_1_second &&
-                                                score_3_first >
-                                                    score_3_second) ||
-                                            (score_2_first > score_2_second &&
-                                                score_3_first >
-                                                    score_3_second)) {
+                                        if ((widget.player1_set_1 >
+                                                    widget.player2_set_1 &&
+                                                widget.player1_set_2 >
+                                                    widget.player2_set_2) ||
+                                            (widget.player1_set_1 >
+                                                    widget.player2_set_1 &&
+                                                widget.player1_set_3 >
+                                                    widget.player2_set_3) ||
+                                            (widget.player1_set_2 >
+                                                    widget.player2_set_2 &&
+                                                widget.player1_set_3 >
+                                                    widget.player2_set_3)) {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -590,6 +596,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                             .Player_1_name,
                                                         p2_name: widget
                                                             .Player_2_name,
+                                                        player1_set_1: widget
+                                                            .player1_set_1,
+                                                        player1_set_2: widget
+                                                            .player1_set_2,
+                                                        player1_set_3: widget
+                                                            .player1_set_3,
+                                                        player2_set_1: widget
+                                                            .player2_set_1,
+                                                        player2_set_2: widget
+                                                            .player2_set_2,
+                                                        player2_set_3: widget
+                                                            .player2_set_3,
                                                       )));
                                         } else {
                                           Navigator.pushReplacement(
@@ -604,6 +622,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                             .Player_1_name,
                                                         p2_name: widget
                                                             .Player_2_name,
+                                                        player1_set_1: widget
+                                                            .player1_set_1,
+                                                        player1_set_2: widget
+                                                            .player1_set_2,
+                                                        player1_set_3: widget
+                                                            .player1_set_3,
+                                                        player2_set_1: widget
+                                                            .player2_set_1,
+                                                        player2_set_2: widget
+                                                            .player2_set_2,
+                                                        player2_set_3: widget
+                                                            .player2_set_3,
                                                       )));
                                         }
                                       },
@@ -1037,8 +1067,8 @@ class _Editbutton1State extends State<Editbutton1> {
                 Container(
                   child: TextButton(
                     onPressed: () {
-                      score_1_first = update_score_1_first;
-                      score_1_second = update_score_1_second;
+                      // score_1_first = update_score_1_first;
+                      // score_1_second = update_score_1_second;
                       final Score = Score_LiveMaintainer(
                           PLAYER_1_SCORE: update_score_1_first.toString(),
                           PLAYER_2_SCORE: update_score_1_second.toString(),
@@ -1281,8 +1311,8 @@ class _Editbutton2State extends State<Editbutton2> {
                   child: TextButton(
                     onPressed: () {
                       setState(() {
-                        score_2_first = update_score_2_first;
-                        score_2_second = update_score_2_second;
+                        // score_2_first = update_score_2_first;
+                        // score_2_second = update_score_2_second;
                         super.deactivate();
                       });
                       final Score = Score_LiveMaintainer(
@@ -1520,8 +1550,8 @@ class _Editbutton3State extends State<Editbutton3> {
                   child: TextButton(
                     onPressed: () {
                       setState(() {
-                        score_3_first = update_score_3_first;
-                        score_3_second = update_score_3_second;
+                        // score_3_first = update_score_3_first;
+                        // score_3_second = update_score_3_second;
                         final Score = Score_LiveMaintainer(
                             PLAYER_1_SCORE: update_score_3_first.toString(),
                             PLAYER_2_SCORE: update_score_3_second.toString(),
@@ -1593,13 +1623,25 @@ class Submit extends StatefulWidget {
   final String Tournament_ID;
   final String p1_name;
   final String p2_name;
-  const Submit(
-      {Key? key,
-      required this.Tournament_ID,
-      required this.MatchId,
-      required this.p1_name,
-      required this.p2_name})
-      : super(key: key);
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const Submit({
+    Key? key,
+    required this.Tournament_ID,
+    required this.MatchId,
+    required this.p1_name,
+    required this.p2_name,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
 
   @override
   State<Submit> createState() => _SubmitState();
@@ -1757,7 +1799,7 @@ class _SubmitState extends State<Submit> {
                                                 ),
                                                 Center(
                                                   child: Text(
-                                                    "$score_1_first",
+                                                    "${widget.player1_set_1}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontStyle:
@@ -1773,7 +1815,7 @@ class _SubmitState extends State<Submit> {
                                                 ),
                                                 Center(
                                                   child: Text(
-                                                    "${score_2_first}",
+                                                    "${widget.player1_set_2}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontStyle:
@@ -1789,7 +1831,7 @@ class _SubmitState extends State<Submit> {
                                                 ),
                                                 Center(
                                                   child: Text(
-                                                    "$score_3_first",
+                                                    "${widget.player1_set_3}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontStyle:
@@ -1851,7 +1893,7 @@ class _SubmitState extends State<Submit> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      "$score_1_second",
+                                                      "${widget.player2_set_1}",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
@@ -1867,7 +1909,7 @@ class _SubmitState extends State<Submit> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      "$score_2_second",
+                                                      "${widget.player2_set_2}",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
@@ -1883,7 +1925,7 @@ class _SubmitState extends State<Submit> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      "$score_3_second",
+                                                      "${widget.player2_set_3}",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:

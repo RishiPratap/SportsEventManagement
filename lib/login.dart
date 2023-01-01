@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/LiveMaintainer.dart';
+import 'package:ardent_sports/LiveMaintainerBadminton.dart';
 import 'package:ardent_sports/Payment.dart';
 import 'package:ardent_sports/PoolDetails.dart';
 import 'package:flutter/material.dart';
