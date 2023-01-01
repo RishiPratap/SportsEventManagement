@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/LiveMaintainerBadminton.dart';
+import 'package:ardent_sports/LiveMaintainerTableTennis.dart';
 import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -346,39 +347,87 @@ class _LiveMaintainerMatchSelectionState
                         var response = await get(Uri.parse(url));
                         Map? mapUserInfo;
                         mapUserInfo = json.decode(response.body);
-                        int player1_set_1 =
-                            mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
-                        int player1_set_2 =
-                            mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
-                        int player1_set_3 =
-                            mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
-                        int player2_set_1 =
-                            mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
-                        int player2_set_2 =
-                            mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
-                        int player2_set_3 =
-                            mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LiveMaintainer(
-                              Tournament_ID: matchesdata[i].TOURNAMENT_ID,
-                              Match_Id: matchesdata[i].MATCHID,
-                              Player_1_name: matchesdata[i].PLAYER1_NAME,
-                              Player1_Partner: matchesdata[i].PLAYER1_PARTNER,
-                              Player_2_name: matchesdata[i].PLAYER2_NAME,
-                              Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
-                              Player1_ID: matchesdata[i].PLAYER1_ID,
-                              Player2_ID: matchesdata[i].PLAYER2_ID,
-                              player1_set_1: player1_set_1,
-                              player1_set_2: player1_set_2,
-                              player1_set_3: player1_set_3,
-                              player2_set_1: player2_set_1,
-                              player2_set_2: player2_set_2,
-                              player2_set_3: player2_set_3,
+                        if (matchesdata[i].SPORT_NAME == "Badminton") {
+                          int player1_set_1 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
+                          int player1_set_2 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
+                          int player1_set_3 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
+                          int player2_set_1 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
+                          int player2_set_2 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
+                          int player2_set_3 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LiveMaintainer(
+                                Tournament_ID: matchesdata[i].TOURNAMENT_ID,
+                                Match_Id: matchesdata[i].MATCHID,
+                                Player_1_name: matchesdata[i].PLAYER1_NAME,
+                                Player1_Partner: matchesdata[i].PLAYER1_PARTNER,
+                                Player_2_name: matchesdata[i].PLAYER2_NAME,
+                                Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
+                                Player1_ID: matchesdata[i].PLAYER1_ID,
+                                Player2_ID: matchesdata[i].PLAYER2_ID,
+                                player1_set_1: player1_set_1,
+                                player1_set_2: player1_set_2,
+                                player1_set_3: player1_set_3,
+                                player2_set_1: player2_set_1,
+                                player2_set_2: player2_set_2,
+                                player2_set_3: player2_set_3,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          int player1_set_1 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
+                          int player1_set_2 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
+                          int player1_set_3 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
+                          int player1_set_4 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set4'];
+                          int player1_set_5 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set5'];
+                          int player2_set_1 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
+                          int player2_set_2 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
+                          int player2_set_3 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
+                          int player2_set_4 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set4'];
+                          int player2_set_5 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set5'];
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LiveMaintainerTableTennis(
+                                Tournament_ID: matchesdata[i].TOURNAMENT_ID,
+                                Match_Id: matchesdata[i].MATCHID,
+                                Player_1_name: matchesdata[i].PLAYER1_NAME,
+                                Player1_Partner: matchesdata[i].PLAYER1_PARTNER,
+                                Player_2_name: matchesdata[i].PLAYER2_NAME,
+                                Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
+                                Player1_ID: matchesdata[i].PLAYER1_ID,
+                                Player2_ID: matchesdata[i].PLAYER2_ID,
+                                player1_set_1: player1_set_1,
+                                player1_set_2: player1_set_2,
+                                player1_set_3: player1_set_3,
+                                player1_set_4: player1_set_4,
+                                player1_set_5: player1_set_5,
+                                player2_set_1: player2_set_1,
+                                player2_set_2: player2_set_2,
+                                player2_set_3: player2_set_3,
+                                player2_set_4: player2_set_4,
+                                player2_set_5: player2_set_5,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       child: Text("Start Scoring >",
                           style: TextStyle(

@@ -594,8 +594,12 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                             .Tournament_ID,
                                                         p1_name: widget
                                                             .Player_1_name,
+                                                        p1_partner_name: widget
+                                                            .Player1_Partner,
                                                         p2_name: widget
                                                             .Player_2_name,
+                                                        p2_partner_name: widget
+                                                            .Player2_Partner,
                                                         player1_set_1: widget
                                                             .player1_set_1,
                                                         player1_set_2: widget
@@ -620,8 +624,12 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                             .Tournament_ID,
                                                         p1_name: widget
                                                             .Player_1_name,
+                                                        p1_partner_name: widget
+                                                            .Player1_Partner,
                                                         p2_name: widget
                                                             .Player_2_name,
+                                                        p2_partner_name: widget
+                                                            .Player2_Partner,
                                                         player1_set_1: widget
                                                             .player1_set_1,
                                                         player1_set_2: widget
@@ -1622,7 +1630,9 @@ class Submit extends StatefulWidget {
   final String MatchId;
   final String Tournament_ID;
   final String p1_name;
+  final String p1_partner_name;
   final String p2_name;
+  final String p2_partner_name;
   final int player1_set_1;
   final int player1_set_2;
   final int player1_set_3;
@@ -1634,7 +1644,9 @@ class Submit extends StatefulWidget {
     required this.Tournament_ID,
     required this.MatchId,
     required this.p1_name,
+    required this.p1_partner_name,
     required this.p2_name,
+    required this.p2_partner_name,
     required this.player1_set_1,
     required this.player1_set_2,
     required this.player1_set_3,
@@ -1790,7 +1802,7 @@ class _SubmitState extends State<Submit> {
                                                     color: Color(0xff252626),
                                                     child: Center(
                                                       child: Text(
-                                                          "${widget.p1_name}"),
+                                                          "${widget.p1_name}\n${widget.p1_partner_name}"),
                                                     ),
                                                   ),
                                                 ),
@@ -1884,7 +1896,7 @@ class _SubmitState extends State<Submit> {
                                                       color: Color(0xff252626),
                                                       child: Center(
                                                         child: Text(
-                                                            "${widget.p2_name}"),
+                                                            "${widget.p2_name}\n${widget.p2_partner_name}"),
                                                       ),
                                                     ),
                                                   ),
