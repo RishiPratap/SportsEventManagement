@@ -340,7 +340,24 @@ class _LiveMaintainerMatchSelectionState
                       borderRadius: BorderRadius.circular(deviceWidth * 0.04),
                     ),
                     child: TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        var url =
+                            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/startscoring?TOURNAMENT_ID=${matchesdata[i].TOURNAMENT_ID}&MATCHID=${matchesdata[i].MATCHID}";
+                        var response = await get(Uri.parse(url));
+                        Map? mapUserInfo;
+                        mapUserInfo = json.decode(response.body);
+                        int player1_set_1 =
+                            mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
+                        int player1_set_2 =
+                            mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
+                        int player1_set_3 =
+                            mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
+                        int player2_set_1 =
+                            mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
+                        int player2_set_2 =
+                            mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
+                        int player2_set_3 =
+                            mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -353,6 +370,12 @@ class _LiveMaintainerMatchSelectionState
                               Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
                               Player1_ID: matchesdata[i].PLAYER1_ID,
                               Player2_ID: matchesdata[i].PLAYER2_ID,
+                              player1_set_1: player1_set_1,
+                              player1_set_2: player1_set_2,
+                              player1_set_3: player1_set_3,
+                              player2_set_1: player2_set_1,
+                              player2_set_2: player2_set_2,
+                              player2_set_3: player2_set_3,
                             ),
                           ),
                         );

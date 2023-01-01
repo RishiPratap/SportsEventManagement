@@ -40,6 +40,12 @@ class MyApp extends StatelessWidget {
               Player2_Partner: '',
               Player1_ID: '',
               Player2_ID: '',
+              player1_set_1: 0,
+              player1_set_2: 0,
+              player1_set_3: 0,
+              player2_set_1: 0,
+              player2_set_2: 0,
+              player2_set_3: 0,
             ),
         // '/scoreChallenge': (context) => ScoreAChallenge()
       },

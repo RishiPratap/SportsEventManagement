@@ -107,17 +107,29 @@ class LiveMaintainer extends StatefulWidget {
   final String Player2_Partner;
   final String Player1_ID;
   final String Player2_ID;
-  const LiveMaintainer(
-      {Key? key,
-      required this.Tournament_ID,
-      required this.Match_Id,
-      required this.Player_1_name,
-      required this.Player1_Partner,
-      required this.Player_2_name,
-      required this.Player2_Partner,
-      required this.Player1_ID,
-      required this.Player2_ID})
-      : super(key: key);
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const LiveMaintainer({
+    Key? key,
+    required this.Tournament_ID,
+    required this.Match_Id,
+    required this.Player_1_name,
+    required this.Player1_Partner,
+    required this.Player_2_name,
+    required this.Player2_Partner,
+    required this.Player1_ID,
+    required this.Player2_ID,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
   @override
   LiveMaintainer1 createState() => LiveMaintainer1();
 }
@@ -266,9 +278,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 onPressed: () {
                                                   print("1");
                                                   update_score_1_first =
-                                                      score_1_first;
+                                                      widget.player1_set_1;
                                                   update_score_1_second =
-                                                      score_1_second;
+                                                      widget.player2_set_1;
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -286,8 +298,19 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player1_Partner,
                                                           Player2_Partner: widget
                                                               .Player2_Partner,
+                                                          player1_set_1: widget
+                                                              .player1_set_1,
+                                                          player1_set_2: widget
+                                                              .player1_set_2,
+                                                          player1_set_3: widget
+                                                              .player1_set_3,
+                                                          player2_set_1: widget
+                                                              .player2_set_1,
+                                                          player2_set_2: widget
+                                                              .player2_set_2,
+                                                          player2_set_3: widget
+                                                              .player2_set_3,
                                                         );
-                                                        ;
                                                       });
                                                 },
                                               ),
@@ -298,9 +321,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     'assets/edit_button.png'),
                                                 onPressed: () {
                                                   update_score_2_first =
-                                                      score_2_first;
+                                                      widget.player1_set_2;
                                                   update_score_2_second =
-                                                      score_2_second;
+                                                      widget.player2_set_2;
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -318,6 +341,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player1_Partner,
                                                           Player2_Partner: widget
                                                               .Player2_Partner,
+                                                          player1_set_1: widget
+                                                              .player1_set_1,
+                                                          player1_set_2: widget
+                                                              .player1_set_2,
+                                                          player1_set_3: widget
+                                                              .player1_set_3,
+                                                          player2_set_1: widget
+                                                              .player2_set_1,
+                                                          player2_set_2: widget
+                                                              .player2_set_2,
+                                                          player2_set_3: widget
+                                                              .player2_set_3,
                                                         );
                                                       });
                                                 },
@@ -329,9 +364,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     'assets/edit_button.png'),
                                                 onPressed: () {
                                                   update_score_3_first =
-                                                      score_3_first;
+                                                      widget.player1_set_3;
                                                   update_score_3_second =
-                                                      score_3_second;
+                                                      widget.player2_set_3;
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -349,6 +384,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player1_Partner,
                                                           Player2_Partner: widget
                                                               .Player2_Partner,
+                                                          player1_set_1: widget
+                                                              .player1_set_1,
+                                                          player1_set_2: widget
+                                                              .player1_set_2,
+                                                          player1_set_3: widget
+                                                              .player1_set_3,
+                                                          player2_set_1: widget
+                                                              .player2_set_1,
+                                                          player2_set_2: widget
+                                                              .player2_set_2,
+                                                          player2_set_3: widget
+                                                              .player2_set_3,
                                                         );
                                                       });
                                                 },
@@ -395,7 +442,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_1_first",
+                                                "${widget.player1_set_1}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -406,7 +453,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "${score_2_first}",
+                                                "${widget.player1_set_2}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -417,7 +464,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_3_first",
+                                                "${widget.player1_set_3}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -467,7 +514,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_1_second",
+                                                "${widget.player2_set_1}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -478,7 +525,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_2_second",
+                                                "${widget.player2_set_2}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -489,7 +536,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_3_second",
+                                                "${widget.player2_set_3}",
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -830,15 +877,27 @@ class Editbutton1 extends StatefulWidget {
   final String Player_2_name;
   final String Player1_Partner;
   final String Player2_Partner;
-  const Editbutton1(
-      {Key? key,
-      required this.Tournament_Id,
-      required this.Match_Id,
-      required this.Player_1_name,
-      required this.Player_2_name,
-      required this.Player1_Partner,
-      required this.Player2_Partner})
-      : super(key: key);
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const Editbutton1({
+    Key? key,
+    required this.Tournament_Id,
+    required this.Match_Id,
+    required this.Player_1_name,
+    required this.Player_2_name,
+    required this.Player1_Partner,
+    required this.Player2_Partner,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
 
   @override
   State<Editbutton1> createState() => _Editbutton1State();
@@ -1005,6 +1064,12 @@ class _Editbutton1State extends State<Editbutton1> {
                             Player2_Partner: widget.Player2_Partner,
                             Player1_ID: "",
                             Player2_ID: "",
+                            player1_set_1: update_score_1_first,
+                            player1_set_2: widget.player1_set_2,
+                            player1_set_3: widget.player1_set_3,
+                            player2_set_1: update_score_1_second,
+                            player2_set_2: widget.player2_set_2,
+                            player2_set_3: widget.player2_set_3,
                           ),
                         ),
                       );
@@ -1050,15 +1115,27 @@ class Editbutton2 extends StatefulWidget {
   final String Player_2_name;
   final String Player1_Partner;
   final String Player2_Partner;
-  const Editbutton2(
-      {Key? key,
-      required this.Tournament_ID,
-      required this.Match_Id,
-      required this.Player_1_name,
-      required this.Player_2_name,
-      required this.Player1_Partner,
-      required this.Player2_Partner})
-      : super(key: key);
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const Editbutton2({
+    Key? key,
+    required this.Tournament_ID,
+    required this.Match_Id,
+    required this.Player_1_name,
+    required this.Player_2_name,
+    required this.Player1_Partner,
+    required this.Player2_Partner,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
 
   @override
   State<Editbutton2> createState() => _Editbutton2State();
@@ -1228,6 +1305,12 @@ class _Editbutton2State extends State<Editbutton2> {
                             Player2_Partner: widget.Player2_Partner,
                             Player1_ID: "",
                             Player2_ID: "",
+                            player1_set_1: widget.player1_set_1,
+                            player1_set_2: update_score_2_first,
+                            player1_set_3: widget.player1_set_3,
+                            player2_set_1: widget.player2_set_1,
+                            player2_set_2: update_score_2_second,
+                            player2_set_3: widget.player2_set_3,
                           ),
                         ),
                       );
@@ -1274,6 +1357,12 @@ class Editbutton3 extends StatefulWidget {
   final String Player_2_name;
   final String Player1_Partner;
   final String Player2_Partner;
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
   const Editbutton3({
     Key? key,
     required this.Tournament_ID,
@@ -1282,6 +1371,12 @@ class Editbutton3 extends StatefulWidget {
     required this.Player_2_name,
     required this.Player1_Partner,
     required this.Player2_Partner,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
   }) : super(key: key);
   @override
   State<Editbutton3> createState() => _Editbutton3State();
@@ -1446,6 +1541,12 @@ class _Editbutton3State extends State<Editbutton3> {
                               Player2_Partner: widget.Player2_Partner,
                               Player1_ID: "",
                               Player2_ID: "",
+                              player1_set_1: widget.player1_set_1,
+                              player1_set_2: widget.player1_set_2,
+                              player1_set_3: update_score_3_first,
+                              player2_set_1: widget.player2_set_1,
+                              player2_set_2: widget.player2_set_2,
+                              player2_set_3: update_score_3_second,
                             ),
                           ),
                         ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
