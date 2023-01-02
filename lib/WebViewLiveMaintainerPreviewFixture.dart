@@ -46,7 +46,7 @@ class _WebViewLiveMaintainerPreviewFixtureState
         ),
         body: WebView(
           initialUrl:
-              'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getLivFixtures?TOURNAMENT_ID=TT890288-MS-U19',
+              'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getLivFixtures?TOURNAMENT_ID=${widget.Tourney_id}',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (controller) => _controller = controller,
         ),
