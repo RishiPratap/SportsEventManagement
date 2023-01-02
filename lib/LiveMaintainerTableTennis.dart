@@ -1901,7 +1901,7 @@ class EditbuttonTableTennis4 extends StatefulWidget {
     required this.player2_set_5,
   }) : super(key: key);
   @override
-  State<EditbuttonTableTennis5> createState() => _EditbuttonTableTennis5State();
+  State<EditbuttonTableTennis4> createState() => _EditbuttonTableTennis4State();
 }
 
 class _EditbuttonTableTennis4State extends State<EditbuttonTableTennis4> {
