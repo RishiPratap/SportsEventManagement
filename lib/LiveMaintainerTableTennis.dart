@@ -860,7 +860,10 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                     children: [
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color(0xffD15858),
+                                            backgroundColor:
+                                                widget.Player_1_name != 'N/A'
+                                                    ? Color(0xffD15858)
+                                                    : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   new BorderRadius.circular(
@@ -869,114 +872,122 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                           ),
                                           child: Text("Walk Over Player 1"),
                                           onPressed: () async {
-                                            showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                      title:
-                                                          Text("Confirmation"),
-                                                      content: Text(
-                                                          "${widget.Player_1_name} will be declared as Winner!"),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(ctx)
-                                                                .pop();
-                                                          },
-                                                          child: Text(
-                                                            "Cancel",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            const url =
-                                                                'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
-                                                            final walkOver = WalkOver(
-                                                                MATCHID: widget
-                                                                    .Match_Id,
-                                                                WINNER_ID: widget
-                                                                    .Player1_ID,
-                                                                TOURNAMENTID: widget
-                                                                    .Tournament_ID);
-
-                                                            final walkOverMap =
-                                                                walkOver
-                                                                    .toMap();
-                                                            final json =
-                                                                jsonEncode(
-                                                                    walkOverMap);
-                                                            EasyLoading.show(
-                                                                status:
-                                                                    'loading...',
-                                                                maskType:
-                                                                    EasyLoadingMaskType
-                                                                        .black);
-                                                            var response = await post(
-                                                                Uri.parse(url),
-                                                                headers: {
-                                                                  "Content-Type":
-                                                                      "application/json",
-                                                                  "Accept":
-                                                                      "application/json",
-                                                                },
-                                                                body: json,
-                                                                encoding: Encoding
-                                                                    .getByName(
-                                                                        "utf-8"));
-
-                                                            final jsonResponse =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-
-                                                            if (jsonResponse[
-                                                                    'Message'] ==
-                                                                'Success') {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            LiveMaintainerMatchSelection(
-                                                                              Tournament_id: widget.Tournament_ID,
-                                                                            )),
-                                                              );
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                msg:
-                                                                    "${widget.Player_1_name} has been declared as winner",
-                                                              );
-                                                            } else {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.pop(
-                                                                  context);
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          "Failed to do Walk Over");
-                                                            }
-                                                          },
-                                                          child: Text(
-                                                            "Yes",
-                                                            style: TextStyle(
-                                                              fontSize: 15,
+                                            if (widget.Player_1_name != 'N/A') {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (ctx) => AlertDialog(
+                                                        title: Text(
+                                                            "Confirmation"),
+                                                        content: Text(
+                                                            "${widget.Player_1_name} will be declared as Winner!"),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(ctx)
+                                                                  .pop();
+                                                            },
+                                                            child: Text(
+                                                              "Cancel",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
                                                             ),
                                                           ),
-                                                        )
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              const url =
+                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
 
-                                                        // },
-                                                      ],
-                                                    ));
+                                                              final walkOver = WalkOver(
+                                                                  MATCHID: widget
+                                                                      .Match_Id,
+                                                                  WINNER_ID: widget
+                                                                      .Player1_ID,
+                                                                  TOURNAMENTID:
+                                                                      widget
+                                                                          .Tournament_ID);
+
+                                                              final walkOverMap =
+                                                                  walkOver
+                                                                      .toMap();
+                                                              final json =
+                                                                  jsonEncode(
+                                                                      walkOverMap);
+                                                              EasyLoading.show(
+                                                                  status:
+                                                                      'loading...',
+                                                                  maskType:
+                                                                      EasyLoadingMaskType
+                                                                          .black);
+                                                              var response = await post(
+                                                                  Uri.parse(
+                                                                      url),
+                                                                  headers: {
+                                                                    "Content-Type":
+                                                                        "application/json",
+                                                                    "Accept":
+                                                                        "application/json",
+                                                                  },
+                                                                  body: json,
+                                                                  encoding: Encoding
+                                                                      .getByName(
+                                                                          "utf-8"));
+
+                                                              final jsonResponse =
+                                                                  jsonDecode(
+                                                                      response
+                                                                          .body);
+
+                                                              if (jsonResponse[
+                                                                      'Message'] ==
+                                                                  'Success') {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              LiveMaintainerMatchSelection(
+                                                                                Tournament_id: widget.Tournament_ID,
+                                                                              )),
+                                                                );
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                  msg:
+                                                                      "${widget.Player_1_name} has been declared as winner",
+                                                                );
+                                                              } else {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Failed to do Walk Over");
+                                                              }
+                                                            },
+                                                            child: Text(
+                                                              "Yes",
+                                                              style: TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                          )
+
+                                                          // },
+                                                        ],
+                                                      ));
+                                            }
                                           }),
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color(0xffD15858),
+                                            backgroundColor:
+                                                widget.Player_2_name != 'N/A'
+                                                    ? Color(0xffD15858)
+                                                    : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   new BorderRadius.circular(
@@ -985,110 +996,115 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                           ),
                                           child: Text("Walk Over Player 2"),
                                           onPressed: () async {
-                                            showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                      title:
-                                                          Text("Confirmation"),
-                                                      content: Text(
-                                                          "${widget.Player_2_name} will be declared as Winner!"),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(ctx)
-                                                                .pop();
-                                                          },
-                                                          child: Text(
-                                                            "Cancel",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            const url =
-                                                                'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
-                                                            final walkOver = WalkOver(
-                                                                MATCHID: widget
-                                                                    .Match_Id,
-                                                                WINNER_ID: widget
-                                                                    .Player2_ID,
-                                                                TOURNAMENTID: widget
-                                                                    .Tournament_ID);
-
-                                                            final walkOverMap =
-                                                                walkOver
-                                                                    .toMap();
-                                                            final json =
-                                                                jsonEncode(
-                                                                    walkOverMap);
-                                                            EasyLoading.show(
-                                                                status:
-                                                                    'loading...',
-                                                                maskType:
-                                                                    EasyLoadingMaskType
-                                                                        .black);
-                                                            var response = await post(
-                                                                Uri.parse(url),
-                                                                headers: {
-                                                                  "Content-Type":
-                                                                      "application/json",
-                                                                  "Accept":
-                                                                      "application/json",
-                                                                },
-                                                                body: json,
-                                                                encoding: Encoding
-                                                                    .getByName(
-                                                                        "utf-8"));
-
-                                                            final jsonResponse =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-
-                                                            if (jsonResponse[
-                                                                    'Message'] ==
-                                                                'Success') {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            LiveMaintainerMatchSelection(
-                                                                              Tournament_id: widget.Tournament_ID,
-                                                                            )),
-                                                              );
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                msg:
-                                                                    "${widget.Player_2_name} has been declared as winner",
-                                                              );
-                                                            } else {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.pop(
-                                                                  context);
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          "Failed to do Walk Over");
-                                                            }
-                                                          },
-                                                          child: Text(
-                                                            "Yes",
-                                                            style: TextStyle(
-                                                              fontSize: 15,
+                                            if (widget.Player_2_name != 'N/A') {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (ctx) => AlertDialog(
+                                                        title: Text(
+                                                            "Confirmation"),
+                                                        content: Text(
+                                                            "${widget.Player_2_name} will be declared as Winner!"),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(ctx)
+                                                                  .pop();
+                                                            },
+                                                            child: Text(
+                                                              "Cancel",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
                                                             ),
                                                           ),
-                                                        )
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              const url =
+                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
 
-                                                        // },
-                                                      ],
-                                                    ));
+                                                              final walkOver = WalkOver(
+                                                                  MATCHID: widget
+                                                                      .Match_Id,
+                                                                  WINNER_ID: widget
+                                                                      .Player2_ID,
+                                                                  TOURNAMENTID:
+                                                                      widget
+                                                                          .Tournament_ID);
+
+                                                              final walkOverMap =
+                                                                  walkOver
+                                                                      .toMap();
+                                                              final json =
+                                                                  jsonEncode(
+                                                                      walkOverMap);
+                                                              EasyLoading.show(
+                                                                  status:
+                                                                      'loading...',
+                                                                  maskType:
+                                                                      EasyLoadingMaskType
+                                                                          .black);
+                                                              var response = await post(
+                                                                  Uri.parse(
+                                                                      url),
+                                                                  headers: {
+                                                                    "Content-Type":
+                                                                        "application/json",
+                                                                    "Accept":
+                                                                        "application/json",
+                                                                  },
+                                                                  body: json,
+                                                                  encoding: Encoding
+                                                                      .getByName(
+                                                                          "utf-8"));
+
+                                                              final jsonResponse =
+                                                                  jsonDecode(
+                                                                      response
+                                                                          .body);
+
+                                                              if (jsonResponse[
+                                                                      'Message'] ==
+                                                                  'Success') {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              LiveMaintainerMatchSelection(
+                                                                                Tournament_id: widget.Tournament_ID,
+                                                                              )),
+                                                                );
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                  msg:
+                                                                      "${widget.Player_2_name} has been declared as winner",
+                                                                );
+                                                              } else {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Failed to do Walk Over");
+                                                              }
+                                                            },
+                                                            child: Text(
+                                                              "Yes",
+                                                              style: TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                          )
+
+                                                          // },
+                                                        ],
+                                                      ));
+                                            }
                                           }),
                                     ],
                                   )
