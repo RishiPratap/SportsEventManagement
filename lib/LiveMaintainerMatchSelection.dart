@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/LiveMaintainer.dart';
+import 'package:ardent_sports/LiveMaintainerBadminton.dart';
+import 'package:ardent_sports/LiveMaintainerTableTennis.dart';
+import 'package:ardent_sports/WebViewLiveMaintainerPreviewFixture.dart';
 import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -74,277 +76,291 @@ class _LiveMaintainerMatchSelectionState
   var futures;
   List<Container> AllUpcomingHostedMatches = [];
 
-  List<Container> AllMatches = [];
+  List<Card> AllMatches = [];
 
-  List<Container> getHostedMatches(
-      List<MatchesData> matchesdata, int array_length) {
+  List<Card> getHostedMatches(List<MatchesData> matchesdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     if (array_length == 0) {
-      var container = Container(
+      var container = Card(
         margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
         child: Text("There arent any matches in this Tournament"),
       );
       AllMatches.add(container);
     } else {
       for (int i = 0; i < array_length; i++) {
-        var container = Container(
-          padding: EdgeInsets.all(deviceWidth * 0.018),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(deviceWidth * 0.03),
-            ),
-            elevation: 10,
-            color: Colors.white60.withOpacity(0.1),
-            child: Column(
-              //MAIN COLUMN
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                    title: Container(
-                  margin: EdgeInsets.only(top: deviceWidth * 0.002),
-                  height: MediaQuery.of(context).size.height * 0.075,
-                  child: InkWell(
-                    onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => BadmintonSpotSelection(
-                      //           tourneyId: matchesdata[i].TOURNAMENT_ID,
-                      //         )));
-                    },
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.04),
-                      ),
-                      elevation: 20,
-                      color: matchesdata[i].SPORT_NAME == 'Badminton'
-                          ? Color(0xff6BB8FF)
-                          : Color(0xff03C289),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: deviceWidth * 0.03,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: deviceWidth * 0.1,
-                              width: deviceWidth * 0.1,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.transparent.withOpacity(0.6),
-                                  backgroundBlendMode: BlendMode.darken),
-                              child: Image(
-                                image: NetworkImage(matchesdata[i].IMG_URL),
-                                height: deviceWidth * 0.04,
-                                width: deviceWidth * 0.04,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(
-                              width: deviceWidth * 0.04,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  matchesdata[i].TOURNAMENT_NAME.length > 25
-                                      ? matchesdata[i]
-                                              .TOURNAMENT_NAME
-                                              .substring(0, 25) +
-                                          '...'
-                                      : matchesdata[i].TOURNAMENT_NAME,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: deviceWidth * 0.035,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                SizedBox(
-                                  height: deviceWidth * 0.01,
-                                ),
-                                Text(
-                                  matchesdata[i].CITY,
-                                  style: TextStyle(
-                                    fontSize: deviceWidth * 0.035,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
-                SizedBox(
-                  height: deviceWidth * 0.018,
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(deviceWidth * 0.018),
-                  ),
-                  elevation: 1,
-                  color: Colors.transparent.withOpacity(0.2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left: deviceWidth * 0.08,
-                                  top: deviceWidth * 0.02),
-                              child: Text(
-                                matchesdata[i].PLAYER1_NAME,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left: deviceWidth * 0.08,
-                                  top: deviceWidth * 0.02,
-                                  bottom: deviceWidth * 0.02),
-                              child: Text(
-                                matchesdata[i].PLAYER1_PARTNER,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                        ],
-                      ),
-                      TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Vs",
-                            style: TextStyle(
-                              fontSize: deviceWidth * 0.04,
-                              color: Color(0xffE74545),
-                            ),
-                          )),
-                      Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                right: deviceWidth * 0.07,
-                                top: deviceWidth * 0.02),
-                            child: Text(
-                              matchesdata[i].PLAYER2_NAME,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                right: deviceWidth * 0.07,
-                                top: deviceWidth * 0.02,
-                                bottom: deviceWidth * 0.02),
-                            child: Text(
-                              matchesdata[i].PLAYER2_PARTNER,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.09,
-                  width: MediaQuery.of(context).size.width * 0.9,
+        var container = Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(deviceWidth * 0.03),
+          ),
+          elevation: 10,
+          color: Colors.white60.withOpacity(0.1),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                  title: Container(
+                margin: EdgeInsets.only(top: deviceWidth * 0.002),
+                height: MediaQuery.of(context).size.height * 0.075,
+                child: InkWell(
+                  onTap: () {
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => BadmintonSpotSelection(
+                    //           tourneyId: matchesdata[i].TOURNAMENT_ID,
+                    //         )));
+                  },
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.04),
                     ),
-                    elevation: 1,
-                    color: Colors.transparent.withOpacity(0.2),
+                    elevation: 20,
+                    color: matchesdata[i].SPORT_NAME == 'Badminton'
+                        ? Color(0xff6BB8FF)
+                        : Color(0xff03C289),
                     child: Container(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          SizedBox(
+                            width: deviceWidth * 0.03,
+                          ),
                           Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                              child: Row(
-                                children: [
-                                  Image(
-                                    image: AssetImage("assets/trophy 2.png"),
-                                    height: deviceWidth * 0.05,
-                                  ),
-                                  SizedBox(
-                                    width: deviceWidth * 0.03,
-                                  ),
-                                  Text(
-                                    "Prize money",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          Container(
-                              margin:
-                                  EdgeInsets.only(right: deviceWidth * 0.07),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          fontSize: deviceWidth * 0.027,
-                                          color: Colors.white),
-                                      children: <TextSpan>[
-                                    TextSpan(text: "Up to "),
-                                    TextSpan(
-                                        text: " ₹",
-                                        style: TextStyle(
-                                          fontSize: deviceWidth * 0.05,
-                                        )),
-                                    TextSpan(
-                                      text:
-                                          matchesdata[i].PRIZE_POOL.toString(),
-                                      style: TextStyle(
-                                          fontSize: deviceWidth * 0.05,
-                                          color: Color(0xffE74545),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ])))
+                            alignment: Alignment.center,
+                            height: deviceWidth * 0.1,
+                            width: deviceWidth * 0.1,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent.withOpacity(0.6),
+                                backgroundBlendMode: BlendMode.darken),
+                            child: Image(
+                              image: NetworkImage(matchesdata[i].IMG_URL),
+                              height: deviceWidth * 0.04,
+                              width: deviceWidth * 0.04,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(
+                            width: deviceWidth * 0.04,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                matchesdata[i].TOURNAMENT_NAME.length > 25
+                                    ? matchesdata[i]
+                                            .TOURNAMENT_NAME
+                                            .substring(0, 25) +
+                                        '...'
+                                    : matchesdata[i].TOURNAMENT_NAME,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: deviceWidth * 0.035,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              SizedBox(
+                                height: deviceWidth * 0.01,
+                              ),
+                              Text(
+                                matchesdata[i].CITY,
+                                style: TextStyle(
+                                  fontSize: deviceWidth * 0.035,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                Row(
+              )),
+              SizedBox(
+                height: deviceWidth * 0.018,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(deviceWidth * 0.018),
+                ),
+                elevation: 1,
+                color: Colors.transparent.withOpacity(0.2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(deviceWidth * 0.02),
-                      child: Image(
-                        image: AssetImage("assets/Location.png"),
-                      ),
+                    Column(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(
+                                left: deviceWidth * 0.08,
+                                top: deviceWidth * 0.02),
+                            child: Text(
+                              matchesdata[i].PLAYER1_NAME,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(
+                                left: deviceWidth * 0.08,
+                                top: deviceWidth * 0.02,
+                                bottom: deviceWidth * 0.02),
+                            child: Text(
+                              matchesdata[i].PLAYER1_PARTNER,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ],
                     ),
-                    Text(
-                      matchesdata[i].LOCATION,
-                      style: TextStyle(
-                          color: Colors.white, fontSize: deviceWidth * 0.03),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Vs",
+                          style: TextStyle(
+                            fontSize: deviceWidth * 0.04,
+                            color: Color(0xffE74545),
+                          ),
+                        )),
+                    Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: deviceWidth * 0.07,
+                              top: deviceWidth * 0.02),
+                          child: Text(
+                            matchesdata[i].PLAYER2_NAME,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: deviceWidth * 0.07,
+                              top: deviceWidth * 0.02,
+                              bottom: deviceWidth * 0.02),
+                          child: Text(
+                            matchesdata[i].PLAYER2_PARTNER,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.055,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffE74545),
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.04),
-                      ),
-                      child: TextButton(
-                        onPressed: () {
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.09,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                  ),
+                  elevation: 1,
+                  color: Colors.transparent.withOpacity(0.2),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                            child: Row(
+                              children: [
+                                Image(
+                                  image: AssetImage("assets/trophy 2.png"),
+                                  height: deviceWidth * 0.05,
+                                ),
+                                SizedBox(
+                                  width: deviceWidth * 0.03,
+                                ),
+                                Text(
+                                  "Prize money",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                            child: RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: deviceWidth * 0.027,
+                                        color: Colors.white),
+                                    children: <TextSpan>[
+                                  TextSpan(text: "Up to "),
+                                  TextSpan(
+                                      text: " ₹",
+                                      style: TextStyle(
+                                        fontSize: deviceWidth * 0.05,
+                                      )),
+                                  TextSpan(
+                                    text: matchesdata[i].PRIZE_POOL.toString(),
+                                    style: TextStyle(
+                                        fontSize: deviceWidth * 0.05,
+                                        color: Color(0xffE74545),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ])))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(deviceWidth * 0.02),
+                    child: Image(
+                      image: AssetImage("assets/Location.png"),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      matchesdata[i].LOCATION,
+                      style: TextStyle(
+                          color: Colors.white, fontSize: deviceWidth * 0.03),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.055,
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffE74545),
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                    ),
+                    child: TextButton(
+                      onPressed: () async {
+                        var url =
+                            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/startscoring?TOURNAMENT_ID=${matchesdata[i].TOURNAMENT_ID}&MATCHID=${matchesdata[i].MATCHID}";
+                        var response = await get(Uri.parse(url));
+                        Map? mapUserInfo;
+                        mapUserInfo = json.decode(response.body);
+                        if (matchesdata[i].SPORT_NAME == "Badminton") {
+                          int player1_set_1 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
+                          int player1_set_2 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
+                          int player1_set_3 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
+                          int player2_set_1 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
+                          int player2_set_2 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
+                          int player2_set_3 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -357,35 +373,87 @@ class _LiveMaintainerMatchSelectionState
                                 Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
                                 Player1_ID: matchesdata[i].PLAYER1_ID,
                                 Player2_ID: matchesdata[i].PLAYER2_ID,
+                                player1_set_1: player1_set_1,
+                                player1_set_2: player1_set_2,
+                                player1_set_3: player1_set_3,
+                                player2_set_1: player2_set_1,
+                                player2_set_2: player2_set_2,
+                                player2_set_3: player2_set_3,
                               ),
                             ),
                           );
-                        },
-                        child: Text("Start Scoring >",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: deviceWidth * 0.03,
-                                fontWeight: FontWeight.bold)),
-                      ),
+                        } else {
+                          int player1_set_1 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
+                          int player1_set_2 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
+                          int player1_set_3 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
+                          int player1_set_4 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set4'];
+                          int player1_set_5 =
+                              mapUserInfo?['Message']['PLAYER1_SCORE']['set5'];
+                          int player2_set_1 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
+                          int player2_set_2 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
+                          int player2_set_3 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
+                          int player2_set_4 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set4'];
+                          int player2_set_5 =
+                              mapUserInfo?['Message']['PLAYER2_SCORE']['set5'];
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LiveMaintainerTableTennis(
+                                Tournament_ID: matchesdata[i].TOURNAMENT_ID,
+                                Match_Id: matchesdata[i].MATCHID,
+                                Player_1_name: matchesdata[i].PLAYER1_NAME,
+                                Player1_Partner: matchesdata[i].PLAYER1_PARTNER,
+                                Player_2_name: matchesdata[i].PLAYER2_NAME,
+                                Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
+                                Player1_ID: matchesdata[i].PLAYER1_ID,
+                                Player2_ID: matchesdata[i].PLAYER2_ID,
+                                player1_set_1: player1_set_1,
+                                player1_set_2: player1_set_2,
+                                player1_set_3: player1_set_3,
+                                player1_set_4: player1_set_4,
+                                player1_set_5: player1_set_5,
+                                player2_set_1: player2_set_1,
+                                player2_set_2: player2_set_2,
+                                player2_set_3: player2_set_3,
+                                player2_set_4: player2_set_4,
+                                player2_set_5: player2_set_5,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text("Start Scoring >",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: deviceWidth * 0.03,
+                              fontWeight: FontWeight.bold)),
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "Match Id :${int.parse(matchesdata[i].MATCHID) + 1}",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Match Id :${int.parse(matchesdata[i].MATCHID) + 1}",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         );
         AllMatches.add(container);
@@ -431,11 +499,13 @@ class _LiveMaintainerMatchSelectionState
   Widget build(BuildContext context) {
     Future<Null> _refreshTournaments() async {
       Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-              pageBuilder: (a, b, c) => LiveMaintainerMatchSelection(
-                    Tournament_id: widget.Tournament_id,
-                  )));
+        context,
+        PageRouteBuilder(
+          pageBuilder: (a, b, c) => LiveMaintainerMatchSelection(
+            Tournament_id: widget.Tournament_id,
+          ),
+        ),
+      );
     }
 
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -517,7 +587,7 @@ class _LiveMaintainerMatchSelectionState
                       onPressed: () async {
                         final prefs = await SharedPreferences.getInstance();
                         var email = prefs.getString('email');
-                        Get.to(WebViewTest(
+                        Get.to(WebViewLiveMaintainerPreviewFixture(
                           Tourney_id: widget.Tournament_id,
                           userId: email,
                           SpotNo: "1",

@@ -176,12 +176,43 @@ class _MenuState extends State<Menu> {
                   ),
                   TextButton(
                       onPressed: () async {
-                        final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.remove('email');
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: const Text("Logout Alert"),
+                            content:
+                                const Text("Are you sure you want to Logout?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(14),
+                                  child: const Text(
+                                    "NO",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.remove('email');
 
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/', (Route<dynamic> route) => false);
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/', (Route<dynamic> route) => false);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(14),
+                                  child: const Text("YES",
+                                      style: TextStyle(color: Colors.white)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                       child: Text(
                         "Logout",

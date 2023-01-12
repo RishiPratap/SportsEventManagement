@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:io';
+import 'package:ardent_sports/webViewTrophies.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -414,14 +415,15 @@ class _ProfileState extends State<Profile> {
                           Expanded(
                             flex: 2,
                             child: Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: Text(
-                                  "Level:${widget.level}",
-                                  style: TextStyle(
-                                    fontFamily: 'SNAP_ITC',
-                                    fontSize: 22,
-                                  ),
-                                )),
+                              margin: EdgeInsets.only(top: 10),
+                              child: Text(
+                                "Level:${widget.level}",
+                                style: TextStyle(
+                                  fontFamily: 'SNAP_ITC',
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
                           ),
                           Expanded(
                             flex: 3,
@@ -481,67 +483,78 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.16,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fitWidth,
-                          image: AssetImage(
-                            'assets/OrangeRect.png',
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WebViewTrophie(
+                                      userId: widget.email,
+                                    )));
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.16,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            image: AssetImage(
+                              'assets/OrangeRect.png',
+                            ),
                           ),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Center(
-                              child: Container(
-                                  child: Text(
-                                "The Trophy Room",
-                                style: TextStyle(
-                                  fontFamily: 'SNAP_ITC',
-                                  fontSize: 22,
-                                ),
-                              )),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Center(
-                              child: Container(
-                                child: Row(
-                                  //crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/GoldTrophy.png')),
-                                            // color:
-                                            //     Colors.black.withOpacity(0.2),
-                                            borderRadius: BorderRadius.circular(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.02)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          MediaQuery.of(context).size.height *
-                                              0.03)),
-                                ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Center(
+                                child: Container(
+                                    child: Text(
+                                  "The Trophy Room",
+                                  style: TextStyle(
+                                    fontFamily: 'SNAP_ITC',
+                                    fontSize: 22,
+                                  ),
+                                )),
                               ),
                             ),
-                          )
-                        ],
+                            Expanded(
+                              flex: 3,
+                              child: Center(
+                                child: Container(
+                                  child: Row(
+                                    //crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/GoldTrophy.png')),
+                                              // color:
+                                              //     Colors.black.withOpacity(0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.02)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            MediaQuery.of(context).size.height *
+                                                0.03)),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(

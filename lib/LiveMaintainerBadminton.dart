@@ -20,12 +20,13 @@ var update_score_2_second = 0;
 var update_score_3_first = 0;
 var update_score_3_second = 0;
 
-var score_1_first = 0;
-var score_2_first = 0;
-var score_3_first = 0;
-var score_1_second = 0;
-var score_2_second = 0;
-var score_3_second = 0;
+// var score_1_first = 0;
+// var score_2_first = 0;
+// var score_3_first = 0;
+// var score_1_second = 0;
+// var score_2_second = 0;
+// var score_3_second = 0;
+
 late Socket socket;
 
 class player_score {
@@ -107,17 +108,29 @@ class LiveMaintainer extends StatefulWidget {
   final String Player2_Partner;
   final String Player1_ID;
   final String Player2_ID;
-  const LiveMaintainer(
-      {Key? key,
-      required this.Tournament_ID,
-      required this.Match_Id,
-      required this.Player_1_name,
-      required this.Player1_Partner,
-      required this.Player_2_name,
-      required this.Player2_Partner,
-      required this.Player1_ID,
-      required this.Player2_ID})
-      : super(key: key);
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const LiveMaintainer({
+    Key? key,
+    required this.Tournament_ID,
+    required this.Match_Id,
+    required this.Player_1_name,
+    required this.Player1_Partner,
+    required this.Player_2_name,
+    required this.Player2_Partner,
+    required this.Player1_ID,
+    required this.Player2_ID,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
   @override
   LiveMaintainer1 createState() => LiveMaintainer1();
 }
@@ -266,9 +279,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                 onPressed: () {
                                                   print("1");
                                                   update_score_1_first =
-                                                      score_1_first;
+                                                      widget.player1_set_1;
                                                   update_score_1_second =
-                                                      score_1_second;
+                                                      widget.player2_set_1;
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -286,8 +299,19 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player1_Partner,
                                                           Player2_Partner: widget
                                                               .Player2_Partner,
+                                                          player1_set_1: widget
+                                                              .player1_set_1,
+                                                          player1_set_2: widget
+                                                              .player1_set_2,
+                                                          player1_set_3: widget
+                                                              .player1_set_3,
+                                                          player2_set_1: widget
+                                                              .player2_set_1,
+                                                          player2_set_2: widget
+                                                              .player2_set_2,
+                                                          player2_set_3: widget
+                                                              .player2_set_3,
                                                         );
-                                                        ;
                                                       });
                                                 },
                                               ),
@@ -298,9 +322,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     'assets/edit_button.png'),
                                                 onPressed: () {
                                                   update_score_2_first =
-                                                      score_2_first;
+                                                      widget.player1_set_2;
                                                   update_score_2_second =
-                                                      score_2_second;
+                                                      widget.player2_set_2;
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -318,6 +342,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player1_Partner,
                                                           Player2_Partner: widget
                                                               .Player2_Partner,
+                                                          player1_set_1: widget
+                                                              .player1_set_1,
+                                                          player1_set_2: widget
+                                                              .player1_set_2,
+                                                          player1_set_3: widget
+                                                              .player1_set_3,
+                                                          player2_set_1: widget
+                                                              .player2_set_1,
+                                                          player2_set_2: widget
+                                                              .player2_set_2,
+                                                          player2_set_3: widget
+                                                              .player2_set_3,
                                                         );
                                                       });
                                                 },
@@ -329,9 +365,9 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     'assets/edit_button.png'),
                                                 onPressed: () {
                                                   update_score_3_first =
-                                                      score_3_first;
+                                                      widget.player1_set_3;
                                                   update_score_3_second =
-                                                      score_3_second;
+                                                      widget.player2_set_3;
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -349,6 +385,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                               .Player1_Partner,
                                                           Player2_Partner: widget
                                                               .Player2_Partner,
+                                                          player1_set_1: widget
+                                                              .player1_set_1,
+                                                          player1_set_2: widget
+                                                              .player1_set_2,
+                                                          player1_set_3: widget
+                                                              .player1_set_3,
+                                                          player2_set_1: widget
+                                                              .player2_set_1,
+                                                          player2_set_2: widget
+                                                              .player2_set_2,
+                                                          player2_set_3: widget
+                                                              .player2_set_3,
                                                         );
                                                       });
                                                 },
@@ -395,7 +443,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_1_first",
+                                                "${widget.player1_set_1}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -406,7 +454,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "${score_2_first}",
+                                                "${widget.player1_set_2}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -417,7 +465,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_3_first",
+                                                "${widget.player1_set_3}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -467,7 +515,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_1_second",
+                                                "${widget.player2_set_1}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -478,7 +526,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_2_second",
+                                                "${widget.player2_set_2}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -489,7 +537,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                             ),
                                             Center(
                                               child: Text(
-                                                "$score_3_second",
+                                                "${widget.player2_set_3}",
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.normal,
@@ -524,13 +572,18 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        if ((score_1_first > score_1_second && score_2_first > score_2_second) ||
-                                            (score_1_first > score_1_second &&
-                                                score_3_first >
-                                                    score_3_second) ||
-                                            (score_2_first > score_2_second &&
-                                                score_3_first >
-                                                    score_3_second)) {
+                                        if ((widget.player1_set_1 >
+                                                    widget.player2_set_1 &&
+                                                widget.player1_set_2 >
+                                                    widget.player2_set_2) ||
+                                            (widget.player1_set_1 >
+                                                    widget.player2_set_1 &&
+                                                widget.player1_set_3 >
+                                                    widget.player2_set_3) ||
+                                            (widget.player1_set_2 >
+                                                    widget.player2_set_2 &&
+                                                widget.player1_set_3 >
+                                                    widget.player2_set_3)) {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -541,8 +594,24 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                             .Tournament_ID,
                                                         p1_name: widget
                                                             .Player_1_name,
+                                                        p1_partner_name: widget
+                                                            .Player1_Partner,
                                                         p2_name: widget
                                                             .Player_2_name,
+                                                        p2_partner_name: widget
+                                                            .Player2_Partner,
+                                                        player1_set_1: widget
+                                                            .player1_set_1,
+                                                        player1_set_2: widget
+                                                            .player1_set_2,
+                                                        player1_set_3: widget
+                                                            .player1_set_3,
+                                                        player2_set_1: widget
+                                                            .player2_set_1,
+                                                        player2_set_2: widget
+                                                            .player2_set_2,
+                                                        player2_set_3: widget
+                                                            .player2_set_3,
                                                       )));
                                         } else {
                                           Navigator.pushReplacement(
@@ -555,8 +624,24 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                             .Tournament_ID,
                                                         p1_name: widget
                                                             .Player_1_name,
+                                                        p1_partner_name: widget
+                                                            .Player1_Partner,
                                                         p2_name: widget
                                                             .Player_2_name,
+                                                        p2_partner_name: widget
+                                                            .Player2_Partner,
+                                                        player1_set_1: widget
+                                                            .player1_set_1,
+                                                        player1_set_2: widget
+                                                            .player1_set_2,
+                                                        player1_set_3: widget
+                                                            .player1_set_3,
+                                                        player2_set_1: widget
+                                                            .player2_set_1,
+                                                        player2_set_2: widget
+                                                            .player2_set_2,
+                                                        player2_set_3: widget
+                                                            .player2_set_3,
                                                       )));
                                         }
                                       },
@@ -575,7 +660,10 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                     children: [
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color(0xffD15858),
+                                            backgroundColor:
+                                                widget.Player_1_name != 'N/A'
+                                                    ? Color(0xffD15858)
+                                                    : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   new BorderRadius.circular(
@@ -584,114 +672,122 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                           ),
                                           child: Text("Walk Over Player 1"),
                                           onPressed: () async {
-                                            showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                      title:
-                                                          Text("Confirmation"),
-                                                      content: Text(
-                                                          "${widget.Player_1_name} will be declared as Winner!"),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(ctx)
-                                                                .pop();
-                                                          },
-                                                          child: Text(
-                                                            "Cancel",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            const url =
-                                                                'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
-                                                            final walkOver = WalkOver(
-                                                                MATCHID: widget
-                                                                    .Match_Id,
-                                                                WINNER_ID: widget
-                                                                    .Player1_ID,
-                                                                TOURNAMENTID: widget
-                                                                    .Tournament_ID);
-
-                                                            final walkOverMap =
-                                                                walkOver
-                                                                    .toMap();
-                                                            final json =
-                                                                jsonEncode(
-                                                                    walkOverMap);
-                                                            EasyLoading.show(
-                                                                status:
-                                                                    'loading...',
-                                                                maskType:
-                                                                    EasyLoadingMaskType
-                                                                        .black);
-                                                            var response = await post(
-                                                                Uri.parse(url),
-                                                                headers: {
-                                                                  "Content-Type":
-                                                                      "application/json",
-                                                                  "Accept":
-                                                                      "application/json",
-                                                                },
-                                                                body: json,
-                                                                encoding: Encoding
-                                                                    .getByName(
-                                                                        "utf-8"));
-
-                                                            final jsonResponse =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-
-                                                            if (jsonResponse[
-                                                                    'Message'] ==
-                                                                'Success') {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            LiveMaintainerMatchSelection(
-                                                                              Tournament_id: widget.Tournament_ID,
-                                                                            )),
-                                                              );
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                msg:
-                                                                    "${widget.Player_1_name} has been declared as winner",
-                                                              );
-                                                            } else {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.pop(
-                                                                  context);
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          "Failed to do Walk Over");
-                                                            }
-                                                          },
-                                                          child: Text(
-                                                            "Yes",
-                                                            style: TextStyle(
-                                                              fontSize: 15,
+                                            if (widget.Player_1_name != 'N/A') {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (ctx) => AlertDialog(
+                                                        title: Text(
+                                                            "Confirmation"),
+                                                        content: Text(
+                                                            "${widget.Player_1_name} will be declared as Winner!"),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(ctx)
+                                                                  .pop();
+                                                            },
+                                                            child: Text(
+                                                              "Cancel",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
                                                             ),
                                                           ),
-                                                        )
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              const url =
+                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
 
-                                                        // },
-                                                      ],
-                                                    ));
+                                                              final walkOver = WalkOver(
+                                                                  MATCHID: widget
+                                                                      .Match_Id,
+                                                                  WINNER_ID: widget
+                                                                      .Player1_ID,
+                                                                  TOURNAMENTID:
+                                                                      widget
+                                                                          .Tournament_ID);
+
+                                                              final walkOverMap =
+                                                                  walkOver
+                                                                      .toMap();
+                                                              final json =
+                                                                  jsonEncode(
+                                                                      walkOverMap);
+                                                              EasyLoading.show(
+                                                                  status:
+                                                                      'loading...',
+                                                                  maskType:
+                                                                      EasyLoadingMaskType
+                                                                          .black);
+                                                              var response = await post(
+                                                                  Uri.parse(
+                                                                      url),
+                                                                  headers: {
+                                                                    "Content-Type":
+                                                                        "application/json",
+                                                                    "Accept":
+                                                                        "application/json",
+                                                                  },
+                                                                  body: json,
+                                                                  encoding: Encoding
+                                                                      .getByName(
+                                                                          "utf-8"));
+
+                                                              final jsonResponse =
+                                                                  jsonDecode(
+                                                                      response
+                                                                          .body);
+
+                                                              if (jsonResponse[
+                                                                      'Message'] ==
+                                                                  'Success') {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              LiveMaintainerMatchSelection(
+                                                                                Tournament_id: widget.Tournament_ID,
+                                                                              )),
+                                                                );
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                  msg:
+                                                                      "${widget.Player_1_name} has been declared as winner",
+                                                                );
+                                                              } else {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Failed to do Walk Over");
+                                                              }
+                                                            },
+                                                            child: Text(
+                                                              "Yes",
+                                                              style: TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                          )
+
+                                                          // },
+                                                        ],
+                                                      ));
+                                            }
                                           }),
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color(0xffD15858),
+                                            backgroundColor:
+                                                widget.Player_2_name != 'N/A'
+                                                    ? Color(0xffD15858)
+                                                    : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   new BorderRadius.circular(
@@ -700,110 +796,115 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                           ),
                                           child: Text("Walk Over Player 2"),
                                           onPressed: () async {
-                                            showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                      title:
-                                                          Text("Confirmation"),
-                                                      content: Text(
-                                                          "${widget.Player_2_name} will be declared as Winner!"),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(ctx)
-                                                                .pop();
-                                                          },
-                                                          child: Text(
-                                                            "Cancel",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            const url =
-                                                                'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
-                                                            final walkOver = WalkOver(
-                                                                MATCHID: widget
-                                                                    .Match_Id,
-                                                                WINNER_ID: widget
-                                                                    .Player2_ID,
-                                                                TOURNAMENTID: widget
-                                                                    .Tournament_ID);
-
-                                                            final walkOverMap =
-                                                                walkOver
-                                                                    .toMap();
-                                                            final json =
-                                                                jsonEncode(
-                                                                    walkOverMap);
-                                                            EasyLoading.show(
-                                                                status:
-                                                                    'loading...',
-                                                                maskType:
-                                                                    EasyLoadingMaskType
-                                                                        .black);
-                                                            var response = await post(
-                                                                Uri.parse(url),
-                                                                headers: {
-                                                                  "Content-Type":
-                                                                      "application/json",
-                                                                  "Accept":
-                                                                      "application/json",
-                                                                },
-                                                                body: json,
-                                                                encoding: Encoding
-                                                                    .getByName(
-                                                                        "utf-8"));
-
-                                                            final jsonResponse =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-
-                                                            if (jsonResponse[
-                                                                    'Message'] ==
-                                                                'Success') {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            LiveMaintainerMatchSelection(
-                                                                              Tournament_id: widget.Tournament_ID,
-                                                                            )),
-                                                              );
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                msg:
-                                                                    "${widget.Player_2_name} has been declared as winner",
-                                                              );
-                                                            } else {
-                                                              EasyLoading
-                                                                  .dismiss();
-                                                              Navigator.pop(
-                                                                  context);
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          "Failed to do Walk Over");
-                                                            }
-                                                          },
-                                                          child: Text(
-                                                            "Yes",
-                                                            style: TextStyle(
-                                                              fontSize: 15,
+                                            if (widget.Player_2_name != 'N/A') {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (ctx) => AlertDialog(
+                                                        title: Text(
+                                                            "Confirmation"),
+                                                        content: Text(
+                                                            "${widget.Player_2_name} will be declared as Winner!"),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(ctx)
+                                                                  .pop();
+                                                            },
+                                                            child: Text(
+                                                              "Cancel",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
                                                             ),
                                                           ),
-                                                        )
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              const url =
+                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
 
-                                                        // },
-                                                      ],
-                                                    ));
+                                                              final walkOver = WalkOver(
+                                                                  MATCHID: widget
+                                                                      .Match_Id,
+                                                                  WINNER_ID: widget
+                                                                      .Player2_ID,
+                                                                  TOURNAMENTID:
+                                                                      widget
+                                                                          .Tournament_ID);
+
+                                                              final walkOverMap =
+                                                                  walkOver
+                                                                      .toMap();
+                                                              final json =
+                                                                  jsonEncode(
+                                                                      walkOverMap);
+                                                              EasyLoading.show(
+                                                                  status:
+                                                                      'loading...',
+                                                                  maskType:
+                                                                      EasyLoadingMaskType
+                                                                          .black);
+                                                              var response = await post(
+                                                                  Uri.parse(
+                                                                      url),
+                                                                  headers: {
+                                                                    "Content-Type":
+                                                                        "application/json",
+                                                                    "Accept":
+                                                                        "application/json",
+                                                                  },
+                                                                  body: json,
+                                                                  encoding: Encoding
+                                                                      .getByName(
+                                                                          "utf-8"));
+
+                                                              final jsonResponse =
+                                                                  jsonDecode(
+                                                                      response
+                                                                          .body);
+
+                                                              if (jsonResponse[
+                                                                      'Message'] ==
+                                                                  'Success') {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              LiveMaintainerMatchSelection(
+                                                                                Tournament_id: widget.Tournament_ID,
+                                                                              )),
+                                                                );
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                  msg:
+                                                                      "${widget.Player_2_name} has been declared as winner",
+                                                                );
+                                                              } else {
+                                                                EasyLoading
+                                                                    .dismiss();
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Failed to do Walk Over");
+                                                              }
+                                                            },
+                                                            child: Text(
+                                                              "Yes",
+                                                              style: TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                          )
+
+                                                          // },
+                                                        ],
+                                                      ));
+                                            }
                                           }),
                                     ],
                                   )
@@ -830,15 +931,27 @@ class Editbutton1 extends StatefulWidget {
   final String Player_2_name;
   final String Player1_Partner;
   final String Player2_Partner;
-  const Editbutton1(
-      {Key? key,
-      required this.Tournament_Id,
-      required this.Match_Id,
-      required this.Player_1_name,
-      required this.Player_2_name,
-      required this.Player1_Partner,
-      required this.Player2_Partner})
-      : super(key: key);
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const Editbutton1({
+    Key? key,
+    required this.Tournament_Id,
+    required this.Match_Id,
+    required this.Player_1_name,
+    required this.Player_2_name,
+    required this.Player1_Partner,
+    required this.Player2_Partner,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
 
   @override
   State<Editbutton1> createState() => _Editbutton1State();
@@ -978,8 +1091,8 @@ class _Editbutton1State extends State<Editbutton1> {
                 Container(
                   child: TextButton(
                     onPressed: () {
-                      score_1_first = update_score_1_first;
-                      score_1_second = update_score_1_second;
+                      // score_1_first = update_score_1_first;
+                      // score_1_second = update_score_1_second;
                       final Score = Score_LiveMaintainer(
                           PLAYER_1_SCORE: update_score_1_first.toString(),
                           PLAYER_2_SCORE: update_score_1_second.toString(),
@@ -1005,6 +1118,12 @@ class _Editbutton1State extends State<Editbutton1> {
                             Player2_Partner: widget.Player2_Partner,
                             Player1_ID: "",
                             Player2_ID: "",
+                            player1_set_1: update_score_1_first,
+                            player1_set_2: widget.player1_set_2,
+                            player1_set_3: widget.player1_set_3,
+                            player2_set_1: update_score_1_second,
+                            player2_set_2: widget.player2_set_2,
+                            player2_set_3: widget.player2_set_3,
                           ),
                         ),
                       );
@@ -1050,15 +1169,27 @@ class Editbutton2 extends StatefulWidget {
   final String Player_2_name;
   final String Player1_Partner;
   final String Player2_Partner;
-  const Editbutton2(
-      {Key? key,
-      required this.Tournament_ID,
-      required this.Match_Id,
-      required this.Player_1_name,
-      required this.Player_2_name,
-      required this.Player1_Partner,
-      required this.Player2_Partner})
-      : super(key: key);
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const Editbutton2({
+    Key? key,
+    required this.Tournament_ID,
+    required this.Match_Id,
+    required this.Player_1_name,
+    required this.Player_2_name,
+    required this.Player1_Partner,
+    required this.Player2_Partner,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
 
   @override
   State<Editbutton2> createState() => _Editbutton2State();
@@ -1204,8 +1335,8 @@ class _Editbutton2State extends State<Editbutton2> {
                   child: TextButton(
                     onPressed: () {
                       setState(() {
-                        score_2_first = update_score_2_first;
-                        score_2_second = update_score_2_second;
+                        // score_2_first = update_score_2_first;
+                        // score_2_second = update_score_2_second;
                         super.deactivate();
                       });
                       final Score = Score_LiveMaintainer(
@@ -1228,6 +1359,12 @@ class _Editbutton2State extends State<Editbutton2> {
                             Player2_Partner: widget.Player2_Partner,
                             Player1_ID: "",
                             Player2_ID: "",
+                            player1_set_1: widget.player1_set_1,
+                            player1_set_2: update_score_2_first,
+                            player1_set_3: widget.player1_set_3,
+                            player2_set_1: widget.player2_set_1,
+                            player2_set_2: update_score_2_second,
+                            player2_set_3: widget.player2_set_3,
                           ),
                         ),
                       );
@@ -1274,6 +1411,12 @@ class Editbutton3 extends StatefulWidget {
   final String Player_2_name;
   final String Player1_Partner;
   final String Player2_Partner;
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
   const Editbutton3({
     Key? key,
     required this.Tournament_ID,
@@ -1282,6 +1425,12 @@ class Editbutton3 extends StatefulWidget {
     required this.Player_2_name,
     required this.Player1_Partner,
     required this.Player2_Partner,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
   }) : super(key: key);
   @override
   State<Editbutton3> createState() => _Editbutton3State();
@@ -1425,8 +1574,8 @@ class _Editbutton3State extends State<Editbutton3> {
                   child: TextButton(
                     onPressed: () {
                       setState(() {
-                        score_3_first = update_score_3_first;
-                        score_3_second = update_score_3_second;
+                        // score_3_first = update_score_3_first;
+                        // score_3_second = update_score_3_second;
                         final Score = Score_LiveMaintainer(
                             PLAYER_1_SCORE: update_score_3_first.toString(),
                             PLAYER_2_SCORE: update_score_3_second.toString(),
@@ -1446,6 +1595,12 @@ class _Editbutton3State extends State<Editbutton3> {
                               Player2_Partner: widget.Player2_Partner,
                               Player1_ID: "",
                               Player2_ID: "",
+                              player1_set_1: widget.player1_set_1,
+                              player1_set_2: widget.player1_set_2,
+                              player1_set_3: update_score_3_first,
+                              player2_set_1: widget.player2_set_1,
+                              player2_set_2: widget.player2_set_2,
+                              player2_set_3: update_score_3_second,
                             ),
                           ),
                         ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
@@ -1491,14 +1646,30 @@ class Submit extends StatefulWidget {
   final String MatchId;
   final String Tournament_ID;
   final String p1_name;
+  final String p1_partner_name;
   final String p2_name;
-  const Submit(
-      {Key? key,
-      required this.Tournament_ID,
-      required this.MatchId,
-      required this.p1_name,
-      required this.p2_name})
-      : super(key: key);
+  final String p2_partner_name;
+  final int player1_set_1;
+  final int player1_set_2;
+  final int player1_set_3;
+  final int player2_set_1;
+  final int player2_set_2;
+  final int player2_set_3;
+  const Submit({
+    Key? key,
+    required this.Tournament_ID,
+    required this.MatchId,
+    required this.p1_name,
+    required this.p1_partner_name,
+    required this.p2_name,
+    required this.p2_partner_name,
+    required this.player1_set_1,
+    required this.player1_set_2,
+    required this.player1_set_3,
+    required this.player2_set_1,
+    required this.player2_set_2,
+    required this.player2_set_3,
+  }) : super(key: key);
 
   @override
   State<Submit> createState() => _SubmitState();
@@ -1647,7 +1818,7 @@ class _SubmitState extends State<Submit> {
                                                     color: Color(0xff252626),
                                                     child: Center(
                                                       child: Text(
-                                                          "${widget.p1_name}"),
+                                                          "${widget.p1_name}\n${widget.p1_partner_name}"),
                                                     ),
                                                   ),
                                                 ),
@@ -1656,7 +1827,7 @@ class _SubmitState extends State<Submit> {
                                                 ),
                                                 Center(
                                                   child: Text(
-                                                    "$score_1_first",
+                                                    "${widget.player1_set_1}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontStyle:
@@ -1672,7 +1843,7 @@ class _SubmitState extends State<Submit> {
                                                 ),
                                                 Center(
                                                   child: Text(
-                                                    "${score_2_first}",
+                                                    "${widget.player1_set_2}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontStyle:
@@ -1688,7 +1859,7 @@ class _SubmitState extends State<Submit> {
                                                 ),
                                                 Center(
                                                   child: Text(
-                                                    "$score_3_first",
+                                                    "${widget.player1_set_3}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontStyle:
@@ -1741,7 +1912,7 @@ class _SubmitState extends State<Submit> {
                                                       color: Color(0xff252626),
                                                       child: Center(
                                                         child: Text(
-                                                            "${widget.p2_name}"),
+                                                            "${widget.p2_name}\n${widget.p2_partner_name}"),
                                                       ),
                                                     ),
                                                   ),
@@ -1750,7 +1921,7 @@ class _SubmitState extends State<Submit> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      "$score_1_second",
+                                                      "${widget.player2_set_1}",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
@@ -1766,7 +1937,7 @@ class _SubmitState extends State<Submit> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      "$score_2_second",
+                                                      "${widget.player2_set_2}",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
@@ -1782,7 +1953,7 @@ class _SubmitState extends State<Submit> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      "$score_3_second",
+                                                      "${widget.player2_set_3}",
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontStyle:
