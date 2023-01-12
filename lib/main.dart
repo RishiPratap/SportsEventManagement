@@ -1,48 +1,29 @@
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/ScoreAChallenge.dart';
+import 'package:ardent_sports/VerifyPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'LiveMaintainer.dart';
 import 'login.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() async => {
-      WidgetsFlutterBinding.ensureInitialized(),
-      Stripe.publishableKey =
-          'pk_test_51Kx9oUSDyPLJYmvrp5H6rmxyMHQHAHVF38RnAiJzzWI2euD0orPuqf9SOJGpNcAf6FHLYfIOCbihzJR4lBcPrgTw00PKpqaeoy',
-      await Stripe.instance.applySettings(),
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      )),
-      runApp(MyApp())
-    };
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      builder: EasyLoading.init(),
-      title: 'Ardent Sports',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      // home: login(),
-      routes: {
-        '/': (context) => login(),
-        '/homePage': (context) => HomePage(),
-        '/live': (context) => LiveMaintainer(
-              Tournament_ID: '',
-              Match_Id: '',
-              Player_1_name: '',
-              Player1_Partner: '',
-              Player_2_name: '',
-              Player2_Partner: '',
-              Player1_ID: '',
-              Player2_ID: '',
-            ),
-        // '/scoreChallenge': (context) => ScoreAChallenge()
-      },
-    );
-  }
+  Widget build(BuildContext context) => GetMaterialApp(
+        builder: EasyLoading.init(),
+        title: 'Ardent Sports',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark(),
+        routes: {
+          '/': (context) => login(),
+          '/homePage': (context) => HomePage(),
+        },
+      );
 }
