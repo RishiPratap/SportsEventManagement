@@ -378,26 +378,48 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         ),
                         onPressed: userdata[i].STATUS == true
                             ? () async {
-                                final url =
-                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-                                EasyLoading.show(
-                                    status: 'Starting',
-                                    maskType: EasyLoadingMaskType.black);
-                                var response = await get(Uri.parse(url));
-                                if (response.statusCode == 200) {
-                                  EasyLoading.dismiss();
-                                  const msg =
-                                      'Tournament has Successfully Started!';
-                                  Fluttertoast.showToast(msg: msg);
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Failed to start Tournament");
-                                }
-
-                                if (userdata[i].STATUS == false) {
-                                  const msg = 'Tournament has Already Started!';
-                                  Fluttertoast.showToast(msg: msg);
-                                }
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Error"),
+                                        content: Text(
+                                            "Do You want to start the challenge"),
+                                        actions: <Widget>[
+                                          ElevatedButton(
+                                            child: Text("OK"),
+                                            onPressed: () async {
+                                              final url =
+                                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
+                                              EasyLoading.show(
+                                                  status: 'Starting',
+                                                  maskType: EasyLoadingMaskType
+                                                      .black);
+                                              var response =
+                                                  await get(Uri.parse(url));
+                                              if (response.statusCode == 200) {
+                                                EasyLoading.dismiss();
+                                                const msg =
+                                                    'Tournament has Successfully Started!';
+                                                Fluttertoast.showToast(
+                                                    msg: msg);
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Failed to start Tournament");
+                                              }
+                                              if (userdata[i].STATUS == false) {
+                                                const msg =
+                                                    'Tournament has Already Started!';
+                                                Fluttertoast.showToast(
+                                                    msg: msg);
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    });
                               }
                             : null,
                         child: Column(
