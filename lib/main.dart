@@ -1,23 +1,18 @@
 import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/ScoreAChallenge.dart';
+import 'package:ardent_sports/VerifyPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'LiveMaintainerBadminton.dart';
 import 'login.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() async => {
-      WidgetsFlutterBinding.ensureInitialized(),
-      Stripe.publishableKey =
-          'pk_test_51Kx9oUSDyPLJYmvrp5H6rmxyMHQHAHVF38RnAiJzzWI2euD0orPuqf9SOJGpNcAf6FHLYfIOCbihzJR4lBcPrgTw00PKpqaeoy',
-      await Stripe.instance.applySettings(),
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      )),
-      runApp(MyApp())
-    };
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

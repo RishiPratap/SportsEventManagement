@@ -50,17 +50,6 @@ class _loginState extends State<login> {
     });
   }
 
-  // BadmintonSpotSelection(
-  //                     Address: '',
-  //                     Date: '',
-  //                     Organiser_Name: '',
-  //                     spots: 8,
-  //                     sport: '',
-  //                     tourneyId: '',
-  //                     Organiser_Number: '',
-  //                     subTournamentType: '',
-  //                   )
-
   final emaild = TextEditingController();
   final password = TextEditingController();
 
@@ -253,10 +242,6 @@ class _loginState extends State<login> {
                           PageTransition(
                               type: PageTransitionType.rightToLeftWithFade,
                               child: SignUpPage()));
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => SignUpPage()));
                     },
                     child: const Text('Sign Up >'),
                   ),

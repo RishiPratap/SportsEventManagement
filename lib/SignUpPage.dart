@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:ardent_sports/HomePage.dart';
 import 'package:ardent_sports/UserDetails.dart';
+import 'package:ardent_sports/VerifyPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
@@ -239,7 +242,7 @@ class _SignUpPage extends State<SignUpPage> {
                               height: deviceWidth * 0.1,
                               minWidth: deviceWidth * 0.4,
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (emailController.text.trim().isNotEmpty &&
                                       mobileController.text.trim().isNotEmpty &&
                                       passController.text.trim().isNotEmpty &&
@@ -248,11 +251,28 @@ class _SignUpPage extends State<SignUpPage> {
                                         repassController.text
                                             .toString()
                                             .trim()) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SubmitPage()));
+                                      try {
+                                        await FirebaseAuth.instance
+                                            .createUserWithEmailAndPassword(
+                                                email:
+                                                    emailController.text.trim(),
+                                                password:
+                                                    passController.text.trim());
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    VerifyPage(
+                                                      email: emailController
+                                                          .text
+                                                          .trim(),
+                                                    )));
+                                      } on FirebaseAuthException catch (e) {
+                                        print(e);
+                                        Fluttertoast.showToast(
+                                            msg: e.toString(),
+                                            toastLength: Toast.LENGTH_SHORT);
+                                      }
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
