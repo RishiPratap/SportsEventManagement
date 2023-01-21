@@ -382,9 +382,9 @@ class _HostedChallengesState extends State<HostedChallenges> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: Text("Error"),
+                                        title: Text("Alert"),
                                         content: Text(
-                                            "Do You want to start the challenge"),
+                                            "Do you want to start the challenge?"),
                                         actions: <Widget>[
                                           ElevatedButton(
                                             child: Text("OK"),
