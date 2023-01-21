@@ -384,7 +384,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                                       return AlertDialog(
                                         title: Text("Alert"),
                                         content: Text(
-                                            "Do you want to start the challenge?"),
+                                            "You are starting the challenge"),
                                         actions: <Widget>[
                                           ElevatedButton(
                                             child: Text("OK"),
