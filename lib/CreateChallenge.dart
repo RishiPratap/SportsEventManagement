@@ -14,6 +14,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
   List<String> Sports = [
     'Badminton',
     'Table Tennis',
+    'Cricket'
   ];
   String? SelectedSport;
 

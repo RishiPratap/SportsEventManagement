@@ -7,7 +7,7 @@ import 'LiveMaintainerBadminton.dart';
 import 'login.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-//hi
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

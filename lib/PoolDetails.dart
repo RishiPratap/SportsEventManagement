@@ -870,9 +870,9 @@ class _PoolDetailsState extends State<PoolDetails> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                 ),
-                onPressed: isPaymentDone == false
+                onPressed: /*isPaymentDone == false
                     ? null
-                    : () async {
+                    :*/ () async {
                         var data = pools.map((it) => it.pooldata).toList();
 
                         String poolsize_details = "";
@@ -969,8 +969,10 @@ class _PoolDetailsState extends State<PoolDetails> {
                             SPORT: widget.SportName);
                         final DetailMap = ChallengeDetails.toMap();
                         final json = jsonEncode(DetailMap);
-                        var url =
-                            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
+                        print(json);
+                        // var url =
+                        //     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
+                        var url = "https://localhost:5000/createmMultipleTournament";
 
                         try {
                           var response = await post(Uri.parse(url),
