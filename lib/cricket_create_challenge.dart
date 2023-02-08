@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'CategoryDetails.dart';
-import 'PoolDetails.dart';
+import 'cricket_pool_details.dart';
 
 class CricketChallenge extends StatefulWidget {
 
@@ -380,7 +380,11 @@ class _CricketChallengeState extends State<CricketChallenge> {
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                 )),
           ),
-        ), Container(
+        ),
+        SizedBox(
+          height: deviceWidth * 0.04,
+        ),
+        Container(
           margin: EdgeInsets.fromLTRB(
               deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
           decoration: new BoxDecoration(
@@ -453,10 +457,11 @@ class _CricketChallengeState extends State<CricketChallenge> {
                   endtime.text.isNotEmpty &&
                   city.text.isNotEmpty &&
                   Address.text.isNotEmpty) {
+                print("Cricket pool calling here");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PoolDetails(
+                    builder: (context) => CricketPool(
                       SportName: widget.SportName,
                       EventManagerName: widget.EventManagerName,
                       EventManagerMobileNo: widget.EventManagerMobileNo,
