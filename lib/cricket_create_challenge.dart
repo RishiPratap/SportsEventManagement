@@ -2,8 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'CategoryDetails.dart';
+import 'PoolDetails.dart';
 
 class CricketChallenge extends StatefulWidget {
+
+  final String? SportName;
+  final String EventManagerName;
+  final String EventManagerMobileNo;
+  final String? EventType;
+
+  const CricketChallenge({
+    Key? key,
+    required this.SportName,
+    required this.EventManagerName,
+    required this.EventManagerMobileNo,
+    required this.EventType,
+  }) : super(key: key);
 
   @override
   State<CricketChallenge> createState() => _CricketChallengeState();
@@ -18,6 +33,9 @@ class _CricketChallengeState extends State<CricketChallenge> {
   TextEditingController endtime = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController Address = TextEditingController();
+
+   String? RegClosesHrs;
+   List<String> RegCloses = ['2hrs', '6hrs', '12hrs', '24hrs'];
 
 
   Widget build(BuildContext context) {
@@ -50,7 +68,16 @@ class _CricketChallengeState extends State<CricketChallenge> {
         ));
   }
 
-  Widget buildCardEventDetails(double deviceWidth) => Card(
+   List<CategorieDetails> AllCategories = [];
+   @override
+   void initState() {
+     super.initState();
+     AllCategories.add(CategorieDetails("Tournament", "Cricket"));
+   }
+
+
+
+   Widget buildCardEventDetails(double deviceWidth) => Card(
     elevation: 10,
     shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
     color: Colors.white.withOpacity(0.1),
@@ -353,6 +380,51 @@ class _CricketChallengeState extends State<CricketChallenge> {
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                 )),
           ),
+        ), Container(
+          margin: EdgeInsets.fromLTRB(
+              deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
+          decoration: new BoxDecoration(
+              borderRadius: BorderRadius.circular(deviceWidth * 0.04)),
+          child: DropdownButtonFormField(
+            hint: Text(
+              "Registration Closes Before",
+              style: TextStyle(
+                color: Colors.white,
+                fontStyle: FontStyle.normal,
+                fontSize: deviceWidth * 0.04,
+              ),
+            ),
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: Colors.red,
+            ),
+            decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: Colors.black.withOpacity(0.3),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(deviceWidth * 0.06),
+                )),
+            value: RegClosesHrs,
+            items: RegCloses.map((value) => DropdownMenuItem(
+              child: Text(value),
+              value: value,
+            )).toList(),
+            onChanged: (value) {
+              setState(() {
+                RegClosesHrs = value as String;
+              });
+            },
+          ),
+        ),
+        SizedBox(
+          height: deviceWidth * 0.02,
         ),
         SizedBox(
           height: deviceWidth * 0.02,
@@ -381,22 +453,30 @@ class _CricketChallengeState extends State<CricketChallenge> {
                   endtime.text.isNotEmpty &&
                   city.text.isNotEmpty &&
                   Address.text.isNotEmpty) {
-                showDialog(          //  data to be passed to new page
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Succes"),
-                        content: Text("Data enter succefully"),
-                        actions: <Widget>[
-                          ElevatedButton(
-                            child: Text("OK"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      );
-                    });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PoolDetails(
+                      SportName: widget.SportName,
+                      EventManagerName: widget.EventManagerName,
+                      EventManagerMobileNo: widget.EventManagerMobileNo,
+                      EventType: widget.EventType,
+                      EventName: EventName.text,
+                      StartDate: startdateinput.text,
+                      EndDate: enddateinput.text,
+                      RegistrationCloses: RegClosesHrs![0],
+                      StartTime: starttime.text,
+                      EndTime: endtime.text,
+                      City: city.text,
+                      Address: Address.text,
+                      Category: "Cricket",
+                      AgeCategory: "Tournament",
+                      NoofCourts: "",
+                      BreakTime: "",
+                      AllCategoryDetails: AllCategories,
+                    ),
+                  ),
+                );
               } else {
                 showDialog(
                     context: context,
