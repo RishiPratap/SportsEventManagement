@@ -870,9 +870,9 @@ class _PoolDetailsState extends State<PoolDetails> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                 ),
-                onPressed: isPaymentDone == false
+                onPressed: /*isPaymentDone == false
                     ? null
-                    : () async {
+                    : */() async {
                         var data = pools.map((it) => it.pooldata).toList();
 
                         String poolsize_details = "";
