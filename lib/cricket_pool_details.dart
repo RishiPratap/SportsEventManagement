@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:ardent_sports/AgeCategoryItem.dart';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
-import 'package:ardent_sports/PoolDetailsDataClass.dart';
+import 'package:ardent_sports/CricketDetailsDataClass.dart';
 import 'package:ardent_sports/PoolDetailsItem.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -15,6 +15,7 @@ import 'WebViewSpots.dart';
 import 'package:get/get.dart';
 import 'orderAPI/ModelOrderID.dart';
 import 'orderAPI/serviceWrapper.dart';
+import 'CricketDetailsItem.dart';
 
 class CricketPool extends StatefulWidget {
   final String? SportName;
@@ -145,21 +146,19 @@ class CreateChallengeDetails {
 
 class details {
   late String PoolSize;
-  late String gold;
-  late String silver;
-  late String bronze;
-  late String others;
-  late String entryfee;
-  late String pointsystem;
+  late String TeamSize;
+  late String Substitute;
+  late String EntryFee;
+  late String BallType;
+  late String Overs;
 
   details({
     required this.PoolSize,
-    required this.gold,
-    required this.silver,
-    required this.bronze,
-    required this.others,
-    required this.entryfee,
-    required this.pointsystem,
+    required this.TeamSize,
+    required this.Substitute,
+    required this.EntryFee,
+    required this.BallType,
+    required this.Overs,
   });
 }
 
@@ -175,7 +174,6 @@ class _CricketPoolState extends State<CricketPool> {
   String? SelectedTeamSize;
   String? SelectedSubstitutes;
   String? SelectedBallType;
-  List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
   String? SelectedPointSystem;
   String? Points;
 
@@ -183,7 +181,7 @@ class _CricketPoolState extends State<CricketPool> {
   String? SelectedPerMatchEstimatedTime;
 
   List<details>? poolDetails = [];
-  List<PoolDetailsItem> pools = [];
+  List<CricketDetailsItem> pools = [];
 
   bool isPaymentDone = false;
 
@@ -194,348 +192,6 @@ class _CricketPoolState extends State<CricketPool> {
   final silver = TextEditingController();
   final bronze = TextEditingController();
   final others = TextEditingController();
-
-  List<Card> AllPools(int count, double deviceWidth, double deviceHeight) {
-    late Razorpay _razrorpay;
-    List<bool> isCategoryDetailsAdded =
-    List<bool>.filled(widget.AllCategoryDetails.length, false);
-
-    List<Card> AllDetails = [];
-    var card = Card(
-      elevation: 10,
-      shape: BeveledRectangleBorder(
-        borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-      ),
-      margin: EdgeInsets.only(
-          left: deviceWidth * 0.025, right: deviceWidth * 0.025),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(
-                  deviceWidth * 0.03, deviceWidth * 0.02, 0, 0),
-              child: Text(
-                // "${widget.AllCategoryDetails[i].CategoryName} ${widget.AllCategoryDetails[i].AgeCategory}",
-                "Rishi Bhadwa",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            //DROPDOWN CONTAINER
-            Container(
-              margin: EdgeInsets.all(deviceWidth * 0.04),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black.withOpacity(0.3),
-              ),
-              child: DropdownButtonFormField(
-                hint: Text("Pool Size",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontSize: deviceWidth * 0.04,
-                    )),
-                icon: Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.red,
-                ),
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Colors.black.withOpacity(0.3),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-                    )),
-                value: SelectedPoolSize,
-                items: PoolSizes.map((value) => DropdownMenuItem(
-                  child: Text(value),
-                  value: value,
-                )).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    SelectedPoolSize = value as String;
-                  });
-                },
-              ),
-            ),
-            SizedBox(
-              height: deviceWidth * 0.02,
-            ),
-            Container(
-              margin: EdgeInsets.all(deviceWidth * 0.04),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black.withOpacity(0.3),
-              ),
-              child: DropdownButtonFormField(
-                hint: Text("Team Size",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontSize: deviceWidth * 0.04,
-                    )),
-                icon: Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.red,
-                ),
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Colors.black.withOpacity(0.3),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-                    )),
-                value: SelectedTeamSize,
-                items: TeamSizes.map((value) => DropdownMenuItem(
-                  child: Text(value),
-                  value: value,
-                )).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    SelectedTeamSize = value as String;
-                  });
-                },
-              ),
-            ),
-            SizedBox(
-              height: deviceWidth * 0.02,
-            ),
-
-            //substitue sizes
-            Container(
-              margin: EdgeInsets.all(deviceWidth * 0.04),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black.withOpacity(0.3),
-              ),
-              child: DropdownButtonFormField(
-                hint: Text("Substitute Size",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontSize: deviceWidth * 0.04,
-                    )),
-                icon: Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.red,
-                ),
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Colors.black.withOpacity(0.3),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-                    )),
-                value: SelectedSubstitutes,
-                items: SubstitueSizes.map((value) => DropdownMenuItem(
-                  child: Text(value),
-                  value: value,
-                )).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    SelectedSubstitutes = value as String;
-                  });
-                },
-              ),
-            ),
-            SizedBox(
-              height: deviceWidth * 0.02,
-            ),
-            Container(
-              margin: EdgeInsets.all(deviceWidth * 0.04),
-              child: TextField(
-                controller: EntryFeeController,
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.04),
-                      borderSide: BorderSide(
-                        color: Colors.white.withOpacity(0.4),
-                      ),
-                    ),
-                    hintText: "Entry Fee",
-                    hintStyle: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w200),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                    )),
-              ),
-            ),
-
-            //point system
-            // Container(
-            //   margin: EdgeInsets.all(deviceWidth * 0.04),
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(20),
-            //     color: Colors.black.withOpacity(0.3),
-            //   ),
-            //   child: DropdownButtonFormField(
-            //     hint: Text("Select Point System",
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontStyle: FontStyle.normal,
-            //           fontSize: deviceWidth * 0.04,
-            //         )),
-            //     icon: Icon(
-            //       Icons.arrow_drop_down,
-            //       color: Colors.red,
-            //     ),
-            //     decoration: InputDecoration(
-            //         enabledBorder: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(20),
-            //           borderSide: BorderSide(
-            //             color: Colors.black.withOpacity(0.3),
-            //           ),
-            //         ),
-            //         focusedBorder: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-            //           borderSide: BorderSide(
-            //             color: Colors.black,
-            //           ),
-            //         ),
-            //         border: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-            //         )),
-            //     value: SelectedPointSystem,
-            //     items: PointSystems.map((value) => DropdownMenuItem(
-            //       child: Text(value),
-            //       value: value,
-            //     )).toList(),
-            //     onChanged: (value) {
-            //       setState(() {
-            //         String x = value.toString();
-            //         SelectedPointSystem = value as String;
-            //         Points = "${x[0]}${x[1]}_${x[11]}";
-            //         print(x[0]);
-            //       });
-            //     },
-            //   ),
-            // ),
-            SizedBox(
-              height: deviceWidth * 0.02,
-            ),
-            Container(
-              width: deviceWidth * 0.8,
-              margin: EdgeInsets.fromLTRB(
-                  deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  Get.to(WebViewSpots(spots: SelectedPoolSize));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                      BorderRadius.circular(deviceWidth * 0.06)),
-                ),
-                child: Text(
-                  'Preview Fixture',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: deviceWidth * 0.8,
-              margin: EdgeInsets.fromLTRB(
-                  deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  // EasyLoading.show(
-                  //   status: 'Loading...',
-                  //   maskType: EasyLoadingMaskType.black,
-                  // );
-                  if (PoolSizes.isNotEmpty &&
-                      EntryFeeController.text.isNotEmpty &&
-                      PointSystems.isNotEmpty &&
-                      gold.text.isNotEmpty &&
-                      silver.text.isNotEmpty &&
-                      bronze.text.isNotEmpty &&
-                      !isCategoryDetailsAdded[_currPageValue.toInt()]) {
-                    var pool = details(
-                      PoolSize: SelectedPoolSize!,
-                      gold: gold.text,
-                      silver: silver.text,
-                      bronze: bronze.text,
-                      others: others.text,
-                      entryfee: EntryFeeController.text,
-                      pointsystem: Points!,
-                    );
-                    poolDetails?.add(pool);
-                    setState(() {
-                      String? ok;
-                      gold.text = "";
-                      silver.text = "";
-                      bronze.text = "";
-                      SelectedPoolSize = ok;
-                      EntryFeeController.text = "";
-                      others.text = "";
-                      SelectedPointSystem = ok;
-                      Points = ok;
-                    });
-                    EasyLoading.showInfo(
-                        "Details Have been successfully saved");
-                  } else if (isCategoryDetailsAdded[_currPageValue.toInt()]) {
-                    EasyLoading.showError("Details Have ALredy Been Saved");
-                  } else {
-                    EasyLoading.showError("All fields are required");
-                  }
-                },
-                child: Text(
-                  'Submit Category Details',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                      BorderRadius.circular(deviceWidth * 0.06)),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: deviceWidth * 0.02,
-            ),
-          ],
-        ),
-      ),
-    );
-    AllDetails.add(card);
-    return AllDetails;
-  }
 
   late Razorpay _razorpay;
   var tournament_id_arr;
@@ -560,8 +216,8 @@ class _CricketPoolState extends State<CricketPool> {
     });
 
     for (CategorieDetails details in widget.AllCategoryDetails) {
-      var poolData = PoolDetailsDataClass();
-      pools.add(PoolDetailsItem(
+      var poolData = CricketDetailsDataClass();
+      pools.add(CricketDetailsItem(
         details: details,
         pooldata: poolData,
       ));
@@ -609,31 +265,13 @@ class _CricketPoolState extends State<CricketPool> {
                   var data = pools.map((it) => it.pooldata).toList();
 
                   String poolsize_details = "";
-                  String gold_details = "";
-                  String silver_details = "";
-                  String bronze_details = "";
-                  String other_details = "";
                   String entryfee_details = "";
-                  String selected_point_system_details = "";
-                  String per_match_estimated_time = "";
                   for (int i = 0; i < data.length; i++) {
                     poolsize_details += data[i].PoolSize;
-                    gold_details += data[i].Gold;
-                    silver_details += pools[i].pooldata.Silver;
-                    bronze_details += pools[i].pooldata.Bronze;
-                    other_details += "0";
                     entryfee_details += pools[i].pooldata.EntryFee;
-                    selected_point_system_details +=
-                        pools[i].pooldata.PointSystem;
                     if (i != pools.length - 1) {
                       poolsize_details += "-";
-                      gold_details += "-";
-                      silver_details += "-";
-                      bronze_details += "-";
-                      other_details += "-";
                       entryfee_details += "-";
-                      selected_point_system_details += "-";
-                      per_match_estimated_time += "-";
                     }
                   }
                   EasyLoading.show(
@@ -655,21 +293,8 @@ class _CricketPoolState extends State<CricketPool> {
                     }
                   }
                   print(Category);
-                  print(gold_details);
-                  print(silver_details);
-                  print(bronze_details);
-                  print(other_details);
-                  print(entryfee_details);
                   print(widget.EventName);
                   print(widget.City);
-
-                  var prizePool = gold_details +
-                      "-" +
-                      silver_details +
-                      "-" +
-                      bronze_details +
-                      "-" +
-                      other_details;
 
                   final ChallengeDetails = CreateChallengeDetails(
                       ORGANIZER_NAME: widget.EventManagerName,
@@ -679,11 +304,11 @@ class _CricketPoolState extends State<CricketPool> {
                       CATEGORY: Category,
                       NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
                       ENTRY_FEE: entryfee_details,
-                      GOLD: gold_details,
-                      SILVER: silver_details,
-                      BRONZE: bronze_details,
-                      OTHER: other_details,
-                      PRIZE_POOL: prizePool,
+                      GOLD: "0",
+                      SILVER: "0",
+                      BRONZE: "0",
+                      OTHER: "0",
+                      PRIZE_POOL: "0",
                       TOURNAMENT_NAME: widget.EventName,
                       CITY: widget.City,
                       TYPE: widget.EventType,
