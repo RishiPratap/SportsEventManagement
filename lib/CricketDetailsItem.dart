@@ -24,8 +24,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
   final form = GlobalKey<FormState>();
 
   List<String> PoolSizes = ['4', '8', '16', '32', '64'];
-  List<String> TeamSizes = ['5','6','7','8','9','10','11','12'];
-  List<String> SubstitueSizes = ['2','3','4','5'];
+  List<String> TeamSizes = ['5', '6', '7', '8', '9', '10', '11', '12'];
+  List<String> SubstitueSizes = ['2', '3', '4', '5'];
+  List<String> Overs = ['5', '6', '7', '8', '9', '10', '11', '12'];
   List<String> BallType = ["Hard Tennis", "Soft Tennis", "Leather", "Other"];
 
   String? SelectedPoolSize;
@@ -102,9 +103,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       )),
                   // value: widget.pooldata.PoolSize,
                   items: PoolSizes.map((value) => DropdownMenuItem(
-                    child: Text(value),
-                    value: value,
-                  )).toList(),
+                        child: Text(value),
+                        value: value,
+                      )).toList(),
                   onSaved: (val) => widget.pooldata.PoolSize = val.toString(),
                   value: widget.pooldata.PoolSize,
                   onChanged: (value) {
@@ -153,9 +154,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       )),
                   // value: widget.pooldata.PoolSize,
                   items: TeamSizes.map((value) => DropdownMenuItem(
-                    child: Text(value),
-                    value: value,
-                  )).toList(),
+                        child: Text(value),
+                        value: value,
+                      )).toList(),
                   onSaved: (val) => widget.pooldata.TeamSize = val.toString(),
                   value: widget.pooldata.TeamSize,
                   onChanged: (value) {
@@ -168,6 +169,167 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
+
+              // Substitute
+              Container(
+                margin: EdgeInsets.all(deviceWidth * 0.04),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black.withOpacity(0.3),
+                ),
+                child: DropdownButtonFormField(
+                  hint: Text(
+                    "Substitute Size",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      fontSize: deviceWidth * 0.04,
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.red,
+                  ),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Colors.black.withOpacity(0.3),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.06),
+                      )),
+                  items: SubstitueSizes.map((value) => DropdownMenuItem(
+                        child: Text(value),
+                        value: value,
+                      )).toList(),
+                  onSaved: (val) => widget.pooldata.Substitute = val.toString(),
+                  value: widget.pooldata.Substitute,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.pooldata.Substitute = value as String;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: deviceWidth * 0.02,
+              ),
+
+              // Ball type
+              Container(
+                margin: EdgeInsets.all(deviceWidth * 0.04),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black.withOpacity(0.3),
+                ),
+                child: DropdownButtonFormField(
+                  hint: Text(
+                    "Ball Type",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      fontSize: deviceWidth * 0.04,
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.red,
+                  ),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Colors.black.withOpacity(0.3),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.06),
+                      )),
+                  items: BallType.map((value) => DropdownMenuItem(
+                        child: Text(value),
+                        value: value,
+                      )).toList(),
+                  onSaved: (val) => widget.pooldata.BallType = val.toString(),
+                  value: widget.pooldata.BallType,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.pooldata.BallType = value as String;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: deviceWidth * 0.02,
+              ),
+
+              // Overs
+              Container(
+                margin: EdgeInsets.all(deviceWidth * 0.04),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black.withOpacity(0.3),
+                ),
+                child: DropdownButtonFormField(
+                  hint: Text(
+                    "Overs",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      fontSize: deviceWidth * 0.04,
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.red,
+                  ),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Colors.black.withOpacity(0.3),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.06),
+                      )),
+                  items: Overs.map((value) => DropdownMenuItem(
+                        child: Text(value),
+                        value: value,
+                      )).toList(),
+                  onSaved: (val) => widget.pooldata.Overs = val.toString(),
+                  value: widget.pooldata.Overs,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.pooldata.Overs = value as String;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: deviceWidth * 0.02,
+              ),
+
+              // Entry Fee
               Container(
                 margin: EdgeInsets.all(deviceWidth * 0.04),
                 child: TextFormField(
@@ -214,7 +376,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                     backgroundColor: Colors.red,
                     shape: RoundedRectangleBorder(
                         borderRadius:
-                        BorderRadius.circular(deviceWidth * 0.06)),
+                            BorderRadius.circular(deviceWidth * 0.06)),
                   ),
                   child: Text(
                     'Preview Fixture',

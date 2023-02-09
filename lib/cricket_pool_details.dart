@@ -38,23 +38,23 @@ class CricketPool extends StatefulWidget {
 
   const CricketPool(
       {Key? key,
-        required this.SportName,
-        required this.EventManagerName,
-        required this.EventManagerMobileNo,
-        required this.EventType,
-        required this.EventName,
-        required this.StartDate,
-        required this.EndDate,
-        required this.StartTime,
-        required this.EndTime,
-        required this.City,
-        required this.Address,
-        required this.Category,
-        required this.AgeCategory,
-        required this.RegistrationCloses,
-        required this.NoofCourts,
-        required this.BreakTime,
-        required this.AllCategoryDetails})
+      required this.SportName,
+      required this.EventManagerName,
+      required this.EventManagerMobileNo,
+      required this.EventType,
+      required this.EventName,
+      required this.StartDate,
+      required this.EndDate,
+      required this.StartTime,
+      required this.EndTime,
+      required this.City,
+      required this.Address,
+      required this.Category,
+      required this.AgeCategory,
+      required this.RegistrationCloses,
+      required this.NoofCourts,
+      required this.BreakTime,
+      required this.AllCategoryDetails})
       : super(key: key);
   @override
   State<CricketPool> createState() => _CricketPoolState();
@@ -86,33 +86,39 @@ class CreateChallengeDetails {
   late String NO_OF_COURTS;
   late String BREAK_TIME;
   late String? SPORT;
+  late String? TEAM_SIZE;
+  late String? SUBSTITUTES;
+  late String? BALL_TYPE;
 
   CreateChallengeDetails(
       {required this.ORGANIZER_NAME,
-        required this.ORGANIZER_ID,
-        required this.USERID,
-        required this.TOURNAMENT_ID,
-        required this.CATEGORY,
-        required this.NO_OF_KNOCKOUT_ROUNDS,
-        required this.ENTRY_FEE,
-        required this.GOLD,
-        required this.SILVER,
-        required this.BRONZE,
-        required this.OTHER,
-        required this.PRIZE_POOL,
-        required this.TOURNAMENT_NAME,
-        required this.CITY,
-        required this.TYPE,
-        required this.LOCATION,
-        required this.START_DATE,
-        required this.END_DATE,
-        required this.START_TIME,
-        required this.END_TIME,
-        required this.REGISTRATION_CLOSES_BEFORE,
-        required this.AGE_CATEGORY,
-        required this.NO_OF_COURTS,
-        required this.BREAK_TIME,
-        required this.SPORT});
+      required this.ORGANIZER_ID,
+      required this.USERID,
+      required this.TOURNAMENT_ID,
+      required this.CATEGORY,
+      required this.NO_OF_KNOCKOUT_ROUNDS,
+      required this.ENTRY_FEE,
+      required this.GOLD,
+      required this.SILVER,
+      required this.BRONZE,
+      required this.OTHER,
+      required this.PRIZE_POOL,
+      required this.TOURNAMENT_NAME,
+      required this.CITY,
+      required this.TYPE,
+      required this.LOCATION,
+      required this.START_DATE,
+      required this.END_DATE,
+      required this.START_TIME,
+      required this.END_TIME,
+      required this.REGISTRATION_CLOSES_BEFORE,
+      required this.AGE_CATEGORY,
+      required this.NO_OF_COURTS,
+      required this.BREAK_TIME,
+      required this.SPORT,
+      required this.TEAM_SIZE,
+      required this.SUBSTITUTES,
+      required this.BALL_TYPE});
   Map<String, dynamic> toMap() {
     return {
       "ORGANIZER_NAME": this.ORGANIZER_NAME,
@@ -166,8 +172,8 @@ class _CricketPoolState extends State<CricketPool> {
   PageController pageController = PageController(viewportFraction: 0.9);
   double _currPageValue = 0.0;
   List<String> PoolSizes = ['4', '8', '16', '32', '64'];
-  List<String> TeamSizes = ['5','6','7','8','9','10','11','12'];
-  List<String> SubstitueSizes = ['2','3','4','5'];
+  List<String> TeamSizes = ['5', '6', '7', '8', '9', '10', '11', '12'];
+  List<String> SubstitueSizes = ['2', '3', '4', '5'];
   List<String> BallType = ["Hard Tennis", "Soft Tennis", "Leather", "Other"];
 
   String? SelectedPoolSize;
@@ -279,7 +285,7 @@ class _CricketPoolState extends State<CricketPool> {
                     maskType: EasyLoadingMaskType.black,
                   );
                   final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
+                      await SharedPreferences.getInstance();
                   var obtianedEmail = prefs.getString('email');
                   print(obtianedEmail);
                   String Category = "";
@@ -297,31 +303,35 @@ class _CricketPoolState extends State<CricketPool> {
                   print(widget.City);
 
                   final ChallengeDetails = CreateChallengeDetails(
-                      ORGANIZER_NAME: widget.EventManagerName,
-                      ORGANIZER_ID: widget.EventManagerMobileNo,
-                      USERID: obtianedEmail!.trim(),
-                      TOURNAMENT_ID: "123456",
-                      CATEGORY: Category,
-                      NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
-                      ENTRY_FEE: entryfee_details,
-                      GOLD: "0",
-                      SILVER: "0",
-                      BRONZE: "0",
-                      OTHER: "0",
-                      PRIZE_POOL: "0",
-                      TOURNAMENT_NAME: widget.EventName,
-                      CITY: widget.City,
-                      TYPE: widget.EventType,
-                      LOCATION: widget.Address,
-                      START_DATE: widget.StartDate,
-                      END_DATE: widget.EndDate,
-                      START_TIME: widget.StartTime,
-                      END_TIME: widget.EndTime,
-                      REGISTRATION_CLOSES_BEFORE: 6,
-                      AGE_CATEGORY: AgeCategory,
-                      NO_OF_COURTS: "1",
-                      BREAK_TIME: widget.BreakTime,
-                      SPORT: widget.SportName);
+                    ORGANIZER_NAME: widget.EventManagerName,
+                    ORGANIZER_ID: widget.EventManagerMobileNo,
+                    USERID: obtianedEmail!.trim(),
+                    TOURNAMENT_ID: "123456",
+                    CATEGORY: Category,
+                    NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
+                    ENTRY_FEE: entryfee_details,
+                    GOLD: "0",
+                    SILVER: "0",
+                    BRONZE: "0",
+                    OTHER: "0",
+                    PRIZE_POOL: "0",
+                    TOURNAMENT_NAME: widget.EventName,
+                    CITY: widget.City,
+                    TYPE: widget.EventType,
+                    LOCATION: widget.Address,
+                    START_DATE: widget.StartDate,
+                    END_DATE: widget.EndDate,
+                    START_TIME: widget.StartTime,
+                    END_TIME: widget.EndTime,
+                    REGISTRATION_CLOSES_BEFORE: 6,
+                    AGE_CATEGORY: AgeCategory,
+                    NO_OF_COURTS: "1",
+                    BREAK_TIME: widget.BreakTime,
+                    SPORT: widget.SportName,
+                    TEAM_SIZE: SelectedTeamSize,
+                    SUBSTITUTES: SelectedSubstitutes,
+                    BALL_TYPE: SelectedBallType,
+                  );
                   final DetailMap = ChallengeDetails.toMap();
                   final json = jsonEncode(DetailMap);
                   print(json);
@@ -386,8 +396,8 @@ class _CricketPoolState extends State<CricketPool> {
                 onPressed: isPaymentDone == true
                     ? null
                     : () {
-                  _getorderId('2');
-                }),
+                        _getorderId('2');
+                      }),
             const SizedBox(
               height: 20,
             )
