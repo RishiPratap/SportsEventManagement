@@ -319,7 +319,7 @@ class _CricketPoolState extends State<CricketPool> {
                       END_TIME: widget.EndTime,
                       REGISTRATION_CLOSES_BEFORE: 6,
                       AGE_CATEGORY: AgeCategory,
-                      NO_OF_COURTS: widget.NoofCourts,
+                      NO_OF_COURTS: "1",
                       BREAK_TIME: widget.BreakTime,
                       SPORT: widget.SportName);
                   final DetailMap = ChallengeDetails.toMap();
