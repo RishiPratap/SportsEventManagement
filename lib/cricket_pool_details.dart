@@ -267,9 +267,9 @@ class _CricketPoolState extends State<CricketPool> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                 ),
-                onPressed: /*isPaymentDone == false
+                onPressed: isPaymentDone == false
                     ? null
-                    :*/
+                    :
                     () async {
                   var data = pools.map((it) => it.pooldata).toList();
 
