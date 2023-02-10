@@ -353,9 +353,9 @@ class _PoolDetailsState extends State<PoolDetails> {
                   final DetailMap = ChallengeDetails.toMap();
                   final json = jsonEncode(DetailMap);
                   print(json);
-                  // var url =
-                  //     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
-                  var url = "https://localhost:5000/createmMultipleTournament";
+                  var url =
+                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
+                  // var url = "http://7e26-2401-4900-234a-2aa6-8597-daf-a06f-b504.ngrok.io/createMultipleTournament";
 
                   try {
                     var response = await post(Uri.parse(url),

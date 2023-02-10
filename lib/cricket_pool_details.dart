@@ -89,6 +89,7 @@ class CreateChallengeDetails {
   late String? TEAM_SIZE;
   late String? SUBSTITUTES;
   late String? BALL_TYPE;
+  late String? OVERS;
 
   CreateChallengeDetails(
       {required this.ORGANIZER_NAME,
@@ -118,7 +119,9 @@ class CreateChallengeDetails {
       required this.SPORT,
       required this.TEAM_SIZE,
       required this.SUBSTITUTES,
-      required this.BALL_TYPE});
+      required this.BALL_TYPE,
+        required this.OVERS,
+      });
   Map<String, dynamic> toMap() {
     return {
       "ORGANIZER_NAME": this.ORGANIZER_NAME,
@@ -145,7 +148,11 @@ class CreateChallengeDetails {
       "AGE_CATEGORY": this.AGE_CATEGORY,
       "NO_OF_COURTS": this.NO_OF_COURTS,
       "BREAK_TIME": this.BREAK_TIME,
-      "SPORT": this.SPORT
+      "SPORT": this.SPORT,
+      "TEAM_SIZE" : this.TEAM_SIZE,
+      "SUBSTITUTE" : this.SUBSTITUTES,
+      "BALL_TYPE" : this.BALL_TYPE,
+      "OVERS" : this.OVERS
     };
   }
 }
@@ -177,10 +184,6 @@ class _CricketPoolState extends State<CricketPool> {
   List<String> BallType = ["Hard Tennis", "Soft Tennis", "Leather", "Other"];
 
   String? SelectedPoolSize;
-  String? SelectedTeamSize;
-  String? SelectedSubstitutes;
-  String? SelectedBallType;
-  String? SelectedPointSystem;
   String? Points;
 
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
@@ -272,13 +275,17 @@ class _CricketPoolState extends State<CricketPool> {
 
                   String poolsize_details = "";
                   String entryfee_details = "";
+                  String BallType = "";
+                  String Overs = "";
+                  String Substitutes = "";
+                  String TeamSize = "";
                   for (int i = 0; i < data.length; i++) {
                     poolsize_details += data[i].PoolSize;
                     entryfee_details += pools[i].pooldata.EntryFee;
-                    if (i != pools.length - 1) {
-                      poolsize_details += "-";
-                      entryfee_details += "-";
-                    }
+                    BallType += pools[i].pooldata.BallType;
+                    Overs += pools[i].pooldata.Overs;
+                    Substitutes += pools[i].pooldata.Substitute;
+                    TeamSize += pools[i].pooldata.TeamSize;
                   }
                   EasyLoading.show(
                     status: 'Loading...',
@@ -328,16 +335,17 @@ class _CricketPoolState extends State<CricketPool> {
                     NO_OF_COURTS: "1",
                     BREAK_TIME: widget.BreakTime,
                     SPORT: widget.SportName,
-                    TEAM_SIZE: SelectedTeamSize,
-                    SUBSTITUTES: SelectedSubstitutes,
-                    BALL_TYPE: SelectedBallType,
+                    TEAM_SIZE: TeamSize,
+                    SUBSTITUTES: Substitutes,
+                    BALL_TYPE: BallType,
+                    OVERS : Overs
                   );
                   final DetailMap = ChallengeDetails.toMap();
                   final json = jsonEncode(DetailMap);
                   print(json);
-                  // var url =
-                  //     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
-                  var url = "https://localhost:5000/createmMultipleTournament";
+                  var url =
+                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
+                  // var url = "http://7e26-2401-4900-234a-2aa6-8597-daf-a06f-b504.ngrok.io/createMultipleTournament";
 
                   try {
                     var response = await post(Uri.parse(url),

@@ -66,6 +66,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: deviceWidth * 0.02,
+              ),
               Container(
                 margin: EdgeInsets.all(deviceWidth * 0.04),
                 decoration: BoxDecoration(
@@ -115,7 +118,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                   },
                 ),
               ),
-
+              SizedBox(
+                height: deviceWidth * 0.02,
+              ),
               //Team Size
               Container(
                 margin: EdgeInsets.all(deviceWidth * 0.04),
@@ -222,7 +227,6 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
-
               // Ball type
               Container(
                 margin: EdgeInsets.all(deviceWidth * 0.04),
