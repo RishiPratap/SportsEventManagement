@@ -137,6 +137,10 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(
               height: deviceWidth * 0.02,
             ),
+            /*Text(
+              '${widget.SportName}'
+            ),*/
+             /* widget.SportName == 'Baddmiton' ? Text('Hi') : Text('Bye'),*/
             Container(
               margin: EdgeInsets.fromLTRB(
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),

@@ -45,12 +45,12 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                   children: [
                     TextButton(
                       onPressed: () {},
-                      child: Image.asset("assets/back.png"),
+                      child: Image.asset("assets/back_edit.png"),
                     ),
                     Container(
                       width: deviceWidth * 0.07,
                       height: deviceWidth * 0.1,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/AARDENT_LOGO.png"),
                               fit: BoxFit.fitHeight)),

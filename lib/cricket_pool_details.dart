@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 import 'dart:convert';
 import 'dart:io';
 import 'package:ardent_sports/AgeCategoryItem.dart';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
-import 'package:ardent_sports/PoolDetailsDataClass.dart';
+import 'package:ardent_sports/CricketDetailsDataClass.dart';
 import 'package:ardent_sports/PoolDetailsItem.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -16,8 +15,9 @@ import 'WebViewSpots.dart';
 import 'package:get/get.dart';
 import 'orderAPI/ModelOrderID.dart';
 import 'orderAPI/serviceWrapper.dart';
+import 'CricketDetailsItem.dart';
 
-class PoolDetails extends StatefulWidget {
+class CricketPool extends StatefulWidget {
   final String? SportName;
   final String EventManagerName;
   final String EventManagerMobileNo;
@@ -36,7 +36,7 @@ class PoolDetails extends StatefulWidget {
   final String BreakTime;
   final List<CategorieDetails> AllCategoryDetails;
 
-  const PoolDetails(
+  const CricketPool(
       {Key? key,
       required this.SportName,
       required this.EventManagerName,
@@ -57,7 +57,7 @@ class PoolDetails extends StatefulWidget {
       required this.AllCategoryDetails})
       : super(key: key);
   @override
-  State<PoolDetails> createState() => _PoolDetailsState();
+  State<CricketPool> createState() => _CricketPoolState();
 }
 
 class CreateChallengeDetails {
@@ -86,6 +86,10 @@ class CreateChallengeDetails {
   late String NO_OF_COURTS;
   late String BREAK_TIME;
   late String? SPORT;
+  late String? TEAM_SIZE;
+  late String? SUBSTITUTES;
+  late String? BALL_TYPE;
+  late String? OVERS;
 
   CreateChallengeDetails(
       {required this.ORGANIZER_NAME,
@@ -112,7 +116,12 @@ class CreateChallengeDetails {
       required this.AGE_CATEGORY,
       required this.NO_OF_COURTS,
       required this.BREAK_TIME,
-      required this.SPORT});
+      required this.SPORT,
+      required this.TEAM_SIZE,
+      required this.SUBSTITUTES,
+      required this.BALL_TYPE,
+        required this.OVERS,
+      });
   Map<String, dynamic> toMap() {
     return {
       "ORGANIZER_NAME": this.ORGANIZER_NAME,
@@ -139,45 +148,49 @@ class CreateChallengeDetails {
       "AGE_CATEGORY": this.AGE_CATEGORY,
       "NO_OF_COURTS": this.NO_OF_COURTS,
       "BREAK_TIME": this.BREAK_TIME,
-      "SPORT": this.SPORT
+      "SPORT": this.SPORT,
+      "TEAM_SIZE" : this.TEAM_SIZE,
+      "SUBSTITUTE" : this.SUBSTITUTES,
+      "BALL_TYPE" : this.BALL_TYPE,
+      "OVERS" : this.OVERS
     };
   }
 }
 
 class details {
   late String PoolSize;
-  late String gold;
-  late String silver;
-  late String bronze;
-  late String others;
-  late String entryfee;
-  late String pointsystem;
+  late String TeamSize;
+  late String Substitute;
+  late String EntryFee;
+  late String BallType;
+  late String Overs;
 
   details({
     required this.PoolSize,
-    required this.gold,
-    required this.silver,
-    required this.bronze,
-    required this.others,
-    required this.entryfee,
-    required this.pointsystem,
+    required this.TeamSize,
+    required this.Substitute,
+    required this.EntryFee,
+    required this.BallType,
+    required this.Overs,
   });
 }
 
-class _PoolDetailsState extends State<PoolDetails> {
+class _CricketPoolState extends State<CricketPool> {
   PageController pageController = PageController(viewportFraction: 0.9);
   double _currPageValue = 0.0;
-  List<String> PoolSizes = ['8', '16', '32', '64'];
+  List<String> PoolSizes = ['4', '8', '16', '32', '64'];
+  List<String> TeamSizes = ['5', '6', '7', '8', '9', '10', '11', '12'];
+  List<String> SubstitueSizes = ['2', '3', '4', '5'];
+  List<String> BallType = ["Hard Tennis", "Soft Tennis", "Leather", "Other"];
+
   String? SelectedPoolSize;
-  List<String> PointSystems = ["21 best of 3", "15 best of 3", "11 best of 3"];
-  String? SelectedPointSystem;
   String? Points;
 
   List<String> PerMatchEstimatedTime = ['5', '10', '20', '30', '60'];
   String? SelectedPerMatchEstimatedTime;
 
   List<details>? poolDetails = [];
-  List<PoolDetailsItem> pools = [];
+  List<CricketDetailsItem> pools = [];
 
   bool isPaymentDone = false;
 
@@ -188,7 +201,6 @@ class _PoolDetailsState extends State<PoolDetails> {
   final silver = TextEditingController();
   final bronze = TextEditingController();
   final others = TextEditingController();
-
 
   late Razorpay _razorpay;
   var tournament_id_arr;
@@ -213,8 +225,8 @@ class _PoolDetailsState extends State<PoolDetails> {
     });
 
     for (CategorieDetails details in widget.AllCategoryDetails) {
-      var poolData = PoolDetailsDataClass();
-      pools.add(PoolDetailsItem(
+      var poolData = CricketDetailsDataClass();
+      pools.add(CricketDetailsItem(
         details: details,
         pooldata: poolData,
       ));
@@ -262,32 +274,18 @@ class _PoolDetailsState extends State<PoolDetails> {
                   var data = pools.map((it) => it.pooldata).toList();
 
                   String poolsize_details = "";
-                  String gold_details = "";
-                  String silver_details = "";
-                  String bronze_details = "";
-                  String other_details = "";
                   String entryfee_details = "";
-                  String selected_point_system_details = "";
-                  String per_match_estimated_time = "";
+                  String BallType = "";
+                  String Overs = "";
+                  String Substitutes = "";
+                  String TeamSize = "";
                   for (int i = 0; i < data.length; i++) {
                     poolsize_details += data[i].PoolSize;
-                    gold_details += data[i].Gold;
-                    silver_details += pools[i].pooldata.Silver;
-                    bronze_details += pools[i].pooldata.Bronze;
-                    other_details += "0";
                     entryfee_details += pools[i].pooldata.EntryFee;
-                    selected_point_system_details +=
-                        pools[i].pooldata.PointSystem;
-                    if (i != pools.length - 1) {
-                      poolsize_details += "-";
-                      gold_details += "-";
-                      silver_details += "-";
-                      bronze_details += "-";
-                      other_details += "-";
-                      entryfee_details += "-";
-                      selected_point_system_details += "-";
-                      per_match_estimated_time += "-";
-                    }
+                    BallType += pools[i].pooldata.BallType;
+                    Overs += pools[i].pooldata.Overs;
+                    Substitutes += pools[i].pooldata.Substitute;
+                    TeamSize += pools[i].pooldata.TeamSize;
                   }
                   EasyLoading.show(
                     status: 'Loading...',
@@ -308,48 +306,40 @@ class _PoolDetailsState extends State<PoolDetails> {
                     }
                   }
                   print(Category);
-                  print(gold_details);
-                  print(silver_details);
-                  print(bronze_details);
-                  print(other_details);
-                  print(entryfee_details);
                   print(widget.EventName);
                   print(widget.City);
 
-                  var prizePool = gold_details +
-                      "-" +
-                      silver_details +
-                      "-" +
-                      bronze_details +
-                      "-" +
-                      other_details;
-
                   final ChallengeDetails = CreateChallengeDetails(
-                      ORGANIZER_NAME: widget.EventManagerName,
-                      ORGANIZER_ID: widget.EventManagerMobileNo,
-                      USERID: obtianedEmail!.trim(),
-                      TOURNAMENT_ID: "123456",
-                      CATEGORY: Category,
-                      NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
-                      ENTRY_FEE: entryfee_details,
-                      GOLD: gold_details,
-                      SILVER: silver_details,
-                      BRONZE: bronze_details,
-                      OTHER: other_details,
-                      PRIZE_POOL: prizePool,
-                      TOURNAMENT_NAME: widget.EventName,
-                      CITY: widget.City,
-                      TYPE: widget.EventType,
-                      LOCATION: widget.Address,
-                      START_DATE: widget.StartDate,
-                      END_DATE: widget.EndDate,
-                      START_TIME: widget.StartTime,
-                      END_TIME: widget.EndTime,
-                      REGISTRATION_CLOSES_BEFORE: 6,
-                      AGE_CATEGORY: AgeCategory,
-                      NO_OF_COURTS: widget.NoofCourts,
-                      BREAK_TIME: widget.BreakTime,
-                      SPORT: widget.SportName);
+                    ORGANIZER_NAME: widget.EventManagerName,
+                    ORGANIZER_ID: widget.EventManagerMobileNo,
+                    USERID: obtianedEmail!.trim(),
+                    TOURNAMENT_ID: "123456",
+                    CATEGORY: Category,
+                    NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
+                    ENTRY_FEE: entryfee_details,
+                    GOLD: "0",
+                    SILVER: "0",
+                    BRONZE: "0",
+                    OTHER: "0",
+                    PRIZE_POOL: "0",
+                    TOURNAMENT_NAME: widget.EventName,
+                    CITY: widget.City,
+                    TYPE: widget.EventType,
+                    LOCATION: widget.Address,
+                    START_DATE: widget.StartDate,
+                    END_DATE: widget.EndDate,
+                    START_TIME: widget.StartTime,
+                    END_TIME: widget.EndTime,
+                    REGISTRATION_CLOSES_BEFORE: 6,
+                    AGE_CATEGORY: AgeCategory,
+                    NO_OF_COURTS: "1",
+                    BREAK_TIME: widget.BreakTime,
+                    SPORT: widget.SportName,
+                    TEAM_SIZE: TeamSize,
+                    SUBSTITUTES: Substitutes,
+                    BALL_TYPE: BallType,
+                    OVERS : Overs
+                  );
                   final DetailMap = ChallengeDetails.toMap();
                   final json = jsonEncode(DetailMap);
                   print(json);

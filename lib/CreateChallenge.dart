@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'EventDetails.dart';
+import 'cricket_create_challenge.dart';
 
 class CreateChallenge extends StatefulWidget {
   const CreateChallenge({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
   List<String> Sports = [
     'Badminton',
     'Table Tennis',
+    'Cricket'
   ];
   String? SelectedSport;
 
@@ -384,7 +386,21 @@ class _CreateChallengeState extends State<CreateChallenge> {
                         MobileNumberController.text.isEmpty) {
                       final msg = "All Fields are Mandatory";
                       Fluttertoast.showToast(msg: msg);
-                    } else {
+                    }
+                    else if(SelectedSport == 'Cricket'){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CricketChallenge(
+                            SportName: SelectedSport,
+                            EventManagerName: EventManagerNameController.text,
+                            EventManagerMobileNo: MobileNumberController.text,
+                            EventType: "Fixed",
+                          ),
+                        ),
+                      );
+                    }
+                    else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
