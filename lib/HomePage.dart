@@ -765,7 +765,7 @@ class _HomePageState extends State<HomePage> {
                               margin:
                                   EdgeInsets.only(bottom: deviceWidth * 0.028),
                               child: Text(
-                                "Level :${Level!}",
+                                "Level :${Level}",
                                 style: TextStyle(
                                   fontFamily: 'SNAP_ITC',
                                   fontSize: 15,
