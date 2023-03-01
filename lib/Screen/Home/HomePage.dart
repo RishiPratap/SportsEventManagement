@@ -3,20 +3,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
-import 'CricketMatchDetailsInput.dart';
-import 'CricketTossDetails.dart';
-import 'Menu.dart';
+import '../../Menu.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'Profile.dart';
-import 'cricket_create_challenge.dart';
+import '../../Profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -155,7 +151,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-                title: Container(
+                title: SizedBox(
               height: MediaQuery.of(context).size.height * 0.075,
               child: InkWell(
                 onTap: () async {
@@ -239,58 +235,55 @@ class _HomePageState extends State<HomePage> {
               ),
               elevation: 1,
               color: Colors.transparent.withOpacity(0.2),
-              child: Container(
-                child: ExpansionTile(
-                  trailing: Icon(
-                    Icons.arrow_drop_down_circle,
-                    color: userdata[i].SPORT == 'Badminton'
-                        ? Color(0xff6BB8FF)
-                        : Color(0xff03C289),
-                  ),
-                  // trailing: IconButton(
-                  //   icon: Icon(Icons.arrow_drop_down_circle_rounded),
-                  //   onPressed: () {},
-                  // ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: deviceWidth * 0.02),
-                          child: const Text(
-                            "Category",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          )),
-                      // Text(
-                      //   "v",
-                      //   style: TextStyle(
-                      //     fontSize: deviceWidth * 0.04,
-                      //     color: Color(0xffE74545),
-                      //   ),
-                      // ),
-                      Container(
-                        margin: EdgeInsets.only(right: deviceWidth * 0.02),
-                        child: Text(
-                          "Spots Left",
+              child: ExpansionTile(
+                trailing: Icon(
+                  Icons.arrow_drop_down_circle,
+                  color: userdata[i].SPORT == 'Badminton'
+                      ? Color(0xff6BB8FF)
+                      : Color(0xff03C289),
+                ),
+                // trailing: IconButton(
+                //   icon: Icon(Icons.arrow_drop_down_circle_rounded),
+                //   onPressed: () {},
+                // ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: deviceWidth * 0.02),
+                        child: const Text(
+                          "Category",
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ],
-                  ),
-                  children: getAllTournamentCategories(
-                      userdata[i].spotStatusArray,
-                      userdata[i].START_DATE,
-                      userdata[i].ORGANIZER_NAME,
-                      userdata[i].ORGANIZER_ID,
-                      userdata[i].SPORT,
-                      userdata[i].LOCATION,
-                      userdata[i].CATEGORY),
+                        )),
+                    // Text(
+                    //   "v",
+                    //   style: TextStyle(
+                    //     fontSize: deviceWidth * 0.04,
+                    //     color: Color(0xffE74545),
+                    //   ),
+                    // ),
+                    Container(
+                      margin: EdgeInsets.only(right: deviceWidth * 0.02),
+                      child: Text(
+                        "Spots Left",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
                 ),
+                children: getAllTournamentCategories(
+                    userdata[i].spotStatusArray,
+                    userdata[i].START_DATE,
+                    userdata[i].ORGANIZER_NAME,
+                    userdata[i].ORGANIZER_ID,
+                    userdata[i].SPORT,
+                    userdata[i].LOCATION,
+                    userdata[i].CATEGORY),
               ),
             ),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.06,
               width: MediaQuery.of(context).size.width * 0.9,
               child: Card(
@@ -299,53 +292,54 @@ class _HomePageState extends State<HomePage> {
                 ),
                 elevation: 1,
                 color: Colors.transparent.withOpacity(0.2),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                          child: Row(
-                            children: [
-                              Image(
-                                image: AssetImage("assets/trophy 2.png"),
-                                height: deviceWidth * 0.05,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                        child: Row(
+                          children: [
+                            Image(
+                              image: AssetImage("assets/trophy 2.png"),
+                              height: deviceWidth * 0.05,
+                            ),
+                            SizedBox(
+                              width: deviceWidth * 0.03,
+                            ),
+                            const Text(
+                              "Prize money",
+                              style: TextStyle(
+                                color: Colors.white,
                               ),
-                              SizedBox(
-                                width: deviceWidth * 0.03,
-                              ),
-                              const Text(
-                                "Prize money",
+                            ),
+                          ],
+                        )),
+                    Container(
+                      margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                              fontSize: deviceWidth * 0.027,
+                              color: Colors.white),
+                          children: <TextSpan>[
+                            TextSpan(text: "Up to "),
+                            TextSpan(
+                                text: " ₹",
                                 style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(right: deviceWidth * 0.07),
-                          child: RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: deviceWidth * 0.027,
-                                      color: Colors.white),
-                                  children: <TextSpan>[
-                                TextSpan(text: "Up to "),
-                                TextSpan(
-                                    text: " ₹",
-                                    style: TextStyle(
-                                      fontSize: deviceWidth * 0.05,
-                                    )),
-                                TextSpan(
-                                  text: userdata[i].PRIZE_POOL.toString(),
-                                  style: TextStyle(
-                                      fontSize: deviceWidth * 0.05,
-                                      color: Color(0xffE74545),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ])))
-                    ],
-                  ),
+                                  fontSize: deviceWidth * 0.05,
+                                )),
+                            TextSpan(
+                              text: userdata[i].PRIZE_POOL.toString(),
+                              style: TextStyle(
+                                  fontSize: deviceWidth * 0.05,
+                                  color: Color(0xffE74545),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -518,7 +512,7 @@ class _HomePageState extends State<HomePage> {
                           ? Color(0xff6BB8FF)
                           : Color(0xff03C289),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      boxShadow: [
+                      boxShadow: const[
                         BoxShadow(
                           color: Colors.black,
                           spreadRadius: 1,
@@ -526,8 +520,8 @@ class _HomePageState extends State<HomePage> {
                           offset: Offset(4, 4),
                         ),
                       ]),
-                  child: new Center(
-                    child: new Text(
+                  child: Center(
+                    child: Text(
                       spotStatusArray[i]['category'],
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
@@ -617,15 +611,12 @@ class _HomePageState extends State<HomePage> {
     // userData();
   }
 
-  Future<Null> _refreshTournaments() async {
+  Future<void> _refreshTournaments() async {
     Navigator.pushReplacement(
         context, PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
   }
 
-/*  Future<void> _refreshTournaments() async{
-    Navigator.of(context).push(MaterialPageRoute(       // testing code #to be removed
-        builder: (context) => CricketChallenge()));
-  }*/
+
 
   @override
   Widget build(BuildContext context) {

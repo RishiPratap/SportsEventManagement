@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:ardent_sports/SignUpPage.dart';
+import 'package:ardent_sports/Screen/Authentication/SignUpPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

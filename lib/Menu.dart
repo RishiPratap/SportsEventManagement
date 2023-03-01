@@ -3,7 +3,7 @@ import 'package:ardent_sports/CreateChallenge.dart';
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/ScoreAMatch.dart';
-import 'package:ardent_sports/login.dart';
+import 'package:ardent_sports/Screen/Authentication/login.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,10 +1,10 @@
-import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/Screen/Home/HomePage.dart';
 import 'package:ardent_sports/VerifyPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'LiveMaintainerBadminton.dart';
-import 'login.dart';
+import 'Screen/Authentication/login.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 

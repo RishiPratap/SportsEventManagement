@@ -1,21 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:ardent_sports/BadmintonSpotSelection.dart';
-import 'package:ardent_sports/HomePage.dart';
-import 'package:ardent_sports/LiveMaintainerBadminton.dart';
-import 'package:ardent_sports/Payment.dart';
-import 'package:ardent_sports/PoolDetails.dart';
+import 'package:ardent_sports/Screen/Home/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
+import '../../Helper/constant.dart';
 import 'SignUpPage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'UserDetails.dart';
+import '../../UserDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:socket_io_client/socket_io_client.dart'; //TEMPORARY
+import 'package:socket_io_client/socket_io_client.dart'; 
 
 String? finalEmail;
 late Socket socket;
@@ -42,10 +39,10 @@ class _loginState extends State<login> {
     super.initState();
     getValidationData().whenComplete(() async {
       if (finalEmail == null) {
-        Get.to(login());
+        Get.to(const login());
       } else {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
       }
     });
   }
@@ -55,9 +52,9 @@ class _loginState extends State<login> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
-    double cardheight = MediaQuery.of(context).size.height * 0.47;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
+    double cardheight = deviceHeight * 0.47;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -78,7 +75,7 @@ class _loginState extends State<login> {
                   child: Container(
                     height: cardheight,
                     width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     padding: EdgeInsets.fromLTRB(deviceWidth * 0.04, 0,
                         deviceWidth * 0.04, deviceWidth * 0.04),
                     child: Card(
@@ -139,7 +136,7 @@ class _loginState extends State<login> {
                                 foregroundColor: Colors.white,
                                 padding: EdgeInsets.all(deviceWidth * 0.03),
                                 // splashColor: Colors.grey,
-                                backgroundColor: Color(0xffE74545),
+                                backgroundColor: const Color(0xffE74545),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(deviceWidth * 0.04),
@@ -150,7 +147,6 @@ class _loginState extends State<login> {
                                 style: TextStyle(fontSize: deviceWidth * 0.05),
                               ),
                               onPressed: () async {
-                                
                                 EasyLoading.show(
                                     status: 'Loading...',
                                     indicator: const SpinKitThreeBounce(
@@ -182,20 +178,21 @@ class _loginState extends State<login> {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => HomePage()));
+                                            builder: (context) =>
+                                                const HomePage()));
                                     ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
+                                        .showSnackBar(const SnackBar(
                                       content: Text("Logged in successfully"),
                                     ));
                                     EasyLoading.dismiss();
                                   } else if (jsonResponse['Message'] ==
                                       'Incorrect Pwd') {
-                                    final msg = "Incorrect Password";
+                                    const msg = "Incorrect Password";
                                     Fluttertoast.showToast(msg: msg);
                                     EasyLoading.dismiss();
                                   } else if (jsonResponse['Message'] ==
                                       "Invalid USERID") {
-                                    final msg = "Invalid UserID";
+                                    const msg = "Invalid UserID";
                                     Fluttertoast.showToast(msg: msg);
                                     EasyLoading.dismiss();
                                   }
@@ -232,7 +229,7 @@ class _loginState extends State<login> {
                 Center(
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      primary: Color(0xffE74545),
+                      foregroundColor: const Color(0xffE74545),
                       textStyle: const TextStyle(
                         fontSize: 15,
                       ),
@@ -242,7 +239,7 @@ class _loginState extends State<login> {
                           context,
                           PageTransition(
                               type: PageTransitionType.rightToLeftWithFade,
-                              child: SignUpPage()));
+                              child: const SignUpPage()));
                     },
                     child: const Text('Sign Up >'),
                   ),

@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'HomePage.dart';
+import 'Screen/Home/HomePage.dart';
 import 'package:get/get.dart';
 
 class MyBookings extends StatefulWidget {

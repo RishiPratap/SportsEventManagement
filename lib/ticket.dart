@@ -1,7 +1,7 @@
 import 'package:ardent_sports/MyBookings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'HomePage.dart';
+import 'Screen/Home/HomePage.dart';
 
 class ticket extends StatefulWidget {
   final String spotNo;

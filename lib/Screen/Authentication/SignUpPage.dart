@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/Screen/Home/HomePage.dart';
 import 'package:ardent_sports/UserDetails.dart';
 import 'package:ardent_sports/VerifyPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Helper/constant.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -28,19 +29,8 @@ class _SignUpPage extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -48,18 +38,18 @@ class _SignUpPage extends State<SignUpPage> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/login.png'), fit: BoxFit.cover),
           ),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Image(
+                const Image(
                   alignment: Alignment.center,
                   image: AssetImage('assets/AARDENT.png'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Card(
@@ -76,136 +66,125 @@ class _SignUpPage extends State<SignUpPage> {
                         bottom: deviceWidth * 0.05),
                     child: Column(
                       children: [
-                        Container(
-                          // padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
-                          child: TextField(
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            style:
-                                TextStyle(color: Colors.white.withOpacity(0.5)),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.5),
-                                  ),
+                        TextField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          style:
+                              TextStyle(color: Colors.white.withOpacity(0.5)),
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.5),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
                                 ),
-                                hintText: "Email",
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.5)),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                )),
-                          ),
+                              ),
+                              hintText: "Email",
+                              hintStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.5)),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                              )),
                         ),
                         SizedBox(
                           height: deviceWidth * 0.06,
                         ),
-                        Container(
-                          child: TextField(
-                            controller: mobileController,
-                            keyboardType: TextInputType.number,
-                            maxLength: 10,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                counterText: "",
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.5),
-                                  ),
+                        TextField(
+                          controller: mobileController,
+                          keyboardType: TextInputType.number,
+                          maxLength: 10,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              counterText: "",
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.5),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
                                 ),
-                                hintText: "MobileNo",
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.5)),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                )),
-                          ),
+                              ),
+                              hintText: "MobileNo",
+                              hintStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.5)),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                              )),
                         ),
                         SizedBox(
                           height: deviceWidth * 0.06,
                         ),
-                        Container(
-                          // padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-                          child: TextField(
-                            controller: passController,
-                            style: TextStyle(color: Colors.white),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.5),
-                                  ),
+                        TextField(
+                          controller: passController,
+                          style: const TextStyle(color: Colors.white),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.5),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
                                 ),
-                                hintText: "Password",
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.5)),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                )),
-                          ),
+                              ),
+                              hintText: "Password",
+                              hintStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.5)),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                              )),
                         ),
                         SizedBox(
                           height: deviceWidth * 0.06,
                         ),
-                        Container(
-                          // padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
-                          child: TextField(
-                            controller: repassController,
-                            style: TextStyle(color: Colors.white),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.white.withOpacity(0.5),
-                                  ),
+                        TextField(
+                          controller: repassController,
+                          style: const TextStyle(color: Colors.white),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: BorderSide(
+                                  color: Colors.white.withOpacity(0.5),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
                                 ),
-                                hintText: "Confirm Password",
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.5)),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(deviceWidth * 0.06),
-                                )),
-                          ),
+                              ),
+                              hintText: "Confirm Password",
+                              hintStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.5)),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.circular(deviceWidth * 0.06),
+                              )),
                         ),
                         SizedBox(
                           height: deviceWidth * 0.02,
@@ -215,7 +194,7 @@ class _SignUpPage extends State<SignUpPage> {
                           children: [
                             Checkbox(
                               checkColor: Colors.white,
-                              side: BorderSide(color: Colors.red),
+                              side: const BorderSide(color: Colors.red),
                               value: isChecked,
                               onChanged: (bool? value) {
                                 setState(() {
@@ -268,32 +247,31 @@ class _SignUpPage extends State<SignUpPage> {
                                                           .trim(),
                                                     )));
                                       } on FirebaseAuthException catch (e) {
-                                        print(e);
                                         Fluttertoast.showToast(
                                             msg: e.toString(),
                                             toastLength: Toast.LENGTH_SHORT);
                                       }
                                     } else {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
+                                          .showSnackBar(const SnackBar(
                                         content: Text(
                                             "Password and Confirm Password must be same"),
                                       ));
                                     }
                                   } else {
                                     ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
+                                        .showSnackBar(const SnackBar(
                                       content:
                                           Text("All fields must be entered"),
                                     ));
                                   }
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Sign Up',
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xffE74545),
+                                  backgroundColor: const Color(0xffE74545),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.06)),
@@ -346,7 +324,6 @@ class SubmitPage extends StatefulWidget {
 
 class _SubmitPageState extends State<SubmitPage> {
   final first_name = TextEditingController();
-
   final last_name = TextEditingController();
 
   final date_of_birth = TextEditingController();
@@ -365,15 +342,15 @@ class _SubmitPageState extends State<SubmitPage> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/login.png"),
                 fit: BoxFit.cover,
@@ -405,7 +382,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                     child: Image.asset(
                                         "assets/profile-avatar 1.png"),
                                   ),
-                                  Center(
+                                  const Center(
                                     child: Text(
                                       "Set Up Your Profile",
                                       style: TextStyle(
@@ -424,7 +401,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: deviceWidth * 0.14,
                                 child: TextFormField(
                                   controller: first_name,
@@ -438,7 +415,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.06),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.black,
                                       ),
                                     ),
@@ -451,7 +428,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: deviceWidth * 0.14,
                                 child: TextFormField(
                                   controller: last_name,
@@ -465,7 +442,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.06),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.black,
                                       ),
                                     ),
@@ -478,7 +455,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: deviceWidth * 0.14,
                                 child: TextFormField(
                                   controller: date_of_birth,
@@ -510,7 +487,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.06),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.black,
                                       ),
                                     ),
@@ -523,7 +500,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: deviceWidth * 0.14,
                                 child: TextFormField(
                                   controller: state,
@@ -537,7 +514,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.06),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.black,
                                       ),
                                     ),
@@ -550,7 +527,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: deviceWidth * 0.14,
                                 child: TextFormField(
                                   controller: city,
@@ -564,7 +541,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.06),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.black,
                                       ),
                                     ),
@@ -577,7 +554,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                   deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: deviceWidth * 0.14,
                                 child: DropdownButtonFormField(
                                   value: selectedGender,
@@ -598,7 +575,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                         fontStyle: FontStyle.normal,
                                         fontSize: deviceWidth * 0.04,
                                       )),
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.arrow_drop_down,
                                     color: Colors.red,
                                   ),
@@ -612,7 +589,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.06),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.black,
                                       ),
                                     ),
@@ -621,7 +598,7 @@ class _SubmitPageState extends State<SubmitPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           )
                         ],
@@ -683,21 +660,22 @@ class _SubmitPageState extends State<SubmitPage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomePage()));
+                                        builder: (context) =>
+                                            const HomePage()));
                               }
                             } else {
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
+                                  .showSnackBar(const SnackBar(
                                 content: Text("All Fields Must Be Filled"),
                               ));
                             }
                           },
-                          child: Text(
+                          child: const Text(
                             'Submit',
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xffE74545),
+                            backgroundColor: const Color(0xffE74545),
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(deviceWidth * 0.06)),
@@ -711,8 +689,7 @@ class _SubmitPageState extends State<SubmitPage> {
                         alignment: FractionalOffset.bottomCenter,
                         child: TextButton(
                           style: TextButton.styleFrom(
-                            primary: Colors.white.withOpacity(0.5),
-                            textStyle: const TextStyle(
+                            foregroundColor: Colors.white.withOpacity(0.5), textStyle: const TextStyle(
                               fontSize: 15,
                             ),
                           ),

@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:ardent_sports/CategoryDetails.dart';
-import 'package:ardent_sports/HomePage.dart';
+import 'package:ardent_sports/Screen/Home/HomePage.dart';
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
