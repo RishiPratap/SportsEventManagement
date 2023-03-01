@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Helper/constant.dart';
 
 class PastHostedChallenges extends StatefulWidget {
   const PastHostedChallenges({Key? key}) : super(key: key);
@@ -86,12 +87,12 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
 
   List<Container> getHostedTournaments(
       List<UserData> userdata, int array_length) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     if (array_length == 0) {
       var container = Container(
         margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-        child: Text("You Dont Have Any Hosted Challenges"),
+        child: const Text("You Dont Have Any Hosted Challenges"),
       );
       AllTournaments.add(container);
     } else {
@@ -128,63 +129,61 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                       ),
                       elevation: 20,
                       color: userdata[i].SPORT == 'Badminton'
-                          ? Color(0xff6BB8FF)
-                          : Color(0xff03C289),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: deviceWidth * 0.03,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: deviceWidth * 0.1,
-                              width: deviceWidth * 0.1,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.transparent.withOpacity(0.6),
-                                  backgroundBlendMode: BlendMode.darken),
-                              child: Image(
-                                image: NetworkImage(userdata[i].IMG_URL),
-                                height: deviceWidth * 0.04,
-                                width: deviceWidth * 0.04,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(
+                          ? const Color(0xff6BB8FF)
+                          : const Color(0xff03C289),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: deviceWidth * 0.03,
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: deviceWidth * 0.1,
+                            width: deviceWidth * 0.1,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent.withOpacity(0.6),
+                                backgroundBlendMode: BlendMode.darken),
+                            child: Image(
+                              image: NetworkImage(userdata[i].IMG_URL),
+                              height: deviceWidth * 0.04,
                               width: deviceWidth * 0.04,
+                              fit: BoxFit.cover,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  userdata[i].TOURNAMENT_NAME.length > 25
-                                      ? userdata[i]
-                                              .TOURNAMENT_NAME
-                                              .substring(0, 25) +
-                                          '...'
-                                      : userdata[i].TOURNAMENT_NAME,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: deviceWidth * 0.035,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                SizedBox(
-                                  height: deviceWidth * 0.01,
-                                ),
-                                Text(
-                                  userdata[i].CITY,
-                                  style: TextStyle(
+                          ),
+                          SizedBox(
+                            width: deviceWidth * 0.04,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                userdata[i].TOURNAMENT_NAME.length > 25
+                                    ? userdata[i]
+                                            .TOURNAMENT_NAME
+                                            .substring(0, 25) +
+                                        '...'
+                                    : userdata[i].TOURNAMENT_NAME,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                     fontSize: deviceWidth * 0.035,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              SizedBox(
+                                height: deviceWidth * 0.01,
+                              ),
+                              Text(
+                                userdata[i].CITY,
+                                style: TextStyle(
+                                  fontSize: deviceWidth * 0.035,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -192,7 +191,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                 SizedBox(
                   height: deviceWidth * 0.018,
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.06,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Card(
@@ -201,42 +200,39 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                     ),
                     elevation: 1,
                     color: Colors.transparent.withOpacity(0.2),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                              child: Text(
-                                "Category",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "V",
-                                style: TextStyle(
-                                  fontSize: deviceWidth * 0.04,
-                                  color: Color(0xffE74545),
-                                ),
-                              )),
-                          Container(
-                              margin:
-                                  EdgeInsets.only(right: deviceWidth * 0.07),
-                              child: Text(
-                                "Spots Left",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ))
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                            child: const Text(
+                              "Category",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "V",
+                              style: TextStyle(
+                                fontSize: deviceWidth * 0.04,
+                                color: const Color(0xffE74545),
+                              ),
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                            child: const Text(
+                              "Spots Left",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ))
+                      ],
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.06,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Card(
@@ -245,54 +241,55 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                     ),
                     elevation: 1,
                     color: Colors.transparent.withOpacity(0.2),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                              child: Row(
-                                children: [
-                                  Image(
-                                    image: AssetImage("assets/trophy 2.png"),
-                                    height: deviceWidth * 0.05,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                            child: Row(
+                              children: [
+                                Image(
+                                  image:
+                                      const AssetImage("assets/trophy 2.png"),
+                                  height: deviceWidth * 0.05,
+                                ),
+                                SizedBox(
+                                  width: deviceWidth * 0.03,
+                                ),
+                                const Text(
+                                  "Prize money",
+                                  style: TextStyle(
+                                    color: Colors.white,
                                   ),
-                                  SizedBox(
-                                    width: deviceWidth * 0.03,
-                                  ),
-                                  Text(
-                                    "Prize money",
+                                ),
+                              ],
+                            )),
+                        Container(
+                          margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                          child: RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                  fontSize: deviceWidth * 0.027,
+                                  color: Colors.white),
+                              children: <TextSpan>[
+                                const TextSpan(text: "Up to "),
+                                TextSpan(
+                                    text: " ₹",
                                     style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          Container(
-                              margin:
-                                  EdgeInsets.only(right: deviceWidth * 0.07),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          fontSize: deviceWidth * 0.027,
-                                          color: Colors.white),
-                                      children: <TextSpan>[
-                                    TextSpan(text: "Up to "),
-                                    TextSpan(
-                                        text: " ₹",
-                                        style: TextStyle(
-                                          fontSize: deviceWidth * 0.05,
-                                        )),
-                                    TextSpan(
-                                      text: userdata[i].PRIZE_POOL.toString(),
-                                      style: TextStyle(
-                                          fontSize: deviceWidth * 0.05,
-                                          color: Color(0xffE74545),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ])))
-                        ],
-                      ),
+                                      fontSize: deviceWidth * 0.05,
+                                    )),
+                                TextSpan(
+                                  text: userdata[i].PRIZE_POOL.toString(),
+                                  style: TextStyle(
+                                      fontSize: deviceWidth * 0.05,
+                                      color: const Color(0xffE74545),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -300,7 +297,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(deviceWidth * 0.02),
-                      child: Image(
+                      child: const Image(
                         image: AssetImage("assets/Location.png"),
                       ),
                     ),
@@ -320,40 +317,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                       fontSize: deviceWidth * 0.03,
                       fontWeight: FontWeight.w800),
                 ),
-                // TextButton(
-                //     onPressed: () async {
-                //       final url =
-                //           "http://44.202.65.121:443/createMatches?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}";
-
-                //       var response = await get(Uri.parse(url));
-                //       if (response.statusCode == 200) {
-                //         const msg = 'Tournament has Successfully Started!';
-                //         Fluttertoast.showToast(msg: msg);
-                //       } else {
-                //         Fluttertoast.showToast(
-                //             msg: "Failed to start Tournament");
-                //       }
-                //     },
-                //     child:
-                //     Container(
-                //       height: MediaQuery.of(context).size.height * 0.05,
-                //       width: MediaQuery.of(context).size.width * 0.3,
-                //       decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(10),
-                //         color: Colors.green,
-                //       ),
-                //       // child: Container(
-                //       //   margin: EdgeInsets.only(top: 15),
-                //       //   child: Text(
-                //       //     "Start Challenge",
-                //       //     textAlign: TextAlign.center,
-                //       //     style: TextStyle(
-                //       //         color: Colors.white,
-                //       //         fontSize: 12,
-                //       //         fontWeight: FontWeight.w800),
-                //       //   ),
-                //       // ),
-                //     ))
+             
               ],
             ),
           ),
@@ -392,8 +356,8 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context);
@@ -405,14 +369,14 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"),
                 fit: BoxFit.cover,
               ),
             ),
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
                   Row(
@@ -424,7 +388,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                           height: deviceWidth * 0.1,
                           margin:
                               EdgeInsets.fromLTRB(0, deviceWidth * 0.03, 0, 0),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               image: DecorationImage(
                             image: AssetImage('assets/AARDENT_LOGO.png'),
                             fit: BoxFit.cover,
@@ -436,7 +400,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                         child: Container(
                           width: deviceWidth * 0.26,
                           height: deviceWidth * 0.08,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
                                       "assets/Ardent_Sport_Text.png"),
@@ -451,7 +415,7 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.white,
                   ),
                   SizedBox(
@@ -482,11 +446,9 @@ class _PastHostedChallengesState extends State<PastHostedChallenges> {
                             AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.data == null) {
                             print("In Null");
-                            return Container(
-                              child: Center(
-                                child:
-                                    Text("You don't have any past challenges"),
-                              ),
+                            return const Center(
+                              child:
+                                  Text("You don't have any past challenges"),
                             );
                           } else {
                             return Column(

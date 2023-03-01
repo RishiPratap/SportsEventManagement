@@ -14,21 +14,21 @@ class AgeCategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 5),
+      margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
-              Text("  "),
-              Image(image: AssetImage("assets/Menu.png")),
+              const Text("  "),
+              const Image(image: AssetImage("assets/Menu.png")),
               Text(
                 "   ${data.AgeCategory!} ",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
                 " ${data.Category!}",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -37,11 +37,12 @@ class AgeCategoryItem extends StatelessWidget {
               onDeleteItem(data.Category, data.AgeCategory);
             },
             child: Container(
-                margin: EdgeInsets.only(right: 10),
-                child: Icon(
-                  Icons.delete,
-                  size: 20,
-                )),
+              margin: const EdgeInsets.only(right: 10),
+              child: const Icon(
+                Icons.delete,
+                size: 20,
+              ),
+            ),
           ),
         ],
       ),

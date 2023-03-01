@@ -3,12 +3,12 @@ import 'package:ardent_sports/Screen/Home/HomePage.dart';
 import 'package:ardent_sports/LiveMaintainerBadminton.dart';
 import 'package:ardent_sports/LiveMaintainerTableTennis.dart';
 import 'package:ardent_sports/WebViewLiveMaintainerPreviewFixture.dart';
-import 'package:ardent_sports/WebViewTest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+
+import 'Helper/constant.dart';
 
 class LiveMaintainerMatchSelection extends StatefulWidget {
   final String Tournament_id;
@@ -78,17 +78,17 @@ class _LiveMaintainerMatchSelectionState
 
   List<Card> AllMatches = [];
 
-  List<Card> getHostedMatches(List<MatchesData> matchesdata, int array_length) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
-    if (array_length == 0) {
+  List<Card> getHostedMatches(List<MatchesData> matchesdata, int arrayLength) {
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
+    if (arrayLength == 0) {
       var container = Card(
         margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-        child: Text("There arent any matches in this Tournament"),
+        child: const Text("There arent any matches in this Tournament"),
       );
       AllMatches.add(container);
     } else {
-      for (int i = 0; i < array_length; i++) {
+      for (int i = 0; i < arrayLength; i++) {
         var container = Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(deviceWidth * 0.03),
@@ -117,64 +117,62 @@ class _LiveMaintainerMatchSelectionState
                     ),
                     elevation: 20,
                     color: matchesdata[i].SPORT_NAME == 'Badminton'
-                        ? Color(0xff6BB8FF)
-                        : Color(0xff03C289),
-                    child: Container(
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: deviceWidth * 0.03,
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: deviceWidth * 0.1,
-                            width: deviceWidth * 0.1,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.transparent.withOpacity(0.6),
-                                backgroundBlendMode: BlendMode.darken),
-                            child: Image(
-                              image: NetworkImage(matchesdata[i].IMG_URL),
-                              height: deviceWidth * 0.04,
-                              width: deviceWidth * 0.04,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(
+                        ? const Color(0xff6BB8FF)
+                        : const Color(0xff03C289),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: deviceWidth * 0.03,
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: deviceWidth * 0.1,
+                          width: deviceWidth * 0.1,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.transparent.withOpacity(0.6),
+                              backgroundBlendMode: BlendMode.darken),
+                          child: Image(
+                            image: NetworkImage(matchesdata[i].IMG_URL),
+                            height: deviceWidth * 0.04,
                             width: deviceWidth * 0.04,
+                            fit: BoxFit.cover,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                matchesdata[i].TOURNAMENT_NAME.length > 25
-                                    ? matchesdata[i]
-                                            .TOURNAMENT_NAME
-                                            .substring(0, 25) +
-                                        '...'
-                                    : matchesdata[i].TOURNAMENT_NAME,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: deviceWidth * 0.035,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                              SizedBox(
-                                height: deviceWidth * 0.01,
-                              ),
-                              Text(
-                                matchesdata[i].CITY,
-                                style: TextStyle(
+                        ),
+                        SizedBox(
+                          width: deviceWidth * 0.04,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              matchesdata[i].TOURNAMENT_NAME.length > 25
+                                  ? matchesdata[i]
+                                          .TOURNAMENT_NAME
+                                          .substring(0, 25) +
+                                      '...'
+                                  : matchesdata[i].TOURNAMENT_NAME,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
                                   fontSize: deviceWidth * 0.035,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: deviceWidth * 0.01,
+                            ),
+                            Text(
+                              matchesdata[i].CITY,
+                              style: TextStyle(
+                                fontSize: deviceWidth * 0.035,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -199,7 +197,7 @@ class _LiveMaintainerMatchSelectionState
                                 top: deviceWidth * 0.02),
                             child: Text(
                               matchesdata[i].PLAYER1_NAME,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             )),
@@ -210,7 +208,7 @@ class _LiveMaintainerMatchSelectionState
                                 bottom: deviceWidth * 0.02),
                             child: Text(
                               matchesdata[i].PLAYER1_PARTNER,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             )),
@@ -222,7 +220,7 @@ class _LiveMaintainerMatchSelectionState
                           "Vs",
                           style: TextStyle(
                             fontSize: deviceWidth * 0.04,
-                            color: Color(0xffE74545),
+                            color: const Color(0xffE74545),
                           ),
                         )),
                     Column(
@@ -233,7 +231,7 @@ class _LiveMaintainerMatchSelectionState
                               top: deviceWidth * 0.02),
                           child: Text(
                             matchesdata[i].PLAYER2_NAME,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -245,7 +243,7 @@ class _LiveMaintainerMatchSelectionState
                               bottom: deviceWidth * 0.02),
                           child: Text(
                             matchesdata[i].PLAYER2_PARTNER,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -255,7 +253,7 @@ class _LiveMaintainerMatchSelectionState
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.09,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Card(
@@ -264,53 +262,51 @@ class _LiveMaintainerMatchSelectionState
                   ),
                   elevation: 1,
                   color: Colors.transparent.withOpacity(0.2),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                            child: Row(
-                              children: [
-                                Image(
-                                  image: AssetImage("assets/trophy 2.png"),
-                                  height: deviceWidth * 0.05,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                          child: Row(
+                            children: [
+                              Image(
+                                image: const AssetImage("assets/trophy 2.png"),
+                                height: deviceWidth * 0.05,
+                              ),
+                              SizedBox(
+                                width: deviceWidth * 0.03,
+                              ),
+                              const Text(
+                                "Prize money",
+                                style: TextStyle(
+                                  color: Colors.white,
                                 ),
-                                SizedBox(
-                                  width: deviceWidth * 0.03,
-                                ),
-                                Text(
-                                  "Prize money",
+                              ),
+                            ],
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                          child: RichText(
+                              text: TextSpan(
                                   style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                                      fontSize: deviceWidth * 0.027,
+                                      color: Colors.white),
+                                  children: <TextSpan>[
+                                const TextSpan(text: "Up to "),
+                                TextSpan(
+                                    text: " ₹",
+                                    style: TextStyle(
+                                      fontSize: deviceWidth * 0.05,
+                                    )),
+                                TextSpan(
+                                  text: matchesdata[i].PRIZE_POOL.toString(),
+                                  style: TextStyle(
+                                      fontSize: deviceWidth * 0.05,
+                                      color: const Color(0xffE74545),
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ],
-                            )),
-                        Container(
-                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
-                            child: RichText(
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: deviceWidth * 0.027,
-                                        color: Colors.white),
-                                    children: <TextSpan>[
-                                  TextSpan(text: "Up to "),
-                                  TextSpan(
-                                      text: " ₹",
-                                      style: TextStyle(
-                                        fontSize: deviceWidth * 0.05,
-                                      )),
-                                  TextSpan(
-                                    text: matchesdata[i].PRIZE_POOL.toString(),
-                                    style: TextStyle(
-                                        fontSize: deviceWidth * 0.05,
-                                        color: Color(0xffE74545),
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ])))
-                      ],
-                    ),
+                              ])))
+                    ],
                   ),
                 ),
               ),
@@ -318,7 +314,7 @@ class _LiveMaintainerMatchSelectionState
                 children: [
                   Container(
                     padding: EdgeInsets.all(deviceWidth * 0.02),
-                    child: Image(
+                    child: const Image(
                       image: AssetImage("assets/Location.png"),
                     ),
                   ),
@@ -349,17 +345,17 @@ class _LiveMaintainerMatchSelectionState
                         Map? mapUserInfo;
                         mapUserInfo = json.decode(response.body);
                         if (matchesdata[i].SPORT_NAME == "Badminton") {
-                          int player1_set_1 =
+                          int player1Set1 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
-                          int player1_set_2 =
+                          int player1Set2 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
-                          int player1_set_3 =
+                          int player1Set3 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
-                          int player2_set_1 =
+                          int player2Set1 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
-                          int player2_set_2 =
+                          int player2Set2 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
-                          int player2_set_3 =
+                          int player2Set3 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
                           Navigator.push(
                             context,
@@ -373,35 +369,35 @@ class _LiveMaintainerMatchSelectionState
                                 Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
                                 Player1_ID: matchesdata[i].PLAYER1_ID,
                                 Player2_ID: matchesdata[i].PLAYER2_ID,
-                                player1_set_1: player1_set_1,
-                                player1_set_2: player1_set_2,
-                                player1_set_3: player1_set_3,
-                                player2_set_1: player2_set_1,
-                                player2_set_2: player2_set_2,
-                                player2_set_3: player2_set_3,
+                                player1_set_1: player1Set1,
+                                player1_set_2: player1Set2,
+                                player1_set_3: player1Set3,
+                                player2_set_1: player2Set1,
+                                player2_set_2: player2Set2,
+                                player2_set_3: player2Set3,
                               ),
                             ),
                           );
                         } else {
-                          int player1_set_1 =
+                          int player1Set1 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set1'];
-                          int player1_set_2 =
+                          int player1Set2 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set2'];
-                          int player1_set_3 =
+                          int player1Set3 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set3'];
-                          int player1_set_4 =
+                          int player1Set4 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set4'];
-                          int player1_set_5 =
+                          int player1Set5 =
                               mapUserInfo?['Message']['PLAYER1_SCORE']['set5'];
-                          int player2_set_1 =
+                          int player2Set1 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set1'];
-                          int player2_set_2 =
+                          int player2Set2 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set2'];
-                          int player2_set_3 =
+                          int player2Set3 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set3'];
-                          int player2_set_4 =
+                          int player2Set4 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set4'];
-                          int player2_set_5 =
+                          int player2Set5 =
                               mapUserInfo?['Message']['PLAYER2_SCORE']['set5'];
                           Navigator.push(
                             context,
@@ -415,16 +411,16 @@ class _LiveMaintainerMatchSelectionState
                                 Player2_Partner: matchesdata[i].PLAYER2_PARTNER,
                                 Player1_ID: matchesdata[i].PLAYER1_ID,
                                 Player2_ID: matchesdata[i].PLAYER2_ID,
-                                player1_set_1: player1_set_1,
-                                player1_set_2: player1_set_2,
-                                player1_set_3: player1_set_3,
-                                player1_set_4: player1_set_4,
-                                player1_set_5: player1_set_5,
-                                player2_set_1: player2_set_1,
-                                player2_set_2: player2_set_2,
-                                player2_set_3: player2_set_3,
-                                player2_set_4: player2_set_4,
-                                player2_set_5: player2_set_5,
+                                player1_set_1: player1Set1,
+                                player1_set_2: player1Set2,
+                                player1_set_3: player1Set3,
+                                player1_set_4: player1Set4,
+                                player1_set_5: player1Set5,
+                                player2_set_1: player2Set1,
+                                player2_set_2: player2Set2,
+                                player2_set_3: player2Set3,
+                                player2_set_4: player2Set4,
+                                player2_set_5: player2Set5,
                               ),
                             ),
                           );
@@ -442,10 +438,10 @@ class _LiveMaintainerMatchSelectionState
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Text(
                       "Match Id :${int.parse(matchesdata[i].MATCHID) + 1}",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.w700),
@@ -480,9 +476,9 @@ class _LiveMaintainerMatchSelectionState
     try {
       List<MatchesData> matchesdata =
           jsonData.map((dynamic item) => MatchesData.fromJson(item)).toList();
-      int array_length = matchesdata.length;
+      int arrayLength = matchesdata.length;
       print(matchesdata);
-      return getHostedMatches(matchesdata, array_length);
+      return getHostedMatches(matchesdata, arrayLength);
     } catch (e) {
       print(e);
     }
@@ -512,8 +508,8 @@ class _LiveMaintainerMatchSelectionState
     double deviceHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(
-            context, PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
+        Navigator.pushReplacement(context,
+            PageRouteBuilder(pageBuilder: (a, b, c) => const HomePage()));
         return false;
       },
       child: Scaffold(
@@ -526,14 +522,14 @@ class _LiveMaintainerMatchSelectionState
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/Homepage.png"),
                   fit: BoxFit.cover,
                 ),
               ),
               child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
                     Row(
@@ -545,7 +541,7 @@ class _LiveMaintainerMatchSelectionState
                             height: deviceWidth * 0.1,
                             margin: EdgeInsets.fromLTRB(
                                 0, deviceWidth * 0.03, 0, 0),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 image: DecorationImage(
                               image: AssetImage('assets/AARDENT_LOGO.png'),
                               fit: BoxFit.cover,
@@ -557,7 +553,7 @@ class _LiveMaintainerMatchSelectionState
                           child: Container(
                             width: deviceWidth * 0.026,
                             height: deviceWidth * 0.08,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
                                         "assets/Ardent_Sport_Text.png"),
@@ -572,7 +568,7 @@ class _LiveMaintainerMatchSelectionState
                         ),
                       ],
                     ),
-                    Divider(
+                    const Divider(
                       color: Colors.white,
                     ),
                     SizedBox(
@@ -605,18 +601,15 @@ class _LiveMaintainerMatchSelectionState
                         Container(
                             margin: EdgeInsets.fromLTRB(
                                 deviceWidth * 0.03, 0, 0, 0),
-                            child: Text("Current Matches")),
+                            child: const Text("Current Matches")),
                         FutureBuilder(
                           future: futures,
                           builder: (BuildContext context,
                               AsyncSnapshot<dynamic> snapshot) {
                             if (snapshot.data == null) {
-                              print("In Null");
-                              return Container(
+                              return const Center(
                                 child: Center(
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
+                                  child: CircularProgressIndicator(),
                                 ),
                               );
                             } else {

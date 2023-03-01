@@ -1,10 +1,9 @@
 import 'package:ardent_sports/CategoryDetails.dart';
 import 'package:ardent_sports/PoolDetailsDataClass.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
+import 'Helper/constant.dart';
 import 'WebViewSpots.dart';
 
 class PoolDetailsItem extends StatefulWidget {
@@ -30,10 +29,10 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 15),
+      margin: const EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 15),
       child: Card(
         elevation: 10,
         shape: BeveledRectangleBorder(
@@ -51,7 +50,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                       deviceWidth * 0.03, deviceWidth * 0.02, 0, 0),
                   child: Text(
                     "${widget.details.AgeCategory} ${widget.details.CategoryName}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.red,
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
@@ -73,7 +72,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                       fontSize: deviceWidth * 0.04,
                     ),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -86,7 +85,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -123,11 +122,11 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                         initialValue: widget.pooldata.Gold,
                         onChanged: (value) {
                           setState(() {
-                            widget.pooldata.Gold = value as String;
+                            widget.pooldata.Gold = value;
                           });
                         },
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
@@ -141,7 +140,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                               ),
                             ),
                             hintText: "Gold",
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w200),
                             border: OutlineInputBorder(
@@ -162,11 +161,11 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                             widget.pooldata.Silver = val.toString(),
                         onChanged: (value) {
                           setState(() {
-                            widget.pooldata.Silver = value as String;
+                            widget.pooldata.Silver = value;
                           });
                         },
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
@@ -180,7 +179,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                               ),
                             ),
                             hintText: "Silver",
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w200),
                             border: OutlineInputBorder(
@@ -202,10 +201,10 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                             widget.pooldata.Bronze = val.toString(),
                         onChanged: (value) {
                           setState(() {
-                            widget.pooldata.Bronze = value as String;
+                            widget.pooldata.Bronze = value;
                           });
                         },
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
@@ -219,7 +218,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                               ),
                             ),
                             hintText: "Bronze",
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w200),
                             border: OutlineInputBorder(
@@ -239,10 +238,10 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                   onSaved: (val) => widget.pooldata.EntryFee = val.toString(),
                   onChanged: (value) {
                     setState(() {
-                      widget.pooldata.EntryFee = value as String;
+                      widget.pooldata.EntryFee = value;
                     });
                   },
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -254,7 +253,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                         ),
                       ),
                       hintText: "Entry Fee",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w200),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
@@ -274,7 +273,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                         fontStyle: FontStyle.normal,
                         fontSize: deviceWidth * 0.04,
                       )),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -287,7 +286,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -330,7 +329,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                         borderRadius:
                             BorderRadius.circular(deviceWidth * 0.06)),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Preview Fixture',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -339,63 +338,6 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
               const SizedBox(
                 height: 20,
               ),
-              // Container(
-              //   width: deviceWidth * 0.8,
-              //   margin: EdgeInsets.fromLTRB(
-              //       deviceWidth * 0.04, 0, deviceWidth * 0.03, 0),
-              //   child: ElevatedButton(
-              //     onPressed: () async {
-              //       // EasyLoading.show(
-              //       //   status: 'Loading...',
-              //       //   maskType: EasyLoadingMaskType.black,
-              //       // );
-              //       if (PoolSizes.isNotEmpty &&
-              //           EntryFeeController.text.isNotEmpty &&
-              //           PointSystems.isNotEmpty &&
-              //           gold.text.isNotEmpty &&
-              //           silver.text.isNotEmpty &&
-              //           bronze.text.isNotEmpty &&
-              //           !isCategoryDetailsAdded[_currPageValue.toInt()]) {
-              //         var pool = details(
-              //           PoolSize: SelectedPoolSize!,
-              //           gold: gold.text,
-              //           silver: silver.text,
-              //           bronze: bronze.text,
-              //           others: others.text,
-              //           entryfee: EntryFeeController.text,
-              //           pointsystem: Points!,
-              //         );
-              //         poolDetails?.add(pool);
-              //         setState(() {
-              //           String? ok;
-              //           gold.text = "";
-              //           silver.text = "";
-              //           bronze.text = "";
-              //           SelectedPoolSize = ok;
-              //           EntryFeeController.text = "";
-              //           others.text = "";
-              //           SelectedPointSystem = ok;
-              //           Points = ok;
-              //         });
-              //         EasyLoading.showInfo(
-              //             "Details Have been successfully saved");
-              //       } else if (isCategoryDetailsAdded[_currPageValue.toInt()]) {
-              //         EasyLoading.showError("Details Have ALredy Been Saved");
-              //       } else {
-              //         EasyLoading.showError("All fields are required");
-              //       }
-              //     },
-              //     child: Text(
-              //       'Submit Category Details',
-              //       style: TextStyle(color: Colors.white),
-              //     ),
-              //     style: ElevatedButton.styleFrom(
-              //       backgroundColor: Colors.green,
-              //       shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(deviceWidth * 0.06)),
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: deviceWidth * 0.02,
               ),

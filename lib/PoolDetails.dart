@@ -1,19 +1,16 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 import 'dart:convert';
-import 'dart:io';
-import 'package:ardent_sports/AgeCategoryItem.dart';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
 import 'package:ardent_sports/PoolDetailsDataClass.dart';
 import 'package:ardent_sports/PoolDetailsItem.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CategoryDetails.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'WebViewSpots.dart';
 import 'package:get/get.dart';
+import 'Helper/constant.dart';
 import 'orderAPI/ModelOrderID.dart';
 import 'orderAPI/serviceWrapper.dart';
 
@@ -115,31 +112,31 @@ class CreateChallengeDetails {
       required this.SPORT});
   Map<String, dynamic> toMap() {
     return {
-      "ORGANIZER_NAME": this.ORGANIZER_NAME,
-      "ORGANIZER_ID": this.ORGANIZER_ID,
-      "USERID": this.USERID,
-      "TOURNAMENT_ID": this.TOURNAMENT_ID,
-      "CATEGORY": this.CATEGORY,
-      "NO_OF_KNOCKOUT_ROUNDS": this.NO_OF_KNOCKOUT_ROUNDS,
-      "ENTRY_FEE": this.ENTRY_FEE,
-      "GOLD": this.GOLD,
-      "SILVER": this.SILVER,
-      "BRONZE": this.BRONZE,
-      "OTHER": this.OTHER,
-      "PRIZE_POOL": this.PRIZE_POOL,
-      "TOURNAMENT_NAME": this.TOURNAMENT_NAME,
-      "CITY": this.CITY,
-      "TYPE": this.TYPE,
-      "LOCATION": this.LOCATION,
-      "START_DATE": this.START_DATE,
-      "END_DATE": this.END_DATE,
-      "START_TIME": this.START_TIME,
-      "END_TIME": this.END_TIME,
-      "REGISTRATION_CLOSES_BEFORE": this.REGISTRATION_CLOSES_BEFORE,
-      "AGE_CATEGORY": this.AGE_CATEGORY,
-      "NO_OF_COURTS": this.NO_OF_COURTS,
-      "BREAK_TIME": this.BREAK_TIME,
-      "SPORT": this.SPORT
+      "ORGANIZER_NAME": ORGANIZER_NAME,
+      "ORGANIZER_ID": ORGANIZER_ID,
+      "USERID": USERID,
+      "TOURNAMENT_ID": TOURNAMENT_ID,
+      "CATEGORY": CATEGORY,
+      "NO_OF_KNOCKOUT_ROUNDS": NO_OF_KNOCKOUT_ROUNDS,
+      "ENTRY_FEE": ENTRY_FEE,
+      "GOLD": GOLD,
+      "SILVER": SILVER,
+      "BRONZE": BRONZE,
+      "OTHER": OTHER,
+      "PRIZE_POOL": PRIZE_POOL,
+      "TOURNAMENT_NAME": TOURNAMENT_NAME,
+      "CITY": CITY,
+      "TYPE": TYPE,
+      "LOCATION": LOCATION,
+      "START_DATE": START_DATE,
+      "END_DATE": END_DATE,
+      "START_TIME": START_TIME,
+      "END_TIME": END_TIME,
+      "REGISTRATION_CLOSES_BEFORE": REGISTRATION_CLOSES_BEFORE,
+      "AGE_CATEGORY": AGE_CATEGORY,
+      "NO_OF_COURTS": NO_OF_COURTS,
+      "BREAK_TIME": BREAK_TIME,
+      "SPORT": SPORT
     };
   }
 }
@@ -227,8 +224,8 @@ class _PoolDetailsState extends State<PoolDetails> {
   }
 
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Container(
@@ -428,7 +425,7 @@ class _PoolDetailsState extends State<PoolDetails> {
   _getorderId(String amount) async {
     EasyLoading.show(maskType: EasyLoadingMaskType.black, status: 'Loading...');
     print(" call start here");
-    servicewrapper wrapper = new servicewrapper();
+    servicewrapper wrapper = servicewrapper();
     Map<String, dynamic> response = await wrapper.call_order_api(amount);
     final model = ModelOrderID.fromJson(response);
     print(" response here");

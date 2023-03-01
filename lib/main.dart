@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       // home: login(),
       routes: {
-        '/': (context) => login(),
-        '/homePage': (context) => HomePage(),
-        '/live': (context) => LiveMaintainer(
+        '/': (context) => const login(),
+        '/homePage': (context) => const HomePage(),
+        '/live': (context) => const LiveMaintainer(
               Tournament_ID: '',
               Match_Id: '',
               Player_1_name: '',
@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
               player2_set_2: 0,
               player2_set_3: 0,
             ),
-        // '/scoreChallenge': (context) => ScoreAChallenge()
       },
     );
   }

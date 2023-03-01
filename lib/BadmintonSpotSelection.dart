@@ -1,10 +1,5 @@
-// ignore: file_names
-// ignore: camel_case_types
-// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:ardent_sports/MyBookings.dart';
 import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:ardent_sports/WebViewSpots.dart';
@@ -17,7 +12,6 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Rules.dart';
 
 int freespots = 0;
@@ -54,13 +48,13 @@ class BadmintonSpotSelection extends StatefulWidget {
   State<BadmintonSpotSelection> createState() => _BadmintonSpotSelectionState();
 }
 
-late Color color1 = Color(0xffffff00).withOpacity(0.8);
+late Color color1 = const Color(0xffffff00).withOpacity(0.8);
 
 class tournament_id {
   late String TOURNAMENT_ID;
   tournament_id({required this.TOURNAMENT_ID});
   Map<String, dynamic> toMap() {
-    return {"TOURNAMENT_ID": this.TOURNAMENT_ID};
+    return {"TOURNAMENT_ID": TOURNAMENT_ID};
   }
 }
 
@@ -72,11 +66,7 @@ class SpotClickedDetails {
   SpotClickedDetails(
       {required this.TOURNAMENT_ID, required this.index, required this.USER});
   Map<String, dynamic> toMap() {
-    return {
-      "TOURNAMENT_ID": this.TOURNAMENT_ID,
-      "btnID": this.index,
-      "USERID": this.USER
-    };
+    return {"TOURNAMENT_ID": TOURNAMENT_ID, "btnID": index, "USERID": USER};
   }
 }
 
@@ -88,7 +78,7 @@ class Prize {
   Prize({required this.gold, required this.silver, required this.bronze});
 
   Map<String, dynamic> toMap() {
-    return {"gold": this.gold, "silver": this.silver, "bronze": this.bronze};
+    return {"gold": gold, "silver": silver, "bronze": bronze};
   }
 }
 
@@ -129,7 +119,7 @@ class Search {
   late String USERID;
   Search({required this.USERID});
   Map<String, dynamic> toMap() {
-    return {"PLAYER_2": this.USERID};
+    return {"PLAYER_2": USERID};
   }
 }
 
@@ -146,10 +136,10 @@ class addPartner {
       required this.PLAYER_2});
   Map<String, dynamic> toMap() {
     return {
-      "TOURNAMENT_ID": this.TOURNAMENT_ID,
-      "SPOT_NUMBER": this.SPOT_NUMBER,
-      "PLAYER_1": this.PLAYER_1,
-      "PLAYER_2": this.PLAYER_2
+      "TOURNAMENT_ID": TOURNAMENT_ID,
+      "SPOT_NUMBER": SPOT_NUMBER,
+      "PLAYER_1": PLAYER_1,
+      "PLAYER_2": PLAYER_2
     };
   }
 }
@@ -162,9 +152,9 @@ class send_socket_number_ {
   send_socket_number_(this.spot_number, this.tourney_id, this.USER_ID);
   Map<String, dynamic> toMap() {
     return {
-      "TOURNAMENT_ID": this.tourney_id,
-      "SPOTID": this.spot_number,
-      "USERID": this.USER_ID,
+      "TOURNAMENT_ID": tourney_id,
+      "SPOTID": spot_number,
+      "USERID": USER_ID,
     };
   }
 }
@@ -190,7 +180,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           height: deviceHeight * 0.032,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xff6EBC55),
+              backgroundColor: const Color(0xff6EBC55),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(deviceWidth * 0.01),
               ),
@@ -214,7 +204,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                Image(
+                                const Image(
                                   image: AssetImage(
                                       "assets/AddPlayerBackground.png"),
                                 ),
@@ -231,18 +221,18 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
-                                              child: Image(
+                                              child: const Image(
                                                 image: AssetImage(
                                                     "assets/back_edit.png"),
                                               )),
-                                          Text(
+                                          const Text(
                                             "Add your partner",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          Text(""),
-                                          Text(""),
-                                          Text(""),
+                                          const Text(""),
+                                          const Text(""),
+                                          const Text(""),
                                         ],
                                       ),
                                       Container(
@@ -250,7 +240,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                             EdgeInsets.all(deviceWidth * 0.04),
                                         child: TextField(
                                           controller: searchValue,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
                                           decoration: InputDecoration(
@@ -273,7 +263,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                               ),
                                             ),
                                             hintText: "Enter Mobile/Username",
-                                            hintStyle: TextStyle(
+                                            hintStyle: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w700),
                                             border: OutlineInputBorder(
@@ -336,7 +326,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                         children: [
                                                           Container(
                                                             margin:
-                                                                EdgeInsets.only(
+                                                                const EdgeInsets
+                                                                        .only(
                                                                     left: 10,
                                                                     top: 10),
                                                             child: Text(
@@ -344,7 +335,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                           ),
                                                           Container(
                                                             margin:
-                                                                EdgeInsets.only(
+                                                                const EdgeInsets
+                                                                        .only(
                                                                     left: 10,
                                                                     top: 10),
                                                             child: Text(
@@ -450,8 +442,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                             .sport,
                                                                         color: widget.sport ==
                                                                                 'Badminton'
-                                                                            ? Color(0xff6BB8FF)
-                                                                            : Color(0xff03C289),
+                                                                            ? const Color(0xff6BB8FF)
+                                                                            : const Color(0xff03C289),
                                                                       ),
                                                                     ),
                                                                   );
@@ -491,7 +483,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                           onPressed:
                                                                               () {
                                                                             Navigator.push(context,
-                                                                                PageTransition(type: PageTransitionType.rightToLeftWithFade, child: MyBookings()));
+                                                                                PageTransition(type: PageTransitionType.rightToLeftWithFade, child: const MyBookings()));
                                                                           },
                                                                           child:
                                                                               Container(
@@ -566,27 +558,25 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                     BorderRadius
                                                                         .circular(
                                                                             10),
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xffd15858),
                                                               ),
-                                                              child: Container(
-                                                                child: Center(
-                                                                  child: Text(
-                                                                    "Confirm",
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          deviceWidth *
-                                                                              0.033,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w800,
-                                                                    ),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  "Confirm",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        deviceWidth *
+                                                                            0.033,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800,
                                                                   ),
                                                                 ),
                                                               ),
@@ -611,28 +601,24 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            color: Color(0xffD15858),
+                                            color: const Color(0xffD15858),
                                           ),
-                                          child: Container(
-                                            child: Center(
-                                              child: Text(
-                                                "Search",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize:
-                                                        deviceWidth * 0.033,
-                                                    fontWeight:
-                                                        FontWeight.w800),
-                                              ),
+                                          child: Center(
+                                            child: Text(
+                                              "Search",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: deviceWidth * 0.033,
+                                                  fontWeight: FontWeight.w800),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         "Or",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
@@ -640,11 +626,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                       Container(
                                         width: 198,
                                         height: 64,
-                                        margin: EdgeInsets.only(top: 15),
+                                        margin: const EdgeInsets.only(top: 15),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(15),
-                                          color: Color(0xff6bb8ff),
+                                          color: const Color(0xff6bb8ff),
                                         ),
                                         child: Center(
                                           child: InkWell(
@@ -720,8 +706,10 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                         sport: widget.sport,
                                                         color: widget.sport ==
                                                                 'Badminton'
-                                                            ? Color(0xff6BB8FF)
-                                                            : Color(0xff03C289),
+                                                            ? const Color(
+                                                                0xff6BB8FF)
+                                                            : const Color(
+                                                                0xff03C289),
                                                       ),
                                                     ),
                                                   );
@@ -763,7 +751,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                     type: PageTransitionType
                                                                         .rightToLeftWithFade,
                                                                     child:
-                                                                        MyBookings()));
+                                                                        const MyBookings()));
                                                           },
                                                           child: Container(
                                                             padding:
@@ -822,7 +810,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                 Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
-                                                  children: [
+                                                  children: const [
                                                     Center(
                                                       child: Text(
                                                         "Partner not yet",
@@ -843,10 +831,10 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 15,
                                                 ),
-                                                Image(
+                                                const Image(
                                                     image: AssetImage(
                                                         "assets/right_back.png"))
                                               ],
@@ -889,8 +877,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                         userEmail: obtianedEmail,
                         sport: widget.sport,
                         color: widget.sport == 'Badminton'
-                            ? Color(0xff6BB8FF)
-                            : Color(0xff03C289),
+                            ? const Color(0xff6BB8FF)
+                            : const Color(0xff03C289),
                       ),
                     ),
                   );
@@ -923,7 +911,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                 PageTransition(
                                     type:
                                         PageTransitionType.rightToLeftWithFade,
-                                    child: MyBookings()));
+                                    child: const MyBookings()));
                           },
                           child: Container(
                             padding: const EdgeInsets.all(14),
@@ -971,9 +959,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           height: deviceHeight * 0.032,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xff808080),
+              backgroundColor: const Color(0xff808080),
               shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
+                borderRadius: BorderRadius.circular(deviceWidth * 0.01),
               ),
             ),
             onPressed: () {
@@ -1001,13 +989,13 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           height: deviceHeight * 0.032,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xffFFFF00).withOpacity(0.8),
+              backgroundColor: const Color(0xffFFFF00).withOpacity(0.8),
               shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(deviceWidth * 0.01),
+                borderRadius: BorderRadius.circular(deviceWidth * 0.01),
               ),
             ),
             onPressed: () {
-              final msg =
+              const msg =
                   'Someone is currently booking the spot please try to book another spot or wait for some-time';
               Fluttertoast.showToast(msg: msg);
             },
@@ -1153,7 +1141,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
@@ -1168,7 +1156,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Image(
+                        child: const Image(
                           image: AssetImage("assets/back_edit.png"),
                         )),
                     TextButton(
@@ -1177,7 +1165,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                 tourneyId: widget.tourneyId,
                               ));
                         },
-                        child: Text(
+                        child: const Text(
                           "Rules >",
                           style:
                               TextStyle(color: Color(0xffD15858), fontSize: 20),
@@ -1190,7 +1178,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.data == null) {
                       return Container(
-                        child: Center(
+                        child: const Center(
                           child: Text("Loading..."),
                         ),
                       );
@@ -1210,7 +1198,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
   }
 
   Widget buildSpotsAvailableCard(double deviceWidth, double deviceHeight) =>
-      Container(
+      SizedBox(
         height: deviceHeight * 0.105,
         child: Card(
           shape: RoundedRectangleBorder(
@@ -1218,8 +1206,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
           ),
           elevation: 10,
           color: widget.sport == 'Badminton'
-              ? Color(0xff6BB8FF)
-              : Color(0xff03C289),
+              ? const Color(0xff6BB8FF)
+              : const Color(0xff03C289),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1230,7 +1218,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 10),
+                    margin: const EdgeInsets.only(top: 10),
                     child: Text(
                       "Prize Pool",
                       style: TextStyle(
@@ -1241,7 +1229,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: deviceWidth * 0.25,
                     height: deviceWidth * 0.07,
                     child: Card(
@@ -1252,7 +1240,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       child: Text(
                         "₹$prizepool",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   )
@@ -1264,7 +1252,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 5),
+                    margin: const EdgeInsets.only(top: 5),
                     child: Text(
                       widget.subTournamentType,
                       style: TextStyle(
@@ -1284,7 +1272,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       fontSize: deviceWidth * 0.045,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: deviceWidth * 0.25,
                     height: deviceWidth * 0.07,
                     child: Card(
@@ -1295,7 +1283,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       child: Text(
                         "$freespots/$totalspots",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   )
@@ -1307,7 +1295,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 10),
+                    margin: const EdgeInsets.only(top: 10),
                     child: Text(
                       "Entry Fees  ",
                       style: TextStyle(
@@ -1318,7 +1306,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: deviceWidth * 0.15,
                     height: deviceWidth * 0.07,
                     child: Card(
@@ -1329,7 +1317,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                       child: Text(
                         "₹$entryfee",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   )
@@ -1385,33 +1373,33 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                 Container(
                   width: deviceWidth * 0.04,
                   height: deviceWidth * 0.04,
-                  color: Color(0xff6EBC55),
+                  color: const Color(0xff6EBC55),
                 ),
                 SizedBox(
                   width: deviceWidth * 0.02,
                 ),
-                Text("Vacant"),
+                const Text("Vacant"),
                 SizedBox(
                   width: deviceWidth * 0.06,
                 ),
                 Container(
                   width: deviceWidth * 0.04,
                   height: deviceWidth * 0.04,
-                  color: Color(0xff808080),
+                  color: const Color(0xff808080),
                 ),
                 SizedBox(
                   width: deviceWidth * 0.02,
                 ),
-                Text("Booked"),
+                const Text("Booked"),
                 SizedBox(
                   width: deviceWidth * 0.06,
                 ),
                 Container(
                   width: deviceWidth * 0.04,
                   height: deviceWidth * 0.04,
-                  color: Color(0xffFFFF00).withOpacity(0.8),
+                  color: const Color(0xffFFFF00).withOpacity(0.8),
                 ),
-                Text("   Processing"),
+                const Text("   Processing"),
               ],
             ),
             SizedBox(
@@ -1439,12 +1427,12 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             ),
             Align(
               alignment: Alignment.center,
-              child: Container(
+              child: SizedBox(
                 width: deviceWidth * 0.3,
                 height: deviceWidth * 0.07,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffD15858),
+                      backgroundColor: const Color(0xffD15858),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                       ),
@@ -1458,7 +1446,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                 spots: "${widget.spots}",
                               )));
                     },
-                    child: Text(
+                    child: const Text(
                       "Fixtures",
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
@@ -1467,7 +1455,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             ),
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
-              child: Text(
+              child: const Text(
                 "Note :",
                 style: TextStyle(
                     color: Color(0xffD15858), fontWeight: FontWeight.bold),
@@ -1481,11 +1469,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               child: RichText(
                 text: TextSpan(
                   children: <TextSpan>[
-                    TextSpan(
+                    const TextSpan(
                         text: '->  Match will be played according to the '),
                     TextSpan(
                       text: 'Fixtures',
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.red, fontWeight: FontWeight.bold),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
@@ -1500,7 +1488,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                           );
                         },
                     ),
-                    TextSpan(text: ' so select the spot accordingly '),
+                    const TextSpan(text: ' so select the spot accordingly '),
                   ],
                 ),
               ),
@@ -1510,7 +1498,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             ),
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
-              child: Text(
+              child: const Text(
                 "-> Spots Cannot be changed once selected",
                 style: TextStyle(color: Color(0xffFFFFFF)),
               ),
@@ -1520,7 +1508,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             ),
             Container(
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
-              child: Text(
+              child: const Text(
                 "Organizer Details :",
                 style: TextStyle(
                     color: Color(0xffD15858), fontWeight: FontWeight.bold),
@@ -1533,7 +1521,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "-> Organizer Name : ${widget.Organiser_Name}",
-                style: TextStyle(color: Color(0xffFFFFFF)),
+                style: const TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
             SizedBox(
@@ -1543,7 +1531,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "-> Organizer Number : ${widget.Organiser_Number}",
-                style: TextStyle(color: Color(0xffFFFFFF)),
+                style: const TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
             SizedBox(
@@ -1553,31 +1541,29 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
               margin: EdgeInsets.only(left: deviceWidth * 0.05),
               child: Text(
                 "-> Address : ${widget.Address}",
-                style: TextStyle(color: Color(0xffFFFFFF)),
+                style: const TextStyle(color: Color(0xffFFFFFF)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Center(
-              child: Container(
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffD15858),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                      ),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffD15858),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(deviceWidth * 0.01),
                     ),
-                    onPressed: () {
-                      showSheet();
-                    },
-                    child: Text(
-                      "Show Prize Money",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
-              ),
+                  ),
+                  onPressed: () {
+                    showSheet();
+                  },
+                  child: const Text(
+                    "Show Prize Money",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],
@@ -1586,130 +1572,135 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
 
   void showSheet() {
     showModalBottomSheet(
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-        ),
-        context: context,
-        builder: (BuildContext bc) {
-          return Stack(
-            alignment: Alignment.center,
-            children: [
-              Image(
-                image: AssetImage("assets/PrizeBackGround.png"),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: 20,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      "Gold",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+      ),
+      context: context,
+      builder: (BuildContext bc) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            const Image(
+              image: AssetImage("assets/PrizeBackGround.png"),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  decoration: BoxDecoration(
+                      color: Colors.yellow,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Text(
+                    "Gold",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    height: 70,
-                    width: 299,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset(
-                            'assets/GoldTrophy.png',
-                          ),
-                          Image.asset('assets/cross shape.png'),
-                          Text("₹ $prizepool",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                        ]),
+                ),
+                Container(
+                  height: 70,
+                  width: 299,
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          'assets/GoldTrophy.png',
+                        ),
+                        Image.asset('assets/cross shape.png'),
+                        Text("₹ $prizepool",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)),
+                      ]),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  decoration: BoxDecoration(
+                      color: const Color(0xffCECECE),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Text(
+                    "Silver",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    height: 20,
+                ),
+                Container(
+                  height: 70,
+                  width: 299,
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          'assets/silver-cup 1.png',
+                        ),
+                        Image.asset('assets/cross shape.png'),
+                        Text("₹ $prizepool2",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)),
+                      ]),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  decoration: BoxDecoration(
+                      color: const Color(0xffCD7F32),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Text(
+                    "Bronze",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    height: 20,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        color: Color(0xffCECECE),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      "Silver",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
+                ),
+                Container(
+                  height: 70,
+                  width: 299,
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset(
+                        'assets/BronzeTrophy.png',
+                      ),
+                      Image.asset('assets/cross shape.png'),
+                      Text(
+                        "₹ $prizepool3",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    height: 70,
-                    width: 299,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset(
-                            'assets/silver-cup 1.png',
-                          ),
-                          Image.asset('assets/cross shape.png'),
-                          Text("₹ $prizepool2",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                        ]),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 20,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                        color: Color(0xffCD7F32),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      "Bronze",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    height: 70,
-                    width: 299,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset(
-                            'assets/BronzeTrophy.png',
-                          ),
-                          Image.asset('assets/cross shape.png'),
-                          Text("₹ $prizepool3",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                        ]),
-                  ),
-                ],
-              )
-            ],
-          );
-        });
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
   }
 }

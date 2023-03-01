@@ -1,6 +1,7 @@
 import 'package:ardent_sports/CricketTossDetails.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'Helper/constant.dart';
 
 class CricketTeamDetasilsInput extends StatefulWidget {
   final String no_of_overs;
@@ -36,7 +37,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
       child: Center(
         child: Text(
           "$team_nam Add Players",
-          style: TextStyle(fontWeight: FontWeight.w700),
+          style: const TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
     );
@@ -86,7 +87,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
           deviceWidth * 0.02, deviceWidth * 0.02),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xffD15858),
+          backgroundColor: const Color(0xffD15858),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(deviceWidth * 0.02)),
         ),
@@ -98,7 +99,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
           );
           Navigator.pop(context, false);
         },
-        child: Text("Submit"),
+        child: const Text("Submit"),
       ),
     );
     totalPlayers.add(submit);
@@ -108,15 +109,15 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
@@ -129,7 +130,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                     child: Container(
                       width: deviceWidth * 0.18,
                       height: deviceWidth * 0.1,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/AARDENT_LOGO.png"),
                               fit: BoxFit.cover)),
@@ -140,7 +141,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                     child: Container(
                       width: deviceWidth * 0.26,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Ardent_Sport_Text.png"),
                               fit: BoxFit.fitWidth)),
@@ -154,7 +155,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                   ),
                 ],
               ),
-              Divider(
+              const Divider(
                 color: Colors.white,
               ),
               Row(
@@ -164,7 +165,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                     child: Container(
                       width: deviceWidth * 0.08,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Profile_Image.png"),
                               fit: BoxFit.fitHeight)),
@@ -181,7 +182,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                     child: Container(
                       width: deviceWidth * 0.08,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/money_bag.png"),
                               fit: BoxFit.fitHeight)),
@@ -195,7 +196,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: Text("Shubham"),
+                      child: const Text("Shubham"),
                     ),
                   ),
                   Expanded(
@@ -208,7 +209,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: Text("₹15,000"),
+                      child: const Text("₹15,000"),
                     ),
                   ),
                 ],
@@ -242,7 +243,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                               color: Colors.black.withOpacity(0.4)),
                           child: Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 flex: 1,
                                 child: Text("    Team A Name"),
                               ),
@@ -277,7 +278,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                           ),
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         flex: 6,
                         child: Center(
                           child: Text("Vs"),
@@ -296,7 +297,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                               color: Colors.black.withOpacity(0.4)),
                           child: Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 flex: 1,
                                 child: Text("    Team B Name"),
                               ),
@@ -334,12 +335,12 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                       SizedBox(
                         height: deviceWidth * 0.16,
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: deviceWidth * 0.15,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xffD15858),
+                            backgroundColor: const Color(0xffD15858),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                           ),
@@ -348,9 +349,9 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        CricketTossDetails()));
+                                        const CricketTossDetails()));
                           },
-                          child: Text("Next"),
+                          child: const Text("Next"),
                         ),
                       )
                     ],
@@ -367,7 +368,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
   Dialog leaddialog(BuildContext context, String team_name, int team_size,
           double deviceWidth) =>
       Dialog(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height -
               MediaQuery.of(context).size.height / 6,

@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:convert';
-
 import 'package:ardent_sports/PerMatchEstimatedTimeEditText.dart';
 import 'package:ardent_sports/WebViewTournamentDetails.dart';
 import 'package:flutter/material.dart';
@@ -105,8 +103,8 @@ class Rules {
 
   Map<String, dynamic> toMap() {
     return {
-      "TOURNAMENT_ID": this.TOURNAMENTID,
-      "RULES": this.RULES,
+      "TOURNAMENT_ID": TOURNAMENTID,
+      "RULES": RULES,
     };
   }
 }
@@ -118,17 +116,17 @@ class _HostedChallengesState extends State<HostedChallenges> {
 
   var tounamentID;
 
-  List<Card> getHostedTournaments(List<UserData> userdata, int array_length) {
+  List<Card> getHostedTournaments(List<UserData> userdata, int arrayLength) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
-    if (array_length == 0) {
+    if (arrayLength == 0) {
       var card = Card(
         child: Text("You Dont Have Any Hosted Challenges"),
       );
       AllTournaments.add(card);
     } else {
-      print("${array_length} is printed");
-      for (int i = array_length - 1; i >= 0; i--) {
+      print("${arrayLength} is printed");
+      for (int i = arrayLength - 1; i >= 0; i--) {
         // bool isStarted = userdata[i].STATUS;
         tounamentID = userdata[i].TOURNAMENT_ID;
         var card = Card(
@@ -165,62 +163,60 @@ class _HostedChallengesState extends State<HostedChallenges> {
                       color: userdata[i].SPORT == 'Badminton'
                           ? Color(0xff6BB8FF)
                           : Color(0xff03C289),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: deviceWidth * 0.03,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: deviceWidth * 0.1,
-                              width: deviceWidth * 0.1,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.transparent.withOpacity(0.6),
-                                  backgroundBlendMode: BlendMode.darken),
-                              child: Image(
-                                image: NetworkImage(userdata[i].IMG_URL),
-                                height: deviceWidth * 0.04,
-                                width: deviceWidth * 0.04,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: deviceWidth * 0.03,
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: deviceWidth * 0.1,
+                            width: deviceWidth * 0.1,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent.withOpacity(0.6),
+                                backgroundBlendMode: BlendMode.darken),
+                            child: Image(
+                              image: NetworkImage(userdata[i].IMG_URL),
+                              height: deviceWidth * 0.04,
                               width: deviceWidth * 0.04,
+                              fit: BoxFit.cover,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  userdata[i].TOURNAMENT_NAME.length >= 25
-                                      ? userdata[i]
-                                              .TOURNAMENT_NAME
-                                              .substring(0, 25) +
-                                          '...'
-                                      : userdata[i].TOURNAMENT_NAME,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: deviceWidth * 0.035,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                SizedBox(
-                                  height: deviceWidth * 0.01,
-                                ),
-                                Text(
-                                  userdata[i].CITY,
-                                  style: TextStyle(
+                          ),
+                          SizedBox(
+                            width: deviceWidth * 0.04,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                userdata[i].TOURNAMENT_NAME.length >= 25
+                                    ? userdata[i]
+                                            .TOURNAMENT_NAME
+                                            .substring(0, 25) +
+                                        '...'
+                                    : userdata[i].TOURNAMENT_NAME,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                     fontSize: deviceWidth * 0.035,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              SizedBox(
+                                height: deviceWidth * 0.01,
+                              ),
+                              Text(
+                                userdata[i].CITY,
+                                style: TextStyle(
+                                  fontSize: deviceWidth * 0.035,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -229,7 +225,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
               SizedBox(
                 height: deviceWidth * 0.018,
               ),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Card(
@@ -265,7 +261,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.06,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Card(
@@ -274,53 +270,51 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   ),
                   elevation: 1,
                   color: Colors.transparent.withOpacity(0.2),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                            child: Row(
-                              children: [
-                                Image(
-                                  image: AssetImage("assets/trophy 2.png"),
-                                  height: deviceWidth * 0.05,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage("assets/trophy 2.png"),
+                                height: deviceWidth * 0.05,
+                              ),
+                              SizedBox(
+                                width: deviceWidth * 0.03,
+                              ),
+                              Text(
+                                "Prize money",
+                                style: TextStyle(
+                                  color: Colors.white,
                                 ),
-                                SizedBox(
-                                  width: deviceWidth * 0.03,
-                                ),
-                                Text(
-                                  "Prize money",
+                              ),
+                            ],
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                          child: RichText(
+                              text: TextSpan(
                                   style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                                      fontSize: deviceWidth * 0.027,
+                                      color: Colors.white),
+                                  children: <TextSpan>[
+                                TextSpan(text: "Up to "),
+                                TextSpan(
+                                    text: " ₹",
+                                    style: TextStyle(
+                                      fontSize: deviceWidth * 0.05,
+                                    )),
+                                TextSpan(
+                                  text: userdata[i].PRIZE_POOL.toString(),
+                                  style: TextStyle(
+                                      fontSize: deviceWidth * 0.05,
+                                      color: Color(0xffE74545),
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ],
-                            )),
-                        Container(
-                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
-                            child: RichText(
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: deviceWidth * 0.027,
-                                        color: Colors.white),
-                                    children: <TextSpan>[
-                                  TextSpan(text: "Up to "),
-                                  TextSpan(
-                                      text: " ₹",
-                                      style: TextStyle(
-                                        fontSize: deviceWidth * 0.05,
-                                      )),
-                                  TextSpan(
-                                    text: userdata[i].PRIZE_POOL.toString(),
-                                    style: TextStyle(
-                                        fontSize: deviceWidth * 0.05,
-                                        color: Color(0xffE74545),
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ])))
-                      ],
-                    ),
+                              ])))
+                    ],
                   ),
                 ),
               ),
@@ -366,12 +360,12 @@ class _HostedChallengesState extends State<HostedChallenges> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                     width: MediaQuery.of(context).size.width * 0.3,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
+                          backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -459,31 +453,29 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.red,
                       ),
-                      child: Container(
-                        child: Center(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Text(
-                                "Tournament",
-                                style: TextStyle(
-                                    fontSize: deviceWidth * 0.0333,
-                                    color: Colors.white),
-                              ),
+                      child: Center(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              "Tournament",
+                              style: TextStyle(
+                                  fontSize: deviceWidth * 0.0333,
+                                  color: Colors.white),
                             ),
-                            Center(
-                              child: Text(
-                                "Controls",
-                                style: TextStyle(
-                                    fontSize: deviceWidth * 0.0333,
-                                    color: Colors.white),
-                              ),
+                          ),
+                          Center(
+                            child: Text(
+                              "Controls",
+                              style: TextStyle(
+                                  fontSize: deviceWidth * 0.0333,
+                                  color: Colors.white),
                             ),
-                          ],
-                        )),
-                      ),
+                          ),
+                        ],
+                      )),
                     ),
                   ),
                 ],
@@ -505,16 +497,14 @@ class _HostedChallengesState extends State<HostedChallenges> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.green,
                   ),
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                        "Update Per Match Estimated Time",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800),
-                      ),
+                  child: Center(
+                    child: Text(
+                      "Update Per Match Estimated Time",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800),
                     ),
                   ),
                 ),
@@ -663,9 +653,9 @@ class _HostedChallengesState extends State<HostedChallenges> {
     try {
       List<UserData> userdata =
           jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
-      int array_length = userdata.length;
+      int arrayLength = userdata.length;
       print(userdata);
-      return getHostedTournaments(userdata, array_length);
+      return getHostedTournaments(userdata, arrayLength);
     } catch (e) {
       print(e);
     }
@@ -676,7 +666,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
     futures = getAllHostedTournaments();
   }
 
-  Future<Null> _refreshScreen() async {
+  Future<void> _refreshScreen() async {
     Navigator.pushReplacement(context,
         PageRouteBuilder(pageBuilder: (a, b, c) => HostedChallenges()));
   }
@@ -724,7 +714,6 @@ class _HostedChallengesState extends State<HostedChallenges> {
                   children: [
                     Row(
                       children: [
-                        ///USE EXPANDED HERE TO DEBUG
                         Expanded(
                           child: Row(
                             children: [
@@ -795,11 +784,9 @@ class _HostedChallengesState extends State<HostedChallenges> {
                               AsyncSnapshot<dynamic> snapshot) {
                             if (snapshot.data == null) {
                               print("In Null");
-                              return Container(
-                                child: Center(
-                                  child: Text(
-                                      "You Dont Have any Hosted Challenges"),
-                                ),
+                              return Center(
+                                child:
+                                    Text("You Dont Have any Hosted Challenges"),
                               );
                             } else {
                               return Column(
@@ -809,46 +796,28 @@ class _HostedChallengesState extends State<HostedChallenges> {
                           },
                         ),
                         Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.red,
-                            ),
-                            margin: EdgeInsets.fromLTRB(
-                                deviceWidth * 0.03, 0, 0, 0),
-                            child: TextButton(
-                              onPressed: () {
-                                Get.to(PastHostedChallenges());
-                              },
-                              child: Text(
-                                "Past Hosted Challenges >",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w800,
-                                ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.red,
+                          ),
+                          margin:
+                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
+                          child: TextButton(
+                            onPressed: () {
+                              Get.to(PastHostedChallenges());
+                            },
+                            child: Text(
+                              "Past Hosted Challenges >",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w800,
                               ),
-                            )),
-                        // FutureBuilder(
-                        //   future: getAllPastHostedTournaments(),
-                        //   builder: (BuildContext context,
-                        //       AsyncSnapshot<dynamic> snapshot) {
-                        //     if (snapshot.data == null) {
-                        //       print("In Null");
-                        //       return Container(
-                        //         child: Center(
-                        //           child: Text(
-                        //               "You Dont Have any past hosted challenges"),
-                        //         ),
-                        //       );
-                        //     } else {
-                        //       return Column(
-                        //         children: snapshot.data,
-                        //       );
-                        //     }
-                        //   },
-                        // ),
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   ],

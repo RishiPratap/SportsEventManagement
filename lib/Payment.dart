@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer' as developer;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'orderAPI/ModelOrderID.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -172,7 +169,7 @@ class _PaymentState extends State<Payment> {
               bottomLeft: Radius.circular(w * 0.08),
               bottomRight: Radius.circular(w * 0.08),
             ),
-            image: DecorationImage(
+            image: const DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage("assets/Rectangle 79.png"))),
       ),
@@ -191,7 +188,7 @@ class _PaymentState extends State<Payment> {
 
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(w * 0.04)),
-            image: DecorationImage(
+            image: const DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage("assets/transparent.png"))),
       ),
@@ -233,7 +230,7 @@ class _PaymentState extends State<Payment> {
     EasyLoading.show(status: 'loading...', maskType: EasyLoadingMaskType.black);
 
     print(" call start here");
-    servicewrapper wrapper = new servicewrapper();
+    servicewrapper wrapper = servicewrapper();
     Map<String, dynamic> response = await wrapper.call_order_api(amount);
     final model = ModelOrderID.fromJson(response);
     print(" response here");

@@ -35,7 +35,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
           child: SingleChildScrollView(
@@ -95,7 +95,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                         fontStyle: FontStyle.normal,
                         fontSize: deviceWidth * 0.04,
                       )),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -108,7 +108,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -146,13 +146,13 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   IconButton(
                       onPressed: () {
                         EasyLoading.instance.displayDuration =
-                            Duration(milliseconds: 15000);
+                            const Duration(milliseconds: 15000);
                         EasyLoading.instance.radius = 15;
                         EasyLoading.showInfo(
                             "The event manager details will be displayed to all the players",
                             dismissOnTap: true);
                       },
-                      icon: Icon(Icons.info)),
+                      icon: const Icon(Icons.info)),
                 ],
               ),
 
@@ -163,7 +163,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                 margin: EdgeInsets.fromLTRB(
                     deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
                 child: Card(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   color: Colors.black.withOpacity(0.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -174,15 +174,15 @@ class _CreateChallengeState extends State<CreateChallenge> {
                         height: deviceWidth * 0.01,
                       ),
                       Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: new BoxDecoration(
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextField(
                           controller: EventManagerNameController,
                           keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
@@ -191,12 +191,12 @@ class _CreateChallengeState extends State<CreateChallenge> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.circular(deviceWidth * 0.04),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.black,
                                 ),
                               ),
                               hintText: "Name",
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w200),
                               border: OutlineInputBorder(
@@ -211,7 +211,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                       Container(
                         margin: EdgeInsets.fromLTRB(
                             deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
                             borderRadius:
                                 BorderRadius.circular(deviceWidth * 0.04)),
@@ -219,7 +219,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                           maxLength: 10,
                           controller: MobileNumberController,
                           keyboardType: TextInputType.number,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
@@ -228,13 +228,13 @@ class _CreateChallengeState extends State<CreateChallenge> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.circular(deviceWidth * 0.04),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.black,
                                 ),
                               ),
                               hintText: "Mobile Number",
                               counterText: "",
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w200),
                               border: OutlineInputBorder(
@@ -250,123 +250,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   ),
                 ),
               ),
-              // Container(
-              //   margin: EdgeInsets.all(deviceWidth * 0.04),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(20),
-              //     color: Colors.black.withOpacity(0.3),
-              //   ),
-              //   child: DropdownButtonFormField(
-              //     validator: (value) {
-              //       if (value == null) {
-              //         return 'Please Select a Event';
-              //       } else {
-              //         return null;
-              //       }
-              //     },
-              //     alignment: Alignment.bottomCenter,
-              //     hint: Text("Event Type",
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontStyle: FontStyle.normal,
-              //         )),
-              //     icon: Icon(
-              //       Icons.arrow_drop_down,
-              //       color: Colors.red,
-              //     ),
-              //     value: SelectedEvent,
-              //     items: Event.map((value) => DropdownMenuItem(
-              //           child: Text(
-              //             value,
-              //             style: TextStyle(
-              //                 color: Colors.white,
-              //                 fontStyle: FontStyle.normal,
-              //                 fontSize: 15),
-              //           ),
-              //           value: value,
-              //         )).toList(),
-              //     onChanged: (value) {
-              //       setState(() {
-              //         SelectedEvent = value as String;
-              //       });
-              //     },
-              //     style: TextStyle(color: Colors.white),
-              //     decoration: InputDecoration(
-              //         enabledBorder: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(20),
-              //           borderSide: BorderSide(
-              //             color: Colors.black.withOpacity(0.3),
-              //           ),
-              //         ),
-              //         focusedBorder: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-              //           borderSide: BorderSide(
-              //             color: Colors.black,
-              //           ),
-              //         ),
-              //         hintText: "Event Type",
-              //         border: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-              //         )),
-              //   ),
-              // ),
-              // Container(
-              //   margin: EdgeInsets.fromLTRB(
-              //       deviceWidth * 0.03, 10, deviceWidth * 0.03, 0),
-              //   child: Text(
-              //     "Event Type",
-              //     style: TextStyle(
-              //         fontSize: deviceWidth * 0.05,
-              //         fontWeight: FontWeight.w600),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: deviceWidth * 0.02,
-              // ),
-              // Container(
-              //   margin: EdgeInsets.fromLTRB(
-              //       deviceWidth * 0.03, 0, deviceWidth * 0.03, 0),
-              //   child: Card(
-              //     color: Colors.black.withOpacity(0.3),
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         SizedBox(
-              //           height: deviceWidth * 0.04,
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.fromLTRB(
-              //               deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
-              //           child: Text(
-              //             "Fixed Event: Prize Money is fixed irrespective of the number of players joining the challenge.",
-              //             style: TextStyle(
-              //                 color: Colors.white,
-              //                 fontSize: deviceWidth * 0.04,
-              //                 fontWeight: FontWeight.w400),
-              //           ),
-              //         ),
-              //         SizedBox(
-              //           height: deviceWidth * 0.02,
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.fromLTRB(
-              //               deviceWidth * 0.02, 0, deviceWidth * 0.02, 0),
-              //           child: Text(
-              //             "Dynamic Event:Prize money increases with increase in number of players joining the challenge.",
-              //             style: TextStyle(
-              //                 color: Colors.white,
-              //                 fontSize: deviceWidth * 0.04,
-              //                 fontWeight: FontWeight.w400),
-              //           ),
-              //         ),
-              //         SizedBox(
-              //           height: deviceWidth * 0.02,
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              SizedBox(
+             SizedBox(
                 height: deviceWidth * 0.03,
               ),
               Container(
@@ -384,7 +268,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                     if (SelectedSport == null ||
                         EventManagerNameController.text.isEmpty ||
                         MobileNumberController.text.isEmpty) {
-                      final msg = "All Fields are Mandatory";
+                      const msg = "All Fields are Mandatory";
                       Fluttertoast.showToast(msg: msg);
                     }
                     else if(SelectedSport == 'Cricket'){
@@ -412,11 +296,10 @@ class _CreateChallengeState extends State<CreateChallenge> {
                           ),
                         ),
                       );
-                      print(SelectedEvent);
-                      print(SelectedSport);
+                   
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'Next',
                     style: TextStyle(color: Colors.white),
                   ),

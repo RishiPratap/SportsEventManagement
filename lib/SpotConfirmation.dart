@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:ardent_sports/Payment.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+
+import 'Helper/constant.dart';
 
 class jsonSpotNumber {
   late int spotNumber;
@@ -18,9 +17,9 @@ class jsonSpotNumber {
       required this.User_id});
   Map<String, dynamic> toMap() {
     return {
-      "btnId": this.spotNumber,
-      "TOURNAMENT_ID": this.Tournamen_id,
-      "USERID": this.User_id
+      "btnId": spotNumber,
+      "TOURNAMENT_ID": Tournamen_id,
+      "USERID": User_id
     };
   }
 }
@@ -103,8 +102,8 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -124,7 +123,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         "<",
                         style: TextStyle(color: Colors.white, fontSize: 35),
                       )),
@@ -156,7 +155,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
             SizedBox(
               height: deviceWidth * 0.06,
             ),
-            Container(
+            SizedBox(
               width: deviceWidth * 0.34,
               height: deviceWidth * 0.08,
               child: ElevatedButton(
@@ -164,7 +163,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: widget.color,
                   shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(deviceWidth * 0.08),
+                    borderRadius: BorderRadius.circular(deviceWidth * 0.08),
                   ),
                 ),
                 child: Text(
@@ -245,7 +244,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                         width: deviceWidth * 0.6,
                         child: RichText(
                             text: TextSpan(children: <TextSpan>[
-                          TextSpan(
+                          const TextSpan(
                               text: "Event : ",
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(
@@ -285,7 +284,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                         height: deviceWidth * 0.08,
                         child: RichText(
                             text: TextSpan(children: <TextSpan>[
-                          TextSpan(
+                          const TextSpan(
                               text: "Category : ",
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(
@@ -325,11 +324,11 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                         height: deviceWidth * 0.08,
                         child: RichText(
                             text: TextSpan(children: <TextSpan>[
-                          TextSpan(
+                          const TextSpan(
                               text: "Date : ",
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(
-                            text: "${widget.Date}",
+                            text: widget.Date,
                           ),
                         ])),
                       ),
@@ -366,7 +365,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                         height: deviceWidth * 0.08,
                         child: RichText(
                             text: TextSpan(children: <TextSpan>[
-                          TextSpan(
+                          const TextSpan(
                               text: "Address : ",
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(
@@ -406,7 +405,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                         height: deviceWidth * 0.08,
                         child: RichText(
                             text: TextSpan(children: <TextSpan>[
-                          TextSpan(
+                          const TextSpan(
                               text: "City : ",
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(
@@ -422,13 +421,13 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
             SizedBox(
               height: deviceWidth * 0.1,
             ),
-            Container(
+            SizedBox(
               width: deviceWidth * 0.6,
               height: deviceWidth * 0.08,
               child: ElevatedButton(
                 onPressed: () async {
                   Navigator.push(
-                      this.context,
+                      context,
                       PageTransition(
                         type: PageTransitionType.rightToLeftWithFade,
                         child: Payment(
@@ -444,23 +443,7 @@ class _SpotConfirmationState extends State<SpotConfirmation> {
                           socket: widget.socket,
                         ),
                       ));
-                  // Navigator.push(
-                  //     context,
-                  //     PageTransition(
-                  //         type: PageTransitionType.rightToLeftWithFade,
-                  //         child: Payment(
-                  //           Spot_Price: mapUserResponse?['fee'],
-                  //           Spot_Number: widget.SpotNo,
-                  //           socket: widget.socket,
-                  //           btnId: widget.btnId,
-                  //           tourneyId: widget.tournament_id,
-                  //           location: mapUserResponse?['tournament_city'],
-                  //           eventName: mapUserResponse?['tournament_name'],
-                  //           category: mapUserResponse?['cat'],
-                  //           date: widget.Date,
-                  //           sport: widget.sport,
-                  //           name: mapUserResponse?['username'],
-                  //         )));
+                
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffE74745),

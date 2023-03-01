@@ -1,6 +1,8 @@
 import 'package:ardent_sports/CricketTeamDetailsInput.dart';
 import 'package:flutter/material.dart';
 
+import 'Helper/constant.dart';
+
 class CricketMatchDetailsInput extends StatefulWidget {
   const CricketMatchDetailsInput({Key? key}) : super(key: key);
 
@@ -27,15 +29,15 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
             ),
@@ -58,14 +60,14 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                     Container(
                       width: deviceWidth * 0.26,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Ardent_Sport_Text.png"),
                               fit: BoxFit.fitWidth)),
                     ),
                   ],
                 ),
-                Divider(
+                const Divider(
                   color: Colors.white,
                 ),
                 Container(
@@ -96,7 +98,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                   flex: 1,
                                   child: Text("    No of overs"),
                                 ),
@@ -128,7 +130,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                   flex: 1,
                                   child: Text("    Playing team size"),
                                 ),
@@ -160,7 +162,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                   flex: 1,
                                   child: Text("    Substitutes"),
                                 ),
@@ -193,7 +195,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                 color: Colors.black.withOpacity(0.4)),
                             child: Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                   flex: 1,
                                   child: Text("    Ball Type"),
                                 ),
@@ -300,21 +302,21 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                   backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(
+                                    borderRadius:  BorderRadius.circular(
                                         deviceWidth * 0.04),
                                   ),
                                 ),
                                 onPressed: () {
                                   if (city.text.isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                      const SnackBar(
                                         content:
                                             Text("Please Enter the city name"),
                                       ),
                                     );
                                   } else if (match_name.text.isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                      const SnackBar(
                                         content:
                                             Text("Please Enter the Match Name"),
                                       ),
@@ -336,7 +338,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                     );
                                   }
                                 },
-                                child: Text("Next"),
+                                child: const Text("Next"),
                               ),
                             ),
                           )

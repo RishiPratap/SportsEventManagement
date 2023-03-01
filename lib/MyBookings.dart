@@ -97,7 +97,7 @@ class _MyBookings extends State<MyBookings> {
     if (array_length == 0) {
       var container = Container(
         margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-        child: Text("You Do not have any Bookings"),
+        child: const Text("You Do not have any Bookings"),
       );
       AllTournaments.add(container);
     } else {
@@ -134,64 +134,62 @@ class _MyBookings extends State<MyBookings> {
                       ),
                       elevation: 20,
                       color: userdata[i].SPORT == 'Badminton'
-                          ? Color(0xff6BB8FF)
-                          : Color(0xff03C289),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: deviceWidth * 0.03,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: deviceHeight * 0.09,
-                              width: deviceWidth * 0.09,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.transparent.withOpacity(0.6),
-                                  backgroundBlendMode: BlendMode.darken),
-                              child: Image(
-                                image: NetworkImage(userdata[i].IMG_URL),
-                                height: deviceWidth * 0.04,
-                                width: deviceWidth * 0.04,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(
+                          ? const Color(0xff6BB8FF)
+                          : const Color(0xff03C289),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: deviceWidth * 0.03,
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: deviceHeight * 0.09,
+                            width: deviceWidth * 0.09,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent.withOpacity(0.6),
+                                backgroundBlendMode: BlendMode.darken),
+                            child: Image(
+                              image: NetworkImage(userdata[i].IMG_URL),
+                              height: deviceWidth * 0.04,
                               width: deviceWidth * 0.04,
+                              fit: BoxFit.cover,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  userdata[i].TOURNAMENT_NAME.length > 25
-                                      ? userdata[i]
-                                              .TOURNAMENT_NAME
-                                              .substring(0, 25) +
-                                          '...'
-                                      : userdata[i].TOURNAMENT_NAME,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: deviceWidth * 0.035,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                SizedBox(
-                                  height: deviceWidth * 0.01,
-                                ),
-                                Text(
-                                  userdata[i].CITY,
-                                  style: TextStyle(
+                          ),
+                          SizedBox(
+                            width: deviceWidth * 0.04,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                userdata[i].TOURNAMENT_NAME.length > 25
+                                    ? userdata[i]
+                                            .TOURNAMENT_NAME
+                                            .substring(0, 25) +
+                                        '...'
+                                    : userdata[i].TOURNAMENT_NAME,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                     fontSize: deviceWidth * 0.035,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              SizedBox(
+                                height: deviceWidth * 0.01,
+                              ),
+                              Text(
+                                userdata[i].CITY,
+                                style: TextStyle(
+                                  fontSize: deviceWidth * 0.035,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -199,7 +197,7 @@ class _MyBookings extends State<MyBookings> {
                 SizedBox(
                   height: deviceWidth * 0.018,
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.09,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Card(
@@ -208,54 +206,52 @@ class _MyBookings extends State<MyBookings> {
                     ),
                     elevation: 1,
                     color: Colors.transparent.withOpacity(0.2),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: deviceWidth * 0.07),
-                              child: Row(
-                                children: [
-                                  Image(
-                                    image: AssetImage("assets/trophy 2.png"),
-                                    height: deviceWidth * 0.05,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: deviceWidth * 0.07),
+                            child: Row(
+                              children: [
+                                Image(
+                                  image:
+                                      const AssetImage("assets/trophy 2.png"),
+                                  height: deviceWidth * 0.05,
+                                ),
+                                SizedBox(
+                                  width: deviceWidth * 0.03,
+                                ),
+                                const Text(
+                                  "Prize money",
+                                  style: TextStyle(
+                                    color: Colors.white,
                                   ),
-                                  SizedBox(
-                                    width: deviceWidth * 0.03,
-                                  ),
-                                  Text(
-                                    "Prize money",
+                                ),
+                              ],
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(right: deviceWidth * 0.07),
+                            child: RichText(
+                                text: TextSpan(
                                     style: TextStyle(
-                                      color: Colors.white,
-                                    ),
+                                        fontSize: deviceWidth * 0.027,
+                                        color: Colors.white),
+                                    children: <TextSpan>[
+                                  const TextSpan(text: "Up to "),
+                                  TextSpan(
+                                      text: " ₹",
+                                      style: TextStyle(
+                                        fontSize: deviceWidth * 0.05,
+                                      )),
+                                  TextSpan(
+                                    text: userdata[i].PRIZE_POOL.toString(),
+                                    style: TextStyle(
+                                        fontSize: deviceWidth * 0.05,
+                                        color: const Color(0xffE74545),
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                ],
-                              )),
-                          Container(
-                              margin:
-                                  EdgeInsets.only(right: deviceWidth * 0.07),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          fontSize: deviceWidth * 0.027,
-                                          color: Colors.white),
-                                      children: <TextSpan>[
-                                    TextSpan(text: "Up to "),
-                                    TextSpan(
-                                        text: " ₹",
-                                        style: TextStyle(
-                                          fontSize: deviceWidth * 0.05,
-                                        )),
-                                    TextSpan(
-                                      text: userdata[i].PRIZE_POOL.toString(),
-                                      style: TextStyle(
-                                          fontSize: deviceWidth * 0.05,
-                                          color: Color(0xffE74545),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ])))
-                        ],
-                      ),
+                                ])))
+                      ],
                     ),
                   ),
                 ),
@@ -263,7 +259,7 @@ class _MyBookings extends State<MyBookings> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(deviceWidth * 0.02),
-                      child: Image(
+                      child: const Image(
                         image: AssetImage("assets/Location.png"),
                       ),
                     ),
@@ -289,7 +285,7 @@ class _MyBookings extends State<MyBookings> {
                           onPressed: () async {
                             EasyLoading.show(
                                 status: 'Loading...',
-                                indicator: SpinKitThreeBounce(
+                                indicator: const SpinKitThreeBounce(
                                   color: Color(0xFFE74545),
                                 ),
                                 maskType: EasyLoadingMaskType.black);
@@ -299,12 +295,11 @@ class _MyBookings extends State<MyBookings> {
                             var url =
                                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/ticket?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}&USERID=$obtianedEmail";
                             var response = await get(Uri.parse(url));
-                            Map<String, dynamic> jsonData =
-                                jsonDecode(response.body);
+
                             try {
                               Map<String, dynamic> jsonData =
                                   jsonDecode(response.body);
-                              print(response.body);
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -343,7 +338,7 @@ class _MyBookings extends State<MyBookings> {
                         onPressed: () async {
                           EasyLoading.show(
                               status: 'Loading...',
-                              indicator: SpinKitThreeBounce(
+                              indicator: const SpinKitThreeBounce(
                                 color: Color(0xFFE74545),
                               ),
                               maskType: EasyLoadingMaskType.black);
@@ -423,7 +418,7 @@ class _MyBookings extends State<MyBookings> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         //         builder: (context) => BadmintonSpotSelection(
         //           tourneyId: userdata[i].TOURNAMENT_ID,
         //         )));
@@ -435,7 +430,7 @@ class _MyBookings extends State<MyBookings> {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"),
                 fit: BoxFit.cover,
@@ -451,7 +446,7 @@ class _MyBookings extends State<MyBookings> {
                         height: deviceHeight * 0.07,
                         margin:
                             EdgeInsets.fromLTRB(0, deviceWidth * 0.03, 0, 0),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             image: DecorationImage(
                           image: AssetImage('assets/AARDENT_LOGO.png'),
                           fit: BoxFit.cover,
@@ -460,7 +455,7 @@ class _MyBookings extends State<MyBookings> {
                       Container(
                         width: deviceWidth * 0.2,
                         height: deviceHeight * 0.08,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image:
                                     AssetImage("assets/Ardent_Sport_Text.png"),
@@ -471,7 +466,7 @@ class _MyBookings extends State<MyBookings> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.white,
                   ),
                   SizedBox(
@@ -484,7 +479,7 @@ class _MyBookings extends State<MyBookings> {
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.04))),
                       onPressed: () {
-                        Get.to(HomePage());
+                        Get.to(const HomePage());
                       },
                       child: Text(
                         "Join a Tournament",
@@ -497,7 +492,7 @@ class _MyBookings extends State<MyBookings> {
                       Container(
                           margin:
                               EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-                          child: Text("My Bookings")),
+                          child: const Text("My Bookings")),
                       FutureBuilder(
                         future: futures,
                         builder: (BuildContext context,
@@ -505,7 +500,7 @@ class _MyBookings extends State<MyBookings> {
                           if (snapshot.data == null) {
                             print("In Null");
                             return Container(
-                              child: Center(
+                              child: const Center(
                                 child: Text("Loading..."),
                               ),
                             );

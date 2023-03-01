@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TournamentProgressView extends StatefulWidget {
@@ -18,7 +16,7 @@ class _TournamentProgressViewState extends State<TournamentProgressView> {
     double top_push = 0;
     for (int i = start; i <= end; i++) {
       var newContainer = Container(
-        margin: EdgeInsets.only(left: 5),
+        margin: const EdgeInsets.only(left: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: getTotalSpots(1, (pow(2, end - 1) / x).toInt(),
@@ -46,12 +44,12 @@ class _TournamentProgressViewState extends State<TournamentProgressView> {
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xff6EBC55),
+              backgroundColor: const Color(0xff6EBC55),
               shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(5.0),
               ),
             ),
-            child: Text(
+            child: const Text(
               "",
               style: TextStyle(fontSize: 10),
             ),
@@ -66,12 +64,12 @@ class _TournamentProgressViewState extends State<TournamentProgressView> {
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xff6EBC55),
+              backgroundColor: const Color(0xff6EBC55),
               shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(5.0),
               ),
             ),
-            child: Text(
+            child: const Text(
               "",
               style: TextStyle(fontSize: 10),
             ),
@@ -91,18 +89,18 @@ class _TournamentProgressViewState extends State<TournamentProgressView> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 25, right: 25),
+                  margin: const EdgeInsets.only(left: 25, right: 25),
                   child: buildAvailableSpotsCard(),
                 ),
               ],
@@ -119,29 +117,6 @@ class _TournamentProgressViewState extends State<TournamentProgressView> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: builRows(1, 4),
-          // children: [
-          //   Container(
-          //     margin: EdgeInsets.only(left: 5),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: getTotalSpots(1, 16, 1),
-          //     ),
-          //   ),
-          //   Container(
-          //     margin: EdgeInsets.only(top: 15, left: 25),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: getTotalSpots(1, 8, 2),
-          //     ),
-          //   ),
-          //   Container(
-          //     margin: EdgeInsets.only(top: 25 + 10 + 15, left: 25),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: getTotalSpots(1, 8, 2),
-          //     ),
-          //   ),
-          // ],
         ),
       );
 }

@@ -18,24 +18,26 @@ class _WebViewSpotsState extends State<WebViewSpots> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fixtures'),
+        title: const Text('Fixtures'),
         actions: [
           IconButton(
               onPressed: () async {
-                Navigator.pushReplacement(context,
-                    PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
+                Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (a, b, c) => const HomePage()));
               },
               icon: const Icon(Icons.exit_to_app)),
         ],
       ),
       body: WebView(
-        javascriptChannels: <JavascriptChannel>[
+        javascriptChannels: <JavascriptChannel>{
           JavascriptChannel(
               name: 'Print',
               onMessageReceived: (JavascriptMessage message) {
                 print(message.message);
               }),
-        ].toSet(),
+        },
         initialUrl:
             'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/?no_of_spots=${widget.spots}',
         javascriptMode: JavascriptMode.unrestricted,

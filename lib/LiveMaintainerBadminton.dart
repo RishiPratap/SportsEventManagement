@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'package:ardent_sports/LiveMaintainerMatchSelection.dart';
-import 'package:ardent_sports/SpotConfirmation.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -20,12 +19,6 @@ var update_score_2_second = 0;
 var update_score_3_first = 0;
 var update_score_3_second = 0;
 
-// var score_1_first = 0;
-// var score_2_first = 0;
-// var score_3_first = 0;
-// var score_1_second = 0;
-// var score_2_second = 0;
-// var score_3_second = 0;
 
 late Socket socket;
 
@@ -48,10 +41,10 @@ class Details_LiveMaintainer {
   });
   Map<String, dynamic> toMap() {
     return {
-      "entity": this.entity,
-      "entity_ID": this.entity_ID,
-      "TOURNAMENT_ID": this.TOURNAMENT_ID,
-      "MATCHID": this.MATCHID,
+      "entity": entity,
+      "entity_ID": entity_ID,
+      "TOURNAMENT_ID": TOURNAMENT_ID,
+      "MATCHID": MATCHID,
     };
   }
 }
@@ -67,9 +60,9 @@ class Score_LiveMaintainer {
   });
   Map<String, dynamic> toMap() {
     return {
-      "PLAYER_1_SCORE": this.PLAYER_1_SCORE,
-      "PLAYER_2_SCORE": this.PLAYER_2_SCORE,
-      "set": this.set,
+      "PLAYER_1_SCORE": PLAYER_1_SCORE,
+      "PLAYER_2_SCORE": PLAYER_2_SCORE,
+      "set": set,
     };
   }
 }
@@ -92,9 +85,9 @@ class WalkOver {
 
   Map<String, dynamic> toMap() {
     return {
-      "TOURNAMENT_ID": this.TOURNAMENTID,
-      "MATCHID": this.MATCHID,
-      "WINNER_ID": this.WINNER_ID,
+      "TOURNAMENT_ID": TOURNAMENTID,
+      "MATCHID": MATCHID,
+      "WINNER_ID": WINNER_ID,
     };
   }
 }
@@ -236,16 +229,14 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                               SizedBox(
                                 height: 15.0,
                               ),
-                              Container(
-                                child: Center(
-                                  child: Text(
-                                    "Enter Score",
-                                    style: TextStyle(
-                                      color: Color(0xffE74545),
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 24.0,
-                                    ),
+                              Center(
+                                child: Text(
+                                  "Enter Score",
+                                  style: TextStyle(
+                                    color: Color(0xffE74545),
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 24.0,
                                   ),
                                 ),
                               ),
@@ -257,7 +248,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                 color: Color(0xff252626),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       width: 50,
                                       height: 240,
                                       child: Card(
@@ -266,7 +257,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               height: 60,
                                               child: Card(
                                                 color: Color(0xff252626),
@@ -412,7 +403,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                     SizedBox(
                                       width: 7,
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 125,
                                       height: 240,
                                       child: Card(
@@ -425,7 +416,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               width: 112,
                                               height: 60,
                                               child: Card(
@@ -484,7 +475,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                     SizedBox(
                                       width: 17,
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 125,
                                       height: 240,
                                       child: Card(
@@ -497,7 +488,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               width: 112,
                                               height: 60,
                                               child: Card(
@@ -568,7 +559,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                         backgroundColor: Color(0xffD15858),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              new BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20.0),
                                         ),
                                       ),
                                       onPressed: () {
@@ -666,7 +657,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  new BorderRadius.circular(
+                                                  BorderRadius.circular(
                                                       20.0),
                                             ),
                                           ),
@@ -790,7 +781,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  new BorderRadius.circular(
+                                                  BorderRadius.circular(
                                                       20.0),
                                             ),
                                           ),
@@ -963,7 +954,7 @@ class _Editbutton1State extends State<Editbutton1> {
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
+      child: SizedBox(
         height: 200,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -983,7 +974,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     fontSize: 20.0,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -998,7 +989,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 30,
                   height: 30,
                   child: Text(
@@ -1011,7 +1002,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1041,7 +1032,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     fontSize: 20.0,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1056,7 +1047,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 30,
                   height: 30,
                   child: Text(
@@ -1069,7 +1060,7 @@ class _Editbutton1State extends State<Editbutton1> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1201,7 +1192,7 @@ class _Editbutton2State extends State<Editbutton2> {
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
+      child: SizedBox(
         height: 200,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1223,7 +1214,7 @@ class _Editbutton2State extends State<Editbutton2> {
                     fontSize: 20.0,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1238,7 +1229,7 @@ class _Editbutton2State extends State<Editbutton2> {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 30,
                   height: 30,
                   child: Text(
@@ -1251,7 +1242,7 @@ class _Editbutton2State extends State<Editbutton2> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1281,7 +1272,7 @@ class _Editbutton2State extends State<Editbutton2> {
                     fontSize: 20.0,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1296,7 +1287,7 @@ class _Editbutton2State extends State<Editbutton2> {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 30,
                   height: 30,
                   child: Text(
@@ -1309,7 +1300,7 @@ class _Editbutton2State extends State<Editbutton2> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1400,7 +1391,7 @@ class _Editbutton2State extends State<Editbutton2> {
         ),
       ),
     );
-    ;
+    
   }
 }
 
@@ -1443,7 +1434,7 @@ class _Editbutton3State extends State<Editbutton3> {
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
+      child: SizedBox(
         height: 200,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1465,7 +1456,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     fontSize: 20.0,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1480,7 +1471,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 30,
                   height: 30,
                   child: Text(
@@ -1493,7 +1484,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1523,7 +1514,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     fontSize: 20.0,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1538,7 +1529,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 30,
                   height: 30,
                   child: Text(
@@ -1551,7 +1542,7 @@ class _Editbutton3State extends State<Editbutton3> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 40,
                   height: 50,
                   child: IconButton(
@@ -1570,52 +1561,50 @@ class _Editbutton3State extends State<Editbutton3> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        // score_3_first = update_score_3_first;
-                        // score_3_second = update_score_3_second;
-                        final Score = Score_LiveMaintainer(
-                            PLAYER_1_SCORE: update_score_3_first.toString(),
-                            PLAYER_2_SCORE: update_score_3_second.toString(),
-                            set: "3");
-                        final scoremap = Score.toMap();
-                        final json_score = jsonEncode(scoremap);
-                        socket.emit('update-score', json_score);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LiveMaintainer(
-                              Tournament_ID: widget.Tournament_ID,
-                              Match_Id: widget.Match_Id,
-                              Player_1_name: widget.Player_1_name,
-                              Player1_Partner: widget.Player1_Partner,
-                              Player_2_name: widget.Player_2_name,
-                              Player2_Partner: widget.Player2_Partner,
-                              Player1_ID: "",
-                              Player2_ID: "",
-                              player1_set_1: widget.player1_set_1,
-                              player1_set_2: widget.player1_set_2,
-                              player1_set_3: update_score_3_first,
-                              player2_set_1: widget.player2_set_1,
-                              player2_set_2: widget.player2_set_2,
-                              player2_set_3: update_score_3_second,
-                            ),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      // score_3_first = update_score_3_first;
+                      // score_3_second = update_score_3_second;
+                      final Score = Score_LiveMaintainer(
+                          PLAYER_1_SCORE: update_score_3_first.toString(),
+                          PLAYER_2_SCORE: update_score_3_second.toString(),
+                          set: "3");
+                      final scoremap = Score.toMap();
+                      final json_score = jsonEncode(scoremap);
+                      socket.emit('update-score', json_score);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LiveMaintainer(
+                            Tournament_ID: widget.Tournament_ID,
+                            Match_Id: widget.Match_Id,
+                            Player_1_name: widget.Player_1_name,
+                            Player1_Partner: widget.Player1_Partner,
+                            Player_2_name: widget.Player_2_name,
+                            Player2_Partner: widget.Player2_Partner,
+                            Player1_ID: "",
+                            Player2_ID: "",
+                            player1_set_1: widget.player1_set_1,
+                            player1_set_2: widget.player1_set_2,
+                            player1_set_3: update_score_3_first,
+                            player2_set_1: widget.player2_set_1,
+                            player2_set_2: widget.player2_set_2,
+                            player2_set_3: update_score_3_second,
                           ),
-                        ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
+                        ),
+                      ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
 
-                        super.deactivate();
-                      });
-                    },
-                    child: Text(
-                      "Ok",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.0,
-                      ),
+                      super.deactivate();
+                    });
+                  },
+                  child: Text(
+                    "Ok",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),
@@ -1776,7 +1765,7 @@ class _SubmitState extends State<Submit> {
                                     ),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width: 329,
                                   height: 279,
                                   child: Card(
@@ -1792,7 +1781,7 @@ class _SubmitState extends State<Submit> {
                                         SizedBox(
                                           width: 7,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 125,
                                           height: 240,
                                           child: Card(
@@ -1804,7 +1793,7 @@ class _SubmitState extends State<Submit> {
                                                 Colors.white.withOpacity(0.2),
                                             child: Column(
                                               children: [
-                                                Container(
+                                                SizedBox(
                                                   width: 112,
                                                   height: 60,
                                                   child: Card(
@@ -1877,7 +1866,7 @@ class _SubmitState extends State<Submit> {
                                         const SizedBox(
                                           width: 17,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 125,
                                           height: 240,
                                           child: ConfettiWidget(
@@ -1898,7 +1887,7 @@ class _SubmitState extends State<Submit> {
                                                   Colors.white.withOpacity(0.2),
                                               child: Column(
                                                 children: [
-                                                  Container(
+                                                  SizedBox(
                                                     width: 112,
                                                     height: 60,
                                                     child: Card(
@@ -1976,7 +1965,7 @@ class _SubmitState extends State<Submit> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       width: 350,
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -2035,6 +2024,6 @@ class _SubmitState extends State<Submit> {
         ),
       ),
     );
-    ;
+   
   }
 }

@@ -27,19 +27,19 @@ class UserDetails {
       required this.INTERESTED_SPORTS});
   Map<String, dynamic> toMap() {
     return {
-      "USERID": this.USERID,
-      "PHONE": this.PHONE,
-      "NAME": this.NAME,
-      "EMAIL": this.EMAIL,
-      "PWD": this.PWD,
-      "GENDER": this.GENDER,
-      "DOB": this.DOB,
-      "CITY": this.CITY,
-      "STATE": this.STATE,
-      "SPORTS_ACADEMY": this.SPORTS_ACADEMY,
-      "PROFILE_ID": this.PROFILE_ID,
-      "INTERESTED_SPORTS": this.INTERESTED_SPORTS,
-      "FRIENDS_LIST": this.FRIENDS_LIST,
+      "USERID": USERID,
+      "PHONE": PHONE,
+      "NAME": NAME,
+      "EMAIL": EMAIL,
+      "PWD": PWD,
+      "GENDER": GENDER,
+      "DOB": DOB,
+      "CITY": CITY,
+      "STATE": STATE,
+      "SPORTS_ACADEMY": SPORTS_ACADEMY,
+      "PROFILE_ID": PROFILE_ID,
+      "INTERESTED_SPORTS": INTERESTED_SPORTS,
+      "FRIENDS_LIST": FRIENDS_LIST,
     };
   }
 }
@@ -50,8 +50,8 @@ class LoginDetails {
   LoginDetails({required this.EmailId, required this.Password});
   Map<String, dynamic> toMap() {
     return {
-      "loginid": this.EmailId,
-      "pwd": this.Password,
+      "loginid": EmailId,
+      "pwd": Password,
     };
   }
 }

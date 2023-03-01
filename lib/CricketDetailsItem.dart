@@ -1,10 +1,8 @@
 import 'package:ardent_sports/CategoryDetails.dart';
 import 'package:ardent_sports/CricketDetailsDataClass.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import 'Helper/constant.dart';
 import 'WebViewSpots.dart';
 
 class CricketDetailsItem extends StatefulWidget {
@@ -38,10 +36,10 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 15),
+      margin: const EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 15),
       child: Card(
         elevation: 10,
         shape: BeveledRectangleBorder(
@@ -59,7 +57,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       deviceWidth * 0.03, deviceWidth * 0.02, 0, 0),
                   child: Text(
                     "${widget.details.AgeCategory} ${widget.details.CategoryName}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.red,
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
@@ -84,7 +82,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       fontSize: deviceWidth * 0.04,
                     ),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -97,7 +95,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -137,7 +135,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       fontSize: deviceWidth * 0.04,
                     ),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -150,7 +148,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -191,7 +189,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       fontSize: deviceWidth * 0.04,
                     ),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -204,7 +202,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -243,7 +241,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       fontSize: deviceWidth * 0.04,
                     ),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -256,7 +254,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -296,7 +294,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       fontSize: deviceWidth * 0.04,
                     ),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.red,
                   ),
@@ -309,7 +307,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                         ),
                       ),
@@ -342,10 +340,10 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                   onSaved: (val) => widget.pooldata.EntryFee = val.toString(),
                   onChanged: (value) {
                     setState(() {
-                      widget.pooldata.EntryFee = value as String;
+                      widget.pooldata.EntryFee = value;
                     });
                   },
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -357,7 +355,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                         ),
                       ),
                       hintText: "Entry Fee",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w200),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(deviceWidth * 0.02),
@@ -382,7 +380,7 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                         borderRadius:
                             BorderRadius.circular(deviceWidth * 0.06)),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Preview Fixture',
                     style: TextStyle(color: Colors.white),
                   ),

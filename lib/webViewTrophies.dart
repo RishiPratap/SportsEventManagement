@@ -1,7 +1,6 @@
 import 'package:ardent_sports/Screen/Home/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'Screen/Home/HomePage.dart';
 
 class WebViewTrophie extends StatefulWidget {
   final String? userId;
@@ -18,24 +17,24 @@ class _WebViewTrophieState extends State<WebViewTrophie> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Trophies'),
+        title: const Text('Trophies'),
         actions: [
           IconButton(
               onPressed: () async {
                 Navigator.pushReplacement(context,
-                    PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
+                    PageRouteBuilder(pageBuilder: (a, b, c) => const HomePage()));
               },
               icon: const Icon(Icons.exit_to_app)),
         ],
       ),
       body: WebView(
-        javascriptChannels: <JavascriptChannel>[
+        javascriptChannels: <JavascriptChannel>{
           JavascriptChannel(
               name: 'Print',
               onMessageReceived: (JavascriptMessage message) {
                 print(message.message);
               }),
-        ].toSet(),
+        },
         initialUrl:
             'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/trophy?USERID=${widget.userId}',
         javascriptMode: JavascriptMode.unrestricted,

@@ -1,10 +1,10 @@
 import 'package:ardent_sports/AgeCategoryItem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'AgeCategoryDataClass.dart';
 import 'CategoryDetails.dart';
+import 'Helper/constant.dart';
 import 'PoolDetails.dart';
 
 class EventDetails extends StatefulWidget {
@@ -88,15 +88,15 @@ class _EventDetailsState extends State<EventDetails> {
   List<CategorieDetails> AllCategories = [];
 
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/Homepage.png"),
                     fit: BoxFit.cover)),
@@ -137,27 +137,23 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(
               height: deviceWidth * 0.02,
             ),
-            /*Text(
-              '${widget.SportName}'
-            ),*/
-             /* widget.SportName == 'Baddmiton' ? Text('Hi') : Text('Bye'),*/
-            Container(
+           Container(
               margin: EdgeInsets.fromLTRB(
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: EventName,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                      borderSide: BorderSide(),
+                      borderSide: const BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                      borderSide: BorderSide(),
+                      borderSide: const BorderSide(),
                     ),
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: const TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
@@ -179,7 +175,7 @@ class _EventDetailsState extends State<EventDetails> {
                         controller: startdateinput,
                         readOnly: true,
                         keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
@@ -200,15 +196,15 @@ class _EventDetailsState extends State<EventDetails> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.01),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             hintText: "Start Date 📅",
-                            hintStyle: TextStyle(color: Colors.white),
+                            hintStyle: const TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
@@ -240,20 +236,20 @@ class _EventDetailsState extends State<EventDetails> {
                           }
                         },
                         keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.01),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             hintText: "End Date 📅 ",
-                            hintStyle: TextStyle(color: Colors.white),
+                            hintStyle: const TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
@@ -300,20 +296,20 @@ class _EventDetailsState extends State<EventDetails> {
                             // });
                           }
                         },
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.01),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             hintText: "Start Time ⏰",
-                            hintStyle: TextStyle(color: Colors.white),
+                            hintStyle: const TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
@@ -329,7 +325,7 @@ class _EventDetailsState extends State<EventDetails> {
                         controller: endtime,
                         readOnly: true,
                         keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         onTap: () async {
                           TimeOfDay? pickedTime = await showTimePicker(
                             initialTime: TimeOfDay.now(),
@@ -355,15 +351,15 @@ class _EventDetailsState extends State<EventDetails> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.01),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             hintText: "End Time ⏰",
-                            hintStyle: TextStyle(color: Colors.white),
+                            hintStyle: const TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
@@ -382,18 +378,18 @@ class _EventDetailsState extends State<EventDetails> {
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: city,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                      borderSide: BorderSide(),
+                      borderSide: const BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                      borderSide: BorderSide(),
+                      borderSide: const BorderSide(),
                     ),
                     hintText: "City",
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: const TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
@@ -407,18 +403,18 @@ class _EventDetailsState extends State<EventDetails> {
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
                 controller: Address,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                      borderSide: BorderSide(),
+                      borderSide: const BorderSide(),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                      borderSide: BorderSide(),
+                      borderSide: const BorderSide(),
                     ),
                     hintText: "Address",
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: const TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                     )),
@@ -437,7 +433,7 @@ class _EventDetailsState extends State<EventDetails> {
                     Container(
                       margin: EdgeInsets.fromLTRB(
                           deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
                           borderRadius:
                               BorderRadius.circular(deviceWidth * 0.04)),
@@ -448,7 +444,7 @@ class _EventDetailsState extends State<EventDetails> {
                               fontStyle: FontStyle.normal,
                               fontSize: deviceWidth * 0.04,
                             )),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.red,
                         ),
@@ -462,7 +458,7 @@ class _EventDetailsState extends State<EventDetails> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                               ),
                             ),
@@ -488,7 +484,7 @@ class _EventDetailsState extends State<EventDetails> {
                     Container(
                       margin: EdgeInsets.fromLTRB(
                           deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
                           borderRadius:
                               BorderRadius.circular(deviceWidth * 0.04)),
@@ -499,7 +495,7 @@ class _EventDetailsState extends State<EventDetails> {
                               fontStyle: FontStyle.normal,
                               fontSize: deviceWidth * 0.04,
                             )),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.red,
                         ),
@@ -513,7 +509,7 @@ class _EventDetailsState extends State<EventDetails> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                               ),
                             ),
@@ -544,39 +540,7 @@ class _EventDetailsState extends State<EventDetails> {
                                 BorderRadius.circular(deviceWidth * 0.06)),
                       ),
                       onPressed: () {
-                        // CategorieDetails detail =
-                        //     CategorieDetails(SelectedCategory!, SelectedAge!);
-                        // AllCategories.add(detail);
-                        // var row = Row(
-                        //   children: [
-                        //     Text("  "),
-                        //     Image(image: AssetImage("assets/Menu.png")),
-                        //     SelectedCategory == null
-                        //         ? Text("")
-                        //         : Text("  $SelectedCategory "),
-                        //     SelectedAge == null
-                        //         ? Text("")
-                        //         : Text("   $SelectedAge")
-                        //   ],
-                        // );
-                        // Map<String, String> m = {
-                        //   "$SelectedCategory": "$SelectedAge"
-                        // };
-                        // print(m);
-                        // print(check[m]);
-                        // if (check[m] == null) {
-                        //   setState(() {
-                        //     check[m] = 1;
-                        //     AllAddedCategories.add(row);
-                        //   });
-                        // } else {
-                        //   EasyLoading.instance.displayDuration =
-                        //       Duration(milliseconds: 15000);
-                        //   EasyLoading.instance.radius = 15;
-                        //   EasyLoading.showInfo("Category Already Added",
-                        //       dismissOnTap: true);
-                        // }
-
+                    
                         var categoryItem = AgeCategoryDataClass(
                             Category: SelectedCategory,
                             AgeCategory: SelectedAge);
@@ -594,12 +558,12 @@ class _EventDetailsState extends State<EventDetails> {
                           _addAgeCategoryItem(SelectedCategory!, SelectedAge!);
                         }
                       },
-                      child: Text(
+                      child: const Text(
                         'Add',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     for (AgeCategoryDataClass details in _alladdedCategories)
@@ -617,7 +581,7 @@ class _EventDetailsState extends State<EventDetails> {
             Container(
               margin: EdgeInsets.fromLTRB(
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.04)),
               child: DropdownButtonFormField(
                 hint: Text(
@@ -628,7 +592,7 @@ class _EventDetailsState extends State<EventDetails> {
                     fontSize: deviceWidth * 0.04,
                   ),
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
                   color: Colors.red,
                 ),
@@ -676,7 +640,7 @@ class _EventDetailsState extends State<EventDetails> {
                               fontStyle: FontStyle.normal,
                               fontSize: deviceWidth * 0.04,
                             )),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.red,
                         ),
@@ -684,12 +648,12 @@ class _EventDetailsState extends State<EventDetails> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.01),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
-                              borderSide: BorderSide(),
+                              borderSide: const BorderSide(),
                             ),
                             border: OutlineInputBorder(
                               borderRadius:
@@ -765,11 +729,11 @@ class _EventDetailsState extends State<EventDetails> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Error"),
-                            content: Text("Please fill all the fields"),
+                            title: const Text("Error"),
+                            content: const Text("Please fill all the fields"),
                             actions: <Widget>[
                               ElevatedButton(
-                                child: Text("OK"),
+                                child: const Text("OK"),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
@@ -779,7 +743,7 @@ class _EventDetailsState extends State<EventDetails> {
                         });
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Next',
                   style: TextStyle(color: Colors.white),
                 ),

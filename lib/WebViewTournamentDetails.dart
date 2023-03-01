@@ -23,12 +23,12 @@ class _WebViewTournamentDetailsState extends State<WebViewTournamentDetails> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Details'),
+        title: const Text('Details'),
         actions: [
           IconButton(
               onPressed: () async {
                 Navigator.pushReplacement(context,
-                    PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
+                    PageRouteBuilder(pageBuilder: (a, b, c) => const HomePage()));
               },
               icon: const Icon(Icons.exit_to_app)),
         ],

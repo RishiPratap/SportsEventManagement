@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:ardent_sports/bullet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
@@ -58,8 +57,7 @@ class _RulesState extends State<Rules> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          // ignore: prefer_const_constructors
-          decoration: BoxDecoration(
+        decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
@@ -99,13 +97,11 @@ class _RulesState extends State<Rules> {
                         fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: deviceHeight * 0.05,
-                  // width: 5,
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 10, right: 10),
                   child: Text(
                     rules == null ? "Loading.." : rules?['Message'],
-                    // textAlign: TextAlign.left,
                     softWrap: true,
                     style: TextStyle(
                         height: 1.55,

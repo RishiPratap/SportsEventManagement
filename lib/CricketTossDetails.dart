@@ -1,5 +1,6 @@
 import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
 import 'package:flutter/material.dart';
+import 'Helper/constant.dart';
 
 class CricketTossDetails extends StatefulWidget {
   const CricketTossDetails({Key? key}) : super(key: key);
@@ -11,15 +12,15 @@ class CricketTossDetails extends StatefulWidget {
 class _CricketTossDetailsState extends State<CricketTossDetails> {
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
@@ -32,7 +33,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                     child: Container(
                       width: deviceWidth * 0.18,
                       height: deviceWidth * 0.1,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/AARDENT_LOGO.png"),
                               fit: BoxFit.cover)),
@@ -43,7 +44,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                     child: Container(
                       width: deviceWidth * 0.26,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Ardent_Sport_Text.png"),
                               fit: BoxFit.fitWidth)),
@@ -57,7 +58,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   ),
                 ],
               ),
-              Divider(
+              const Divider(
                 color: Colors.white,
               ),
               Row(
@@ -67,7 +68,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                     child: Container(
                       width: deviceWidth * 0.08,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Profile_Image.png"),
                               fit: BoxFit.fitHeight)),
@@ -84,7 +85,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                     child: Container(
                       width: deviceWidth * 0.08,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/money_bag.png"),
                               fit: BoxFit.fitHeight)),
@@ -98,7 +99,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: Text("Shubham"),
+                      child: const Text("Shubham"),
                     ),
                   ),
                   Expanded(
@@ -111,7 +112,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: Text("₹15,000"),
+                      child: const Text("₹15,000"),
                     ),
                   ),
                 ],
@@ -128,7 +129,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                   color: Colors.white.withOpacity(0.2),
                   child: Column(
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
@@ -156,7 +157,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Team A",
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -180,7 +181,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Team B",
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -194,7 +195,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                           ],
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
@@ -222,7 +223,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Bat",
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -246,7 +247,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Bowl",
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -267,12 +268,12 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                           )),
                       Expanded(
                         flex: 1,
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: deviceWidth * 0.15,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xffD15858),
+                              backgroundColor: const Color(0xffD15858),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                       deviceWidth * 0.04)),
@@ -282,10 +283,10 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        CricketStrickerAndNonStrickerDetails()),
+                                        const CricketStrickerAndNonStrickerDetails()),
                               );
                             },
-                            child: Text("Next"),
+                            child: const Text("Next"),
                           ),
                         ),
                       ),

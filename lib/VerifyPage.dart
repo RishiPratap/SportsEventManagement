@@ -38,7 +38,7 @@ class _VerifyPageState extends State<VerifyPage> {
       await user.sendEmailVerification();
 
       setState(() => canResendEmail = false);
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
       setState((() => canResendEmail = true));
     } catch (e) {
       Fluttertoast.showToast(
@@ -71,35 +71,35 @@ class _VerifyPageState extends State<VerifyPage> {
             title: const Text("Verify Email"),
           ),
           body: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                     'A verification email has been sent to your ${widget.email}.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20)),
-                SizedBox(height: 24),
+                    style: const TextStyle(fontSize: 20)),
+                const SizedBox(height: 24),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
+                    minimumSize: const Size.fromHeight(50),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.email,
                     size: 32,
                   ),
-                  label: Text(
+                  label: const Text(
                     'Resent Email',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: canResendEmail ? sendVerificationEmail : null,
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
+                    minimumSize: const Size.fromHeight(50),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(fontSize: 24),
                   ),

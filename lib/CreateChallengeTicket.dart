@@ -1,10 +1,8 @@
-import 'dart:ui';
 import 'package:ardent_sports/CategoryDetails.dart';
 import 'package:ardent_sports/Screen/Home/HomePage.dart';
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class CreateChallengeTicket extends StatelessWidget {
   final List<String> Tournament_ID;
@@ -23,7 +21,7 @@ class CreateChallengeTicket extends StatelessWidget {
             children: [
               Text(
                   "     ${CategorieNames[i].CategoryName} ${CategorieNames[i].AgeCategory} :    "),
-              Text("${Tournament_ID[i]}"),
+              Text(Tournament_ID[i]),
             ],
           ),
         );
@@ -36,7 +34,7 @@ class CreateChallengeTicket extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         ok = true as Future<bool>;
         return ok;
       },
@@ -45,7 +43,7 @@ class CreateChallengeTicket extends StatelessWidget {
           //backgroundColor: Colors.red,
           body: SingleChildScrollView(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -62,14 +60,12 @@ class CreateChallengeTicket extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      child: Text(
-                        "SUCCESS !",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.08,
-                        ),
+                    child: Text(
+                      "SUCCESS !",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * 0.08,
                       ),
                     ),
                   ),
@@ -82,7 +78,7 @@ class CreateChallengeTicket extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
+                              const BorderRadius.all(Radius.circular(10.0))),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -149,14 +145,14 @@ class CreateChallengeTicket extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
                                 child: Card(
                                   color: Colors.black.withOpacity(0.2),
                                   child: ExpansionTile(
                                     title: Row(
-                                      children: [
+                                      children: const [
                                         Text("Category Name :   "),
                                         Text("Tournament ID")
                                       ],
@@ -176,8 +172,7 @@ class CreateChallengeTicket extends StatelessWidget {
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                      child: Center(
+                                  child: Center(
                                     child: Text(
                                       "View Your challenge   >",
                                       style: TextStyle(
@@ -188,7 +183,7 @@ class CreateChallengeTicket extends StatelessWidget {
                                                 0.07,
                                       ),
                                     ),
-                                  )),
+                                  ),
                                 ),
                               ),
                             )

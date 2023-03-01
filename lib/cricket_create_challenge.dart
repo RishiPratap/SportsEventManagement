@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'CategoryDetails.dart';
+import 'Helper/constant.dart';
 import 'cricket_pool_details.dart';
 
 class CricketChallenge extends StatefulWidget {
@@ -39,8 +38,8 @@ class _CricketChallengeState extends State<CricketChallenge> {
 
 
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
@@ -48,7 +47,7 @@ class _CricketChallengeState extends State<CricketChallenge> {
             alignment: Alignment.center,
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/Homepage.png"),
                     fit: BoxFit.cover)),
@@ -104,17 +103,17 @@ class _CricketChallengeState extends State<CricketChallenge> {
           child: TextField(
             controller: EventName,
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                  borderSide: BorderSide(),
+                  borderSide: const BorderSide(),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                  borderSide: BorderSide(),
+                  borderSide: const BorderSide(),
                 ),
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: const TextStyle(color: Colors.white),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                 )),
@@ -136,7 +135,7 @@ class _CricketChallengeState extends State<CricketChallenge> {
                     controller: startdateinput,
                     readOnly: true,
                     keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
@@ -157,15 +156,15 @@ class _CricketChallengeState extends State<CricketChallenge> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.01),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         hintText: "Start Date 📅",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
@@ -197,20 +196,20 @@ class _CricketChallengeState extends State<CricketChallenge> {
                       }
                     },
                     keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.01),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         hintText: "End Date 📅 ",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
@@ -257,20 +256,20 @@ class _CricketChallengeState extends State<CricketChallenge> {
                         // });
                       }
                     },
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.01),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         hintText: "Start Time ⏰",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
@@ -286,7 +285,7 @@ class _CricketChallengeState extends State<CricketChallenge> {
                     controller: endtime,
                     readOnly: true,
                     keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     onTap: () async {
                       TimeOfDay? pickedTime = await showTimePicker(
                         initialTime: TimeOfDay.now(),
@@ -312,15 +311,15 @@ class _CricketChallengeState extends State<CricketChallenge> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.01),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
-                          borderSide: BorderSide(),
+                          borderSide: const BorderSide(),
                         ),
                         hintText: "End Time ⏰",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius:
                           BorderRadius.circular(deviceWidth * 0.02),
@@ -339,18 +338,18 @@ class _CricketChallengeState extends State<CricketChallenge> {
               deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
           child: TextField(
             controller: city,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                  borderSide: BorderSide(),
+                  borderSide: const BorderSide(),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                  borderSide: BorderSide(),
+                  borderSide: const BorderSide(),
                 ),
                 hintText: "City",
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: const TextStyle(color: Colors.white),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                 )),
@@ -364,18 +363,18 @@ class _CricketChallengeState extends State<CricketChallenge> {
               deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
           child: TextField(
             controller: Address,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.01),
-                  borderSide: BorderSide(),
+                  borderSide: const BorderSide(),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                  borderSide: BorderSide(),
+                  borderSide: const BorderSide(),
                 ),
                 hintText: "Address",
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: const TextStyle(color: Colors.white),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(deviceWidth * 0.02),
                 )),
@@ -387,7 +386,7 @@ class _CricketChallengeState extends State<CricketChallenge> {
         Container(
           margin: EdgeInsets.fromLTRB(
               deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(deviceWidth * 0.04)),
           child: DropdownButtonFormField(
             hint: Text(
@@ -398,7 +397,7 @@ class _CricketChallengeState extends State<CricketChallenge> {
                 fontSize: deviceWidth * 0.04,
               ),
             ),
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_drop_down,
               color: Colors.red,
             ),
@@ -487,11 +486,11 @@ class _CricketChallengeState extends State<CricketChallenge> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text("Error"),
-                        content: Text("Please fill all the fields"),
+                        title: const Text("Error"),
+                        content: const Text("Please fill all the fields"),
                         actions: <Widget>[
                           ElevatedButton(
-                            child: Text("OK"),
+                            child: const Text("OK"),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
@@ -501,7 +500,7 @@ class _CricketChallengeState extends State<CricketChallenge> {
                     });
               }
             },
-            child: Text(
+            child: const Text(
               'Next',
               style: TextStyle(color: Colors.white),
             ),

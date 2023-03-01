@@ -33,7 +33,7 @@ class _ticketState extends State<ticket> {
     return WillPopScope(
       onWillPop: () {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         ok = true as Future<bool>;
         return ok;
       },
@@ -47,14 +47,14 @@ class _ticketState extends State<ticket> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  color: Color(0xFF121F2B),
+                  color: const Color(0xFF121F2B),
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: MediaQuery.of(context).size.height * 0.55,
                   child: Column(
                     children: [
                       Container(
                         height: MediaQuery.of(context).size.height * 0.12,
-                        color: Color(0xFFAB4D4F),
+                        color: const Color(0xFFAB4D4F),
                         child: Center(
                           child: Text(
                             'Booking Succesful!',
@@ -67,7 +67,7 @@ class _ticketState extends State<ticket> {
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                         Container(
-                          color: Color(0xFF121F2B),
+                          color: const Color(0xFF121F2B),
                           height: MediaQuery.of(context).size.height * 0.05,
                           child: Align(
                             alignment: Alignment.centerRight,
@@ -87,7 +87,7 @@ class _ticketState extends State<ticket> {
                       ]),
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                         Container(
-                          color: Color(0xFF121F2B),
+                          color: const Color(0xFF121F2B),
                           height: MediaQuery.of(context).size.height * 0.03,
                           child: Align(
                             alignment: Alignment.topRight,
@@ -123,10 +123,10 @@ class _ticketState extends State<ticket> {
                           Container(
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.74,
-                            color: Color(0xFF121F2B),
+                            color: const Color(0xFF121F2B),
                             child: Row(
                               children: [
-                                Container(
+                                SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.08,
                                   width:
@@ -165,7 +165,7 @@ class _ticketState extends State<ticket> {
                                     ),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.08,
                                   width:
@@ -190,7 +190,7 @@ class _ticketState extends State<ticket> {
                                         Align(
                                           alignment: Alignment.center,
                                           child: Text(
-                                            '${widget.spotNo}', //TODO ADD SPOT
+                                            widget.spotNo, //TODO ADD SPOT
                                             overflow: TextOverflow.ellipsis,
                                             //textAlign: TextAlign.start,
                                             style: TextStyle(
@@ -218,7 +218,6 @@ class _ticketState extends State<ticket> {
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       Row(
-                        //mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.08,
@@ -227,10 +226,10 @@ class _ticketState extends State<ticket> {
                           Container(
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.74,
-                            color: Color(0xFF121F2B),
+                            color: const Color(0xFF121F2B),
                             child: Row(
                               children: [
-                                Container(
+                                SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.08,
                                   width:
@@ -270,7 +269,7 @@ class _ticketState extends State<ticket> {
                                     ),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.08,
                                   width:
@@ -329,10 +328,10 @@ class _ticketState extends State<ticket> {
                           Container(
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.74,
-                            color: Color(0xFF121F2B),
+                            color: const Color(0xFF121F2B),
                             child: Row(
                               children: [
-                                Container(
+                                SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.08,
                                   width:
@@ -357,7 +356,7 @@ class _ticketState extends State<ticket> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            '${widget.date}',
+                                            widget.date,
                                             overflow: TextOverflow.ellipsis,
                                             //textAlign: TextAlign.start,
                                             style: TextStyle(
@@ -384,20 +383,18 @@ class _ticketState extends State<ticket> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
-                      Container(
-                        child: Text(
-                          '#PlayBoldBeArdent',
-                          style: TextStyle(
-                              fontFamily: 'SNAP_ITC',
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.03,
-                              color: Color(0xFFE54545)),
-                        ),
+                      Text(
+                        '#PlayBoldBeArdent',
+                        style: TextStyle(
+                            fontFamily: 'SNAP_ITC',
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.03,
+                            color: const Color(0xFFE54545)),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -406,11 +403,11 @@ class _ticketState extends State<ticket> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
                         MediaQuery.of(context).size.width * 0.04),
-                    color: Color(0xffD15858),
+                    color: const Color(0xffD15858),
                   ),
                   child: InkWell(
                     onTap: () {
-                      Get.to(MyBookings());
+                      Get.to(const MyBookings());
                     },
                     child: Center(
                       child: Text(

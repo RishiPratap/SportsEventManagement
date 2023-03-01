@@ -3,7 +3,6 @@
 import 'dart:io';
 import 'package:ardent_sports/webViewTrophies.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Helper/constant.dart';
 
 class Profile extends StatefulWidget {
   final String? name;
@@ -97,9 +98,6 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  // void _cropImage(filepath) async {
-  //   File? croppedImage = await ImageCropper.cropImage();
-  // }
   Map? mapUserImage;
   bool isLoaded = false;
 
@@ -185,8 +183,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
 
     double progress = double.parse(widget.points!);
 
@@ -283,53 +281,44 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: Container(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        Expanded(
-                                          child: Center(
-                                            child: Container(
-                                              child: Text(
-                                                "${widget.name}",
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.025),
-                                              ),
-                                            ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Expanded(
+                                        child: Center(
+                                          child: Text(
+                                            "${widget.name}",
+                                            style: TextStyle(
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.025),
                                           ),
                                         ),
-                                        Expanded(
-                                          child: Center(
-                                            child: Container(
-                                              child: Text(
-                                                "${widget.email}",
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-                                            ),
+                                      ),
+                                      Expanded(
+                                        child: Center(
+                                          child: Text(
+                                            "${widget.email}",
+                                            style: TextStyle(fontSize: 15),
                                           ),
                                         ),
-                                        Expanded(
-                                          child: Center(
-                                            child: Container(
-                                                child: Text(
-                                              "Play Bold BE Ardent",
-                                              style: TextStyle(
-                                                  fontFamily: 'SNAP_ITC',
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.02),
-                                            )),
+                                      ),
+                                      Expanded(
+                                        child: Center(
+                                          child: Text(
+                                            "Play Bold BE Ardent",
+                                            style: TextStyle(
+                                                fontFamily: 'SNAP_ITC',
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.02),
                                           ),
-                                        )
-                                      ],
-                                    ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 )
                               ],
@@ -373,20 +362,18 @@ class _ProfileState extends State<Profile> {
                                     Expanded(
                                       flex: 1,
                                       child: Center(
-                                        child: Container(
-                                          child: ElevatedButton(
-                                            // + button logic here............
-                                            onPressed: () {},
-                                            child: Icon(
-                                              Icons.add,
-                                              size: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.03,
-                                            ),
-                                            style: ElevatedButton.styleFrom(
-                                              shape: CircleBorder(),
-                                            ),
+                                        child: ElevatedButton(
+                                          // + button logic here............
+                                          onPressed: () {},
+                                          child: Icon(
+                                            Icons.add,
+                                            size: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            shape: CircleBorder(),
                                           ),
                                         ),
                                       ),
@@ -507,14 +494,13 @@ class _ProfileState extends State<Profile> {
                             Expanded(
                               flex: 2,
                               child: Center(
-                                child: Container(
-                                    child: Text(
+                                child: Text(
                                   "The Trophy Room",
                                   style: TextStyle(
                                     fontFamily: 'SNAP_ITC',
                                     fontSize: 22,
                                   ),
-                                )),
+                                ),
                               ),
                             ),
                             Expanded(
@@ -522,7 +508,6 @@ class _ProfileState extends State<Profile> {
                               child: Center(
                                 child: Container(
                                   child: Row(
-                                    //crossAxisAlignment: CrossAxisAlignment.stretch,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -532,9 +517,7 @@ class _ProfileState extends State<Profile> {
                                               image: DecorationImage(
                                                   image: AssetImage(
                                                       'assets/GoldTrophy.png')),
-                                              // color:
-                                              //     Colors.black.withOpacity(0.2),
-                                              borderRadius:
+                                             borderRadius:
                                                   BorderRadius.circular(
                                                       MediaQuery.of(context)
                                                               .size
@@ -560,49 +543,6 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    // Container(
-                    //   height: MediaQuery.of(context).size.height * 0.16,
-                    //   decoration: BoxDecoration(
-                    //     image: DecorationImage(
-                    //       fit: BoxFit.cover,
-                    //       image: AssetImage(
-                    //         'assets/PurpRect.png',
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   child: Column(
-                    //     children: [
-                    //       // Expanded(
-                    //       //   flex: 2,
-                    //       //   child: Center(
-                    //       //     child: Container(
-                    //       //         child: Text(
-                    //       //       "Missions and rewards",
-                    //       //       style: TextStyle(
-                    //       //           fontFamily: 'SNAP_ITC', fontSize: 22),
-                    //       //     )),
-                    //       //   ),
-                    //       // ),
-                    //       // Expanded(
-                    //       //   flex: 3,
-                    //       //   child: Center(
-                    //       //     child: Container(
-                    //       //       decoration: BoxDecoration(
-                    //       //         // color: Colors.black,
-                    //       //         borderRadius: BorderRadius.all(
-                    //       //             Radius.circular(
-                    //       //                 MediaQuery.of(context).size.height *
-                    //       //                     0.03)),
-                    //       //       ),
-                    //       //     ),
-                    //       //   ),
-                    //       // )
-                    //     ],
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: MediaQuery.of(context).size.height * 0.01,
-                    // ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.16,
@@ -681,7 +621,7 @@ class _ProfileState extends State<Profile> {
                                       margin: EdgeInsets.only(
                                           top: deviceWidth * 0.028),
                                       child: Column(
-                                        children: [
+                                        children: const [
                                           Text(
                                             "Tournaments",
                                             style: TextStyle(
@@ -728,7 +668,7 @@ class _ProfileState extends State<Profile> {
                                       margin: EdgeInsets.only(
                                           top: deviceWidth * 0.028),
                                       child: Column(
-                                        children: [
+                                        children: const [
                                           Text(
                                             "Tournaments",
                                             style: TextStyle(
@@ -759,58 +699,12 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           )
-                          // Expanded(
-                          //   flex: 1,
-                          //   child: Center(
-                          //     child: Opacity(
-                          //       opacity: 0.2,
-                          //       child: Container(
-                          //         decoration: BoxDecoration(
-                          //           color: Colors.black,
-                          //           borderRadius: BorderRadius.all(
-                          //               Radius.circular(
-                          //                   MediaQuery.of(context).size.height *
-                          //                       0.03)),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
                         ],
                       ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
-                    // Container(
-                    //   height: MediaQuery.of(context).size.height * 0.16,
-                    //   decoration: BoxDecoration(
-                    //     color: Color(0xFFDD3562),
-                    //     borderRadius: BorderRadius.all(Radius.circular(
-                    //         MediaQuery.of(context).size.height * 0.03)),
-                    //   ),
-                    //   // child: Column(
-                    //   //   children: [
-                    //   //     Expanded(
-                    //   //       flex: 2,
-                    //   //       child: Center(
-                    //   //         child: InkWell(
-                    //   //           onTap: () {
-                    //   //             uploadImage();
-                    //   //             print("Pressed");
-                    //   //           },
-                    //   //           child: Container(
-                    //   //               child: Text(
-                    //   //             "Upload",
-                    //   //             style: TextStyle(
-                    //   //                 fontFamily: 'SNAP_ITC', fontSize: 22),
-                    //   //           )),
-                    //   //         ),
-                    //   //       ),
-                    //   //     ),
-                    //   //   ],
-                    //   // ),
-                    // ),
                   ],
                 ),
               ),

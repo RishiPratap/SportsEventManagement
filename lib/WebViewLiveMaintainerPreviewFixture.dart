@@ -34,12 +34,12 @@ class _WebViewLiveMaintainerPreviewFixtureState
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: Text('Fixtures'),
+          title: const Text('Fixtures'),
           actions: [
             IconButton(
                 onPressed: () async {
                   Navigator.pushReplacement(context,
-                      PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
+                      PageRouteBuilder(pageBuilder: (a, b, c) => const HomePage()));
                 },
                 icon: const Icon(Icons.home)),
           ],

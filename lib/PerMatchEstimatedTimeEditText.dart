@@ -36,7 +36,7 @@ class _PerMatchEstimatedTimeEditTextState
     double deviceHeight = MediaQuery.of(context).size.height;
     return Dialog(
       backgroundColor: Colors.black.withOpacity(0.5),
-      child: Container(
+      child: SizedBox(
         height: deviceHeight * 0.2,
         child: Column(
           children: [
@@ -46,7 +46,7 @@ class _PerMatchEstimatedTimeEditTextState
                 keyboardType: TextInputType.number,
                 controller: timevalue,
                 style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -61,7 +61,7 @@ class _PerMatchEstimatedTimeEditTextState
                       ),
                     ),
                     hintText: "Enter Time In Minutes",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w700),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.02),
@@ -96,16 +96,14 @@ class _PerMatchEstimatedTimeEditTextState
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.red,
                 ),
-                child: Container(
-                  child: Center(
-                    child: Text(
-                      "Update",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: deviceWidth * 0.033,
-                          fontWeight: FontWeight.w800),
-                    ),
+                child: Center(
+                  child: Text(
+                    "Update",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: deviceWidth * 0.033,
+                        fontWeight: FontWeight.w800),
                   ),
                 ),
               ),

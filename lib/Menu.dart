@@ -1,14 +1,10 @@
 import 'package:ardent_sports/CreateChallenge.dart';
-
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:ardent_sports/MyBookings.dart';
-import 'package:ardent_sports/ScoreAMatch.dart';
-import 'package:ardent_sports/Screen/Authentication/login.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'Helper/constant.dart';
 import 'ScoreAChallenge.dart';
 
 class Menu extends StatefulWidget {
@@ -25,15 +21,15 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
           child: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
         ),
@@ -43,7 +39,7 @@ class _MenuState extends State<Menu> {
               Container(
                 width: deviceWidth * 0.4,
                 height: deviceWidth * 0.4,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/AARDENT.png"),
                       fit: BoxFit.cover),
@@ -61,7 +57,7 @@ class _MenuState extends State<Menu> {
                   Container(
                     width: deviceWidth * 0.08,
                     height: deviceWidth * 0.08,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/plus.png"),
                           fit: BoxFit.cover),
@@ -72,9 +68,9 @@ class _MenuState extends State<Menu> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CreateChallenge()));
+                                builder: (context) => const CreateChallenge()));
                       },
-                      child: Text(
+                      child: const Text(
                         "Create Challenge",
                         style: TextStyle(color: Colors.white),
                       )),
@@ -89,7 +85,7 @@ class _MenuState extends State<Menu> {
                   Container(
                     width: deviceWidth * 0.08,
                     height: deviceWidth * 0.08,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/score 1.png"),
                           fit: BoxFit.cover),
@@ -104,7 +100,7 @@ class _MenuState extends State<Menu> {
                                       name: widget.name,
                                     )));
                       },
-                      child: Text(
+                      child: const Text(
                         "Score a challenge",
                         style: TextStyle(color: Colors.white),
                       )),
@@ -119,7 +115,7 @@ class _MenuState extends State<Menu> {
                   Container(
                     width: deviceWidth * 0.06,
                     height: deviceWidth * 0.06,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/Vector.png"),
                           fit: BoxFit.cover),
@@ -127,9 +123,9 @@ class _MenuState extends State<Menu> {
                   ),
                   TextButton(
                       onPressed: () {
-                        Get.to(MyBookings());
+                        Get.to(const MyBookings());
                       },
-                      child: Text(
+                      child: const Text(
                         "My Bookings",
                         style: TextStyle(color: Colors.white),
                       )),
@@ -144,7 +140,7 @@ class _MenuState extends State<Menu> {
                   Container(
                     width: deviceWidth * 0.08,
                     height: deviceWidth * 0.08,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/Vecto1.png"),
                           fit: BoxFit.cover),
@@ -154,7 +150,7 @@ class _MenuState extends State<Menu> {
                       onPressed: () {
                         Get.to(HostedChallenges());
                       },
-                      child: Text(
+                      child: const Text(
                         "My Hosted Challenges",
                         style: TextStyle(color: Colors.white),
                       )),
@@ -166,11 +162,11 @@ class _MenuState extends State<Menu> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: deviceWidth * 0.08,
                     height: deviceWidth * 0.08,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.exit_to_app,
                     color: Colors.white,
                   ),
@@ -214,7 +210,7 @@ class _MenuState extends State<Menu> {
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Logout",
                         style: TextStyle(color: Colors.white),
                       )),

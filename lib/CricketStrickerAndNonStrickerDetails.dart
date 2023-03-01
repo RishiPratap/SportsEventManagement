@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:ardent_sports/CricketScore.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'Helper/constant.dart';
 
 class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   const CricketStrickerAndNonStrickerDetails({Key? key}) : super(key: key);
@@ -16,15 +14,15 @@ class _CricketStrickerAndNonStrickerDetailsState
     extends State<CricketStrickerAndNonStrickerDetails> {
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
@@ -37,7 +35,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                     child: Container(
                       width: deviceWidth * 0.18,
                       height: deviceWidth * 0.1,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/AARDENT_LOGO.png"),
                               fit: BoxFit.cover)),
@@ -48,7 +46,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                     child: Container(
                       width: deviceWidth * 0.26,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Ardent_Sport_Text.png"),
                               fit: BoxFit.fitWidth)),
@@ -62,7 +60,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                   ),
                 ],
               ),
-              Divider(
+              const Divider(
                 color: Colors.white,
               ),
               Row(
@@ -72,7 +70,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                     child: Container(
                       width: deviceWidth * 0.08,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/Profile_Image.png"),
                               fit: BoxFit.fitHeight)),
@@ -89,7 +87,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                     child: Container(
                       width: deviceWidth * 0.08,
                       height: deviceWidth * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("assets/money_bag.png"),
                               fit: BoxFit.fitHeight)),
@@ -103,7 +101,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: Text("Shubham"),
+                      child: const Text("Shubham"),
                     ),
                   ),
                   Expanded(
@@ -116,7 +114,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: Text("₹15,000"),
+                      child: const Text("₹15,000"),
                     ),
                   ),
                 ],
@@ -133,7 +131,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                   color: Colors.white.withOpacity(0.2),
                   child: Column(
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
@@ -160,7 +158,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0),
                                   child: TextButton(
                                     onPressed: () {},
-                                    child: Text(
+                                    child: const Text(
                                       "Select Striker",
                                       style: TextStyle(color: Colors.white),
                                     ),
@@ -189,7 +187,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0),
                                   child: TextButton(
                                     onPressed: () {},
-                                    child: Text(
+                                    child: const Text(
                                       "Select Non Striker",
                                       style: TextStyle(color: Colors.white),
                                     ),
@@ -202,7 +200,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                           ],
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
@@ -230,7 +228,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Select Bowler",
                                         style: TextStyle(color: Colors.white),
                                       ),
@@ -251,11 +249,11 @@ class _CricketStrickerAndNonStrickerDetailsState
                           )),
                       Expanded(
                         flex: 2,
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xffD15858),
+                              backgroundColor: const Color(0xffD15858),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                       deviceWidth * 0.04)),
@@ -264,44 +262,10 @@ class _CricketStrickerAndNonStrickerDetailsState
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CricketScore()),
+                                    builder: (context) => const CricketScore()),
                               );
                             },
-                            // onPressed: () async {
-                            //   final match_details = match_Details(
-                            //       matchid: "12359",
-                            //       team_1: ["Doraemon"],
-                            //       team_2: ["Doraemon"],
-                            //       team_1_score: 0,
-                            //       team_2_score: 0,
-                            //       team_1_wickets: 0,
-                            //       team_2_wickets: 0,
-                            //       team_1_target: 10,
-                            //       team_2_target: 10,
-                            //       winning_team: "He",
-                            //       no_of_overs: 5,
-                            //       ball_type: "H",
-                            //       city: "Nzb",
-                            //       playing_team_size: 5,
-                            //       toss_won_by: "a",
-                            //       elected_to: "baT");
-                            //   final match_details_map = match_details.toMap();
-                            //   final json = jsonEncode(match_details_map);
-                            //   var url =
-                            //       "https://ardentsportsapis.herokuapp.com/cricketMatchDetails";
-                            //   var response = await post(Uri.parse(url),
-                            //       headers: {
-                            //         "Accept": "application/json",
-                            //         "Content-Type": "application/json"
-                            //       },
-                            //       body: json,
-                            //       encoding: Encoding.getByName("utf-8"));
-                            //   ScaffoldMessenger.of(context)
-                            //       .showSnackBar(SnackBar(
-                            //     content: Text(response.statusCode.toString()),
-                            //   ));
-                            // },
-                            child: Text("Start Scoring"),
+                          child: const Text("Start Scoring"),
                           ),
                         ),
                       ),
@@ -353,22 +317,22 @@ class match_Details {
       required this.elected_to});
   Map<String, dynamic> toMap() {
     return {
-      "matchid": this.matchid,
-      "team_1": this.team_1,
-      "team_2": this.team_2,
-      "team_1_score": this.team_1_score,
-      "team_2_score": this.team_2_score,
-      "team_1_wickets": this.team_1_wickets,
-      "team_2_wickets": this.team_2_wickets,
-      "team_1_target": this.team_1_target,
-      "team_2_target": this.team_2_target,
-      "winning_team": this.winning_team,
-      "no_of_overs": this.no_of_overs,
-      "ball_type": this.ball_type,
-      "city": this.city,
-      "playing_team_size": this.playing_team_size,
-      "toss_won_by": this.toss_won_by,
-      "elected_to": this.elected_to
+      "matchid": matchid,
+      "team_1": team_1,
+      "team_2": team_2,
+      "team_1_score": team_1_score,
+      "team_2_score": team_2_score,
+      "team_1_wickets": team_1_wickets,
+      "team_2_wickets": team_2_wickets,
+      "team_1_target": team_1_target,
+      "team_2_target": team_2_target,
+      "winning_team": winning_team,
+      "no_of_overs": no_of_overs,
+      "ball_type": ball_type,
+      "city": city,
+      "playing_team_size": playing_team_size,
+      "toss_won_by": toss_won_by,
+      "elected_to": elected_to
     };
   }
 }

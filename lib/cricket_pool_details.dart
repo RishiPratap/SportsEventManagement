@@ -1,18 +1,14 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:ardent_sports/AgeCategoryItem.dart';
 import 'package:ardent_sports/CreateChallengeTicket.dart';
 import 'package:ardent_sports/CricketDetailsDataClass.dart';
-import 'package:ardent_sports/PoolDetailsItem.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CategoryDetails.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'WebViewSpots.dart';
 import 'package:get/get.dart';
+import 'Helper/constant.dart';
 import 'orderAPI/ModelOrderID.dart';
 import 'orderAPI/serviceWrapper.dart';
 import 'CricketDetailsItem.dart';
@@ -124,35 +120,35 @@ class CreateChallengeDetails {
       });
   Map<String, dynamic> toMap() {
     return {
-      "ORGANIZER_NAME": this.ORGANIZER_NAME,
-      "ORGANIZER_ID": this.ORGANIZER_ID,
-      "USERID": this.USERID,
-      "TOURNAMENT_ID": this.TOURNAMENT_ID,
-      "CATEGORY": this.CATEGORY,
-      "NO_OF_KNOCKOUT_ROUNDS": this.NO_OF_KNOCKOUT_ROUNDS,
-      "ENTRY_FEE": this.ENTRY_FEE,
-      "GOLD": this.GOLD,
-      "SILVER": this.SILVER,
-      "BRONZE": this.BRONZE,
-      "OTHER": this.OTHER,
-      "PRIZE_POOL": this.PRIZE_POOL,
-      "TOURNAMENT_NAME": this.TOURNAMENT_NAME,
-      "CITY": this.CITY,
-      "TYPE": this.TYPE,
-      "LOCATION": this.LOCATION,
-      "START_DATE": this.START_DATE,
-      "END_DATE": this.END_DATE,
-      "START_TIME": this.START_TIME,
-      "END_TIME": this.END_TIME,
-      "REGISTRATION_CLOSES_BEFORE": this.REGISTRATION_CLOSES_BEFORE,
-      "AGE_CATEGORY": this.AGE_CATEGORY,
-      "NO_OF_COURTS": this.NO_OF_COURTS,
-      "BREAK_TIME": this.BREAK_TIME,
-      "SPORT": this.SPORT,
-      "TEAM_SIZE" : this.TEAM_SIZE,
-      "SUBSTITUTE" : this.SUBSTITUTES,
-      "BALL_TYPE" : this.BALL_TYPE,
-      "OVERS" : this.OVERS
+      "ORGANIZER_NAME": ORGANIZER_NAME,
+      "ORGANIZER_ID": ORGANIZER_ID,
+      "USERID": USERID,
+      "TOURNAMENT_ID": TOURNAMENT_ID,
+      "CATEGORY": CATEGORY,
+      "NO_OF_KNOCKOUT_ROUNDS": NO_OF_KNOCKOUT_ROUNDS,
+      "ENTRY_FEE": ENTRY_FEE,
+      "GOLD": GOLD,
+      "SILVER": SILVER,
+      "BRONZE": BRONZE,
+      "OTHER": OTHER,
+      "PRIZE_POOL": PRIZE_POOL,
+      "TOURNAMENT_NAME": TOURNAMENT_NAME,
+      "CITY": CITY,
+      "TYPE": TYPE,
+      "LOCATION": LOCATION,
+      "START_DATE": START_DATE,
+      "END_DATE": END_DATE,
+      "START_TIME": START_TIME,
+      "END_TIME": END_TIME,
+      "REGISTRATION_CLOSES_BEFORE": REGISTRATION_CLOSES_BEFORE,
+      "AGE_CATEGORY": AGE_CATEGORY,
+      "NO_OF_COURTS": NO_OF_COURTS,
+      "BREAK_TIME": BREAK_TIME,
+      "SPORT": SPORT,
+      "TEAM_SIZE" : TEAM_SIZE,
+      "SUBSTITUTE" : SUBSTITUTES,
+      "BALL_TYPE" : BALL_TYPE,
+      "OVERS" : OVERS
     };
   }
 }
@@ -239,12 +235,12 @@ class _CricketPoolState extends State<CricketPool> {
   }
 
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
+     deviceWidth = MediaQuery.of(context).size.width;
+     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover)),
         child: Column(
@@ -377,7 +373,7 @@ class _CricketPoolState extends State<CricketPool> {
                     EasyLoading.dismiss();
                   }
                 },
-                child: Text("Create Tournament",
+                child: const Text("Create Tournament",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -396,7 +392,7 @@ class _CricketPoolState extends State<CricketPool> {
                       deviceWidth * 0.04,
                       deviceWidth * 0.02),
                 ),
-                child: Text("Make Payment",
+                child: const Text("Make Payment",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

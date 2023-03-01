@@ -33,7 +33,7 @@ class _CricketScoreState extends State<CricketScore> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: h,
           child: Stack(
             children: [
@@ -52,7 +52,7 @@ class _CricketScoreState extends State<CricketScore> {
                 top: h * 0.2,
                 left: w * 0.6,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.transparent),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
                   onPressed: () {
                     print("Match Result pressed");
                   },
@@ -151,20 +151,7 @@ class _CricketScoreState extends State<CricketScore> {
       left: w * 0.4,
       child: Row(
         children: [
-          // Container(
-          //     alignment: Alignment.topCenter,
-          //     child: TextField(
-          //       enableInteractiveSelection: false,
-          //       controller: _searchInputControllor,
-          //       cursorColor: Colors.white,
-          //       decoration: InputDecoration(
-          //           contentPadding: EdgeInsets.symmetric(
-          //             horizontal: 16.0,
-          //             vertical: 15.0,
-          //           ),
-          //           border: InputBorder.none,
-          //           hintText: "Enter Score"),
-          //     )),
+        
           Container(
             margin: EdgeInsets.only(top: w * 0.02),
             child: Padding(
@@ -189,31 +176,29 @@ class _CricketScoreState extends State<CricketScore> {
       left: h * 0.02,
       right: w * 0.04,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Container(
+        SizedBox(
             width: w * 0.4,
             height: h * 0.07,
             child: ElevatedButton(
-              child: Text("Aniket Mudpe \n0(0)"),
+              child: const Text("Aniket Mudpe \n0(0)"),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
-                  ),
-                  primary: Color.fromRGBO(255, 255, 255, 0.4)),
+                  ), backgroundColor: const Color.fromRGBO(255, 255, 255, 0.4)),
               onPressed: () {
                 print("Pressed");
               },
             )),
-        Container(
+        SizedBox(
             width: w * 0.4,
             height: h * 0.07,
             child: ElevatedButton(
-              child: Text("Hiren Thacker\n0(0)"),
+              child: const Text("Hiren Thacker\n0(0)"),
               style: ElevatedButton.styleFrom(
-                  elevation: 5,
+                  elevation: 5, backgroundColor: const Color.fromRGBO(255, 255, 255, 0.4),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
-                  ),
-                  primary: Color.fromRGBO(255, 255, 255, 0.4)),
+                  )),
               onPressed: () {
                 print("Pressed");
               },
@@ -260,75 +245,67 @@ class _CricketScoreState extends State<CricketScore> {
       top: h * 0.65,
       left: w * 0.01,
       right: w * 0.01,
-      child: Container(
-        // color: Colors.white.withOpacity(0.4),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: ElevatedButton(
-                child: Text("0"),
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  _searchInputControllor.text =
-                      _searchInputControllor.text + "0";
-                },
+        width: w * 0.2,
+        height: w * 0.15,
+        margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+        child: ElevatedButton(
+          child: const Text("0"),
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
+              ), backgroundColor: Colors.red),
+          onPressed: () {
+            _searchInputControllor.text =
+                _searchInputControllor.text + "0";
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("1"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("1"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  _searchInputControllor.text =
-                      _searchInputControllor.text + "1";
-                },
+          onPressed: () {
+            _searchInputControllor.text =
+                _searchInputControllor.text + "1";
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("2"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("2"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  _searchInputControllor.text =
-                      _searchInputControllor.text + "2";
-                },
+          onPressed: () {
+            _searchInputControllor.text =
+                _searchInputControllor.text + "2";
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("Undo"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("Undo"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
-              )),
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
         ]),
-      ),
     );
   }
 
@@ -339,71 +316,63 @@ class _CricketScoreState extends State<CricketScore> {
       top: h * 0.74,
       left: w * 0.01,
       right: w * 0.01,
-      child: Container(
-        // color: Colors.white.withOpacity(0.4),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("3"),
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("3"),
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
+              ), backgroundColor: Colors.red),
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("4"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("4"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("6"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("6"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("5,7"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("5,7"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
-              )),
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
         ]),
-      ),
     );
   }
 
@@ -414,74 +383,66 @@ class _CricketScoreState extends State<CricketScore> {
       top: h * 0.83,
       left: w * 0.01,
       right: w * 0.01,
-      child: Container(
-        // color: Colors.white.withOpacity(0.4),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("WD"),
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("WD"),
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
+              ), backgroundColor: Colors.red),
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("NB"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("NB"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text("BYE"),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text("BYE"),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.red),
-                onPressed: () {
-                  print("Pressed");
-                },
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
+          SizedBox(
+        width: w * 0.2,
+        height: w * 0.15,
+        child: ElevatedButton(
+          child: const Text(
+            "Out",
+            style: TextStyle(color: Colors.red),
+          ),
+          style: ElevatedButton.styleFrom(
+              elevation: 5, backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          Container(
-              width: w * 0.2,
-              height: w * 0.15,
-              child: ElevatedButton(
-                child: Text(
-                  "Out",
-                  style: TextStyle(color: Colors.red),
-                ),
-                style: ElevatedButton.styleFrom(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(w * 0.02),
-                    ),
-                    primary: Colors.white),
-                onPressed: () {
-                  print("Pressed");
-                },
-              )),
+          onPressed: () {
+            print("Pressed");
+          },
+        )),
         ]),
-      ),
     );
   }
 
@@ -495,13 +456,12 @@ class _CricketScoreState extends State<CricketScore> {
         child: Center(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                elevation: 5,
+                elevation: 5, backgroundColor: const Color(0xFFD15858),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(w * 0.02),
-                ),
-                primary: Color(0xFFD15858)),
+                )),
             onPressed: () {},
-            child: Container(
+            child: SizedBox(
                 width: w * 0.442,
                 height: w * 0.14,
                 child: Padding(
