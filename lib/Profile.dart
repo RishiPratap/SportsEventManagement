@@ -517,7 +517,7 @@ class _ProfileState extends State<Profile> {
                                               image: DecorationImage(
                                                   image: AssetImage(
                                                       'assets/GoldTrophy.png')),
-                                             borderRadius:
+                                              borderRadius:
                                                   BorderRadius.circular(
                                                       MediaQuery.of(context)
                                                               .size

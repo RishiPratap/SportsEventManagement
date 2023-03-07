@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
+import '../../Helper/apis.dart';
 import '../../Menu.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -128,9 +129,6 @@ class UserData {
 class _HomePageState extends State<HomePage> {
   DateTime timeBackPressed = DateTime.now();
   List<Card> AllTournaments = [];
-
-  final url =
-      'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/baseTournaments';
 
   List<Card> getTournaments(List<UserData> userdata, int array_length) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -512,7 +510,7 @@ class _HomePageState extends State<HomePage> {
                           ? Color(0xff6BB8FF)
                           : Color(0xff03C289),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      boxShadow: const[
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black,
                           spreadRadius: 1,
@@ -554,7 +552,9 @@ class _HomePageState extends State<HomePage> {
   // }
 
   getAllTournaments() async {
-    var response = await get(Uri.parse(url));
+    var response = await get(
+      baseTournamentsApi,
+    );
     List<dynamic> jsonData = jsonDecode(response.body);
     try {
       List<UserData> userdata =
@@ -569,7 +569,9 @@ class _HomePageState extends State<HomePage> {
 
   void userData() async {
     try {
-      var response = await get(Uri.parse(url));
+      var response = await get(
+        baseTournamentsApi,
+      );
       List<dynamic> jsonData = jsonDecode(response.body);
 
       print(jsonData);
@@ -615,8 +617,6 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushReplacement(
         context, PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
   }
-
-
 
   @override
   Widget build(BuildContext context) {

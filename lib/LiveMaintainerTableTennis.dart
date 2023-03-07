@@ -10,6 +10,7 @@ import 'package:http/http.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'Helper/apis.dart';
 import 'Helper/constant.dart';
 import 'Screen/Home/HomePage.dart';
 
@@ -174,8 +175,8 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
   }
 
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     print("deviceWidth : ${deviceWidth}");
     print("deviceHeight : ${deviceHeight}");
     return WillPopScope(
@@ -864,8 +865,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                     : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      20.0),
+                                                  BorderRadius.circular(20.0),
                                             ),
                                           ),
                                           child: Text("Walk Over Player 1"),
@@ -894,9 +894,6 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                           TextButton(
                                                             onPressed:
                                                                 () async {
-                                                              const url =
-                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
                                                               final walkOver = WalkOver(
                                                                   MATCHID: widget
                                                                       .Match_Id,
@@ -919,8 +916,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                                       EasyLoadingMaskType
                                                                           .black);
                                                               var response = await post(
-                                                                  Uri.parse(
-                                                                      url),
+                                                                  walkoverApi,
                                                                   headers: {
                                                                     "Content-Type":
                                                                         "application/json",
@@ -988,8 +984,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                     : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      20.0),
+                                                  BorderRadius.circular(20.0),
                                             ),
                                           ),
                                           child: Text("Walk Over Player 2"),
@@ -1018,9 +1013,6 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                           TextButton(
                                                             onPressed:
                                                                 () async {
-                                                              const url =
-                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
                                                               final walkOver = WalkOver(
                                                                   MATCHID: widget
                                                                       .Match_Id,
@@ -1043,8 +1035,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                                       EasyLoadingMaskType
                                                                           .black);
                                                               var response = await post(
-                                                                  Uri.parse(
-                                                                      url),
+                                                                  walkoverApi,
                                                                   headers: {
                                                                     "Content-Type":
                                                                         "application/json",

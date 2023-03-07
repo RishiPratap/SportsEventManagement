@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../Helper/apis.dart';
 import '../../Helper/constant.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -342,367 +342,366 @@ class _SubmitPageState extends State<SubmitPage> {
 
   @override
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/login.png"),
-                fit: BoxFit.cover,
-              ),
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/login.png"),
+              fit: BoxFit.cover,
             ),
-            child: SingleChildScrollView(
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    Card(
-                      margin: EdgeInsets.only(
-                          left: deviceWidth * 0.05,
-                          right: deviceWidth * 0.05,
-                          top: deviceWidth * 0.2,
-                          bottom: 0),
-                      color: Colors.white.withOpacity(0.2),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(deviceWidth * 0.04)),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.06,
-                                  deviceWidth * 0.02, deviceWidth * 0.06, 0),
-                              child: Row(
-                                children: [
-                                  Center(
-                                    child: Image.asset(
-                                        "assets/profile-avatar 1.png"),
-                                  ),
-                                  const Center(
-                                    child: Text(
-                                      "Set Up Your Profile",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 22.0,
-                                      ),
+          ),
+          child: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Card(
+                    margin: EdgeInsets.only(
+                        left: deviceWidth * 0.05,
+                        right: deviceWidth * 0.05,
+                        top: deviceWidth * 0.2,
+                        bottom: 0),
+                    color: Colors.white.withOpacity(0.2),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(deviceWidth * 0.04)),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.06,
+                                deviceWidth * 0.02, deviceWidth * 0.06, 0),
+                            child: Row(
+                              children: [
+                                Center(
+                                  child: Image.asset(
+                                      "assets/profile-avatar 1.png"),
+                                ),
+                                const Center(
+                                  child: Text(
+                                    "Set Up Your Profile",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 22.0,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: SizedBox(
-                                height: deviceWidth * 0.14,
-                                child: TextFormField(
-                                  controller: first_name,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06)),
-                                    hintText: '  First name',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
+                        ),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                            child: SizedBox(
+                              height: deviceWidth * 0.14,
+                              child: TextFormField(
+                                controller: first_name,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                      borderSide: const BorderSide(
-                                        color: Colors.black,
-                                      ),
+                                          deviceWidth * 0.06)),
+                                  hintText: '  First name',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.5)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: SizedBox(
-                                height: deviceWidth * 0.14,
-                                child: TextFormField(
-                                  controller: last_name,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06)),
-                                    hintText: '  Last Name',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
+                        ),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                            child: SizedBox(
+                              height: deviceWidth * 0.14,
+                              child: TextFormField(
+                                controller: last_name,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                      borderSide: const BorderSide(
-                                        color: Colors.black,
-                                      ),
+                                          deviceWidth * 0.06)),
+                                  hintText: '  Last Name',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.5)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: SizedBox(
-                                height: deviceWidth * 0.14,
-                                child: TextFormField(
-                                  controller: date_of_birth,
-                                  readOnly: true,
-                                  onTap: () async {
-                                    DateTime? pickedDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1900),
-                                        lastDate: DateTime(2100));
+                        ),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                            child: SizedBox(
+                              height: deviceWidth * 0.14,
+                              child: TextFormField(
+                                controller: date_of_birth,
+                                readOnly: true,
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2100));
 
-                                    if (pickedDate != null) {
-                                      String formattedDate =
-                                          DateFormat('dd-MM-yyyy')
-                                              .format(pickedDate);
-                                      setState(() {
-                                        date_of_birth.text =
-                                            formattedDate.toString();
-                                      });
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06)),
-                                    hintText: '  Date of Birth (dd-mm-yy)',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                      borderSide: const BorderSide(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: SizedBox(
-                                height: deviceWidth * 0.14,
-                                child: TextFormField(
-                                  controller: state,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06)),
-                                    hintText: '  State',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                      borderSide: const BorderSide(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: SizedBox(
-                                height: deviceWidth * 0.14,
-                                child: TextFormField(
-                                  controller: city,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06)),
-                                    hintText: '  City',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                      borderSide: const BorderSide(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                                  deviceWidth * 0.02, deviceWidth * 0.04, 0),
-                              child: SizedBox(
-                                height: deviceWidth * 0.14,
-                                child: DropdownButtonFormField(
-                                  value: selectedGender,
-                                  items: gender
-                                      .map((value) => DropdownMenuItem(
-                                            child: Text(value),
-                                            value: value,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {
+                                  if (pickedDate != null) {
+                                    String formattedDate =
+                                        DateFormat('dd-MM-yyyy')
+                                            .format(pickedDate);
                                     setState(() {
-                                      selectedGender = value as String;
+                                      date_of_birth.text =
+                                          formattedDate.toString();
                                     });
-                                  },
-                                  hint: Text("Select Gender",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: deviceWidth * 0.04,
-                                      )),
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.red,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            deviceWidth * 0.06)),
-                                    hintText: '  Gender',
-                                    hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)),
-                                    focusedBorder: OutlineInputBorder(
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06),
-                                      borderSide: const BorderSide(
-                                        color: Colors.black,
-                                      ),
+                                          deviceWidth * 0.06)),
+                                  hintText: '  Date of Birth (dd-mm-yy)',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.5)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      ),
+                        ),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                            child: SizedBox(
+                              height: deviceWidth * 0.14,
+                              child: TextFormField(
+                                controller: state,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06)),
+                                  hintText: '  State',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.5)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                            child: SizedBox(
+                              height: deviceWidth * 0.14,
+                              child: TextFormField(
+                                controller: city,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06)),
+                                  hintText: '  City',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.5)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
+                                deviceWidth * 0.02, deviceWidth * 0.04, 0),
+                            child: SizedBox(
+                              height: deviceWidth * 0.14,
+                              child: DropdownButtonFormField(
+                                value: selectedGender,
+                                items: gender
+                                    .map((value) => DropdownMenuItem(
+                                          child: Text(value),
+                                          value: value,
+                                        ))
+                                    .toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedGender = value as String;
+                                  });
+                                },
+                                hint: Text("Select Gender",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: deviceWidth * 0.04,
+                                    )),
+                                icon: const Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.red,
+                                ),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          deviceWidth * 0.06)),
+                                  hintText: '  Gender',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.5)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        deviceWidth * 0.06),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        )
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, deviceWidth * 0.05, 0, 0),
-                      child: Center(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            var obtianedEmail =
-                                prefs.setString('email', emailController.text);
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, deviceWidth * 0.05, 0, 0),
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          var obtianedEmail =
+                              prefs.setString('email', emailController.text);
 
-                            if (first_name.text.trim().isNotEmpty &&
-                                last_name.text.trim().isNotEmpty &&
-                                date_of_birth.text.isNotEmpty &&
-                                state.text.isNotEmpty &&
-                                city.text.isNotEmpty &&
-                                selectedGender!.isNotEmpty) {
-                              final Details = UserDetails(
-                                  USERID: emailController.text.toString(),
-                                  PHONE: mobileController.text.toString(),
-                                  NAME: first_name.text.toString(),
-                                  EMAIL: emailController.text.toString(),
-                                  PWD: passController.text.toString(),
-                                  GENDER: selectedGender as String,
-                                  DOB: date_of_birth.text.toString(),
-                                  CITY: city.text.toString(),
-                                  STATE: state.text.toString(),
-                                  SPORTS_ACADEMY: "NULL",
-                                  PROFILE_ID: emailController.text.toString(),
-                                  INTERESTED_SPORTS: "NULL");
-                              final DetailMap = Details.toMap();
-                              final json = jsonEncode(DetailMap);
-                              var url =
-                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createUser";
-                              var response = await post(Uri.parse(url),
-                                  headers: {
-                                    "Accept": "application/json",
-                                    "Content-Type": "application/json"
-                                  },
-                                  body: json,
-                                  encoding: Encoding.getByName("utf-8"));
+                          if (first_name.text.trim().isNotEmpty &&
+                              last_name.text.trim().isNotEmpty &&
+                              date_of_birth.text.isNotEmpty &&
+                              state.text.isNotEmpty &&
+                              city.text.isNotEmpty &&
+                              selectedGender!.isNotEmpty) {
+                            final Details = UserDetails(
+                                USERID: emailController.text.toString(),
+                                PHONE: mobileController.text.toString(),
+                                NAME: first_name.text.toString(),
+                                EMAIL: emailController.text.toString(),
+                                PWD: passController.text.toString(),
+                                GENDER: selectedGender as String,
+                                DOB: date_of_birth.text.toString(),
+                                CITY: city.text.toString(),
+                                STATE: state.text.toString(),
+                                SPORTS_ACADEMY: "NULL",
+                                PROFILE_ID: emailController.text.toString(),
+                                INTERESTED_SPORTS: "NULL");
+                            final DetailMap = Details.toMap();
+                            final json = jsonEncode(DetailMap);
+                            var response = await post(createUserApi,
+                                headers: {
+                                  "Accept": "application/json",
+                                  "Content-Type": "application/json"
+                                },
+                                body: json,
+                                encoding: Encoding.getByName("utf-8"));
 
-                              final jsonResponse = jsonDecode(response.body);
-                              if (jsonResponse['Message'] == "User Exists") {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Email Already Exists,please try with different email"),
-                                ));
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text("Successfully Registered"),
-                                ));
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const HomePage()));
-                              }
+                            final jsonResponse = jsonDecode(response.body);
+                            if (jsonResponse['Message'] == "User Exists") {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Email Already Exists,please try with different email"),
+                              ));
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content: Text("All Fields Must Be Filled"),
+                                content: Text("Successfully Registered"),
                               ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const HomePage()));
                             }
-                          },
-                          child: const Text(
-                            'Submit',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffE74545),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(deviceWidth * 0.06)),
-                          ),
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("All Fields Must Be Filled"),
+                            ));
+                          }
+                        },
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffE74545),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.06)),
                         ),
                       ),
                     ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      child: Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white.withOpacity(0.5), textStyle: const TextStyle(
-                              fontSize: 15,
-                            ),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Align(
+                      alignment: FractionalOffset.bottomCenter,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white.withOpacity(0.5),
+                          textStyle: const TextStyle(
+                            fontSize: 15,
                           ),
-                          onPressed: () {},
-                          child: const Text('Terms & Conditions'),
                         ),
+                        onPressed: () {},
+                        child: const Text('Terms & Conditions'),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

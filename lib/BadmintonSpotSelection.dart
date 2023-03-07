@@ -12,6 +12,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Helper/apis.dart';
 import 'Rules.dart';
 
 int freespots = 0;
@@ -282,15 +283,12 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                               Search_details.toMap();
                                           final json =
                                               jsonEncode(Search_detailsMap);
-
-                                          var url =
-                                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/searchDoublesPartner";
                                           EasyLoading.show(
                                               status: 'Searching...',
                                               maskType:
                                                   EasyLoadingMaskType.black);
                                           var response = await post(
-                                              Uri.parse(url),
+                                              searchDoublesPartnerApi,
                                               headers: {
                                                 "Accept": "application/json",
                                                 "Content-Type":
@@ -364,11 +362,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                                   jsonEncode(
                                                                       addPlayerDetailsMap);
 
-                                                              var url =
-                                                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addDoublesPartner";
                                                               var response = await post(
-                                                                  Uri.parse(
-                                                                      url),
+                                                                  addDoublesPartnerApi,
                                                                   headers: {
                                                                     "Accept":
                                                                         "application/json",
@@ -648,10 +643,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                               final json = jsonEncode(
                                                   addPlayerDetailsMap);
 
-                                              var url =
-                                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addDoublesPartner";
                                               var response = await post(
-                                                  Uri.parse(url),
+                                                  addDoublesPartnerApi,
                                                   headers: {
                                                     "Accept":
                                                         "application/json",

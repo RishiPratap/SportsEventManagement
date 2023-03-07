@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
+import 'Helper/apis.dart';
 import 'Helper/constant.dart';
 import 'LiveMaintainerMatchSelection.dart';
 import 'Menu.dart';
@@ -39,8 +40,8 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
   bool isLoading = false;
   TextEditingController challengeid = TextEditingController();
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
@@ -131,7 +132,6 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                         width: double.infinity,
                       ),
                     ),
-                
                   ],
                 ),
                 Row(
@@ -149,7 +149,6 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                         width: double.infinity,
                       ),
                     ),
-               
                   ],
                 ),
                 Container(
@@ -185,7 +184,8 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                             child: Center(
                               child: Text(
                                 sport_name,
-                                style: const TextStyle(color: Color(0xffE74545)),
+                                style:
+                                    const TextStyle(color: Color(0xffE74545)),
                               ),
                             ),
                           ),
@@ -325,14 +325,13 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                         TournamentIdCheckdata.toMap();
                                     final json =
                                         jsonEncode(TournamentIdCheckMap);
-                                    var url =
-                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/tourney_exists";
 
                                     try {
                                       EasyLoading.show(
                                           status: 'Loading...',
                                           maskType: EasyLoadingMaskType.black);
-                                      var response = await post(Uri.parse(url),
+                                      var response = await post(
+                                          tourneyExistsApi,
                                           headers: {
                                             "Accept": "application/json",
                                             "Content-Type": "application/json"

@@ -10,6 +10,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'Helper/apis.dart';
 import 'Screen/Home/HomePage.dart';
 import 'PastHostedChallenges.dart';
 
@@ -618,9 +619,7 @@ class _HostedChallengesState extends State<HostedChallenges> {
 
     EasyLoading.show(
         status: 'Adding Rules', maskType: EasyLoadingMaskType.black);
-    var response = await post(
-        Uri.parse(
-            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/rules"),
+    var response = await post(rulesApi,
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",

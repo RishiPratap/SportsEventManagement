@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'CategoryDetails.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:get/get.dart';
+import 'Helper/apis.dart';
 import 'Helper/constant.dart';
 import 'orderAPI/ModelOrderID.dart';
 import 'orderAPI/serviceWrapper.dart';
@@ -87,37 +88,37 @@ class CreateChallengeDetails {
   late String? BALL_TYPE;
   late String? OVERS;
 
-  CreateChallengeDetails(
-      {required this.ORGANIZER_NAME,
-      required this.ORGANIZER_ID,
-      required this.USERID,
-      required this.TOURNAMENT_ID,
-      required this.CATEGORY,
-      required this.NO_OF_KNOCKOUT_ROUNDS,
-      required this.ENTRY_FEE,
-      required this.GOLD,
-      required this.SILVER,
-      required this.BRONZE,
-      required this.OTHER,
-      required this.PRIZE_POOL,
-      required this.TOURNAMENT_NAME,
-      required this.CITY,
-      required this.TYPE,
-      required this.LOCATION,
-      required this.START_DATE,
-      required this.END_DATE,
-      required this.START_TIME,
-      required this.END_TIME,
-      required this.REGISTRATION_CLOSES_BEFORE,
-      required this.AGE_CATEGORY,
-      required this.NO_OF_COURTS,
-      required this.BREAK_TIME,
-      required this.SPORT,
-      required this.TEAM_SIZE,
-      required this.SUBSTITUTES,
-      required this.BALL_TYPE,
-        required this.OVERS,
-      });
+  CreateChallengeDetails({
+    required this.ORGANIZER_NAME,
+    required this.ORGANIZER_ID,
+    required this.USERID,
+    required this.TOURNAMENT_ID,
+    required this.CATEGORY,
+    required this.NO_OF_KNOCKOUT_ROUNDS,
+    required this.ENTRY_FEE,
+    required this.GOLD,
+    required this.SILVER,
+    required this.BRONZE,
+    required this.OTHER,
+    required this.PRIZE_POOL,
+    required this.TOURNAMENT_NAME,
+    required this.CITY,
+    required this.TYPE,
+    required this.LOCATION,
+    required this.START_DATE,
+    required this.END_DATE,
+    required this.START_TIME,
+    required this.END_TIME,
+    required this.REGISTRATION_CLOSES_BEFORE,
+    required this.AGE_CATEGORY,
+    required this.NO_OF_COURTS,
+    required this.BREAK_TIME,
+    required this.SPORT,
+    required this.TEAM_SIZE,
+    required this.SUBSTITUTES,
+    required this.BALL_TYPE,
+    required this.OVERS,
+  });
   Map<String, dynamic> toMap() {
     return {
       "ORGANIZER_NAME": ORGANIZER_NAME,
@@ -145,10 +146,10 @@ class CreateChallengeDetails {
       "NO_OF_COURTS": NO_OF_COURTS,
       "BREAK_TIME": BREAK_TIME,
       "SPORT": SPORT,
-      "TEAM_SIZE" : TEAM_SIZE,
-      "SUBSTITUTE" : SUBSTITUTES,
-      "BALL_TYPE" : BALL_TYPE,
-      "OVERS" : OVERS
+      "TEAM_SIZE": TEAM_SIZE,
+      "SUBSTITUTE": SUBSTITUTES,
+      "BALL_TYPE": BALL_TYPE,
+      "OVERS": OVERS
     };
   }
 }
@@ -235,8 +236,8 @@ class _CricketPoolState extends State<CricketPool> {
   }
 
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Container(
@@ -265,114 +266,115 @@ class _CricketPoolState extends State<CricketPool> {
                 ),
                 onPressed: isPaymentDone == false
                     ? null
-                    :
-                    () async {
-                  var data = pools.map((it) => it.pooldata).toList();
+                    : () async {
+                        var data = pools.map((it) => it.pooldata).toList();
 
-                  String poolsize_details = "";
-                  String entryfee_details = "";
-                  String BallType = "";
-                  String Overs = "";
-                  String Substitutes = "";
-                  String TeamSize = "";
-                  for (int i = 0; i < data.length; i++) {
-                    poolsize_details += data[i].PoolSize;
-                    entryfee_details += pools[i].pooldata.EntryFee;
-                    BallType += pools[i].pooldata.BallType;
-                    Overs += pools[i].pooldata.Overs;
-                    Substitutes += pools[i].pooldata.Substitute;
-                    TeamSize += pools[i].pooldata.TeamSize;
-                  }
-                  EasyLoading.show(
-                    status: 'Loading...',
-                    maskType: EasyLoadingMaskType.black,
-                  );
-                  final SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  var obtianedEmail = prefs.getString('email');
-                  print(obtianedEmail);
-                  String Category = "";
-                  String AgeCategory = "";
-                  for (int i = 0; i < widget.AllCategoryDetails.length; i++) {
-                    Category += widget.AllCategoryDetails[i].CategoryName;
-                    AgeCategory += widget.AllCategoryDetails[i].AgeCategory;
-                    if (i != widget.AllCategoryDetails.length - 1) {
-                      Category += "-";
-                      AgeCategory += "-";
-                    }
-                  }
-                  print(Category);
-                  print(widget.EventName);
-                  print(widget.City);
+                        String poolsize_details = "";
+                        String entryfee_details = "";
+                        String BallType = "";
+                        String Overs = "";
+                        String Substitutes = "";
+                        String TeamSize = "";
+                        for (int i = 0; i < data.length; i++) {
+                          poolsize_details += data[i].PoolSize;
+                          entryfee_details += pools[i].pooldata.EntryFee;
+                          BallType += pools[i].pooldata.BallType;
+                          Overs += pools[i].pooldata.Overs;
+                          Substitutes += pools[i].pooldata.Substitute;
+                          TeamSize += pools[i].pooldata.TeamSize;
+                        }
+                        EasyLoading.show(
+                          status: 'Loading...',
+                          maskType: EasyLoadingMaskType.black,
+                        );
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        var obtianedEmail = prefs.getString('email');
+                        print(obtianedEmail);
+                        String Category = "";
+                        String AgeCategory = "";
+                        for (int i = 0;
+                            i < widget.AllCategoryDetails.length;
+                            i++) {
+                          Category += widget.AllCategoryDetails[i].CategoryName;
+                          AgeCategory +=
+                              widget.AllCategoryDetails[i].AgeCategory;
+                          if (i != widget.AllCategoryDetails.length - 1) {
+                            Category += "-";
+                            AgeCategory += "-";
+                          }
+                        }
+                        print(Category);
+                        print(widget.EventName);
+                        print(widget.City);
 
-                  final ChallengeDetails = CreateChallengeDetails(
-                    ORGANIZER_NAME: widget.EventManagerName,
-                    ORGANIZER_ID: widget.EventManagerMobileNo,
-                    USERID: obtianedEmail!.trim(),
-                    TOURNAMENT_ID: "123456",
-                    CATEGORY: Category,
-                    NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
-                    ENTRY_FEE: entryfee_details,
-                    GOLD: "0",
-                    SILVER: "0",
-                    BRONZE: "0",
-                    OTHER: "0",
-                    PRIZE_POOL: "0",
-                    TOURNAMENT_NAME: widget.EventName,
-                    CITY: widget.City,
-                    TYPE: widget.EventType,
-                    LOCATION: widget.Address,
-                    START_DATE: widget.StartDate,
-                    END_DATE: widget.EndDate,
-                    START_TIME: widget.StartTime,
-                    END_TIME: widget.EndTime,
-                    REGISTRATION_CLOSES_BEFORE: 6,
-                    AGE_CATEGORY: AgeCategory,
-                    NO_OF_COURTS: "1",
-                    BREAK_TIME: widget.BreakTime,
-                    SPORT: widget.SportName,
-                    TEAM_SIZE: TeamSize,
-                    SUBSTITUTES: Substitutes,
-                    BALL_TYPE: BallType,
-                    OVERS : Overs
-                  );
-                  final DetailMap = ChallengeDetails.toMap();
-                  final json = jsonEncode(DetailMap);
-                  print(json);
-                  var url =
-                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/createMultipleTournament";
-                  // var url = "http://7e26-2401-4900-234a-2aa6-8597-daf-a06f-b504.ngrok.io/createMultipleTournament";
+                        final ChallengeDetails = CreateChallengeDetails(
+                            ORGANIZER_NAME: widget.EventManagerName,
+                            ORGANIZER_ID: widget.EventManagerMobileNo,
+                            USERID: obtianedEmail!.trim(),
+                            TOURNAMENT_ID: "123456",
+                            CATEGORY: Category,
+                            NO_OF_KNOCKOUT_ROUNDS: poolsize_details,
+                            ENTRY_FEE: entryfee_details,
+                            GOLD: "0",
+                            SILVER: "0",
+                            BRONZE: "0",
+                            OTHER: "0",
+                            PRIZE_POOL: "0",
+                            TOURNAMENT_NAME: widget.EventName,
+                            CITY: widget.City,
+                            TYPE: widget.EventType,
+                            LOCATION: widget.Address,
+                            START_DATE: widget.StartDate,
+                            END_DATE: widget.EndDate,
+                            START_TIME: widget.StartTime,
+                            END_TIME: widget.EndTime,
+                            REGISTRATION_CLOSES_BEFORE: 6,
+                            AGE_CATEGORY: AgeCategory,
+                            NO_OF_COURTS: "1",
+                            BREAK_TIME: widget.BreakTime,
+                            SPORT: widget.SportName,
+                            TEAM_SIZE: TeamSize,
+                            SUBSTITUTES: Substitutes,
+                            BALL_TYPE: BallType,
+                            OVERS: Overs);
+                        final DetailMap = ChallengeDetails.toMap();
+                        final json = jsonEncode(DetailMap);
+                        print(json);
+                        // var url = "http://7e26-2401-4900-234a-2aa6-8597-daf-a06f-b504.ngrok.io/createMultipleTournament";
 
-                  try {
-                    var response = await post(Uri.parse(url),
-                        headers: {
-                          "Accept": "application/json",
-                          "Content-Type": "application/json"
-                        },
-                        body: json,
-                        encoding: Encoding.getByName("utf-8"));
-                    Map<String, dynamic> jsonData = jsonDecode(response.body);
-                    debugPrint('Response body:$json');
-                    print(jsonData["TOURNAMENT_ID"]);
-                    tournament_id_arr =
-                        jsonData["TOURNAMENT_ID"].toString().split(',');
-                    if (response.statusCode == 200) {
-                      EasyLoading.dismiss();
-                      Get.to(CreateChallengeTicket(
-                        Tournament_ID: tournament_id_arr,
-                        CategorieNames: widget.AllCategoryDetails,
-                      ));
-                      EasyLoading.dismiss();
-                    } else {
-                      EasyLoading.dismiss();
-                      EasyLoading.showError("Error in Tournament Creation");
-                    }
-                  } catch (e) {
-                    print(e);
-                    EasyLoading.showError(e.toString());
-                    EasyLoading.dismiss();
-                  }
-                },
+                        try {
+                          var response = await post(createMultipleTournamentApi,
+                              headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                              },
+                              body: json,
+                              encoding: Encoding.getByName("utf-8"));
+                          Map<String, dynamic> jsonData =
+                              jsonDecode(response.body);
+                          debugPrint('Response body:$json');
+                          print(jsonData["TOURNAMENT_ID"]);
+                          tournament_id_arr =
+                              jsonData["TOURNAMENT_ID"].toString().split(',');
+                          if (response.statusCode == 200) {
+                            EasyLoading.dismiss();
+                            Get.to(CreateChallengeTicket(
+                              Tournament_ID: tournament_id_arr,
+                              CategorieNames: widget.AllCategoryDetails,
+                            ));
+                            EasyLoading.dismiss();
+                          } else {
+                            EasyLoading.dismiss();
+                            EasyLoading.showError(
+                                "Error in Tournament Creation");
+                          }
+                        } catch (e) {
+                          print(e);
+                          EasyLoading.showError(e.toString());
+                          EasyLoading.dismiss();
+                        }
+                      },
                 child: const Text("Create Tournament",
                     style: TextStyle(
                         color: Colors.white,

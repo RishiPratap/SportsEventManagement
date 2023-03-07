@@ -10,6 +10,7 @@ import 'package:http/http.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'Helper/apis.dart';
 import 'Screen/Home/HomePage.dart';
 
 var update_score_1_first = 0;
@@ -18,7 +19,6 @@ var update_score_2_first = 0;
 var update_score_2_second = 0;
 var update_score_3_first = 0;
 var update_score_3_second = 0;
-
 
 late Socket socket;
 
@@ -657,8 +657,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      20.0),
+                                                  BorderRadius.circular(20.0),
                                             ),
                                           ),
                                           child: Text("Walk Over Player 1"),
@@ -687,9 +686,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                           TextButton(
                                                             onPressed:
                                                                 () async {
-                                                              const url =
-                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
                                                               final walkOver = WalkOver(
                                                                   MATCHID: widget
                                                                       .Match_Id,
@@ -712,8 +708,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                                       EasyLoadingMaskType
                                                                           .black);
                                                               var response = await post(
-                                                                  Uri.parse(
-                                                                      url),
+                                                                  walkoverApi,
                                                                   headers: {
                                                                     "Content-Type":
                                                                         "application/json",
@@ -781,8 +776,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                     : Color(0xff808080),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      20.0),
+                                                  BorderRadius.circular(20.0),
                                             ),
                                           ),
                                           child: Text("Walk Over Player 2"),
@@ -811,9 +805,6 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                           TextButton(
                                                             onPressed:
                                                                 () async {
-                                                              const url =
-                                                                  'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/walkover';
-
                                                               final walkOver = WalkOver(
                                                                   MATCHID: widget
                                                                       .Match_Id,
@@ -836,8 +827,7 @@ class LiveMaintainer1 extends State<LiveMaintainer> {
                                                                       EasyLoadingMaskType
                                                                           .black);
                                                               var response = await post(
-                                                                  Uri.parse(
-                                                                      url),
+                                                                  walkoverApi,
                                                                   headers: {
                                                                     "Content-Type":
                                                                         "application/json",
@@ -1391,7 +1381,6 @@ class _Editbutton2State extends State<Editbutton2> {
         ),
       ),
     );
-    
   }
 }
 
@@ -2024,6 +2013,5 @@ class _SubmitState extends State<Submit> {
         ),
       ),
     );
-   
   }
 }

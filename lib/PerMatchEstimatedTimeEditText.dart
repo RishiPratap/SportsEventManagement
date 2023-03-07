@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+import 'Helper/apis.dart';
+
 class PerMatchEstimatedTimeEditText extends StatefulWidget {
   final String TOURNAMENT_ID;
   const PerMatchEstimatedTimeEditText({Key? key, required this.TOURNAMENT_ID})
@@ -45,8 +47,8 @@ class _PerMatchEstimatedTimeEditTextState
               child: TextField(
                 keyboardType: TextInputType.number,
                 controller: timevalue,
-                style:
-                    const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -76,9 +78,7 @@ class _PerMatchEstimatedTimeEditTextState
                 final TimeJsonMap = TimeJsonDetails.toMap();
                 final json = jsonEncode(TimeJsonMap);
 
-                var url =
-                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/updatePerMatchEstimatedTime";
-                var response = await post(Uri.parse(url),
+                var response = await post(updatePerMatchEstimatedTimeApi,
                     headers: {
                       "Accept": "application/json",
                       "Content-Type": "application/json"
