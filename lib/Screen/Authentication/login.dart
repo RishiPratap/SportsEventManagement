@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:ardent_sports/Screen/Home/HomePage.dart';
+import 'package:ardent_sports/Screen/widget/setSnackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
@@ -112,19 +114,13 @@ class _loginState extends State<login> {
   Padding googleSingInMethod(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
-      child: MaterialButton(
-        onPressed: () {
+      child: InkWell(
+        onTap: () {
           print("press material button ");
           Authentication.signInWithGoogle(context: context).then(
             (value) async {
-              print("value : $value ");
-              print("email : ${value!.email}");
-              print("email verification : ${value.emailVerified}");
-              print("phoneNumber : ${value.phoneNumber}");
-              print("phoneNumber : ${value.photoURL}");
-
               var parameter = {
-                'USERID': value.email,
+                'USERID': value!.email,
               };
               if (value.emailVerified) {
                 // user exist or not .
@@ -137,7 +133,6 @@ class _loginState extends State<login> {
                     },
                     body: json,
                     encoding: Encoding.getByName("utf-8"));
-                print(' response : ${response.body.toString()}');
                 final jsonResponse = jsonDecode(response.body);
                 if (jsonResponse['EMAIL'] == value.email) {
                   Navigator.pushReplacement(
@@ -154,36 +149,52 @@ class _loginState extends State<login> {
                   prefs.setString('email', value.email!);
                 }
                 if (jsonResponse['Message'] == 'Failure') {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setString('email', value.email!);
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => SubmitPage()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SubmitPage(
+                        email: value.email ?? '',
+                        password: '',
+                        fromGoogleSingIn: true,
+                        mobile: '',
+                        showMobileNumber: true,
+                      ),
+                    ),
+                  );
                 }
               }
+              Authentication.signOut(context: context);
             },
           );
         },
-        color: Colors.white.withOpacity(0.2),
-        elevation: 10,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              height: 30.0,
-              width: 30.0,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/googlepng.jpeg'),
-                    fit: BoxFit.cover),
-                shape: BoxShape.circle,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          height: 50,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 30.0,
+                width: 30.0,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/googlepng.jpeg'),
+                      fit: BoxFit.cover),
+                  shape: BoxShape.circle,
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            const Text("Sign In with Google")
-          ],
+              const SizedBox(
+                width: 20,
+              ),
+              const Text(
+                "Sign In with Google",
+                style: TextStyle(fontSize: 17),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -210,11 +221,32 @@ class _loginState extends State<login> {
     );
   }
 
-  Future<bool> checkEmailVerified() async {
+  Future<bool> forGoogleSingIn() async {
     var user = await FirebaseAuth.instance.currentUser!.reload();
 
     setState(() {});
     return FirebaseAuth.instance.currentUser!.emailVerified;
+  }
+
+  Future<bool> checkEmailVerified() async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emaild.text, password: password.text)
+          .then((value) {
+        setState(() {});
+        return true;
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        setSnackbar('No user found for that email.', context);
+        return false;
+      } else if (e.code == 'wrong-password') {
+        setSnackbar('Wrong password provided for that user.', context);
+        return false;
+      }
+    }
+    return false;
   }
 
   Center loginFields(BuildContext context) {
@@ -232,11 +264,11 @@ class _loginState extends State<login> {
           ),
           color: Colors.white.withOpacity(0.2),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(deviceWidth * 0.04,
-                    deviceWidth * 0.04, deviceWidth * 0.04, 0),
+                    deviceWidth * 0.08, deviceWidth * 0.04, 0),
                 child: TextField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emaild,
@@ -273,12 +305,11 @@ class _loginState extends State<login> {
               Container(
                 width: deviceWidth * 0.4,
                 margin: EdgeInsets.fromLTRB(
-                    deviceWidth * 0.04, 0.05 * cardheight, 0, 0),
+                    deviceWidth * 0.04, 0.07 * cardheight, 0, 0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.all(deviceWidth * 0.03),
-                    // splashColor: Colors.grey,
                     backgroundColor: const Color(0xffE74545),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -295,88 +326,53 @@ class _loginState extends State<login> {
                           color: Color(0xFFE74545),
                         ),
                         maskType: EasyLoadingMaskType.black);
-                    bool isVerifedAccount = await checkEmailVerified();
-                    print("emailVerified:  $isVerifedAccount");
-                    if (isVerifedAccount) {
-                      var parameter = {
-                        'USERID': emaild.text,
-                      };
-                      final json = jsonEncode(parameter);
-                      var response = await post(findUserByIDApi,
+
+                    if (emaild.text.trim().isNotEmpty ||
+                        password.text.trim().isNotEmpty) {
+                      final logindetails = LoginDetails(
+                          EmailId: emaild.text.toString().trim(),
+                          Password: password.text.toString().trim());
+                      final logindetailsmap = logindetails.toMap();
+                      final json = jsonEncode(logindetailsmap);
+                      var response = await post(getUserLoginApi,
                           headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json"
                           },
                           body: json,
                           encoding: Encoding.getByName("utf-8"));
-                      print(' response : ${response.body.toString()}');
                       final jsonResponse = jsonDecode(response.body);
-                      if (jsonResponse['EMAIL'] == emaild.text) {
-                        if (emaild.text.trim().isNotEmpty ||
-                            password.text.trim().isNotEmpty) {
-                          final logindetails = LoginDetails(
-                              EmailId: emaild.text.toString().trim(),
-                              Password: password.text.toString().trim());
-                          final logindetailsmap = logindetails.toMap();
-                          final json = jsonEncode(logindetailsmap);
-                          var response = await post(getUserLoginApi,
-                              headers: {
-                                "Accept": "application/json",
-                                "Content-Type": "application/json"
-                              },
-                              body: json,
-                              encoding: Encoding.getByName("utf-8"));
-                          final jsonResponse = jsonDecode(response.body);
-                          print('response : ${jsonResponse}');
-                          if (jsonResponse['Message'] == "USER Verified") {
-                            EasyLoading.dismiss();
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const HomePage()));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Logged in successfully"),
-                            ));
-                            EasyLoading.dismiss();
-                          } else if (jsonResponse['Message'] ==
-                              'Incorrect Pwd') {
-                            const msg = "Incorrect Password";
-                            Fluttertoast.showToast(msg: msg);
-                            EasyLoading.dismiss();
-                          } else if (jsonResponse['Message'] ==
-                              "Invalid USERID") {
-                            const msg = "Invalid UserID";
-                            Fluttertoast.showToast(msg: msg);
-                            EasyLoading.dismiss();
-                          }
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          prefs.setString('email', emaild.text);
-                        }
-                      }
-                      if (jsonResponse['Message'] == 'Failure') {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setString('email', emaild.text);
+                      print('response : ${jsonResponse}');
+                      if (jsonResponse['Message'] == "USER Verified") {
+                        EasyLoading.dismiss();
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SubmitPage()));
+                                builder: (context) => const HomePage()));
+                        setSnackbar("Logged in successfully", context);
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString('email', emaild.text);
+                        EasyLoading.dismiss();
+                      } else if (jsonResponse['Message'] == 'Incorrect Pwd') {
+                        const msg = "Incorrect Password";
+                        setSnackbar(msg, context);
+                        // Fluttertoast.showToast(msg: msg);
+                        EasyLoading.dismiss();
+                      } else if (jsonResponse['Message'] == "Invalid USERID") {
+                        const msg = "Invalid UserID";
+                        setSnackbar(msg, context);
+                        // Fluttertoast.showToast(msg: msg);
+                        EasyLoading.dismiss();
                       }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("User Not Exist"),
-                        ),
-                      );
                     }
+
                     EasyLoading.dismiss();
                   },
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0.1 * cardheight, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 0.05 * cardheight, 0, 0),
                 child: Center(
                   child: TextButton(
                     style: TextButton.styleFrom(

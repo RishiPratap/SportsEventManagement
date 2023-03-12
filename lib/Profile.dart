@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -307,16 +308,19 @@ class _ProfileState extends State<Profile> {
                                       ),
                                       Expanded(
                                         child: Center(
-                                          child: Text(
-                                            "Play Bold BE Ardent",
-                                            style: TextStyle(
-                                                fontFamily: 'SNAP_ITC',
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.02),
-                                          ),
-                                        ),
+                                            child: Text(
+                                          "Play Bold BE Ardent",
+                                          style: GoogleFonts.hennyPenny(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.02),
+                                        )
+                                            //knewave
+                                            //henny penny
+                                            //leckerliOne
+
+                                            ),
                                       )
                                     ],
                                   ),
@@ -405,10 +409,7 @@ class _ProfileState extends State<Profile> {
                               margin: EdgeInsets.only(top: 10),
                               child: Text(
                                 "Level:${widget.level}",
-                                style: TextStyle(
-                                  fontFamily: 'SNAP_ITC',
-                                  fontSize: 22,
-                                ),
+                                style: GoogleFonts.hennyPenny(fontSize: 22),
                               ),
                             ),
                           ),
@@ -496,10 +497,7 @@ class _ProfileState extends State<Profile> {
                               child: Center(
                                 child: Text(
                                   "The Trophy Room",
-                                  style: TextStyle(
-                                    fontFamily: 'SNAP_ITC',
-                                    fontSize: 22,
-                                  ),
+                                  style: GoogleFonts.hennyPenny(fontSize: 22),
                                 ),
                               ),
                             ),
@@ -556,11 +554,10 @@ class _ProfileState extends State<Profile> {
                             child: Container(
                                 margin: EdgeInsets.only(
                                     bottom: MediaQuery.of(context).size.height *
-                                        0.0085),
+                                        0.00),
                                 child: Text(
                                   "Analytics",
-                                  style: TextStyle(
-                                      fontFamily: 'SNAP_ITC', fontSize: 22),
+                                  style: GoogleFonts.hennyPenny(fontSize: 22),
                                 )),
                           ),
                           Row(
@@ -595,8 +592,7 @@ class _ProfileState extends State<Profile> {
                                           bottom: deviceWidth * 0.028),
                                       child: Text(
                                         widget.pointsScored.toString(),
-                                        style: TextStyle(
-                                            fontFamily: 'SNAP_ITC',
+                                        style: GoogleFonts.hennyPenny(
                                             fontSize: 15),
                                       ),
                                     )
@@ -642,8 +638,7 @@ class _ProfileState extends State<Profile> {
                                           bottom: deviceWidth * 0.028),
                                       child: Text(
                                         widget.tourneyWon.toString(),
-                                        style: TextStyle(
-                                            fontFamily: 'SNAP_ITC',
+                                        style: GoogleFonts.hennyPenny(
                                             fontSize: 15),
                                       ),
                                     )
@@ -689,8 +684,7 @@ class _ProfileState extends State<Profile> {
                                           bottom: deviceWidth * 0.028),
                                       child: Text(
                                         widget.totalTourney.toString(),
-                                        style: TextStyle(
-                                            fontFamily: 'SNAP_ITC',
+                                        style: GoogleFonts.hennyPenny(
                                             fontSize: 15),
                                       ),
                                     )

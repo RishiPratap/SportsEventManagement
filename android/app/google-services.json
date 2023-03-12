@@ -23,7 +23,15 @@
           }
         },
         {
-          "client_id": "135786337166-s7sp1ikvrbmbi1o3o5emaqa6meq36v1l.apps.googleusercontent.com",
+          "client_id": "135786337166-irrlss8r9do8en6letk0mkqq3g6recjr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ardent.ardent_sports",
+            "certificate_hash": "1e9018927a5d43b6a79d0d01af00c352cb9116b7"
+          }
+        },
+        {
+          "client_id": "135786337166-e5631238ua1pnrmku79hkiaj7tnl4fkr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -36,7 +44,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "135786337166-s7sp1ikvrbmbi1o3o5emaqa6meq36v1l.apps.googleusercontent.com",
+              "client_id": "135786337166-e5631238ua1pnrmku79hkiaj7tnl4fkr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -68,7 +76,7 @@
           }
         },
         {
-          "client_id": "135786337166-s7sp1ikvrbmbi1o3o5emaqa6meq36v1l.apps.googleusercontent.com",
+          "client_id": "135786337166-e5631238ua1pnrmku79hkiaj7tnl4fkr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -81,7 +89,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "135786337166-s7sp1ikvrbmbi1o3o5emaqa6meq36v1l.apps.googleusercontent.com",
+              "client_id": "135786337166-e5631238ua1pnrmku79hkiaj7tnl4fkr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

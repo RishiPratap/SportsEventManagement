@@ -6,7 +6,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class VerifyPage extends StatefulWidget {
   final String email;
-  const VerifyPage({required this.email, Key? key}) : super(key: key);
+  final String password;
+  final String mobile;
+  const VerifyPage({
+    required this.email,
+    required this.password,
+    required this.mobile,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<VerifyPage> createState() => _VerifyPageState();
@@ -65,7 +72,13 @@ class _VerifyPageState extends State<VerifyPage> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? SubmitPage()
+      ? SubmitPage(
+          email: widget.email,
+          password: widget.password,
+          fromGoogleSingIn: false,
+          showMobileNumber: false,
+          mobile: widget.mobile,
+        )
       : Scaffold(
           appBar: AppBar(
             title: const Text("Verify Email"),

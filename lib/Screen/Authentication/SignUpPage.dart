@@ -233,19 +233,22 @@ class _SignUpPage extends State<SignUpPage> {
                                       try {
                                         await FirebaseAuth.instance
                                             .createUserWithEmailAndPassword(
-                                                email:
-                                                    emailController.text.trim(),
-                                                password:
-                                                    passController.text.trim());
+                                          email: emailController.text.trim(),
+                                          password: passController.text.trim(),
+                                        );
                                         Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    VerifyPage(
-                                                      email: emailController
-                                                          .text
-                                                          .trim(),
-                                                    )));
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => VerifyPage(
+                                              email:
+                                                  emailController.text.trim(),
+                                              password:
+                                                  passController.text.trim(),
+                                              mobile:
+                                                  mobileController.text.trim(),
+                                            ),
+                                          ),
+                                        );
                                       } on FirebaseAuthException catch (e) {
                                         Fluttertoast.showToast(
                                             msg: e.toString(),
@@ -316,7 +319,20 @@ class _SignUpPage extends State<SignUpPage> {
 }
 
 class SubmitPage extends StatefulWidget {
-  SubmitPage({Key? key}) : super(key: key);
+  String email;
+  String password;
+  String mobile;
+  bool fromGoogleSingIn;
+  bool showMobileNumber;
+
+  SubmitPage({
+    Key? key,
+    required this.email,
+    required this.password,
+    required this.fromGoogleSingIn,
+    required this.mobile,
+    required this.showMobileNumber,
+  }) : super(key: key);
 
   @override
   State<SubmitPage> createState() => _SubmitPageState();
@@ -325,7 +341,8 @@ class SubmitPage extends StatefulWidget {
 class _SubmitPageState extends State<SubmitPage> {
   final first_name = TextEditingController();
   final last_name = TextEditingController();
-
+  final passwordController = TextEditingController();
+  final mobileController = TextEditingController();
   final date_of_birth = TextEditingController();
 
   final state = TextEditingController();
@@ -336,7 +353,7 @@ class _SubmitPageState extends State<SubmitPage> {
 
   final Intersted_Sports = TextEditingController();
 
-  List<String> gender = ['Male', 'Female'];
+  List<String> gender = ['Male', 'Female', 'Other', 'Prefer not to respond'];
 
   String? selectedGender;
 
@@ -451,6 +468,73 @@ class _SubmitPageState extends State<SubmitPage> {
                             ),
                           ),
                         ),
+                        widget.fromGoogleSingIn
+                            ? Center(
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      deviceWidth * 0.04,
+                                      deviceWidth * 0.02,
+                                      deviceWidth * 0.04,
+                                      0),
+                                  child: SizedBox(
+                                    height: deviceWidth * 0.14,
+                                    child: TextFormField(
+                                      controller: passwordController,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                deviceWidth * 0.06)),
+                                        hintText: '  Password',
+                                        hintStyle: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.5)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06),
+                                          borderSide: const BorderSide(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        widget.showMobileNumber
+                            ? Center(
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      deviceWidth * 0.04,
+                                      deviceWidth * 0.02,
+                                      deviceWidth * 0.04,
+                                      0),
+                                  child: SizedBox(
+                                    height: deviceWidth * 0.14,
+                                    child: TextFormField(
+                                      controller: mobileController,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                deviceWidth * 0.06)),
+                                        hintText: '  Mobile Number',
+                                        hintStyle: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.5)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              deviceWidth * 0.06),
+                                          borderSide: const BorderSide(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
                         Center(
                           child: Container(
                             margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
@@ -555,7 +639,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             margin: EdgeInsets.fromLTRB(deviceWidth * 0.04,
                                 deviceWidth * 0.02, deviceWidth * 0.04, 0),
                             child: SizedBox(
-                              height: deviceWidth * 0.14,
+                              height: deviceWidth * 0.16,
                               child: DropdownButtonFormField(
                                 value: selectedGender,
                                 items: gender
@@ -621,17 +705,21 @@ class _SubmitPageState extends State<SubmitPage> {
                               city.text.isNotEmpty &&
                               selectedGender!.isNotEmpty) {
                             final Details = UserDetails(
-                                USERID: emailController.text.toString(),
-                                PHONE: mobileController.text.toString(),
+                                USERID: widget.email.toString(),
+                                PHONE: widget.showMobileNumber
+                                    ? mobileController.text.toString()
+                                    : widget.mobile.toString(),
                                 NAME: first_name.text.toString(),
-                                EMAIL: emailController.text.toString(),
-                                PWD: passController.text.toString(),
+                                EMAIL: widget.email.toString(),
+                                PWD: widget.fromGoogleSingIn
+                                    ? passwordController.text.toString()
+                                    : widget.password.toString(),
                                 GENDER: selectedGender as String,
                                 DOB: date_of_birth.text.toString(),
                                 CITY: city.text.toString(),
                                 STATE: state.text.toString(),
                                 SPORTS_ACADEMY: "NULL",
-                                PROFILE_ID: emailController.text.toString(),
+                                PROFILE_ID: widget.email.toString(),
                                 INTERESTED_SPORTS: "NULL");
                             final DetailMap = Details.toMap();
                             final json = jsonEncode(DetailMap);

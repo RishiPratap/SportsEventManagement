@@ -1,6 +1,7 @@
 import 'package:ardent_sports/MyBookings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'Screen/Home/HomePage.dart';
 
 class ticket extends StatefulWidget {
@@ -385,11 +386,10 @@ class _ticketState extends State<ticket> {
                       ),
                       Text(
                         '#PlayBoldBeArdent',
-                        style: TextStyle(
-                            fontFamily: 'SNAP_ITC',
+                        style: GoogleFonts.hennyPenny(
+                            color: const Color(0xFFE54545),
                             fontSize:
-                                MediaQuery.of(context).size.height * 0.03,
-                            color: const Color(0xFFE54545)),
+                                MediaQuery.of(context).size.height * 0.03),
                       ),
                     ],
                   ),

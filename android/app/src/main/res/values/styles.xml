@@ -16,4 +16,8 @@
     <style name="NormalTheme" parent="Theme.MaterialComponents">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.Material3.DayNight">
+      
+    </style>
 </resources>

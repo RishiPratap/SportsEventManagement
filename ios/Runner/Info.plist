@@ -5,15 +5,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Seller Multivendor</string>
+	<string>Ardent</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>com.example.ardentsports</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>sellermultivendor</string>
+	<string>ardent</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,11 +45,7 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>Allow permission to fetch photos from album</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Allow access of microphone to search product by voice</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Allow access of location to fetch accurate address to deliver product at right place</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
