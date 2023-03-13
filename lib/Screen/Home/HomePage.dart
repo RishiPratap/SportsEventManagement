@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:ardent_sports/BadmintonSpotSelection.dart';
-import 'package:ardent_sports/Screen/Home/home_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,6 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '../../Model/user_model.dart';
 import '../../Profile.dart';
 import '../Authentication/updateDialog.dart';
 import 'home_page_provider.dart';
@@ -32,22 +32,6 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
-}
-
-class SpotStatusArray {
-  late String category;
-  late String id;
-  late List array;
-  SpotStatusArray(
-    this.category,
-    this.id,
-    this.array,
-  );
-  SpotStatusArray.fromJson(Map<String, dynamic> json) {
-    category = json['category'];
-    id = json['id'];
-    array = json[array];
-  }
 }
 
 class _HomePageState extends State<HomePage> {
@@ -65,24 +49,8 @@ class _HomePageState extends State<HomePage> {
     } catch (err) {}
   }
 
-  Map? mapUserInfo;
-  dynamic email;
-
-  Future _getDetails() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    email = prefs.getString('email');
-    final uri =
-        'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/userDetails?USERID=${email!.trim()}';
-
-    http.Response response;
-    response = await http.get(Uri.parse(uri));
-
-    if (response.statusCode == 200) {
-      setState(() {
-        mapUserInfo = json.decode(response.body);
-        print("mapUserInfo  : $mapUserInfo");
-      });
-    }
+  update() {
+    setState(() {});
   }
 
   var futures;
@@ -92,7 +60,7 @@ class _HomePageState extends State<HomePage> {
     homePagedProvider = Provider.of<HomeProvider>(context, listen: false);
     showUpdateDialog();
     futures = homePagedProvider!.getAllTournaments(context);
-    _getDetails();
+    homePagedProvider!.getDetails(update);
     // userData();
   }
 
@@ -129,11 +97,11 @@ class _HomePageState extends State<HomePage> {
     double deviceHeight = MediaQuery.of(context).size.height;
 
     double progress = double.parse(
-      mapUserInfo?['Points'] ?? '0',
+      homePagedProvider!.mapUserInfo?['Points'] ?? '0',
     );
-    String Level = mapUserInfo?['Level'] ?? '0';
+    String Level = homePagedProvider!.mapUserInfo?['Level'] ?? '0';
 
-    String totalPoints = mapUserInfo?['TotalPoints'] ?? '0';
+    String totalPoints = homePagedProvider!.mapUserInfo?['TotalPoints'] ?? '0';
 
     Widget buildLinearProgressIndicator() => Text(
           '${(progress * 100).toStringAsFixed(0)}/$totalPoints',
@@ -194,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                         InkWell(
                           onTap: () {
                             Get.to(() => Menu(
-                                  name: mapUserInfo?['Name'],
+                                  name: homePagedProvider!.mapUserInfo?['Name'],
                                 ));
                           },
                           child: Container(
@@ -216,16 +184,23 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(Profile(
-                              name: mapUserInfo?['Name'],
-                              email: email,
-                              level: mapUserInfo?['Level'],
-                              pointsScored: mapUserInfo?['PointsScored'],
-                              points: mapUserInfo?['Points'],
-                              totalPoints: mapUserInfo?['TotalPoints'],
-                              totalTourney: mapUserInfo?['TOTAL_TOURNAMENTS'],
-                              tourneyWon: mapUserInfo?['TROPHIES'],
-                            ));
+                            Get.to(
+                              Profile(
+                                name: homePagedProvider!.mapUserInfo?['Name'],
+                                email: homePagedProvider!.email,
+                                level: homePagedProvider!.mapUserInfo?['Level'],
+                                pointsScored: homePagedProvider!
+                                    .mapUserInfo?['PointsScored'],
+                                points:
+                                    homePagedProvider!.mapUserInfo?['Points'],
+                                totalPoints: homePagedProvider!
+                                    .mapUserInfo?['TotalPoints'],
+                                totalTourney: homePagedProvider!
+                                    .mapUserInfo?['TOTAL_TOURNAMENTS'],
+                                tourneyWon:
+                                    homePagedProvider!.mapUserInfo?['TROPHIES'],
+                              ),
+                            );
                           },
                           child: Column(
                             children: [
@@ -247,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                                   left: deviceWidth * 0.02,
                                 ),
                                 child: Text(
-                                    "${mapUserInfo == null ? "Loading.." : mapUserInfo?['Name']}"),
+                                    "${homePagedProvider!.mapUserInfo == null ? "Loading.." : homePagedProvider!.mapUserInfo?['Name']}"),
                               )
                             ],
                           ),
@@ -299,10 +274,8 @@ class _HomePageState extends State<HomePage> {
                           AsyncSnapshot<dynamic> snapshot) {
                         if (snapshot.data == null) {
                           print("In Null");
-                          return Container(
-                            child: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
                         } else {
                           return Column(
