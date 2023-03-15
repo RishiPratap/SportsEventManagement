@@ -54,7 +54,16 @@ class _EventDetailsState extends State<EventDetails> {
     'Above 60'
   ];
   List<String> RegCloses = ['6hrs', '12hrs'];
-  List<String> NoOfCourts = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  List<String> NoOfCourts = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+  ];
   String? SelectedAge;
   String? RegClosesHrs;
   String? Courts;

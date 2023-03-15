@@ -2,6 +2,7 @@ import 'package:ardent_sports/CricketTeamDetailsInput.dart';
 import 'package:flutter/material.dart';
 
 import 'Helper/constant.dart';
+import 'Screen/Home/Home_page.dart';
 
 class CricketMatchDetailsInput extends StatefulWidget {
   const CricketMatchDetailsInput({Key? key}) : super(key: key);
@@ -49,13 +50,21 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                       onPressed: () {},
                       child: Image.asset("assets/back_edit.png"),
                     ),
-                    Container(
-                      width: deviceWidth * 0.07,
-                      height: deviceWidth * 0.1,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/AARDENT_LOGO.png"),
-                              fit: BoxFit.fitHeight)),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (a, b, c) => const HomePage()));
+                      },
+                      child: Container(
+                        width: deviceWidth * 0.07,
+                        height: deviceWidth * 0.1,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/AARDENT_LOGO.png"),
+                                fit: BoxFit.fitHeight)),
+                      ),
                     ),
                     Container(
                       width: deviceWidth * 0.26,
@@ -302,7 +311,7 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                   backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius:  BorderRadius.circular(
+                                    borderRadius: BorderRadius.circular(
                                         deviceWidth * 0.04),
                                   ),
                                 ),

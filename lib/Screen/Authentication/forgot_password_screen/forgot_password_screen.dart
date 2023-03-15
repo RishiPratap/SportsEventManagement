@@ -9,6 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
+import '../../Home/Home_page.dart';
 import '../../widget/setSnackbar.dart';
 import '../verify_otp/verify_otp.dart';
 
@@ -42,9 +43,17 @@ class _forgotPasswordState extends State<forgotPassword> {
               SizedBox(
                 height: deviceHeight * 0.1,
               ),
-              const Image(
-                alignment: Alignment.center,
-                image: AssetImage('assets/AARDENT.png'),
+              InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                          pageBuilder: (a, b, c) => const HomePage()));
+                },
+                child: const Image(
+                  alignment: Alignment.center,
+                  image: AssetImage('assets/AARDENT.png'),
+                ),
               ),
               SizedBox(
                 height: deviceHeight * 0.1,

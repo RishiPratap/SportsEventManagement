@@ -76,15 +76,20 @@ class _loginState extends State<login> {
             child: Column(
               children: [
                 Center(
-                  child: Image.asset("assets/AARDENT.png"),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (a, b, c) => const HomePage()));
+                      },
+                      child: Image.asset("assets/AARDENT.png")),
                 ),
                 loginFields(context),
                 singUP_button(context),
                 googleSingInMethod(context),
-
                 // by onpressed we call the function signup function
-
-                termcondition(),
+                termCondition(),
               ],
             ),
           ),
@@ -93,7 +98,7 @@ class _loginState extends State<login> {
     );
   }
 
-  Container termcondition() {
+  Container termCondition() {
     return Container(
       alignment: Alignment.bottomCenter,
       child: Align(
@@ -120,6 +125,12 @@ class _loginState extends State<login> {
           print("press material button ");
           Authentication.signInWithGoogle(context: context).then(
             (value) async {
+              EasyLoading.show(
+                  status: 'Loading...',
+                  indicator: const SpinKitThreeBounce(
+                    color: Color(0xFFE74545),
+                  ),
+                  maskType: EasyLoadingMaskType.black);
               var parameter = {
                 'USERID': value!.email,
               };
@@ -164,6 +175,7 @@ class _loginState extends State<login> {
                   );
                 }
               }
+              EasyLoading.dismiss();
               Authentication.signOut(context: context);
             },
           );

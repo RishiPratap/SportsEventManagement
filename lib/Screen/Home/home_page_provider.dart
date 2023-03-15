@@ -44,4 +44,18 @@ class HomeProvider extends ChangeNotifier {
       update();
     }
   }
+
+  Future getVersions() async {
+    final uri = 'http://52.66.209.218:3000/getVersion';
+
+    var response;
+    response = await get(Uri.parse(uri));
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body.toString());
+      androidVersion = data['androidVersion'];
+      iOSVersion = data['iosVersion'];
+    }
+    return;
+  }
 }

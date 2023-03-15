@@ -80,6 +80,6 @@ class UserData {
     ORGANIZER_ID = json['ORGANIZER_ID'];
     MATCHES = json['MATCHES'];
     __v = json['__v'];
-    spotStatusArray = json['spotStatusArrays'];
+    spotStatusArray = json['spotStatusArrays'] ?? [];
   }
 }

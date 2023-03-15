@@ -45,9 +45,17 @@ class _SignUpPage extends State<SignUpPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Image(
-                  alignment: Alignment.center,
-                  image: AssetImage('assets/AARDENT.png'),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                            pageBuilder: (a, b, c) => const HomePage()));
+                  },
+                  child: const Image(
+                    alignment: Alignment.center,
+                    image: AssetImage('assets/AARDENT.png'),
+                  ),
                 ),
                 const SizedBox(
                   height: 5,

@@ -65,24 +65,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   showUpdateDialog() async {
-    await Future.delayed(const Duration(seconds: 1)).then((value) {
-      showAppUpdateDialog(context);
-    });
+    homePagedProvider!.getVersions().then(
+      (value) async {
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        String version = packageInfo.version;
 
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        final Version currentVersion = Version.parse(version);
+        final Version latestVersionAnd =
+            Version.parse(homePagedProvider!.androidVersion!);
+        final Version latestVersionIos =
+            Version.parse(homePagedProvider!.iOSVersion!);
 
-    String version = packageInfo.version;
-
-    final Version currentVersion = Version.parse(version);
-    final Version latestVersionAnd =
-        Version.parse(homePagedProvider!.androidVersion!);
-    final Version latestVersionIos =
-        Version.parse(homePagedProvider!.iOSVersion!);
-
-    if ((Platform.isAndroid && latestVersionAnd > currentVersion) ||
-        (Platform.isIOS && latestVersionIos > currentVersion)) {
-      // showAppUpdateDialog(context);
-    }
+        if ((Platform.isAndroid && latestVersionAnd > currentVersion) ||
+            (Platform.isIOS && latestVersionIos > currentVersion)) {
+          showAppUpdateDialog(context);
+        }
+      },
+    );
     setState(() {});
   }
 

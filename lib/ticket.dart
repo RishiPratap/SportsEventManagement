@@ -40,25 +40,39 @@ class _ticketState extends State<ticket> {
       },
       child: Scaffold(
         body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.lightBlueAccent,
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/Homepage.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  color: const Color(0xFF121F2B),
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: MediaQuery.of(context).size.height * 0.55,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF121F2B),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: Column(
                     children: [
                       Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFAB4D4F),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                          ),
+                        ),
                         height: MediaQuery.of(context).size.height * 0.12,
-                        color: const Color(0xFFAB4D4F),
                         child: Center(
                           child: Text(
-                            'Booking Succesful!',
+                            'Booking Successful!',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize:
@@ -141,7 +155,7 @@ class _ticketState extends State<ticket> {
                                           child: Text(
                                             'Name:',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.grey,
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -181,7 +195,7 @@ class _ticketState extends State<ticket> {
                                           child: Text(
                                             'Spot:',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.grey,
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -245,7 +259,7 @@ class _ticketState extends State<ticket> {
                                           child: Text(
                                             'Sport:',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.grey,
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -285,7 +299,7 @@ class _ticketState extends State<ticket> {
                                           child: Text(
                                             'Category:',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.grey,
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -347,7 +361,7 @@ class _ticketState extends State<ticket> {
                                           child: Text(
                                             'Date:',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.grey,
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -387,9 +401,7 @@ class _ticketState extends State<ticket> {
                       Text(
                         '#PlayBoldBeArdent',
                         style: GoogleFonts.hennyPenny(
-                            color: const Color(0xFFE54545),
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.03),
+                            color: const Color(0xFFE54545), fontSize: 22),
                       ),
                     ],
                   ),

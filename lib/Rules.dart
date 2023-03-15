@@ -5,6 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'Screen/Home/Home_page.dart';
+
 class Rules extends StatefulWidget {
   final String tourneyId;
   const Rules({Key? key, required this.tourneyId}) : super(key: key);
@@ -57,7 +59,7 @@ class _RulesState extends State<Rules> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-        decoration: BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/Homepage.png"), fit: BoxFit.cover),
           ),
@@ -67,13 +69,21 @@ class _RulesState extends State<Rules> {
               children: [
                 Row(
                   children: [
-                    Container(
-                      width: deviceWidth * 0.2,
-                      height: deviceHeight * 0.07,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/AARDENT_LOGO.png'),
-                          fit: BoxFit.cover,
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (a, b, c) => const HomePage()));
+                      },
+                      child: Container(
+                        width: deviceWidth * 0.2,
+                        height: deviceHeight * 0.07,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/AARDENT_LOGO.png'),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),

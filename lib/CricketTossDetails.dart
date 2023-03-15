@@ -1,6 +1,7 @@
 import 'package:ardent_sports/CricketStrickerAndNonStrickerDetails.dart';
 import 'package:flutter/material.dart';
 import 'Helper/constant.dart';
+import 'Screen/Home/Home_page.dart';
 
 class CricketTossDetails extends StatefulWidget {
   const CricketTossDetails({Key? key}) : super(key: key);
@@ -12,8 +13,8 @@ class CricketTossDetails extends StatefulWidget {
 class _CricketTossDetailsState extends State<CricketTossDetails> {
   @override
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -30,13 +31,21 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      width: deviceWidth * 0.18,
-                      height: deviceWidth * 0.1,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/AARDENT_LOGO.png"),
-                              fit: BoxFit.cover)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (a, b, c) => const HomePage()));
+                      },
+                      child: Container(
+                        width: deviceWidth * 0.18,
+                        height: deviceWidth * 0.1,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/AARDENT_LOGO.png"),
+                                fit: BoxFit.cover)),
+                      ),
                     ),
                   ),
                   Expanded(

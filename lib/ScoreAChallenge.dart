@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'Helper/apis.dart';
 import 'Helper/constant.dart';
 import 'LiveMaintainerMatchSelection.dart';
+import 'Screen/Home/Home_page.dart';
 import 'Screen/menu/menu.dart';
 
 class ScoreAChallenge extends StatefulWidget {
@@ -60,13 +61,21 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        width: 90,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/AARDENT_LOGO.png"),
-                                fit: BoxFit.cover)),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              PageRouteBuilder(
+                                  pageBuilder: (a, b, c) => const HomePage()));
+                        },
+                        child: Container(
+                          width: 90,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage("assets/AARDENT_LOGO.png"),
+                                  fit: BoxFit.cover)),
+                        ),
                       ),
                     ),
                     Expanded(

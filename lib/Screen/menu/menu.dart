@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Helper/constant.dart';
 import '../../ScoreAChallenge.dart';
+import '../Home/Home_page.dart';
 import '../delete_account_screen/delete_account.dart';
 
 class Menu extends StatefulWidget {
@@ -37,13 +38,21 @@ class _MenuState extends State<Menu> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: deviceWidth * 0.4,
-                height: deviceWidth * 0.4,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/AARDENT.png"),
-                      fit: BoxFit.cover),
+              InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                          pageBuilder: (a, b, c) => const HomePage()));
+                },
+                child: Container(
+                  width: deviceWidth * 0.4,
+                  height: deviceWidth * 0.4,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/AARDENT.png"),
+                        fit: BoxFit.cover),
+                  ),
                 ),
               ),
               SizedBox(
@@ -124,7 +133,12 @@ class _MenuState extends State<Menu> {
                   ),
                   TextButton(
                       onPressed: () {
-                        Get.to(const MyBookings());
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MyBookings()));
+
+                        // Get.to(const MyBookings());
                       },
                       child: const Text(
                         "My Bookings",
