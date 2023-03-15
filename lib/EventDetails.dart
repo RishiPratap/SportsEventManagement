@@ -48,9 +48,10 @@ class _EventDetailsState extends State<EventDetails> {
     'U15',
     'U17',
     'U19',
-    '35+',
-    '40+',
-    '50+',
+    'Above 35',
+    'Above 40',
+    'Above 50',
+    'Above 60'
   ];
   List<String> RegCloses = ['6hrs', '12hrs'];
   List<String> NoOfCourts = ['1', '2', '3', '4', '5', '6', '7', '8'];
@@ -88,8 +89,8 @@ class _EventDetailsState extends State<EventDetails> {
   List<CategorieDetails> AllCategories = [];
 
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
@@ -137,7 +138,7 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(
               height: deviceWidth * 0.02,
             ),
-           Container(
+            Container(
               margin: EdgeInsets.fromLTRB(
                   deviceWidth * 0.04, 0, deviceWidth * 0.04, 0),
               child: TextField(
@@ -540,7 +541,6 @@ class _EventDetailsState extends State<EventDetails> {
                                 BorderRadius.circular(deviceWidth * 0.06)),
                       ),
                       onPressed: () {
-                    
                         var categoryItem = AgeCategoryDataClass(
                             Category: SelectedCategory,
                             AgeCategory: SelectedAge);
