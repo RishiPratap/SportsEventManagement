@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart';
+import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
+import '../../widget/setSnackbar.dart';
 import '../verify_otp/verify_otp.dart';
 
 class forgotPassword extends StatefulWidget {
@@ -111,12 +118,46 @@ class _forgotPasswordState extends State<forgotPassword> {
                     style: TextStyle(fontSize: deviceWidth * 0.05),
                   ),
                   onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const VerifyOTP(),
-                      ),
-                    );
+                    EasyLoading.show(
+                        status: 'Loading...',
+                        indicator: const SpinKitThreeBounce(
+                          color: Color(0xFFE74545),
+                        ),
+                        maskType: EasyLoadingMaskType.black);
+                    if (emaild.text.trim().isNotEmpty) {
+                      var parameter = {
+                        'USERID': emaild.text.toString(),
+                      };
+                      print('parameter : $parameter');
+                      final json = jsonEncode(parameter);
+                      var response = await post(resetpwdOtpgenApi,
+                          headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                          },
+                          body: json,
+                          encoding: Encoding.getByName("utf-8"));
+                      final jsonResponse = jsonDecode(response.body);
+                      print('response : ${jsonResponse}');
+                      if (jsonResponse['Message'] == "Success") {
+                        EasyLoading.dismiss();
+                        setSnackbar("OTP Send Successfully", context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VerifyOTP(
+                              email: emaild.text.toString(),
+                            ),
+                          ),
+                        );
+                        EasyLoading.dismiss();
+                      } else {
+                        const msg = "Something Wrong!!!";
+                        setSnackbar(msg, context);
+                        EasyLoading.dismiss();
+                      }
+                    }
+                    EasyLoading.dismiss();
                   },
                 ),
               ),

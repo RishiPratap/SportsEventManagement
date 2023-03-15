@@ -19,6 +19,8 @@ final Uri rulesApi = Uri.parse('${baseUrl}rules');
 final Uri addDoublesPartnerApi = Uri.parse('${baseUrl}addDoublesPartner');
 final Uri findUserByIDApi = Uri.parse('${baseUrl}findUserByID');
 final Uri removeUserApi = Uri.parse('${baseUrl}removeUser');
+final Uri resetpwdOtpgenApi = Uri.parse('${baseUrl}resetpwdOtpgen');
+final Uri updatePwdApi = Uri.parse('${baseUrl}updatePwd');
 
 // all get request API's declaration
 

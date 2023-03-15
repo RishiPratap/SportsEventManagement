@@ -1,12 +1,24 @@
+import 'dart:convert';
+
+import 'package:ardent_sports/Screen/Authentication/login.dart';
+import 'package:ardent_sports/Screen/widget/setSnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
 
 class ChangePassword extends StatefulWidget {
-  const ChangePassword({Key? key}) : super(key: key);
+  String email;
+  ChangePassword({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
 
   @override
   State<ChangePassword> createState() => _ChangePasswordState();
@@ -15,8 +27,8 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword> {
   String? otp;
   double cardheight = 0;
-  final emaild = TextEditingController();
   final password = TextEditingController();
+  final confirmPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
@@ -71,7 +83,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     deviceWidth * 0.08, deviceWidth * 0.04, 0),
                 child: TextField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: emaild,
+                  controller: password,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius:
@@ -89,7 +101,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     deviceWidth * 0.08, deviceWidth * 0.04, 0),
                 child: TextField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: emaild,
+                  controller: confirmPassword,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius:
@@ -122,7 +134,50 @@ class _ChangePasswordState extends State<ChangePassword> {
                     "Set Password",
                     style: TextStyle(fontSize: deviceWidth * 0.05),
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    EasyLoading.show(
+                        status: 'Loading...',
+                        indicator: const SpinKitThreeBounce(
+                          color: Color(0xFFE74545),
+                        ),
+                        maskType: EasyLoadingMaskType.black);
+                    if (password.text == confirmPassword.text) {
+                      var parameter = {
+                        'USERID': widget.email,
+                        'NEWPWD': password.text,
+                      };
+                      print('parameter : $parameter');
+                      final json = jsonEncode(parameter);
+                      var response = await post(updatePwdApi,
+                          headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                          },
+                          body: json,
+                          encoding: Encoding.getByName("utf-8"));
+                      final jsonResponse = jsonDecode(response.body);
+                      print('response : ${jsonResponse}');
+                      if (jsonResponse['Message'] == "Success") {
+                        EasyLoading.dismiss();
+                        setSnackbar("Password Set Successfully", context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const login(),
+                          ),
+                        );
+                        EasyLoading.dismiss();
+                      } else {
+                        const msg = "Something Wrong!!!";
+                        setSnackbar(msg, context);
+                        EasyLoading.dismiss();
+                      }
+                    } else {
+                      setSnackbar(
+                          'Password and Confirm Password not Same.', context);
+                    }
+                    EasyLoading.dismiss();
+                  },
                 ),
               ),
             ],

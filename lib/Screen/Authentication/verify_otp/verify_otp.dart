@@ -1,13 +1,20 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
+import '../../widget/setSnackbar.dart';
 import '../change_password/change_password.dart';
 
 class VerifyOTP extends StatefulWidget {
-  const VerifyOTP({Key? key}) : super(key: key);
+  String email;
+  VerifyOTP({Key? key, required this.email}) : super(key: key);
 
   @override
   State<VerifyOTP> createState() => _VerifyOTPState();
@@ -16,8 +23,6 @@ class VerifyOTP extends StatefulWidget {
 class _VerifyOTPState extends State<VerifyOTP> {
   String? otp;
   double cardheight = 0;
-  final emaild = TextEditingController();
-  final password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
@@ -70,18 +75,18 @@ class _VerifyOTPState extends State<VerifyOTP> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
                   'Enter your email address we will send 4 digits code to your email.',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               otpLayout(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -102,12 +107,47 @@ class _VerifyOTPState extends State<VerifyOTP> {
                     style: TextStyle(fontSize: deviceWidth * 0.05),
                   ),
                   onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChangePassword(),
-                      ),
-                    );
+                    EasyLoading.show(
+                        status: 'Loading...',
+                        indicator: const SpinKitThreeBounce(
+                          color: Color(0xFFE74545),
+                        ),
+                        maskType: EasyLoadingMaskType.black);
+                    if (widget.email.isNotEmpty) {
+                      var parameter = {
+                        'USERID': widget.email.toString(),
+                        'OTP': otp,
+                      };
+                      print('parameter : $parameter');
+                      final json = jsonEncode(parameter);
+                      var response = await post(resetpwdOtpgenApi,
+                          headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                          },
+                          body: json,
+                          encoding: Encoding.getByName("utf-8"));
+                      final jsonResponse = jsonDecode(response.body);
+                      print('response : ${jsonResponse}');
+                      if (jsonResponse['Message'] == "Success") {
+                        EasyLoading.dismiss();
+                        setSnackbar("OTP Verify Successfully", context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChangePassword(
+                              email: widget.email,
+                            ),
+                          ),
+                        );
+                        EasyLoading.dismiss();
+                      } else {
+                        const msg = "Something Wrong!!!";
+                        setSnackbar(msg, context);
+                        EasyLoading.dismiss();
+                      }
+                    }
+                    EasyLoading.dismiss();
                   },
                 ),
               ),
