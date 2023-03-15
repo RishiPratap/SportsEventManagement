@@ -1,6 +1,6 @@
 import 'package:ardent_sports/CricketMatchDetailsInput.dart';
 import 'package:flutter/material.dart';
-import 'Menu.dart';
+import 'Screen/menu/menu.dart';
 
 class ScoreAMatch extends StatefulWidget {
   const ScoreAMatch({Key? key}) : super(key: key);
@@ -197,10 +197,11 @@ class _ScoreAMatchState extends State<ScoreAMatch> {
                                         builder: (context) =>
                                             const CricketMatchDetailsInput()));
                               } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text("Please Select a sport"),
-                                ));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Please Select a sport"),
+                                  ),
+                                );
                               }
                             },
                             child: const Text("Ok"),

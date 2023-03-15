@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:ardent_sports/Screen/Home/HomePage.dart';
+import 'package:ardent_sports/Screen/Authentication/forgot_password_screen/forgot_password_screen.dart';
+import 'package:ardent_sports/Screen/Home/Home_page.dart';
 import 'package:ardent_sports/Screen/widget/setSnackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -135,6 +136,9 @@ class _loginState extends State<login> {
                     encoding: Encoding.getByName("utf-8"));
                 final jsonResponse = jsonDecode(response.body);
                 if (jsonResponse['EMAIL'] == value.email) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('email', value.email!);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -144,9 +148,6 @@ class _loginState extends State<login> {
                       content: Text("Logged in successfully"),
                     ),
                   );
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setString('email', value.email!);
                 }
                 if (jsonResponse['Message'] == 'Failure') {
                   Navigator.pushReplacement(
@@ -366,7 +367,6 @@ class _loginState extends State<login> {
                         EasyLoading.dismiss();
                       }
                     }
-
                     EasyLoading.dismiss();
                   },
                 ),
@@ -381,7 +381,14 @@ class _loginState extends State<login> {
                         fontSize: 15,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const forgotPassword(),
+                        ),
+                      );
+                    },
                     child: const Text('Forgot Password ?'),
                   ),
                 ),

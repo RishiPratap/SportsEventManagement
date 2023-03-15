@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Helper/apis.dart';
-import 'Screen/Home/HomePage.dart';
+import 'Screen/Home/Home_page.dart';
 import 'PastHostedChallenges.dart';
 import 'Model/user_model.dart';
 

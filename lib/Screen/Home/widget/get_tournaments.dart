@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import '../../../BadmintonSpotSelection.dart';
-import '../HomePage.dart';
+import '../Home_page.dart';
 
 List<Card> getTournaments(
   List<UserData> userdata,

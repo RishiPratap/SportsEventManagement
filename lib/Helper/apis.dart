@@ -18,6 +18,7 @@ final Uri walkoverApi = Uri.parse('${baseUrl}walkover');
 final Uri rulesApi = Uri.parse('${baseUrl}rules');
 final Uri addDoublesPartnerApi = Uri.parse('${baseUrl}addDoublesPartner');
 final Uri findUserByIDApi = Uri.parse('${baseUrl}findUserByID');
+final Uri removeUserApi = Uri.parse('${baseUrl}removeUser');
 
 // all get request API's declaration
 

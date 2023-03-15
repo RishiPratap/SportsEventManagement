@@ -2,7 +2,7 @@ import 'package:ardent_sports/MyBookings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Screen/Home/HomePage.dart';
+import 'Screen/Home/Home_page.dart';
 
 class ticket extends StatefulWidget {
   final String spotNo;

@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_print
 
-import 'package:ardent_sports/Screen/Home/HomePage.dart';
+import 'package:ardent_sports/Screen/Home/Home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'Screen/Home/HomePage.dart';
+import 'Screen/Home/Home_page.dart';
 
 class WebViewTournamentDetails extends StatefulWidget {
   final String? Tournament_Id;

@@ -1,5 +1,5 @@
 import 'package:ardent_sports/CategoryDetails.dart';
-import 'package:ardent_sports/Screen/Home/HomePage.dart';
+import 'package:ardent_sports/Screen/Home/Home_page.dart';
 import 'package:ardent_sports/HostedChallenges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'Helper/apis.dart';
 import 'Helper/constant.dart';
-import 'Screen/Home/HomePage.dart';
+import 'Screen/Home/Home_page.dart';
 
 var update_score_1_first = 0;
 var update_score_1_second = 0;

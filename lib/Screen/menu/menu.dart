@@ -4,8 +4,9 @@ import 'package:ardent_sports/MyBookings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Helper/constant.dart';
-import 'ScoreAChallenge.dart';
+import '../../Helper/constant.dart';
+import '../../ScoreAChallenge.dart';
+import '../delete_account_screen/delete_account.dart';
 
 class Menu extends StatefulWidget {
   final String? name;
@@ -21,8 +22,8 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -152,6 +153,23 @@ class _MenuState extends State<Menu> {
                       },
                       child: const Text(
                         "My Hosted Challenges",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.delete),
+                  TextButton(
+                      onPressed: () {
+                        Get.to(const DeleteAccount());
+                      },
+                      child: const Text(
+                        "Delete Account",
                         style: TextStyle(color: Colors.white),
                       )),
                 ],

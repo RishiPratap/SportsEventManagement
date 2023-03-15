@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'Screen/Home/HomePage.dart';
+import 'Screen/Home/Home_page.dart';
 import 'package:get/get.dart';
 
 import 'Model/user_model.dart';

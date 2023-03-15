@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:ardent_sports/Screen/Home/HomePage.dart';
+import 'package:ardent_sports/Screen/Home/Home_page.dart';
 import 'package:ardent_sports/UserDetails.dart';
 import 'package:ardent_sports/VerifyPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -693,11 +693,8 @@ class _SubmitPageState extends State<SubmitPage> {
                     child: Center(
                       child: ElevatedButton(
                         onPressed: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          var obtianedEmail =
-                              prefs.setString('email', emailController.text);
-
+                          print(
+                              'widget.email.toString(), : ${widget.email.toString()}');
                           if (first_name.text.trim().isNotEmpty &&
                               last_name.text.trim().isNotEmpty &&
                               date_of_birth.text.isNotEmpty &&
@@ -730,15 +727,25 @@ class _SubmitPageState extends State<SubmitPage> {
                                 },
                                 body: json,
                                 encoding: Encoding.getByName("utf-8"));
-
+                            print(
+                                'submit page response : ${response.body.toString()}');
                             final jsonResponse = jsonDecode(response.body);
                             if (jsonResponse['Message'] == "User Exists") {
+                              // final SharedPreferences prefs =
+                              //     await SharedPreferences.getInstance();
+                              // var obtianedEmail = prefs.setString(
+                              //     'email', emailController.text);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 content: Text(
                                     "Email Already Exists,please try with different email"),
                               ));
                             } else {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              var obtianedEmail = prefs.setString(
+                                  'email', emailController.text);
+
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 content: Text("Successfully Registered"),
