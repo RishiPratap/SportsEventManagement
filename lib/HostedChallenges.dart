@@ -21,7 +21,7 @@ class HostedChallenges extends StatefulWidget {
   @override
   State<HostedChallenges> createState() => _HostedChallengesState();
 }
- 
+
 class Rules {
   Rules({
     required this.TOURNAMENTID,
@@ -649,16 +649,26 @@ class _HostedChallengesState extends State<HostedChallenges> {
                         Expanded(
                           child: Row(
                             children: [
-                              Container(
-                                width: deviceWidth * 0.2,
-                                height: deviceHeight * 0.07,
-                                margin: EdgeInsets.fromLTRB(
-                                    0, deviceWidth * 0.03, 0, 0),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                  image: AssetImage('assets/AARDENT_LOGO.png'),
-                                  fit: BoxFit.cover,
-                                )),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                          pageBuilder: (a, b, c) =>
+                                              const HomePage()));
+                                },
+                                child: Container(
+                                  width: deviceWidth * 0.2,
+                                  height: deviceHeight * 0.07,
+                                  margin: EdgeInsets.fromLTRB(
+                                      0, deviceWidth * 0.03, 0, 0),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/AARDENT_LOGO.png'),
+                                    fit: BoxFit.cover,
+                                  )),
+                                ),
                               ),
                               Expanded(
                                 flex: 1,

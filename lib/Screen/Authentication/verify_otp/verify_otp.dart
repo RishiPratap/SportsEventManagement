@@ -9,12 +9,23 @@ import 'package:http/http.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
+import '../../Home/Home_page.dart';
 import '../../widget/setSnackbar.dart';
+import '../SignUpPage.dart';
 import '../change_password/change_password.dart';
 
 class VerifyOTP extends StatefulWidget {
   String email;
-  VerifyOTP({Key? key, required this.email}) : super(key: key);
+  bool fromSingUpVerification;
+  String? password;
+  String? mobile;
+  VerifyOTP({
+    Key? key,
+    required this.email,
+    required this.fromSingUpVerification,
+    this.mobile,
+    this.password,
+  }) : super(key: key);
 
   @override
   State<VerifyOTP> createState() => _VerifyOTPState();
@@ -29,6 +40,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
     deviceHeight = MediaQuery.of(context).size.height;
     cardheight = deviceHeight * 0.40;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -42,9 +54,17 @@ class _VerifyOTPState extends State<VerifyOTP> {
               SizedBox(
                 height: deviceHeight * 0.1,
               ),
-              const Image(
-                alignment: Alignment.center,
-                image: AssetImage('assets/AARDENT.png'),
+              InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                          pageBuilder: (a, b, c) => const HomePage()));
+                },
+                child: const Image(
+                  alignment: Alignment.center,
+                  image: AssetImage('assets/AARDENT.png'),
+                ),
               ),
               SizedBox(
                 height: deviceHeight * 0.1,
@@ -132,14 +152,29 @@ class _VerifyOTPState extends State<VerifyOTP> {
                       if (jsonResponse['Message'] == "Success") {
                         EasyLoading.dismiss();
                         setSnackbar("OTP Verify Successfully", context);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChangePassword(
-                              email: widget.email,
+                        if (widget.fromSingUpVerification) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubmitPage(
+                                email: widget.email,
+                                password: widget.password!,
+                                fromGoogleSingIn: false,
+                                showMobileNumber: false,
+                                mobile: widget.mobile!,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChangePassword(
+                                email: widget.email,
+                              ),
+                            ),
+                          );
+                        }
                         EasyLoading.dismiss();
                       } else {
                         const msg = "Something Wrong!!!";

@@ -18,7 +18,6 @@ class MyBookings extends StatefulWidget {
   State<MyBookings> createState() => _MyBookings();
 }
 
-
 class _MyBookings extends State<MyBookings> {
   var futures;
   List<Container> AllUpcomingHostedTournaments = [];
@@ -198,10 +197,13 @@ class _MyBookings extends State<MyBookings> {
                         image: AssetImage("assets/Location.png"),
                       ),
                     ),
-                    Text(
-                      userdata[i].LOCATION,
-                      style: TextStyle(
-                          color: Colors.white, fontSize: deviceWidth * 0.03),
+                    Expanded(
+                      child: Text(
+                        userdata[i].LOCATION,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: deviceWidth * 0.03),
+                        maxLines: 3,
+                      ),
                     )
                   ],
                 ),
@@ -252,19 +254,19 @@ class _MyBookings extends State<MyBookings> {
 
                               EasyLoading.dismiss();
                             } catch (e) {
-                              print(e);
+                              print("exception ::: $e");
                               EasyLoading.showError("Error Loading Ticket");
                             }
                           },
-                          child: Text("Ticket >",
+                          child: const Text("Ticket >",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: deviceWidth * 0.035,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         )),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.055,
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       decoration: BoxDecoration(
                         color: const Color(0xffE74545),
                         borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -297,10 +299,10 @@ class _MyBookings extends State<MyBookings> {
                             ),
                           );
                         },
-                        child: Text("View Fixtures >",
+                        child: const Text("View Fixtures >",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: deviceWidth * 0.035,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold)),
                       ),
                     ),
@@ -322,23 +324,26 @@ class _MyBookings extends State<MyBookings> {
     var url =
         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/myBookings?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
-    List<dynamic> jsonData = jsonDecode(response.body);
+    print('url : ${url} response ::  ${response.body.toString()}');
+    var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      print(response.body);
+      try {
+        List<UserData> userdata = (jsonData as List)
+            .map(
+              (data) => UserData.fromJson(data),
+            )
+            .toList();
+        int array_length = userdata.length;
+        print(userdata);
+        return getHostedTournaments(userdata, array_length);
+      } catch (e) {
+        print("exception ===>: $e");
+      }
     } else {
       print("Didn't Receive");
     }
     print(jsonData);
-    try {
-      List<UserData> userdata =
-          jsonData.map((dynamic item) => UserData.fromJson(item)).toList();
-      int array_length = userdata.length;
-      print(userdata);
-      return getHostedTournaments(userdata, array_length);
-    } catch (e) {
-      print(e);
-    }
   }
 
   void initState() {
@@ -348,109 +353,96 @@ class _MyBookings extends State<MyBookings> {
 
   @override
   Widget build(BuildContext context) {
+    print("print");
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
-        //         builder: (context) => BadmintonSpotSelection(
-        //           tourneyId: userdata[i].TOURNAMENT_ID,
-        //         )));
-        return false;
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/Homepage.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/Homepage.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: deviceWidth * 0.2,
-                        height: deviceHeight * 0.07,
-                        margin:
-                            EdgeInsets.fromLTRB(0, deviceWidth * 0.03, 0, 0),
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                          image: AssetImage('assets/AARDENT_LOGO.png'),
-                          fit: BoxFit.cover,
-                        )),
-                      ),
-                      Container(
-                        width: deviceWidth * 0.2,
-                        height: deviceHeight * 0.08,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image:
-                                    AssetImage("assets/Ardent_Sport_Text.png"),
-                                fit: BoxFit.fitWidth)),
-                      ),
-                      Container(
-                        width: double.infinity,
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    height: deviceWidth * 0.06,
-                  ),
-                  TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.04))),
-                      onPressed: () {
-                        Get.to(const HomePage());
-                      },
-                      child: Text(
-                        "Join a Tournament",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: deviceWidth * 0.03),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                              pageBuilder: (a, b, c) => const HomePage()));
+                    },
+                    child: Container(
+                      width: deviceWidth * 0.2,
+                      height: deviceHeight * 0.07,
+                      margin: EdgeInsets.fromLTRB(0, deviceWidth * 0.03, 0, 0),
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage('assets/AARDENT_LOGO.png'),
+                        fit: BoxFit.cover,
                       )),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          margin:
-                              EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
-                          child: const Text("My Bookings")),
-                      FutureBuilder(
-                        future: futures,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.data == null) {
-                            print("In Null");
-                            return Container(
-                              child: const Center(
-                                child: Text("Loading..."),
-                              ),
-                            );
-                          } else {
-                            return Column(
-                              children: snapshot.data,
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  )
+                    ),
+                  ),
+                  Container(
+                    width: deviceWidth * 0.2,
+                    height: deviceHeight * 0.08,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/Ardent_Sport_Text.png"),
+                            fit: BoxFit.fitWidth)),
+                  ),
                 ],
               ),
-            ),
+              const Divider(
+                color: Colors.white,
+              ),
+              SizedBox(
+                height: deviceWidth * 0.06,
+              ),
+              TextButton(
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth * 0.04))),
+                  onPressed: () {
+                    Get.to(const HomePage());
+                  },
+                  child: Text(
+                    "Join a Tournament",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: deviceWidth * 0.03),
+                  )),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(deviceWidth * 0.03, 0, 0, 0),
+                      child: const Text("My Bookings")),
+                  FutureBuilder(
+                    future: futures,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.data == null) {
+                        return const Center(
+                          child: Text("Loading..."),
+                        );
+                      } else {
+                        return Column(
+                          children: snapshot.data,
+                        );
+                      }
+                    },
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),

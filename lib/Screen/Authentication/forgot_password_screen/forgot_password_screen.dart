@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
+import '../../Home/Home_page.dart';
 import '../../widget/setSnackbar.dart';
 import '../verify_otp/verify_otp.dart';
 
@@ -29,6 +29,7 @@ class _forgotPasswordState extends State<forgotPassword> {
     deviceHeight = MediaQuery.of(context).size.height;
     cardheight = deviceHeight * 0.40;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -42,9 +43,17 @@ class _forgotPasswordState extends State<forgotPassword> {
               SizedBox(
                 height: deviceHeight * 0.1,
               ),
-              const Image(
-                alignment: Alignment.center,
-                image: AssetImage('assets/AARDENT.png'),
+              InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                          pageBuilder: (a, b, c) => const HomePage()));
+                },
+                child: const Image(
+                  alignment: Alignment.center,
+                  image: AssetImage('assets/AARDENT.png'),
+                ),
               ),
               SizedBox(
                 height: deviceHeight * 0.1,
@@ -147,6 +156,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                           MaterialPageRoute(
                             builder: (context) => VerifyOTP(
                               email: emaild.text.toString(),
+                              fromSingUpVerification: false,
                             ),
                           ),
                         );

@@ -12,6 +12,7 @@ import 'package:http/http.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
+import '../../Home/Home_page.dart';
 
 class ChangePassword extends StatefulWidget {
   String email;
@@ -35,6 +36,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     deviceHeight = MediaQuery.of(context).size.height;
     cardheight = deviceHeight * 0.50;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -48,9 +50,17 @@ class _ChangePasswordState extends State<ChangePassword> {
               SizedBox(
                 height: deviceHeight * 0.1,
               ),
-              const Image(
-                alignment: Alignment.center,
-                image: AssetImage('assets/AARDENT.png'),
+              InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                          pageBuilder: (a, b, c) => const HomePage()));
+                },
+                child: const Image(
+                  alignment: Alignment.center,
+                  image: AssetImage('assets/AARDENT.png'),
+                ),
               ),
               loginFields(context),
             ],

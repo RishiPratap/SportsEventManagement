@@ -536,16 +536,25 @@ class _LiveMaintainerMatchSelectionState
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            width: deviceWidth * 0.18,
-                            height: deviceWidth * 0.1,
-                            margin: EdgeInsets.fromLTRB(
-                                0, deviceWidth * 0.03, 0, 0),
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                              image: AssetImage('assets/AARDENT_LOGO.png'),
-                              fit: BoxFit.cover,
-                            )),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                      pageBuilder: (a, b, c) =>
+                                          const HomePage()));
+                            },
+                            child: Container(
+                              width: deviceWidth * 0.18,
+                              height: deviceWidth * 0.1,
+                              margin: EdgeInsets.fromLTRB(
+                                  0, deviceWidth * 0.03, 0, 0),
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                image: AssetImage('assets/AARDENT_LOGO.png'),
+                                fit: BoxFit.cover,
+                              )),
+                            ),
                           ),
                         ),
                         Expanded(

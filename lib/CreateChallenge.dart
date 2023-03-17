@@ -15,7 +15,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
   List<String> Sports = [
     'Badminton',
     'Table Tennis',
-    'Cricket'
+    'Cricket',
   ];
   String? SelectedSport;
 
@@ -155,7 +155,6 @@ class _CreateChallengeState extends State<CreateChallenge> {
                       icon: const Icon(Icons.info)),
                 ],
               ),
-
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
@@ -250,7 +249,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                   ),
                 ),
               ),
-             SizedBox(
+              SizedBox(
                 height: deviceWidth * 0.03,
               ),
               Container(
@@ -270,8 +269,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                         MobileNumberController.text.isEmpty) {
                       const msg = "All Fields are Mandatory";
                       Fluttertoast.showToast(msg: msg);
-                    }
-                    else if(SelectedSport == 'Cricket'){
+                    } else if (SelectedSport == 'Cricket') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -283,8 +281,7 @@ class _CreateChallengeState extends State<CreateChallenge> {
                           ),
                         ),
                       );
-                    }
-                    else {
+                    } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -296,7 +293,6 @@ class _CreateChallengeState extends State<CreateChallenge> {
                           ),
                         ),
                       );
-                   
                     }
                   },
                   child: const Text(

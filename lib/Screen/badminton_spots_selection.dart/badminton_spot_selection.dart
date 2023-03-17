@@ -12,8 +12,8 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Helper/apis.dart';
-import 'Rules.dart';
+import '../../Helper/apis.dart';
+import '../../Rules.dart';
 
 int freespots = 0;
 int entryfee = 0;
@@ -1170,10 +1170,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.data == null) {
-                      return Container(
-                        child: const Center(
-                          child: Text("Loading..."),
-                        ),
+                      return const Center(
+                        child: Text("Loading..."),
                       );
                     } else {
                       return Column(
@@ -1205,9 +1203,6 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // SizedBox(
-              //   width: deviceWidth * 0.02,
-              // ),
               Column(
                 children: [
                   Container(
@@ -1369,11 +1364,11 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   color: const Color(0xff6EBC55),
                 ),
                 SizedBox(
-                  width: deviceWidth * 0.02,
+                  width: 10,
                 ),
                 const Text("Vacant"),
                 SizedBox(
-                  width: deviceWidth * 0.06,
+                  width: 10,
                 ),
                 Container(
                   width: deviceWidth * 0.04,
@@ -1381,18 +1376,21 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                   color: const Color(0xff808080),
                 ),
                 SizedBox(
-                  width: deviceWidth * 0.02,
+                  width: 10,
                 ),
                 const Text("Booked"),
                 SizedBox(
-                  width: deviceWidth * 0.06,
+                  width: 10,
                 ),
                 Container(
                   width: deviceWidth * 0.04,
                   height: deviceWidth * 0.04,
                   color: const Color(0xffFFFF00).withOpacity(0.8),
                 ),
-                const Text("   Processing"),
+                SizedBox(
+                  width: 10,
+                ),
+                const Text("Processing"),
               ],
             ),
             SizedBox(

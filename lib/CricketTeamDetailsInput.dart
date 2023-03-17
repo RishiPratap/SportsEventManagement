@@ -2,6 +2,7 @@ import 'package:ardent_sports/CricketTossDetails.dart';
 import 'package:flutter/material.dart';
 
 import 'Helper/constant.dart';
+import 'Screen/Home/Home_page.dart';
 
 class CricketTeamDetasilsInput extends StatefulWidget {
   final String no_of_overs;
@@ -127,13 +128,21 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      width: deviceWidth * 0.18,
-                      height: deviceWidth * 0.1,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/AARDENT_LOGO.png"),
-                              fit: BoxFit.cover)),
+                    child: InkWell(
+                        onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (a, b, c) => const HomePage()));
+                      },
+                      child: Container(
+                        width: deviceWidth * 0.18,
+                        height: deviceWidth * 0.1,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/AARDENT_LOGO.png"),
+                                fit: BoxFit.cover)),
+                      ),
                     ),
                   ),
                   Expanded(

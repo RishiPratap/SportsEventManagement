@@ -13,10 +13,20 @@ class HomeProvider extends ChangeNotifier {
   List<Card> AllTournaments = [];
   Map? mapUserInfo;
   dynamic email;
+
+  initializeVariables() {
+    androidVersion = '1.0.0';
+    iOSVersion = '1.0.0';
+    AllTournaments = [];
+    mapUserInfo = null;
+    email = null;
+  }
+
   getAllTournaments(BuildContext context) async {
     var response = await get(
       baseTournamentsApi,
     );
+    print('$baseTournamentsApi response : ${response.body.toString()}');
     List<dynamic> jsonData = jsonDecode(response.body);
     try {
       List<UserData> userdata =
@@ -43,5 +53,19 @@ class HomeProvider extends ChangeNotifier {
       print("mapUserInfo  : $mapUserInfo");
       update();
     }
+  }
+
+  Future getVersions() async {
+    final uri = 'http://52.66.209.218:3000/getVersion';
+
+    var response;
+    response = await get(Uri.parse(uri));
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body.toString());
+      androidVersion = data['androidVersion'];
+      iOSVersion = data['iosVersion'];
+    }
+    return;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:ardent_sports/CricketScore.dart';
 import 'package:flutter/material.dart';
 import 'Helper/constant.dart';
+import 'Screen/Home/Home_page.dart';
 
 class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   const CricketStrickerAndNonStrickerDetails({Key? key}) : super(key: key);
@@ -32,13 +33,21 @@ class _CricketStrickerAndNonStrickerDetailsState
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      width: deviceWidth * 0.18,
-                      height: deviceWidth * 0.1,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/AARDENT_LOGO.png"),
-                              fit: BoxFit.cover)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (a, b, c) => const HomePage()));
+                      },
+                      child: Container(
+                        width: deviceWidth * 0.18,
+                        height: deviceWidth * 0.1,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/AARDENT_LOGO.png"),
+                                fit: BoxFit.cover)),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -265,7 +274,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     builder: (context) => const CricketScore()),
                               );
                             },
-                          child: const Text("Start Scoring"),
+                            child: const Text("Start Scoring"),
                           ),
                         ),
                       ),
