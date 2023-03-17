@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
-import '../../../BadmintonSpotSelection.dart';
+import '../../badminton_spots_selection.dart/badminton_spot_selection.dart';
 import '../Home_page.dart';
 
 List<Card> getTournaments(
@@ -380,8 +380,7 @@ List<Container> getAllTournamentCategories(
                 }
               },
               child: Container(
-                margin: EdgeInsets.only(left: deviceWidth * 0.02),
-                height: deviceHeight * 0.03,
+                // height: deviceHeight * 0.03,
                 width: deviceWidth * 0.4,
                 decoration: BoxDecoration(
                   color: tournament == 'Badminton'
@@ -398,11 +397,16 @@ List<Container> getAllTournamentCategories(
                   ],
                 ),
                 child: Center(
-                  child: Text(
-                    spotStatusArray[i]['category'],
-                    style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      spotStatusArray[i]['category'],
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),

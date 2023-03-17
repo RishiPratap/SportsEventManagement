@@ -11,11 +11,21 @@ import '../../../Helper/apis.dart';
 import '../../../Helper/constant.dart';
 import '../../Home/Home_page.dart';
 import '../../widget/setSnackbar.dart';
+import '../SignUpPage.dart';
 import '../change_password/change_password.dart';
 
 class VerifyOTP extends StatefulWidget {
   String email;
-  VerifyOTP({Key? key, required this.email}) : super(key: key);
+  bool fromSingUpVerification;
+  String? password;
+  String? mobile;
+  VerifyOTP({
+    Key? key,
+    required this.email,
+    required this.fromSingUpVerification,
+    this.mobile,
+    this.password,
+  }) : super(key: key);
 
   @override
   State<VerifyOTP> createState() => _VerifyOTPState();
@@ -30,6 +40,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
     deviceHeight = MediaQuery.of(context).size.height;
     cardheight = deviceHeight * 0.40;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -141,14 +152,29 @@ class _VerifyOTPState extends State<VerifyOTP> {
                       if (jsonResponse['Message'] == "Success") {
                         EasyLoading.dismiss();
                         setSnackbar("OTP Verify Successfully", context);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChangePassword(
-                              email: widget.email,
+                        if (widget.fromSingUpVerification) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubmitPage(
+                                email: widget.email,
+                                password: widget.password!,
+                                fromGoogleSingIn: false,
+                                showMobileNumber: false,
+                                mobile: widget.mobile!,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChangePassword(
+                                email: widget.email,
+                              ),
+                            ),
+                          );
+                        }
                         EasyLoading.dismiss();
                       } else {
                         const msg = "Something Wrong!!!";

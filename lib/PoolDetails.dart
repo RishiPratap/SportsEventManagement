@@ -215,6 +215,14 @@ class _PoolDetailsState extends State<PoolDetails> {
         details: details,
         pooldata: poolData,
       ));
+
+      print("details : ${details.AgeCategory}");
+      print("details : ${details.CategoryName}");
+      print(pools);
+
+      print('widget.AllCategoryDetails :  ${widget.AllCategoryDetails}');
+
+      print('pool Data : $pools');
     }
   }
 
@@ -255,6 +263,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                 onPressed: isPaymentDone == false
                     ? null
                     : () async {
+                        print('we are here ');
                         var data = pools.map((it) => it.pooldata).toList();
 
                         String poolsize_details = "";
@@ -352,7 +361,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                         final DetailMap = ChallengeDetails.toMap();
                         final json = jsonEncode(DetailMap);
                         print(json);
-
+                        print('Detail : ${ChallengeDetails.toMap()} ');
+                        print('parameter : $json');
                         try {
                           var response = await post(createMultipleTournamentApi,
                               headers: {
@@ -361,6 +371,8 @@ class _PoolDetailsState extends State<PoolDetails> {
                               },
                               body: json,
                               encoding: Encoding.getByName("utf-8"));
+
+                          print('response : ${response.body.toString()}');
                           Map<String, dynamic> jsonData =
                               jsonDecode(response.body);
                           debugPrint('Response body:$json');
@@ -380,7 +392,7 @@ class _PoolDetailsState extends State<PoolDetails> {
                                 "Error in Tournament Creation");
                           }
                         } catch (e) {
-                          print(e);
+                          print("exception :  $e");
                           EasyLoading.showError(e.toString());
                           EasyLoading.dismiss();
                         }

@@ -324,7 +324,7 @@ class _MyBookings extends State<MyBookings> {
     var url =
         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/myBookings?USERID=$obtianedEmail";
     var response = await get(Uri.parse(url));
-    print('response ~!~: ${response.body.toString()}');
+    print('url : ${url} response ::  ${response.body.toString()}');
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {

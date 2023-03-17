@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -30,6 +29,7 @@ class _forgotPasswordState extends State<forgotPassword> {
     deviceHeight = MediaQuery.of(context).size.height;
     cardheight = deviceHeight * 0.40;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -156,6 +156,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                           MaterialPageRoute(
                             builder: (context) => VerifyOTP(
                               email: emaild.text.toString(),
+                              fromSingUpVerification: false,
                             ),
                           ),
                         );

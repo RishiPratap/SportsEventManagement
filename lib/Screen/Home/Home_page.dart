@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:ardent_sports/BadmintonSpotSelection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -14,9 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:version/version.dart';
 import '../../Helper/apis.dart';
 import '../menu/menu.dart';
-import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../Model/user_model.dart';
 import '../../Profile.dart';
@@ -58,6 +55,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     homePagedProvider = Provider.of<HomeProvider>(context, listen: false);
+    homePagedProvider!.initializeVariables();
     showUpdateDialog();
     futures = homePagedProvider!.getAllTournaments(context);
     homePagedProvider!.getDetails(update);
@@ -86,6 +84,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _refreshTournaments() async {
+    // homePagedProvider!.mapUserInfo!.clear();
     Navigator.pushReplacement(
         context, PageRouteBuilder(pageBuilder: (a, b, c) => HomePage()));
   }
@@ -272,7 +271,6 @@ class _HomePageState extends State<HomePage> {
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
                         if (snapshot.data == null) {
-                          print("In Null");
                           return const Center(
                             child: CircularProgressIndicator(),
                           );

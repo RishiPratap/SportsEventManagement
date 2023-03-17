@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:ardent_sports/Screen/Authentication/verify_otp/verify_otp.dart';
 import 'package:ardent_sports/Screen/Home/Home_page.dart';
 import 'package:ardent_sports/UserDetails.dart';
 import 'package:ardent_sports/VerifyPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -257,24 +260,87 @@ class _SignUpPage extends State<SignUpPage> {
                                             ),
                                           ),
                                         );
-                                      } on FirebaseAuthException catch (e) {
-                                        Fluttertoast.showToast(
-                                            msg: e.toString(),
-                                            toastLength: Toast.LENGTH_SHORT);
+                                      } on FirebaseAuthException catch (exception) {
+                                        print(' e : $exception');
+                                        if (exception.toString() ==
+                                            "[firebase_auth/email-already-in-use] The email address is already in use by another account.") {
+                                          EasyLoading.show(
+                                              status: 'Loading...',
+                                              indicator:
+                                                  const SpinKitThreeBounce(
+                                                color: Color(0xFFE74545),
+                                              ),
+                                              maskType:
+                                                  EasyLoadingMaskType.black);
+                                          var parameter = {
+                                            'USERID':
+                                                emailController.text.toString(),
+                                          };
+                                          print('parameter : $parameter');
+                                          final json = jsonEncode(parameter);
+                                          var response = await post(
+                                              resetpwdOtpgenApi,
+                                              headers: {
+                                                "Accept": "application/json",
+                                                "Content-Type":
+                                                    "application/json",
+                                              },
+                                              body: json,
+                                              encoding:
+                                                  Encoding.getByName("utf-8"));
+                                          final jsonResponse =
+                                              jsonDecode(response.body);
+                                          print('response : ${jsonResponse}');
+                                          if (jsonResponse['Message'] ==
+                                              "Success") {
+                                            Fluttertoast.showToast(
+                                                msg: "OTP Send Successfully",
+                                                toastLength:
+                                                    Toast.LENGTH_SHORT);
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => VerifyOTP(
+                                                  email: emailController.text,
+                                                  fromSingUpVerification: true,
+                                                  mobile: mobileController.text
+                                                      .trim(),
+                                                  password: passController.text
+                                                      .trim(),
+                                                ),
+                                              ),
+                                            );
+                                            EasyLoading.dismiss();
+                                          } else {
+                                            const msg = "Something Wrong!!!";
+                                            Fluttertoast.showToast(
+                                                msg: msg,
+                                                toastLength:
+                                                    Toast.LENGTH_SHORT);
+                                            EasyLoading.dismiss();
+                                          }
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg: exception.toString(),
+                                              toastLength: Toast.LENGTH_SHORT);
+                                        }
                                       }
                                     } else {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "Password and Confirm Password must be same"),
-                                      ));
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              "Password and Confirm Password must be same"),
+                                        ),
+                                      );
                                     }
                                   } else {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content:
-                                          Text("All fields must be entered"),
-                                    ));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text("All fields must be entered"),
+                                      ),
+                                    );
                                   }
                                 },
                                 child: const Text(
@@ -284,8 +350,10 @@ class _SignUpPage extends State<SignUpPage> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xffE74545),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          deviceWidth * 0.06)),
+                                    borderRadius: BorderRadius.circular(
+                                      deviceWidth * 0.06,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

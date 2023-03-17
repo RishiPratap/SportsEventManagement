@@ -13,8 +13,8 @@ dialogAnimate(BuildContext context, Widget dialge) {
       );
     },
     transitionDuration: const Duration(milliseconds: 250),
-    barrierDismissible: true,
-    barrierLabel: '',
+    barrierDismissible: false,
+    barrierLabel: 'test',
     context: context,
     pageBuilder: (context, animation1, animation2) {
       return Container();
@@ -35,7 +35,7 @@ showAppUpdateDialog(BuildContext context) async {
           ),
           title: const Text("Update App"),
           content: Text(
-            'Update is available, do you want to update app to the latest version?',
+            'Update is available, please update app to the latest version!',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: Colors.amber,
                   fontFamily: 'ubuntu',
@@ -51,13 +51,11 @@ showAppUpdateDialog(BuildContext context) async {
                       fontFamily: 'ubuntu',
                     ),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => exit(0),
             ),
             TextButton(
               child: Text(
-                'Yes',
+                'Update Now',
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: Colors.green,
                       fontWeight: FontWeight.bold,
@@ -72,12 +70,16 @@ showAppUpdateDialog(BuildContext context) async {
                   url = iosLink;
                 }
 
-                if (await canLaunchUrl(Uri.parse(url))) {
-                  await launchUrl(Uri.parse(url));
+                if (await canLaunchUrl(
+                  Uri.parse(url),
+                )) {
+                  await launchUrl(
+                    Uri.parse(url),
+                    mode: LaunchMode.externalApplication,
+                  );
                 } else {
                   throw 'Could not launch $url';
                 }
-                Navigator.of(context).pop();
               },
             )
           ],

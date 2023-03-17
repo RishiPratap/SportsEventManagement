@@ -36,6 +36,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     deviceHeight = MediaQuery.of(context).size.height;
     cardheight = deviceHeight * 0.50;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,

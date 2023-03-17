@@ -63,7 +63,7 @@ class _loginState extends State<login> {
     deviceHeight = MediaQuery.of(context).size.height;
     cardheight = deviceHeight * 0.47;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Container(
           width: deviceWidth,
@@ -73,24 +73,26 @@ class _loginState extends State<login> {
                 image: AssetImage("assets/login.png"), fit: BoxFit.cover),
           ),
           child: SafeArea(
-            child: Column(
-              children: [
-                Center(
-                  child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                                pageBuilder: (a, b, c) => const HomePage()));
-                      },
-                      child: Image.asset("assets/AARDENT.png")),
-                ),
-                loginFields(context),
-                singUP_button(context),
-                googleSingInMethod(context),
-                // by onpressed we call the function signup function
-                termCondition(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Center(
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              PageRouteBuilder(
+                                  pageBuilder: (a, b, c) => const HomePage()));
+                        },
+                        child: Image.asset("assets/AARDENT.png")),
+                  ),
+                  loginFields(context),
+                  singUP_button(context),
+                  googleSingInMethod(context),
+                  // by onpressed we call the function signup function
+                  termCondition(),
+                ],
+              ),
             ),
           ),
         ),
