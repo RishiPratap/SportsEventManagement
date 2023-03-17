@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ardent_sports/CricketTeamSelection.dart';
 import 'package:ardent_sports/WebViewTest.dart';
 import 'package:ardent_sports/ticket.dart';
 import 'package:flutter/material.dart';
@@ -264,6 +265,44 @@ class _MyBookings extends State<MyBookings> {
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         )),
+                        userdata[i].SPORT == "Cricket"
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.055,
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            decoration: BoxDecoration(
+                              color: const Color(0xffE74545),
+                              borderRadius:
+                                  BorderRadius.circular(deviceWidth * 0.04),
+                            ),
+                            child: TextButton(
+                              onPressed: () async {
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                var obtianedEmail = prefs.getString('email');
+                                var url =
+                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/ticket?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}&USERID=$obtianedEmail";
+                                var response = await get(Uri.parse(url));
+                                var jsonData = jsonDecode(response.body);
+                                var url1 =
+                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/myBookings?USERID=$obtianedEmail";
+                                var response1 = await get(Uri.parse(url1));
+                                var jsonData1 = jsonDecode(response1.body);
+                                print("📌" + jsonData1.toString());
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CricketTeamDetails(
+                                          data: jsonData,
+                                          bookingDetails: jsonData1,
+                                        )));
+                              },
+                              child: Center(
+                                child: Text("Edit Team Details",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: deviceWidth * 0.035,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ))
+                        : Text(""),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.055,
                       width: MediaQuery.of(context).size.width * 0.45,
