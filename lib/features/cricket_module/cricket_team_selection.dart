@@ -8,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-// var //showAdd;
+bool showAdd = false;
 
 class CricketTeamDetails extends StatefulWidget {
   final String id;
@@ -29,342 +29,6 @@ class CricketTeamDetails extends StatefulWidget {
 
   @override
   State<CricketTeamDetails> createState() => _CricketTeamDetails();
-}
-
-Widget playerAdd(context, deviceWidth, i, tournamentId) {
-  void addPlayer(context, i, tournamentId) {
-    TextEditingController addplayer = TextEditingController();
-    TextEditingController searchplayer = TextEditingController();
-    var playerDetails = {};
-    //showAdd = false;
-    showDialog(
-        context: context,
-        builder: (_) => SimpleDialog(
-              contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
-              title: Text("Add Player " + (i + 1).toString()),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(children: [
-                    TextField(
-                      controller: searchplayer,
-                      decoration: InputDecoration(
-                        labelText: 'Search Player name',
-                        hintText: "Search Player name",
-                        prefixIcon: Icon(Icons.search),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(color: Colors.grey, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          gapPadding: 0.0,
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(color: Colors.red, width: 1.5),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    TextButton(
-                        onPressed: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          var captain = prefs.getString('email');
-                          // Navigator.pop(context);
-                          //API CALL
-                          var searchPlayer = {
-                            "TOURNAMENT_ID": tournamentId,
-                            "player": searchplayer.text,
-                            "CAPTAIN": captain
-                          };
-                          var sendPlayer = jsonEncode(searchPlayer);
-                          var url =
-                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/validatePlayerCricket";
-
-                          //JSON
-                          var response2 = await post(Uri.parse(url),
-                              body: sendPlayer,
-                              headers: {"Content-Type": "application/json"});
-                          var details = jsonDecode(response2.body);
-                          print("😂" + response2.body);
-                          print("😂😂" + details["Message"]);
-                          Fluttertoast.showToast(
-                              msg: details["Message"],
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Color.fromARGB(255, 33, 237, 6),
-                              fontSize: 16.0);
-
-                          playerDetails = details;
-                          playerDetails["CAPTAIN"] = captain;
-                          print("😂😂yoo😂" + details["Message"]);
-                          if (details["Message"] == "Can Add Player") {
-                            //showAdd = true;
-                            print("Show Add");
-                          } else {
-                            print("Nothing to see");
-                          }
-                        },
-                        child: const Text("Search"),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 76, 175, 86)),
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            )))),
-                    SizedBox(height: 10),
-                    // if (playerDetails["Message"] == "Can Add Player"){
-                    // Text(
-                    //   playerDetails["NAME"],
-                    //   style: TextStyle(color: Colors.black, fontSize: 20),
-                    // ),
-                    SizedBox(height: 10),
-                    TextButton(
-                        onPressed: () {
-                          // In this place, we should use the response2 from line 130
-                          if (playerDetails["Message"] == "Player not found") {
-                            print("Player not found");
-                          }
-                          var addURL =
-                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addTeamPlayers";
-                          var playerJSON = {
-                            "TOURNAMENT_ID": tournamentId,
-                            "player": {
-                              "USERID": playerDetails["USERID"],
-                              "NAME": playerDetails["NAME"],
-                            },
-                            "CAPTAIN": playerDetails["CAPTAIN"],
-                          };
-
-                          var sendAddReq = jsonEncode(playerJSON);
-
-                          var response3 = post(Uri.parse(addURL),
-                              body: sendAddReq,
-                              headers: {"Content-Type": "application/json"});
-                          Fluttertoast.showToast(
-                              msg: "Successfully Added Player",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Color.fromARGB(255, 33, 237, 6),
-                              fontSize: 16.0);
-                        },
-                        child: const Text("Add"),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 234, 16, 23)),
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ))))
-                  ]),
-                ),
-              ],
-            ));
-  }
-
-  return (Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: TextButton(
-          style: ButtonStyle(
-              elevation: MaterialStateProperty.all(0),
-              padding: MaterialStateProperty.all(
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
-              textStyle: MaterialStateProperty.all(TextStyle(
-                color: Colors.black,
-              )),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ))),
-          child: Text("Add player " + (i + 1).toString() + " >"),
-          onPressed: () {
-            addPlayer(context, i, tournamentId);
-          })));
-}
-
-Widget SubsplayerAdd(context, deviceWidth, i, tournamentId) {
-  void addSubs(context, i, tournamentId) {
-    TextEditingController addsubstitute = TextEditingController();
-    TextEditingController searchplayer = TextEditingController();
-    var playerDetails = {};
-    //showAdd = false;
-    showDialog(
-        context: context,
-        builder: (_) => SimpleDialog(
-              contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
-              title: Text("Add Player " + (i + 1).toString()),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(children: [
-                    TextField(
-                      controller: searchplayer,
-                      decoration: InputDecoration(
-                        labelText: 'Search Player name',
-                        hintText: "Search Player name",
-                        prefixIcon: Icon(Icons.search),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(color: Colors.grey, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          gapPadding: 0.0,
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(color: Colors.red, width: 1.5),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    TextButton(
-                        onPressed: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          var captain = prefs.getString('email');
-                          // Navigator.pop(context);
-                          //API CALL
-                          var searchPlayer = {
-                            "TOURNAMENT_ID": tournamentId,
-                            "player": searchplayer.text,
-                            "CAPTAIN": captain
-                          };
-                          var sendPlayer = jsonEncode(searchPlayer);
-                          var url =
-                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/validatePlayerCricket";
-
-                          //JSON
-                          var response2 = await post(Uri.parse(url),
-                              body: sendPlayer,
-                              headers: {"Content-Type": "application/json"});
-                          var details = jsonDecode(response2.body);
-                          print("😂" + response2.body);
-                          print("😂😂" + details["Message"]);
-                          Fluttertoast.showToast(
-                              msg: details["Message"],
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Color.fromARGB(255, 33, 237, 6),
-                              fontSize: 16.0);
-
-                          playerDetails = details;
-                          playerDetails["CAPTAIN"] = captain;
-                          print("😂😂yoo😂" + details["Message"]);
-                          if (details["Message"] == "Can Add Player") {
-                            //showAdd = true;
-                            print("Show Add");
-                          } else {
-                            print("Nothing to see");
-                          }
-                        },
-                        child: const Text("Search"),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 76, 175, 86)),
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            )))),
-                    SizedBox(height: 10),
-                    // Text(
-                    //   playerDetails["NAME"],
-                    //   style: TextStyle(color: Colors.black, fontSize: 20),
-                    // ),
-                    SizedBox(height: 10),
-                    TextButton(
-                        onPressed: () {
-                          // In this place, we should use the response2 from line 130
-
-                          var addURL =
-                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addSubstitutePlayers";
-                          var playerJSON = {
-                            "TOURNAMENT_ID": tournamentId,
-                            "substitute": {
-                              "USERID": playerDetails["USERID"],
-                              "NAME": playerDetails["NAME"],
-                            },
-                            "CAPTAIN": playerDetails["CAPTAIN"],
-                          };
-
-                          var sendAddReq = jsonEncode(playerJSON);
-
-                          var response3 = post(Uri.parse(addURL),
-                              body: sendAddReq,
-                              headers: {"Content-Type": "application/json"});
-                          Fluttertoast.showToast(
-                              msg: "Successfully Added Player",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Color.fromARGB(255, 33, 237, 6),
-                              fontSize: 16.0);
-                        },
-                        child: const Text("Add"),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 234, 16, 23)),
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            )))),
-                  ]),
-                ),
-              ],
-            ));
-  }
-
-  return (Container(
-    decoration: BoxDecoration(
-      color: Colors.white.withOpacity(0.1),
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: TextButton(
-        style: ButtonStyle(
-            elevation: MaterialStateProperty.all(0),
-            padding: MaterialStateProperty.all(
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
-            textStyle: MaterialStateProperty.all(TextStyle(
-              color: Colors.black,
-            )),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ))),
-        child: Text("Substitute player " + (i + 1).toString() + " >"),
-        onPressed: () {
-          addSubs(context, i, tournamentId);
-        }),
-  ));
 }
 
 void finalTeam(context) {
@@ -528,6 +192,366 @@ Future<String?> getEmailFromSharedPrefs() async {
 }
 
 class _CricketTeamDetails extends State<CricketTeamDetails> {
+  Widget playerAdd(context, deviceWidth, i, tournamentId) {
+    return (Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: TextButton(
+            style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
+                textStyle: MaterialStateProperty.all(TextStyle(
+                  color: Colors.black,
+                )),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ))),
+            child: Text("Add player " + (i + 1).toString() + " >"),
+            onPressed: () {
+              addPlayer(context, i, tournamentId);
+            })));
+  }
+
+  Widget SubsplayerAdd(context, deviceWidth, i, tournamentId) {
+    return (Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextButton(
+          style: ButtonStyle(
+              elevation: MaterialStateProperty.all(0),
+              padding: MaterialStateProperty.all(
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
+              textStyle: MaterialStateProperty.all(TextStyle(
+                color: Colors.black,
+              )),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ))),
+          child: Text("Substitute player " + (i + 1).toString() + " >"),
+          onPressed: () {
+            addSubs(context, i, tournamentId);
+          }),
+    ));
+  }
+
+  void addPlayer(context, i, tournamentId) {
+    TextEditingController addplayer = TextEditingController();
+    TextEditingController searchplayer = TextEditingController();
+    var playerDetails = {};
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => SimpleDialog(
+              contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
+              title: Text("Add Player " + (i + 1).toString()),
+              children: <Widget>[
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(children: [
+                      TextField(
+                        controller: searchplayer,
+                        decoration: InputDecoration(
+                          labelText: 'Search Player name',
+                          hintText: "Search Player name",
+                          prefixIcon: Icon(Icons.search),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.5),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            gapPadding: 0.0,
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 1.5),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextButton(
+                          onPressed: () async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            var captain = prefs.getString('email');
+                            // Navigator.pop(context);
+                            //API CALL
+                            var searchPlayer = {
+                              "TOURNAMENT_ID": tournamentId,
+                              "player": searchplayer.text,
+                              "CAPTAIN": captain
+                            };
+                            var sendPlayer = jsonEncode(searchPlayer);
+                            var url =
+                                "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/validatePlayerCricket";
+
+                            //JSON
+                            var response2 = await post(Uri.parse(url),
+                                body: sendPlayer,
+                                headers: {"Content-Type": "application/json"});
+                            var details = jsonDecode(response2.body);
+                            print("😂" + response2.body);
+                            print("😂😂" + details["Message"]);
+                            Fluttertoast.showToast(
+                                msg: details["Message"],
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Color.fromARGB(255, 33, 237, 6),
+                                fontSize: 16.0);
+
+                            playerDetails = details;
+                            playerDetails["CAPTAIN"] = captain;
+                            if (details["Message"] == "Can Add Player") {
+                              print("Show Add");
+                              setState(() {
+                                showAdd = true;
+                              });
+                            } else {
+                              print("Nothing to see");
+                            }
+                          },
+                          child: const Text("Search"),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Color.fromARGB(255, 76, 175, 86)),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              )))),
+                      SizedBox(height: 10),
+                      // if (playerDetails["Message"] == "Can Add Player"){
+                      // Text(
+                      //   playerDetails["NAME"],
+                      //   style: TextStyle(color: Colors.black, fontSize: 20),
+                      // ),
+                      SizedBox(height: 10),
+                      (showAdd)
+                          ? TextButton(
+                              onPressed: () {
+                                // In this place, we should use the response2 from line 130
+                                if (playerDetails["Message"] ==
+                                    "Player not found") {
+                                  print("Player not found");
+                                }
+                                var addURL =
+                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addTeamPlayers";
+                                var playerJSON = {
+                                  "TOURNAMENT_ID": tournamentId,
+                                  "player": {
+                                    "USERID": playerDetails["USERID"],
+                                    "NAME": playerDetails["NAME"],
+                                  },
+                                  "CAPTAIN": playerDetails["CAPTAIN"],
+                                };
+
+                                var sendAddReq = jsonEncode(playerJSON);
+
+                                var response3 = post(Uri.parse(addURL),
+                                    body: sendAddReq,
+                                    headers: {
+                                      "Content-Type": "application/json"
+                                    });
+                                Fluttertoast.showToast(
+                                    msg: "Successfully Added Player",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Color.fromARGB(255, 33, 237, 6),
+                                    fontSize: 16.0);
+                              },
+                              child: const Text("Add"),
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 234, 16, 23)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ))))
+                          : Text("")
+                    ]),
+                  );
+                })
+              ],
+            ));
+  }
+
+  void addSubs(context, i, tournamentId) {
+    TextEditingController addsubstitute = TextEditingController();
+    TextEditingController searchplayer = TextEditingController();
+    var playerDetails = {};
+    showDialog(
+        context: context,
+        builder: (_) => SimpleDialog(
+              contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
+              title: Text("Add Substitute " + (i + 1).toString()),
+              children: <Widget>[
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(children: [
+                      TextField(
+                        controller: searchplayer,
+                        decoration: InputDecoration(
+                          labelText: 'Search Player name',
+                          hintText: "Search Player name",
+                          prefixIcon: Icon(Icons.search),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.5),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            gapPadding: 0.0,
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 1.5),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextButton(
+                          onPressed: () async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            var captain = prefs.getString('email');
+                            // Navigator.pop(context);
+                            //API CALL
+                            var searchPlayer = {
+                              "TOURNAMENT_ID": tournamentId,
+                              "player": searchplayer.text,
+                              "CAPTAIN": captain
+                            };
+                            var sendPlayer = jsonEncode(searchPlayer);
+                            var url =
+                                "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/validatePlayerCricket";
+
+                            //JSON
+                            var response2 = await post(Uri.parse(url),
+                                body: sendPlayer,
+                                headers: {"Content-Type": "application/json"});
+                            var details = jsonDecode(response2.body);
+                            print("😂" + response2.body);
+                            print("😂😂" + details["Message"]);
+                            Fluttertoast.showToast(
+                                msg: details["Message"],
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Color.fromARGB(255, 33, 237, 6),
+                                fontSize: 16.0);
+
+                            playerDetails = details;
+                            playerDetails["CAPTAIN"] = captain;
+                            print("😂😂yoo😂" + details["Message"]);
+                            if (details["Message"] == "Can Add Player") {
+                              setState(() {
+                                showAdd = true;
+                              });
+                              print("Show Add");
+                            } else {
+                              print("Nothing to see");
+                            }
+                          },
+                          child: const Text("Search"),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Color.fromARGB(255, 76, 175, 86)),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              )))),
+                      SizedBox(height: 10),
+                      // Text(
+                      //   playerDetails["NAME"],
+                      //   style: TextStyle(color: Colors.black, fontSize: 20),
+                      // ),
+                      SizedBox(height: 10),
+                      (showAdd)
+                          ? TextButton(
+                              onPressed: () {
+                                // In this place, we should use the response2 from line 130
+
+                                var addURL =
+                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/addSubstitutePlayers";
+                                var playerJSON = {
+                                  "TOURNAMENT_ID": tournamentId,
+                                  "substitute": {
+                                    "USERID": playerDetails["USERID"],
+                                    "NAME": playerDetails["NAME"],
+                                  },
+                                  "CAPTAIN": playerDetails["CAPTAIN"],
+                                };
+
+                                var sendAddReq = jsonEncode(playerJSON);
+
+                                var response3 = post(Uri.parse(addURL),
+                                    body: sendAddReq,
+                                    headers: {
+                                      "Content-Type": "application/json"
+                                    });
+                                Fluttertoast.showToast(
+                                    msg: "Successfully Added Player",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Color.fromARGB(255, 33, 237, 6),
+                                    fontSize: 16.0);
+                              },
+                              child: const Text("Add"),
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 234, 16, 23)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ))))
+                          : Text(""),
+                    ]),
+                  );
+                })
+              ],
+            ));
+  }
+
   String? email = "";
   var players = [];
   var subs = [];
