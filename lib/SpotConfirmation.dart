@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:ardent_sports/Payment.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'Helper/constant.dart';
+import 'features/payment/payment.dart';
 
 class jsonSpotNumber {
   late int spotNumber;
