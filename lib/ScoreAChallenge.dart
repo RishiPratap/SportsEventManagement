@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 import 'Helper/apis.dart';
 import 'Helper/constant.dart';
 import 'LiveMaintainerMatchSelection.dart';
-import 'Screen/Home/Home_page.dart';
-import 'Screen/menu/menu.dart';
+import 'features/home_page/home_page.dart';
+import 'features/menu/Menu.dart';
 
 class ScoreAChallenge extends StatefulWidget {
   final String? name;
@@ -64,9 +64,11 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pushReplacement(
-                              context,
-                              PageRouteBuilder(
-                                  pageBuilder: (a, b, c) => const HomePage()));
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (a, b, c) => const HomePage(),
+                            ),
+                          );
                         },
                         child: Container(
                           width: 90,

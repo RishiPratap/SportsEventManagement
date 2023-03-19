@@ -10,9 +10,8 @@ import 'package:http/http.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'Helper/apis.dart';
-import 'Helper/constant.dart';
-import 'features/home_page/home_page.dart';
+import '../home_page/home_page.dart';
+import '../../helper/apis.dart';
 
 var update_score_1_first = 0;
 var update_score_1_second = 0;
@@ -20,17 +19,6 @@ var update_score_2_first = 0;
 var update_score_2_second = 0;
 var update_score_3_first = 0;
 var update_score_3_second = 0;
-var update_score_4_first = 0;
-var update_score_4_second = 0;
-var update_score_5_first = 0;
-var update_score_5_second = 0;
-
-// var score_1_first = 0;
-// var score_2_first = 0;
-// var score_3_first = 0;
-// var score_1_second = 0;
-// var score_2_second = 0;
-// var score_3_second = 0;
 
 late Socket socket;
 
@@ -104,7 +92,7 @@ class WalkOver {
   }
 }
 
-class LiveMaintainerTableTennis extends StatefulWidget {
+class LiveMaintainer extends StatefulWidget {
   final String Tournament_ID;
   final String Match_Id;
   final String Player_1_name;
@@ -116,14 +104,10 @@ class LiveMaintainerTableTennis extends StatefulWidget {
   final int player1_set_1;
   final int player1_set_2;
   final int player1_set_3;
-  final int player1_set_4;
-  final int player1_set_5;
   final int player2_set_1;
   final int player2_set_2;
   final int player2_set_3;
-  final int player2_set_4;
-  final int player2_set_5;
-  const LiveMaintainerTableTennis({
+  const LiveMaintainer({
     Key? key,
     required this.Tournament_ID,
     required this.Match_Id,
@@ -136,19 +120,15 @@ class LiveMaintainerTableTennis extends StatefulWidget {
     required this.player1_set_1,
     required this.player1_set_2,
     required this.player1_set_3,
-    required this.player1_set_4,
-    required this.player1_set_5,
     required this.player2_set_1,
     required this.player2_set_2,
     required this.player2_set_3,
-    required this.player2_set_4,
-    required this.player2_set_5,
   }) : super(key: key);
   @override
-  LiveMaintainerTableTennis1 createState() => LiveMaintainerTableTennis1();
+  LiveMaintainer1 createState() => LiveMaintainer1();
 }
 
-class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
+class LiveMaintainer1 extends State<LiveMaintainer> {
   @override
   void initState() {
     super.initState();
@@ -175,8 +155,8 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
   }
 
   Widget build(BuildContext context) {
-    deviceWidth = MediaQuery.of(context).size.width;
-    deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     print("deviceWidth : ${deviceWidth}");
     print("deviceHeight : ${deviceHeight}");
     return WillPopScope(
@@ -233,7 +213,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                   children: [
                     Center(
                       child: Container(
-                        height: deviceHeight * 0.70,
+                        height: deviceHeight * 0.60,
                         width: deviceWidth * 0.95,
                         margin: EdgeInsets.only(
                             top: MediaQuery.of(context).size.height * 0.08),
@@ -270,7 +250,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                   children: [
                                     SizedBox(
                                       width: 50,
-                                      height: 320,
+                                      height: 240,
                                       child: Card(
                                         color: Color(0xff252626),
                                         child: Column(
@@ -297,7 +277,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
-                                                        return EditbuttonTableTennis1(
+                                                        return Editbutton1(
                                                           Tournament_Id: widget
                                                               .Tournament_ID,
                                                           Match_Id:
@@ -316,20 +296,12 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                               .player1_set_2,
                                                           player1_set_3: widget
                                                               .player1_set_3,
-                                                          player1_set_4: widget
-                                                              .player1_set_4,
-                                                          player1_set_5: widget
-                                                              .player1_set_5,
                                                           player2_set_1: widget
                                                               .player2_set_1,
                                                           player2_set_2: widget
                                                               .player2_set_2,
                                                           player2_set_3: widget
                                                               .player2_set_3,
-                                                          player2_set_4: widget
-                                                              .player2_set_4,
-                                                          player2_set_5: widget
-                                                              .player2_set_5,
                                                         );
                                                       });
                                                 },
@@ -348,7 +320,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
-                                                        return EditbuttonTableTennis2(
+                                                        return Editbutton2(
                                                           Tournament_ID: widget
                                                               .Tournament_ID,
                                                           Match_Id:
@@ -367,20 +339,12 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                               .player1_set_2,
                                                           player1_set_3: widget
                                                               .player1_set_3,
-                                                          player1_set_4: widget
-                                                              .player1_set_4,
-                                                          player1_set_5: widget
-                                                              .player1_set_5,
                                                           player2_set_1: widget
                                                               .player2_set_1,
                                                           player2_set_2: widget
                                                               .player2_set_2,
                                                           player2_set_3: widget
                                                               .player2_set_3,
-                                                          player2_set_4: widget
-                                                              .player2_set_4,
-                                                          player2_set_5: widget
-                                                              .player2_set_5,
                                                         );
                                                       });
                                                 },
@@ -399,7 +363,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
-                                                        return EditbuttonTableTennis3(
+                                                        return Editbutton3(
                                                           Tournament_ID: widget
                                                               .Tournament_ID,
                                                           Match_Id:
@@ -418,122 +382,12 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                               .player1_set_2,
                                                           player1_set_3: widget
                                                               .player1_set_3,
-                                                          player1_set_4: widget
-                                                              .player1_set_4,
-                                                          player1_set_5: widget
-                                                              .player1_set_5,
                                                           player2_set_1: widget
                                                               .player2_set_1,
                                                           player2_set_2: widget
                                                               .player2_set_2,
                                                           player2_set_3: widget
                                                               .player2_set_3,
-                                                          player2_set_4: widget
-                                                              .player2_set_4,
-                                                          player2_set_5: widget
-                                                              .player2_set_5,
-                                                        );
-                                                      });
-                                                },
-                                              ),
-                                            ),
-                                            Center(
-                                              child: IconButton(
-                                                icon: Image.asset(
-                                                    'assets/edit_button.png'),
-                                                onPressed: () {
-                                                  update_score_4_first =
-                                                      widget.player1_set_4;
-                                                  update_score_4_second =
-                                                      widget.player2_set_4;
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return EditbuttonTableTennis4(
-                                                          Tournament_ID: widget
-                                                              .Tournament_ID,
-                                                          Match_Id:
-                                                              widget.Match_Id,
-                                                          Player_1_name: widget
-                                                              .Player_1_name,
-                                                          Player_2_name: widget
-                                                              .Player_2_name,
-                                                          Player1_Partner: widget
-                                                              .Player1_Partner,
-                                                          Player2_Partner: widget
-                                                              .Player2_Partner,
-                                                          player1_set_1: widget
-                                                              .player1_set_1,
-                                                          player1_set_2: widget
-                                                              .player1_set_2,
-                                                          player1_set_3: widget
-                                                              .player1_set_3,
-                                                          player1_set_4: widget
-                                                              .player1_set_4,
-                                                          player1_set_5: widget
-                                                              .player1_set_5,
-                                                          player2_set_1: widget
-                                                              .player2_set_1,
-                                                          player2_set_2: widget
-                                                              .player2_set_2,
-                                                          player2_set_3: widget
-                                                              .player2_set_3,
-                                                          player2_set_4: widget
-                                                              .player2_set_4,
-                                                          player2_set_5: widget
-                                                              .player2_set_5,
-                                                        );
-                                                      });
-                                                },
-                                              ),
-                                            ),
-                                            Center(
-                                              child: IconButton(
-                                                icon: Image.asset(
-                                                    'assets/edit_button.png'),
-                                                onPressed: () {
-                                                  update_score_5_first =
-                                                      widget.player1_set_5;
-                                                  update_score_5_second =
-                                                      widget.player2_set_5;
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return EditbuttonTableTennis5(
-                                                          Tournament_ID: widget
-                                                              .Tournament_ID,
-                                                          Match_Id:
-                                                              widget.Match_Id,
-                                                          Player_1_name: widget
-                                                              .Player_1_name,
-                                                          Player_2_name: widget
-                                                              .Player_2_name,
-                                                          Player1_Partner: widget
-                                                              .Player1_Partner,
-                                                          Player2_Partner: widget
-                                                              .Player2_Partner,
-                                                          player1_set_1: widget
-                                                              .player1_set_1,
-                                                          player1_set_2: widget
-                                                              .player1_set_2,
-                                                          player1_set_3: widget
-                                                              .player1_set_3,
-                                                          player1_set_4: widget
-                                                              .player1_set_4,
-                                                          player1_set_5: widget
-                                                              .player1_set_5,
-                                                          player2_set_1: widget
-                                                              .player2_set_1,
-                                                          player2_set_2: widget
-                                                              .player2_set_2,
-                                                          player2_set_3: widget
-                                                              .player2_set_3,
-                                                          player2_set_4: widget
-                                                              .player2_set_4,
-                                                          player2_set_5: widget
-                                                              .player2_set_5,
                                                         );
                                                       });
                                                 },
@@ -551,7 +405,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                     ),
                                     SizedBox(
                                       width: 125,
-                                      height: 320,
+                                      height: 240,
                                       child: Card(
                                         elevation: 5,
                                         shape: RoundedRectangleBorder(
@@ -611,28 +465,6 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                 ),
                                               ),
                                             ),
-                                            Center(
-                                              child: Text(
-                                                "${widget.player1_set_4}",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 25.0,
-                                                ),
-                                              ),
-                                            ),
-                                            Center(
-                                              child: Text(
-                                                "${widget.player1_set_5}",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 25.0,
-                                                ),
-                                              ),
-                                            ),
                                             SizedBox(
                                               height: 10,
                                             )
@@ -645,7 +477,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                     ),
                                     SizedBox(
                                       width: 125,
-                                      height: 320,
+                                      height: 240,
                                       child: Card(
                                         elevation: 5,
                                         shape: RoundedRectangleBorder(
@@ -705,28 +537,6 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                 ),
                                               ),
                                             ),
-                                            Center(
-                                              child: Text(
-                                                "${widget.player2_set_4}",
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 25.0,
-                                                ),
-                                              ),
-                                            ),
-                                            Center(
-                                              child: Text(
-                                                "${widget.player2_set_5}",
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 25.0,
-                                                ),
-                                              ),
-                                            ),
                                             SizedBox(
                                               height: 10,
                                             )
@@ -768,8 +578,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SubmitTableTennis(
+                                                  builder: (context) => Submit(
                                                         MatchId:
                                                             widget.Match_Id,
                                                         Tournament_ID: widget
@@ -788,27 +597,18 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                             .player1_set_2,
                                                         player1_set_3: widget
                                                             .player1_set_3,
-                                                        player1_set_4: widget
-                                                            .player1_set_4,
-                                                        player1_set_5: widget
-                                                            .player1_set_5,
                                                         player2_set_1: widget
                                                             .player2_set_1,
                                                         player2_set_2: widget
                                                             .player2_set_2,
                                                         player2_set_3: widget
                                                             .player2_set_3,
-                                                        player2_set_4: widget
-                                                            .player2_set_4,
-                                                        player2_set_5: widget
-                                                            .player2_set_5,
                                                       )));
                                         } else {
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SubmitTableTennis(
+                                                  builder: (context) => Submit(
                                                         MatchId:
                                                             widget.Match_Id,
                                                         Tournament_ID: widget
@@ -827,20 +627,12 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
                                                             .player1_set_2,
                                                         player1_set_3: widget
                                                             .player1_set_3,
-                                                        player1_set_4: widget
-                                                            .player1_set_4,
-                                                        player1_set_5: widget
-                                                            .player1_set_5,
                                                         player2_set_1: widget
                                                             .player2_set_1,
                                                         player2_set_2: widget
                                                             .player2_set_2,
                                                         player2_set_3: widget
                                                             .player2_set_3,
-                                                        player2_set_4: widget
-                                                            .player2_set_4,
-                                                        player2_set_5: widget
-                                                            .player2_set_5,
                                                       )));
                                         }
                                       },
@@ -1113,7 +905,7 @@ class LiveMaintainerTableTennis1 extends State<LiveMaintainerTableTennis> {
   }
 }
 
-class EditbuttonTableTennis1 extends StatefulWidget {
+class Editbutton1 extends StatefulWidget {
   final String Tournament_Id;
   final String Match_Id;
   final String Player_1_name;
@@ -1123,15 +915,10 @@ class EditbuttonTableTennis1 extends StatefulWidget {
   final int player1_set_1;
   final int player1_set_2;
   final int player1_set_3;
-  final int player1_set_4;
-  final int player1_set_5;
   final int player2_set_1;
   final int player2_set_2;
   final int player2_set_3;
-  final int player2_set_4;
-  final int player2_set_5;
-
-  const EditbuttonTableTennis1({
+  const Editbutton1({
     Key? key,
     required this.Tournament_Id,
     required this.Match_Id,
@@ -1142,20 +929,16 @@ class EditbuttonTableTennis1 extends StatefulWidget {
     required this.player1_set_1,
     required this.player1_set_2,
     required this.player1_set_3,
-    required this.player1_set_4,
-    required this.player1_set_5,
     required this.player2_set_1,
     required this.player2_set_2,
     required this.player2_set_3,
-    required this.player2_set_4,
-    required this.player2_set_5,
   }) : super(key: key);
 
   @override
-  State<EditbuttonTableTennis1> createState() => _EditbuttonTableTennis1State();
+  State<Editbutton1> createState() => _Editbutton1State();
 }
 
-class _EditbuttonTableTennis1State extends State<EditbuttonTableTennis1> {
+class _Editbutton1State extends State<Editbutton1> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -1307,7 +1090,7 @@ class _EditbuttonTableTennis1State extends State<EditbuttonTableTennis1> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LiveMaintainerTableTennis(
+                          builder: (context) => LiveMaintainer(
                             Tournament_ID: widget.Tournament_Id,
                             Match_Id: widget.Match_Id,
                             Player_1_name: widget.Player_1_name,
@@ -1319,13 +1102,9 @@ class _EditbuttonTableTennis1State extends State<EditbuttonTableTennis1> {
                             player1_set_1: update_score_1_first,
                             player1_set_2: widget.player1_set_2,
                             player1_set_3: widget.player1_set_3,
-                            player1_set_4: widget.player1_set_4,
-                            player1_set_5: widget.player1_set_5,
                             player2_set_1: update_score_1_second,
                             player2_set_2: widget.player2_set_2,
                             player2_set_3: widget.player2_set_3,
-                            player2_set_4: widget.player2_set_4,
-                            player2_set_5: widget.player2_set_5,
                           ),
                         ),
                       );
@@ -1364,7 +1143,7 @@ class _EditbuttonTableTennis1State extends State<EditbuttonTableTennis1> {
   }
 }
 
-class EditbuttonTableTennis2 extends StatefulWidget {
+class Editbutton2 extends StatefulWidget {
   final String Tournament_ID;
   final String Match_Id;
   final String Player_1_name;
@@ -1374,15 +1153,10 @@ class EditbuttonTableTennis2 extends StatefulWidget {
   final int player1_set_1;
   final int player1_set_2;
   final int player1_set_3;
-  final int player1_set_4;
-  final int player1_set_5;
   final int player2_set_1;
   final int player2_set_2;
   final int player2_set_3;
-  final int player2_set_4;
-  final int player2_set_5;
-
-  const EditbuttonTableTennis2({
+  const Editbutton2({
     Key? key,
     required this.Tournament_ID,
     required this.Match_Id,
@@ -1393,20 +1167,16 @@ class EditbuttonTableTennis2 extends StatefulWidget {
     required this.player1_set_1,
     required this.player1_set_2,
     required this.player1_set_3,
-    required this.player1_set_4,
-    required this.player1_set_5,
     required this.player2_set_1,
     required this.player2_set_2,
     required this.player2_set_3,
-    required this.player2_set_4,
-    required this.player2_set_5,
   }) : super(key: key);
 
   @override
-  State<EditbuttonTableTennis2> createState() => _EditbuttonTableTennis2State();
+  State<Editbutton2> createState() => _Editbutton2State();
 }
 
-class _EditbuttonTableTennis2State extends State<EditbuttonTableTennis2> {
+class _Editbutton2State extends State<Editbutton2> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -1561,7 +1331,7 @@ class _EditbuttonTableTennis2State extends State<EditbuttonTableTennis2> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LiveMaintainerTableTennis(
+                          builder: (context) => LiveMaintainer(
                             Tournament_ID: widget.Tournament_ID,
                             Match_Id: widget.Match_Id,
                             Player_1_name: widget.Player_1_name,
@@ -1573,13 +1343,9 @@ class _EditbuttonTableTennis2State extends State<EditbuttonTableTennis2> {
                             player1_set_1: widget.player1_set_1,
                             player1_set_2: update_score_2_first,
                             player1_set_3: widget.player1_set_3,
-                            player1_set_4: widget.player1_set_4,
-                            player1_set_5: widget.player1_set_5,
                             player2_set_1: widget.player2_set_1,
                             player2_set_2: update_score_2_second,
                             player2_set_3: widget.player2_set_3,
-                            player2_set_4: widget.player2_set_4,
-                            player2_set_5: widget.player2_set_5,
                           ),
                         ),
                       );
@@ -1615,11 +1381,10 @@ class _EditbuttonTableTennis2State extends State<EditbuttonTableTennis2> {
         ),
       ),
     );
-    ;
   }
 }
 
-class EditbuttonTableTennis3 extends StatefulWidget {
+class Editbutton3 extends StatefulWidget {
   final String Tournament_ID;
   final String Match_Id;
   final String Player_1_name;
@@ -1629,14 +1394,10 @@ class EditbuttonTableTennis3 extends StatefulWidget {
   final int player1_set_1;
   final int player1_set_2;
   final int player1_set_3;
-  final int player1_set_4;
-  final int player1_set_5;
   final int player2_set_1;
   final int player2_set_2;
   final int player2_set_3;
-  final int player2_set_4;
-  final int player2_set_5;
-  const EditbuttonTableTennis3({
+  const Editbutton3({
     Key? key,
     required this.Tournament_ID,
     required this.Match_Id,
@@ -1647,19 +1408,15 @@ class EditbuttonTableTennis3 extends StatefulWidget {
     required this.player1_set_1,
     required this.player1_set_2,
     required this.player1_set_3,
-    required this.player1_set_4,
-    required this.player1_set_5,
     required this.player2_set_1,
     required this.player2_set_2,
     required this.player2_set_3,
-    required this.player2_set_4,
-    required this.player2_set_5,
   }) : super(key: key);
   @override
-  State<EditbuttonTableTennis3> createState() => _EditbuttonTableTennis3State();
+  State<Editbutton3> createState() => _Editbutton3State();
 }
 
-class _EditbuttonTableTennis3State extends State<EditbuttonTableTennis3> {
+class _Editbutton3State extends State<Editbutton3> {
   @override
   var update_score = 0;
   Widget build(BuildContext context) {
@@ -1808,7 +1565,7 @@ class _EditbuttonTableTennis3State extends State<EditbuttonTableTennis3> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LiveMaintainerTableTennis(
+                          builder: (context) => LiveMaintainer(
                             Tournament_ID: widget.Tournament_ID,
                             Match_Id: widget.Match_Id,
                             Player_1_name: widget.Player_1_name,
@@ -1820,13 +1577,9 @@ class _EditbuttonTableTennis3State extends State<EditbuttonTableTennis3> {
                             player1_set_1: widget.player1_set_1,
                             player1_set_2: widget.player1_set_2,
                             player1_set_3: update_score_3_first,
-                            player1_set_4: widget.player1_set_4,
-                            player1_set_5: widget.player1_set_5,
                             player2_set_1: widget.player2_set_1,
                             player2_set_2: widget.player2_set_2,
                             player2_set_3: update_score_3_second,
-                            player2_set_4: widget.player2_set_4,
-                            player2_set_5: widget.player2_set_5,
                           ),
                         ),
                       ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
@@ -1867,505 +1620,7 @@ class _EditbuttonTableTennis3State extends State<EditbuttonTableTennis3> {
   }
 }
 
-class EditbuttonTableTennis4 extends StatefulWidget {
-  final String Tournament_ID;
-  final String Match_Id;
-  final String Player_1_name;
-  final String Player_2_name;
-  final String Player1_Partner;
-  final String Player2_Partner;
-  final int player1_set_1;
-  final int player1_set_2;
-  final int player1_set_3;
-  final int player1_set_4;
-  final int player1_set_5;
-  final int player2_set_1;
-  final int player2_set_2;
-  final int player2_set_3;
-  final int player2_set_4;
-  final int player2_set_5;
-  const EditbuttonTableTennis4({
-    Key? key,
-    required this.Tournament_ID,
-    required this.Match_Id,
-    required this.Player_1_name,
-    required this.Player_2_name,
-    required this.Player1_Partner,
-    required this.Player2_Partner,
-    required this.player1_set_1,
-    required this.player1_set_2,
-    required this.player1_set_3,
-    required this.player1_set_4,
-    required this.player1_set_5,
-    required this.player2_set_1,
-    required this.player2_set_2,
-    required this.player2_set_3,
-    required this.player2_set_4,
-    required this.player2_set_5,
-  }) : super(key: key);
-  @override
-  State<EditbuttonTableTennis4> createState() => _EditbuttonTableTennis4State();
-}
-
-class _EditbuttonTableTennis4State extends State<EditbuttonTableTennis4> {
-  @override
-  var update_score = 0;
-  Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: SizedBox(
-        height: 200,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 5,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "     Player 1 Score :",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.0,
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/subtract.png'),
-                    onPressed: () {
-                      setState(() {
-                        if (update_score_4_first > 0) {
-                          update_score_4_first--;
-                        }
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: Text(
-                    " $update_score_4_first",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/add.png'),
-                    onPressed: () {
-                      setState(() {
-                        update_score_4_first++;
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(width: 10),
-            Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "     Player 2 Score :",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.0,
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/subtract.png'),
-                    onPressed: () {
-                      setState(() {
-                        if (update_score_4_second > 0) {
-                          update_score_4_second--;
-                        }
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: Text(
-                    " $update_score_4_second",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/add.png'),
-                    onPressed: () {
-                      setState(() {
-                        update_score_4_second++;
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      // score_3_first = update_score_3_first;
-                      // score_3_second = update_score_3_second;
-                      final Score = Score_LiveMaintainer(
-                          PLAYER_1_SCORE: update_score_4_first.toString(),
-                          PLAYER_2_SCORE: update_score_4_second.toString(),
-                          set: "4");
-                      final scoremap = Score.toMap();
-                      final json_score = jsonEncode(scoremap);
-                      socket.emit('update-score', json_score);
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LiveMaintainerTableTennis(
-                            Tournament_ID: widget.Tournament_ID,
-                            Match_Id: widget.Match_Id,
-                            Player_1_name: widget.Player_1_name,
-                            Player1_Partner: widget.Player1_Partner,
-                            Player_2_name: widget.Player_2_name,
-                            Player2_Partner: widget.Player2_Partner,
-                            Player1_ID: "",
-                            Player2_ID: "",
-                            player1_set_1: widget.player1_set_1,
-                            player1_set_2: widget.player1_set_2,
-                            player1_set_3: widget.player1_set_3,
-                            player1_set_4: update_score_4_first,
-                            player1_set_5: widget.player1_set_5,
-                            player2_set_1: widget.player2_set_1,
-                            player2_set_2: widget.player2_set_2,
-                            player2_set_3: widget.player2_set_3,
-                            player2_set_4: update_score_4_second,
-                            player2_set_5: widget.player2_set_5,
-                          ),
-                        ),
-                      ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
-
-                      super.deactivate();
-                    });
-                  },
-                  child: Text(
-                    "Ok",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class EditbuttonTableTennis5 extends StatefulWidget {
-  final String Tournament_ID;
-  final String Match_Id;
-  final String Player_1_name;
-  final String Player_2_name;
-  final String Player1_Partner;
-  final String Player2_Partner;
-  final int player1_set_1;
-  final int player1_set_2;
-  final int player1_set_3;
-  final int player1_set_4;
-  final int player1_set_5;
-  final int player2_set_1;
-  final int player2_set_2;
-  final int player2_set_3;
-  final int player2_set_4;
-  final int player2_set_5;
-  const EditbuttonTableTennis5({
-    Key? key,
-    required this.Tournament_ID,
-    required this.Match_Id,
-    required this.Player_1_name,
-    required this.Player_2_name,
-    required this.Player1_Partner,
-    required this.Player2_Partner,
-    required this.player1_set_1,
-    required this.player1_set_2,
-    required this.player1_set_3,
-    required this.player1_set_4,
-    required this.player1_set_5,
-    required this.player2_set_1,
-    required this.player2_set_2,
-    required this.player2_set_3,
-    required this.player2_set_4,
-    required this.player2_set_5,
-  }) : super(key: key);
-  @override
-  State<EditbuttonTableTennis5> createState() => _EditbuttonTableTennis5State();
-}
-
-class _EditbuttonTableTennis5State extends State<EditbuttonTableTennis5> {
-  @override
-  var update_score = 0;
-  Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: SizedBox(
-        height: 200,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 5,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "     Player 1 Score :",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.0,
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/subtract.png'),
-                    onPressed: () {
-                      setState(() {
-                        if (update_score_5_first > 0) {
-                          update_score_5_first--;
-                        }
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: Text(
-                    " $update_score_5_first",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/add.png'),
-                    onPressed: () {
-                      setState(() {
-                        update_score_5_first++;
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(width: 10),
-            Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "     Player 2 Score :",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.0,
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/subtract.png'),
-                    onPressed: () {
-                      setState(() {
-                        if (update_score_5_second > 0) {
-                          update_score_5_second--;
-                        }
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: Text(
-                    " $update_score_5_second",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 50,
-                  child: IconButton(
-                    icon: Image.asset('assets/add.png'),
-                    onPressed: () {
-                      setState(() {
-                        update_score_5_second++;
-                        super.deactivate();
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        // score_3_first = update_score_3_first;
-                        // score_3_second = update_score_3_second;
-                        final Score = Score_LiveMaintainer(
-                            PLAYER_1_SCORE: update_score_5_first.toString(),
-                            PLAYER_2_SCORE: update_score_5_second.toString(),
-                            set: "5");
-                        final scoremap = Score.toMap();
-                        final json_score = jsonEncode(scoremap);
-                        socket.emit('update-score', json_score);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LiveMaintainerTableTennis(
-                              Tournament_ID: widget.Tournament_ID,
-                              Match_Id: widget.Match_Id,
-                              Player_1_name: widget.Player_1_name,
-                              Player1_Partner: widget.Player1_Partner,
-                              Player_2_name: widget.Player_2_name,
-                              Player2_Partner: widget.Player2_Partner,
-                              Player1_ID: "",
-                              Player2_ID: "",
-                              player1_set_1: widget.player1_set_1,
-                              player1_set_2: widget.player1_set_2,
-                              player1_set_3: widget.player1_set_3,
-                              player1_set_4: widget.player1_set_4,
-                              player1_set_5: update_score_5_first,
-                              player2_set_1: widget.player2_set_1,
-                              player2_set_2: widget.player2_set_2,
-                              player2_set_3: widget.player2_set_3,
-                              player2_set_4: widget.player2_set_4,
-                              player2_set_5: update_score_5_second,
-                            ),
-                          ),
-                        ); // Timer.periodic(const Duration(seconds: 2), (timer) {});
-
-                        super.deactivate();
-                      });
-                    },
-                    child: Text(
-                      "Ok",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SubmitTableTennis extends StatefulWidget {
+class Submit extends StatefulWidget {
   final String MatchId;
   final String Tournament_ID;
   final String p1_name;
@@ -2375,14 +1630,10 @@ class SubmitTableTennis extends StatefulWidget {
   final int player1_set_1;
   final int player1_set_2;
   final int player1_set_3;
-  final int player1_set_4;
-  final int player1_set_5;
   final int player2_set_1;
   final int player2_set_2;
   final int player2_set_3;
-  final int player2_set_4;
-  final int player2_set_5;
-  const SubmitTableTennis({
+  const Submit({
     Key? key,
     required this.Tournament_ID,
     required this.MatchId,
@@ -2393,20 +1644,16 @@ class SubmitTableTennis extends StatefulWidget {
     required this.player1_set_1,
     required this.player1_set_2,
     required this.player1_set_3,
-    required this.player1_set_4,
-    required this.player1_set_5,
     required this.player2_set_1,
     required this.player2_set_2,
     required this.player2_set_3,
-    required this.player2_set_4,
-    required this.player2_set_5,
   }) : super(key: key);
 
   @override
-  State<SubmitTableTennis> createState() => _SubmitTableTennisState();
+  State<Submit> createState() => _SubmitState();
 }
 
-class _SubmitTableTennisState extends State<SubmitTableTennis> {
+class _SubmitState extends State<Submit> {
   final controller = ConfettiController(duration: const Duration(seconds: 3));
   bool isPlaying = false;
 
@@ -2483,7 +1730,7 @@ class _SubmitTableTennisState extends State<SubmitTableTennis> {
                     children: [
                       Center(
                         child: Container(
-                          height: 460,
+                          height: 447,
                           width: 400,
                           margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                           padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -2509,7 +1756,7 @@ class _SubmitTableTennisState extends State<SubmitTableTennis> {
                                 ),
                                 SizedBox(
                                   width: 329,
-                                  height: 330,
+                                  height: 279,
                                   child: Card(
                                     elevation: 5,
                                     shape: RoundedRectangleBorder(
@@ -2525,7 +1772,7 @@ class _SubmitTableTennisState extends State<SubmitTableTennis> {
                                         ),
                                         SizedBox(
                                           width: 125,
-                                          height: 320,
+                                          height: 240,
                                           child: Card(
                                             elevation: 5,
                                             shape: RoundedRectangleBorder(
@@ -2601,38 +1848,6 @@ class _SubmitTableTennisState extends State<SubmitTableTennis> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Center(
-                                                  child: Text(
-                                                    "${widget.player1_set_4}",
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 25.0,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Center(
-                                                  child: Text(
-                                                    "${widget.player1_set_5}",
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 25.0,
-                                                    ),
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                           ),
@@ -2642,7 +1857,7 @@ class _SubmitTableTennisState extends State<SubmitTableTennis> {
                                         ),
                                         SizedBox(
                                           width: 125,
-                                          height: 330,
+                                          height: 240,
                                           child: ConfettiWidget(
                                             confettiController: controller,
                                             shouldLoop: false,
@@ -2727,38 +1942,6 @@ class _SubmitTableTennisState extends State<SubmitTableTennis> {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  Center(
-                                                    child: Text(
-                                                      "${widget.player2_set_4}",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 25.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  Center(
-                                                    child: Text(
-                                                      "${widget.player2_set_5}",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 25.0,
-                                                      ),
-                                                    ),
-                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -2830,6 +2013,5 @@ class _SubmitTableTennisState extends State<SubmitTableTennis> {
         ),
       ),
     );
-    ;
   }
 }

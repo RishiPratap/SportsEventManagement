@@ -1,5 +1,5 @@
-import 'package:ardent_sports/AgeCategoryDataClass.dart';
 import 'package:flutter/material.dart';
+import 'Model/category_details_model.dart';
 
 class AgeCategoryItem extends StatelessWidget {
   final AgeCategoryDataClass data;

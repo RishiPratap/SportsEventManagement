@@ -1,7 +1,7 @@
-import 'package:ardent_sports/CricketMatchDetailsInput.dart';
 import 'package:flutter/material.dart';
-import 'Screen/Home/Home_page.dart';
-import 'Screen/menu/menu.dart';
+import 'features/cricket_module/cricket_match_details_input.dart';
+import 'features/home_page/home_page.dart';
+import 'features/menu/Menu.dart';
 
 class ScoreAMatch extends StatefulWidget {
   const ScoreAMatch({Key? key}) : super(key: key);

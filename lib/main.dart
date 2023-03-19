@@ -1,14 +1,14 @@
-import 'package:ardent_sports/Screen/Home/Home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'LiveMaintainerBadminton.dart';
-import 'Provider/loginProvider.dart';
-import 'Screen/Authentication/login.dart';
+import 'features/live_maintainer_badminton/live_maintainer_badminton.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'Screen/Home/home_page_provider.dart';
+import 'features/authentication/login/login.dart';
+import 'features/authentication/login/loginProvider.dart';
+import 'features/home_page/home_page.dart';
+import 'features/home_page/home_page_provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
