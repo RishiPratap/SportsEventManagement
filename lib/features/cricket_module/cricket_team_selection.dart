@@ -128,7 +128,7 @@ void finalTeam(context) {
               ]));
 }
 
-void addInput(context) {
+void addInput(context, tournamentId, email) {
   TextEditingController addteam = TextEditingController();
   showDialog(
       context: context,
@@ -166,8 +166,20 @@ void addInput(context) {
                 ]),
               ),
               TextButton(
-                  onPressed: () {
+                  onPressed: () async{
                     Navigator.pop(context);
+                    var sendData = jsonEncode({
+                      "TOURNAMENT_ID" : tournamentId,
+                      "CAPTAIN" : email,
+                      "NAME" : addteam.text,
+                    });
+                    print(sendData);
+
+                    var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketTeamName";
+                    var response = await post(Uri.parse(url),
+                        body: sendData,
+                        headers: {"Content-Type": "application/json"});
+                    print(response.body);
                   },
                   child: const Text("Submit"))
             ],
@@ -312,7 +324,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
+                                backgroundColor: Colors.white24,
                                 textColor: Color.fromARGB(255, 33, 237, 6),
                                 fontSize: 16.0);
 
@@ -330,7 +342,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                           child: const Text("Search"),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
-                                  Color.fromARGB(255, 76, 175, 86)),
+                                  const Color.fromARGB(255, 76, 175, 86)),
                               foregroundColor:
                                   MaterialStateProperty.all(Colors.white),
                               shape: MaterialStateProperty.all<
@@ -361,7 +373,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     "USERID": playerDetails["USERID"],
                                     "NAME": playerDetails["NAME"],
                                   },
-                                  "CAPTAIN": playerDetails["CAPTAIN"],
+                                  "CAPTAIN": email,
                                 };
 
                                 var sendAddReq = jsonEncode(playerJSON);
@@ -515,7 +527,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     "USERID": playerDetails["USERID"],
                                     "NAME": playerDetails["NAME"],
                                   },
-                                  "CAPTAIN": playerDetails["CAPTAIN"],
+                                  "CAPTAIN": email,
                                 };
 
                                 var sendAddReq = jsonEncode(playerJSON);
@@ -558,8 +570,11 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
   var subs = [];
 
   void DetailsOfPlayer() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? e = prefs.getString('email');
     var url =
-        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getPlayers?TOURNAMENT_ID=${widget.TOURNAMENT_ID}&CAPTAIN=${email}";
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getPlayers?TOURNAMENT_ID=${widget.TOURNAMENT_ID}&CAPTAIN=${e}";
+    print("😂" + url);
     var response = await get(Uri.parse(url));
     print("All Players");
     print(response.body);
@@ -642,7 +657,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                 child: Text("Add Team Name   >>"),
                                                 onPressed: () {
                                                   print("😀");
-                                                  addInput(context);
+                                                  addInput(context, widget.TOURNAMENT_ID, email);
                                                 }),
                                             const SizedBox(height: 10),
                                             for(int i=0; i<players.length; i++)
