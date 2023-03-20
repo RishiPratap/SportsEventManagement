@@ -228,7 +228,8 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                     RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ))),
-            child: Text("Add player " + (i + 1).toString() + " >"),
+            child: Text("Add player " + (i + 1).toString() + " >",
+                style: TextStyle(color: Colors.white, fontSize: 18)),
             onPressed: () {
               addPlayer(context, i, tournamentId);
             })));
@@ -252,7 +253,8 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ))),
-          child: Text("Substitute player " + (i + 1).toString() + " >"),
+          child: Text("Add Substitute " + (i + 1).toString() + " >",
+              style: TextStyle(color: Colors.white, fontSize: 18)),
           onPressed: () {
             addSubs(context, i, tournamentId);
           }),
@@ -437,7 +439,11 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
         context: context,
         builder: (_) => SimpleDialog(
               contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
-              title: Text("Add Substitute " + (i + 1).toString()),
+              title: Text("Add Substitute " + (i + 1).toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  )),
               children: <Widget>[
                 StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
@@ -555,7 +561,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     headers: {
                                       "Content-Type": "application/json"
                                     });
-                                setState((){
+                                setState(() {
                                   subs.add({
                                     "USERID": playerDetails["USERID"],
                                     "NAME": playerDetails["NAME"],
@@ -577,7 +583,6 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
 
                                 // Reload the page
                                 Navigator.pop(_);
-
                               },
                               child: const Text("Add"),
                               style: ButtonStyle(
@@ -597,8 +602,6 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
               ],
             ));
   }
-
-
 
   void DetailsOfPlayer() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -670,33 +673,58 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                 child: SingleChildScrollView(
                                     child: Column(
                               children: <Widget>[
+                                SizedBox(height: 30),
                                 (teamName == "Add" || teamName == "")
-                                    ? TextButton(
-                                        style: ButtonStyle(
-                                            elevation:
-                                                MaterialStateProperty.all(0),
-                                            padding: MaterialStateProperty.all(
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 20,
-                                                    vertical: 20)),
-                                            textStyle:
-                                                MaterialStateProperty.all(
-                                                    const TextStyle(
-                                              color: Colors.black,
-                                            )),
-                                            shape: MaterialStateProperty.all<
-                                                    RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ))),
-                                        child: const Text("Add Team Name   >>"),
-                                        onPressed: () {
-                                          print("😀");
-                                          addInput(context,
-                                              widget.TOURNAMENT_ID, email);
-                                        })
-                                    : Text(teamName ?? "Not fetched yet"),
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: TextButton(
+                                            style: ButtonStyle(
+                                                elevation:
+                                                    MaterialStateProperty.all(
+                                                        0),
+                                                padding:
+                                                    MaterialStateProperty.all(
+                                                        const EdgeInsets
+                                                                .symmetric(
+                                                            horizontal: 20,
+                                                            vertical: 20)),
+                                                textStyle:
+                                                    MaterialStateProperty.all(
+                                                        const TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                                shape: MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ))),
+                                            child: const Text(
+                                                "Add Team Name   >>"),
+                                            onPressed: () {
+                                              print("😀");
+                                              addInput(context,
+                                                  widget.TOURNAMENT_ID, email);
+                                            }))
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 30, vertical: 10),
+                                            child: Text(
+                                                teamName ?? "Not fetched yet",
+                                                style: TextStyle(
+                                                  fontSize: 30,
+                                                )))),
                                 const SizedBox(height: 10),
                                 for (int i = 0; i < players.length; i++)
                                   Row(
@@ -723,7 +751,10 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                 borderRadius:
                                                     BorderRadius.circular(10.0),
                                               ))),
-                                          child: Text(players[i]["NAME"]),
+                                          child: Text(players[i]["NAME"],
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18)),
                                           onPressed: () {}),
                                       (i != 0)
                                           ? IconButton(
@@ -749,13 +780,14 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
 
                                                 // Reload the page
                                                 setState(() {
-                                                  print("👍🏻" );
+                                                  print("👍🏻");
                                                   print(players);
                                                   players.removeAt(i);
                                                 });
                                               },
                                               icon: const Icon(
-                                                  Icons.delete_forever_rounded))
+                                                  Icons.delete_forever_rounded),
+                                              color: Colors.red)
                                           : const Text("")
                                     ],
                                   ),
@@ -792,7 +824,11 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                 borderRadius:
                                                     BorderRadius.circular(10.0),
                                               ))),
-                                          child: Text(subs[i]["NAME"]),
+                                          child: Text(subs[i]["NAME"],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                              )),
                                           onPressed: () {}),
                                       IconButton(
                                           onPressed: () async {
@@ -817,10 +853,10 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                 });
 
                                             // Reload the page
-
                                           },
                                           icon: const Icon(
-                                              Icons.delete_forever_rounded))
+                                              Icons.delete_forever_rounded),
+                                          color: Colors.red)
                                     ],
                                   ),
                                 for (int i = subs.length;
@@ -831,31 +867,31 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                       child: SubsplayerAdd(context, deviceWidth,
                                           i, widget.TOURNAMENT_ID)),
                                 const SizedBox(height: 10),
-                                SizedBox(
-                                    height: 30,
-                                    width: 150,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        finalTeam(context);
-                                      },
-                                      child: const Text(
-                                        "Submit",
-                                      ),
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  const Color.fromARGB(
-                                                      255, 226, 64, 64)),
-                                          foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.white),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ))),
-                                    )),
+                                // SizedBox(
+                                //     height: 30,
+                                //     width: 150,
+                                //     child: TextButton(
+                                //       onPressed: () {
+                                //         finalTeam(context);
+                                //       },
+                                //       child: const Text(
+                                //         "Submit",
+                                //       ),
+                                //       style: ButtonStyle(
+                                //           backgroundColor:
+                                //               MaterialStateProperty.all(
+                                //                   const Color.fromARGB(
+                                //                       255, 226, 64, 64)),
+                                //           foregroundColor:
+                                //               MaterialStateProperty.all(
+                                //                   Colors.white),
+                                //           shape: MaterialStateProperty.all<
+                                //                   RoundedRectangleBorder>(
+                                //               RoundedRectangleBorder(
+                                //             borderRadius:
+                                //                 BorderRadius.circular(10.0),
+                                //           ))),
+                                //     )),
                                 const SizedBox(height: 20),
                               ],
                             ))),
