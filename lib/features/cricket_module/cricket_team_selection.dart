@@ -541,6 +541,15 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     backgroundColor: Colors.red,
                                     textColor: Color.fromARGB(255, 33, 237, 6),
                                     fontSize: 16.0);
+
+                                // Reload the page
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          super.widget),
+                                  (Route<dynamic> route) => false,
+                                );
                               },
                               child: const Text("Add"),
                               style: ButtonStyle(
