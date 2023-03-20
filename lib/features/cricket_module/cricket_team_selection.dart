@@ -347,7 +347,6 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                       (showAdd)
                           ? TextButton(
                               onPressed: () {
-                                // In this place, we should use the response2 from line 130
                                 if (playerDetails["Message"] ==
                                     "Player not found") {
                                   print("Player not found");
@@ -378,6 +377,15 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     backgroundColor: Colors.red,
                                     textColor: Color.fromARGB(255, 33, 237, 6),
                                     fontSize: 16.0);
+
+                                // Reload the page
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          super.widget),
+                                  (Route<dynamic> route) => false,
+                                );
                               },
                               child: const Text("Add"),
                               style: ButtonStyle(
