@@ -166,16 +166,17 @@ void addInput(context, tournamentId, email) {
                 ]),
               ),
               TextButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     Navigator.pop(context);
                     var sendData = jsonEncode({
-                      "TOURNAMENT_ID" : tournamentId,
-                      "CAPTAIN" : email,
-                      "NAME" : addteam.text,
+                      "TOURNAMENT_ID": tournamentId,
+                      "CAPTAIN": email,
+                      "NAME": addteam.text,
                     });
                     print(sendData);
 
-                    var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketTeamName";
+                    var url =
+                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketTeamName";
                     var response = await post(Uri.parse(url),
                         body: sendData,
                         headers: {"Content-Type": "application/json"});
@@ -391,6 +392,11 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     textColor: Color.fromARGB(255, 33, 237, 6),
                                     fontSize: 16.0);
 
+                                // Set state to false
+                                setState(() {
+                                  showAdd = false;
+                                });
+
                                 // Reload the page
                                 Navigator.pushAndRemoveUntil(
                                   context,
@@ -554,6 +560,11 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     textColor: Color.fromARGB(255, 33, 237, 6),
                                     fontSize: 16.0);
 
+                                // set state to false
+                                setState(() {
+                                  showAdd = false;
+                                });
+
                                 // Reload the page
                                 Navigator.pushAndRemoveUntil(
                                   context,
@@ -586,7 +597,6 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
   var players = [];
   var subs = [];
   String? teamName = "Add";
-
 
   void DetailsOfPlayer() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -636,174 +646,228 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Image(
-                                      image: AssetImage("assets/back_edit.png"),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Image(
+                                  image: AssetImage("assets/back_edit.png"),
+                                )),
+                          ]),
+                      Card(
+                        elevation: 10,
+                        color: Colors.white.withOpacity(0.1),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: SingleChildScrollView(
+                                    child: Column(
+                              children: <Widget>[
+                                (teamName == "Add" || teamName == "")
+                                    ? TextButton(
+                                        style: ButtonStyle(
+                                            elevation:
+                                                MaterialStateProperty.all(0),
+                                            padding: MaterialStateProperty.all(
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 20,
+                                                    vertical: 20)),
+                                            textStyle:
+                                                MaterialStateProperty.all(
+                                                    const TextStyle(
+                                              color: Colors.black,
+                                            )),
+                                            shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ))),
+                                        child: const Text("Add Team Name   >>"),
+                                        onPressed: () {
+                                          print("😀");
+                                          addInput(context,
+                                              widget.TOURNAMENT_ID, email);
+                                        })
+                                    : Text(teamName ?? "Not fetched yet"),
+                                const SizedBox(height: 10),
+                                for (int i = 0; i < players.length; i++)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  MaterialStateProperty.all(0),
+                                              padding:
+                                                  MaterialStateProperty.all(
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 20)),
+                                              textStyle:
+                                                  MaterialStateProperty.all(
+                                                      const TextStyle(
+                                                color: Colors.black,
+                                              )),
+                                              shape: MaterialStateProperty.all<
+                                                      RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ))),
+                                          child: Text(players[i]["NAME"]),
+                                          onPressed: () {}),
+                                      (i != 0)
+                                          ? IconButton(
+                                              onPressed: () async {
+                                                var url =
+                                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/removePlayer";
+                                                print("😂" + url);
+                                                var sendData = jsonEncode({
+                                                  "TOURNAMENT_ID":
+                                                      widget.TOURNAMENT_ID,
+                                                  "CAPTAIN": email,
+                                                  "NAME": players[i]["NAME"]
+                                                });
+                                                var response = await post(
+                                                    Uri.parse(url),
+                                                    body: sendData,
+                                                    headers: {
+                                                      "Content-Type":
+                                                          "application/json"
+                                                    });
+                                                print("All Players");
+                                                print(response.body);
+
+                                                // Reload the page
+                                                Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          super.widget),
+                                                  (Route<dynamic> route) =>
+                                                      false,
+                                                );
+                                              },
+                                              icon: const Icon(
+                                                  Icons.delete_forever_rounded))
+                                          : const Text("")
+                                    ],
+                                  ),
+                                for (int i = players.length;
+                                    i < widget.TEAM_SIZE;
+                                    i++)
+                                  Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: playerAdd(context, deviceWidth, i,
+                                          widget.TOURNAMENT_ID)),
+                                const SizedBox(height: 15),
+                                for (int i = 0; i < subs.length; i++)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  MaterialStateProperty.all(0),
+                                              padding:
+                                                  MaterialStateProperty.all(
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 20)),
+                                              textStyle:
+                                                  MaterialStateProperty.all(
+                                                      const TextStyle(
+                                                color: Colors.black,
+                                              )),
+                                              shape: MaterialStateProperty.all<
+                                                      RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ))),
+                                          child: Text(subs[i]["NAME"]),
+                                          onPressed: () {}),
+                                      IconButton(
+                                          onPressed: () async {
+                                            var url =
+                                                "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/removeSubstitue";
+                                            print("😂" + url);
+                                            var sendData = jsonEncode({
+                                              "TOURNAMENT_ID":
+                                                  widget.TOURNAMENT_ID,
+                                              "CAPTAIN": email,
+                                              "NAME": subs[i]["NAME"]
+                                            });
+                                            var response = await post(
+                                                Uri.parse(url),
+                                                body: sendData,
+                                                headers: {
+                                                  "Content-Type":
+                                                      "application/json"
+                                                });
+
+                                            // Reload the page
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          super.widget),
+                                              (Route<dynamic> route) => false,
+                                            );
+                                          },
+                                          icon: const Icon(
+                                              Icons.delete_forever_rounded))
+                                    ],
+                                  ),
+                                for (int i = subs.length;
+                                    i < widget.SUBSTITUTE;
+                                    i++)
+                                  Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SubsplayerAdd(context, deviceWidth,
+                                          i, widget.TOURNAMENT_ID)),
+                                const SizedBox(height: 10),
+                                SizedBox(
+                                    height: 30,
+                                    width: 150,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        finalTeam(context);
+                                      },
+                                      child: const Text(
+                                        "Submit",
+                                      ),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  const Color.fromARGB(
+                                                      255, 226, 64, 64)),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.white),
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ))),
                                     )),
-                              ]),
-                          Card(
-                            elevation: 10,
-                            color: Colors.white.withOpacity(0.1),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Center(
-                                    child: SingleChildScrollView(
-                                        child: Column(
-                                          children: <Widget>[
-                                            (teamName == "Add" || teamName == "") ?
-                                            TextButton(
-                                                style: ButtonStyle(
-                                                    elevation: MaterialStateProperty.all(0),
-                                                    padding: MaterialStateProperty.all(
-                                                        const EdgeInsets.symmetric(
-                                                            horizontal: 20, vertical: 20)),
-                                                    textStyle:
-                                                    MaterialStateProperty.all(const TextStyle(
-                                                      color: Colors.black,
-                                                    )),
-                                                    shape: MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius:
-                                                          BorderRadius.circular(10.0),
-                                                        ))),
-                                                child: const Text("Add Team Name   >>"),
-                                                onPressed: () {
-                                                  print("😀");
-                                                  addInput(context, widget.TOURNAMENT_ID, email);
-                                                })
-                                            : Text(teamName??"Not fetched yet"),
-                                            const SizedBox(height: 10),
-                                            for(int i=0; i<players.length; i++)
-                                              Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                  TextButton(
-                                                      style: ButtonStyle(
-                                                          elevation: MaterialStateProperty.all(0),
-                                                          padding: MaterialStateProperty.all(
-                                                              const EdgeInsets.symmetric(
-                                                                  horizontal: 20, vertical: 20)),
-                                                          textStyle:
-                                                          MaterialStateProperty.all(const TextStyle(
-                                                            color: Colors.black,
-                                                          )),
-                                                          shape: MaterialStateProperty.all<
-                                                              RoundedRectangleBorder>(
-                                                              RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                BorderRadius.circular(10.0),
-                                                              ))),
-                                                      child: Text(players[i]["NAME"]),
-                                                      onPressed: () {}),
-                                                    (i!=0) ?
-                                                  IconButton(onPressed: () async{
-                                                    var url =
-                                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/removePlayer";
-                                                    print("😂" + url);
-                                                    var sendData = jsonEncode({
-                                                      "TOURNAMENT_ID" : widget.TOURNAMENT_ID,
-                                                      "CAPTAIN" : email,
-                                                      "NAME" : players[i]["NAME"]
-                                                    });
-                                                    var response = await post(Uri.parse(url),
-                                                        body: sendData,
-                                                        headers: {"Content-Type": "application/json"});
-                                                    print("All Players");
-                                                    print(response.body);
-
-                                                  }, icon: const Icon(Icons.delete_forever_rounded)) : const Text("")
-                                                ],
-                                              ),
-                                            for (int i = players.length; i < widget.TEAM_SIZE; i++)
-                                              Padding(
-                                                  padding: const EdgeInsets.all(10.0),
-                                                  child: playerAdd(context, deviceWidth, i,
-                                                      widget.TOURNAMENT_ID)),
-                                            const SizedBox(height: 15),
-                                            for(int i=0; i<subs.length; i++)
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  TextButton(
-                                                      style: ButtonStyle(
-                                                          elevation: MaterialStateProperty.all(0),
-                                                          padding: MaterialStateProperty.all(
-                                                              const EdgeInsets.symmetric(
-                                                                  horizontal: 20, vertical: 20)),
-                                                          textStyle:
-                                                          MaterialStateProperty.all(const TextStyle(
-                                                            color: Colors.black,
-                                                          )),
-                                                          shape: MaterialStateProperty.all<
-                                                              RoundedRectangleBorder>(
-                                                              RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                BorderRadius.circular(10.0),
-                                                              ))),
-                                                      child: Text(subs[i]["NAME"]),
-                                                      onPressed: () {}),
-                                                  IconButton(onPressed: () async{
-                                                    var url =
-                                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/removeSubstitue";
-                                                    print("😂" + url);
-                                                    var sendData = jsonEncode({
-                                                      "TOURNAMENT_ID" : widget.TOURNAMENT_ID,
-                                                      "CAPTAIN" : email,
-                                                      "NAME" : subs[i]["NAME"]
-                                                    });
-                                                    var response = await post(Uri.parse(url),
-                                                        body: sendData,
-                                                        headers: {"Content-Type": "application/json"});
-
-                                                  }, icon: const Icon(Icons.delete_forever_rounded))
-                                                ],
-                                              ),
-                                            for (int i = subs.length; i < widget.SUBSTITUTE; i++)
-                                              Padding(
-                                                  padding: const EdgeInsets.all(10.0),
-                                                  child: SubsplayerAdd(context, deviceWidth,
-                                                      i, widget.TOURNAMENT_ID)),
-                                            const SizedBox(height: 10),
-                                            SizedBox(
-                                                height: 30,
-                                                width: 150,
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    finalTeam(context);
-                                                  },
-                                                  child: const Text(
-                                                    "Submit",
-                                                  ),
-                                                  style: ButtonStyle(
-                                                      backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                          const Color.fromARGB(
-                                                              255, 226, 64, 64)),
-                                                      foregroundColor:
-                                                      MaterialStateProperty.all(
-                                                          Colors.white),
-                                                      shape: MaterialStateProperty.all<
-                                                          RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                            BorderRadius.circular(10.0),
-                                                          ))),
-                                                )),
-                                            const SizedBox(height: 20),
-                                          ],
-                                        ))),
+                                const SizedBox(height: 20),
                               ],
-                            ),
-                          )
-                        ])))));
+                            ))),
+                          ],
+                        ),
+                      )
+                    ])))));
   }
 }
