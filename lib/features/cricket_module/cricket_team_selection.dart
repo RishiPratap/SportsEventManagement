@@ -704,6 +704,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                               ))),
                                                       child: Text(players[i]["NAME"]),
                                                       onPressed: () {}),
+                                                    (i!=0) ?
                                                   IconButton(onPressed: () async{
                                                     var url =
                                                         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/removePlayer";
@@ -719,7 +720,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                     print("All Players");
                                                     print(response.body);
 
-                                                  }, icon: const Icon(Icons.delete_forever_rounded))
+                                                  }, icon: const Icon(Icons.delete_forever_rounded)) : const Text("")
                                                 ],
                                               ),
                                             for (int i = players.length; i < widget.TEAM_SIZE; i++)
