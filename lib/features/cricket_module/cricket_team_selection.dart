@@ -9,6 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 bool showAdd = false;
+bool showPlayers = false;
 
 class CricketTeamDetails extends StatefulWidget {
   final String id;
@@ -564,8 +565,11 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
     print(response.body);
 
     var allData = jsonDecode(response.body);
-    players = allData['PLAYERS'];
-    subs = allData["SUBSTITUTE"];
+
+    setState(() {
+      players = allData['PLAYERS'];
+      subs = allData["SUBSTITUTE"];
+    });
   }
 
   @override
@@ -597,111 +601,131 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Image(
-                                  image: AssetImage("assets/back_edit.png"),
-                                )),
-                          ]),
-                      Card(
-                        elevation: 10,
-                        color: Colors.white.withOpacity(0.1),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Center(
-                                child: SingleChildScrollView(
-                                    child: Column(
-                              children: <Widget>[
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
                                 TextButton(
-                                    style: ButtonStyle(
-                                        elevation: MaterialStateProperty.all(0),
-                                        padding: MaterialStateProperty.all(
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 20)),
-                                        textStyle:
-                                            MaterialStateProperty.all(TextStyle(
-                                          color: Colors.black,
-                                        )),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ))),
-                                    child: Text("Add Team Name   >>"),
                                     onPressed: () {
-                                      print("😀");
-                                      addInput(context);
-                                    }),
-                                const SizedBox(height: 10),
-                                TextButton(
-                                    style: ButtonStyle(
-                                        elevation: MaterialStateProperty.all(0),
-                                        padding: MaterialStateProperty.all(
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 20)),
-                                        textStyle:
-                                            MaterialStateProperty.all(TextStyle(
-                                          color: Colors.black,
-                                        )),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ))),
-                                    child: Text(email ?? 'Captain Name'),
-                                    onPressed: () {}),
-                                for (int i = 1; i < widget.TEAM_SIZE; i++)
-                                  Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: playerAdd(context, deviceWidth, i,
-                                          widget.TOURNAMENT_ID)),
-                                SizedBox(height: 15),
-                                for (int i = 0; i < widget.SUBSTITUTE; i++)
-                                  Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: SubsplayerAdd(context, deviceWidth,
-                                          i, widget.TOURNAMENT_ID)),
-                                SizedBox(height: 10),
-                                SizedBox(
-                                    height: 30,
-                                    width: 150,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        finalTeam(context);
-                                      },
-                                      child: Text(
-                                        "Submit",
-                                      ),
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color.fromARGB(
-                                                      255, 226, 64, 64)),
-                                          foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.white),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ))),
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Image(
+                                      image: AssetImage("assets/back_edit.png"),
                                     )),
-                                SizedBox(height: 20),
+                              ]),
+                          Card(
+                            elevation: 10,
+                            color: Colors.white.withOpacity(0.1),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Center(
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                          children: <Widget>[
+                                            TextButton(
+                                                style: ButtonStyle(
+                                                    elevation: MaterialStateProperty.all(0),
+                                                    padding: MaterialStateProperty.all(
+                                                        const EdgeInsets.symmetric(
+                                                            horizontal: 20, vertical: 20)),
+                                                    textStyle:
+                                                    MaterialStateProperty.all(TextStyle(
+                                                      color: Colors.black,
+                                                    )),
+                                                    shape: MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                          BorderRadius.circular(10.0),
+                                                        ))),
+                                                child: Text("Add Team Name   >>"),
+                                                onPressed: () {
+                                                  print("😀");
+                                                  addInput(context);
+                                                }),
+                                            const SizedBox(height: 10),
+                                            for(int i=0; i<players.length; i++)
+                                              TextButton(
+                                                  style: ButtonStyle(
+                                                      elevation: MaterialStateProperty.all(0),
+                                                      padding: MaterialStateProperty.all(
+                                                          const EdgeInsets.symmetric(
+                                                              horizontal: 20, vertical: 20)),
+                                                      textStyle:
+                                                      MaterialStateProperty.all(TextStyle(
+                                                        color: Colors.black,
+                                                      )),
+                                                      shape: MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius.circular(10.0),
+                                                          ))),
+                                                  child: Text(players[i]["NAME"]),
+                                                  onPressed: () {}),
+                                            for (int i = players.length; i < widget.TEAM_SIZE; i++)
+                                              Padding(
+                                                  padding: EdgeInsets.all(10.0),
+                                                  child: playerAdd(context, deviceWidth, i,
+                                                      widget.TOURNAMENT_ID)),
+                                            SizedBox(height: 15),
+                                            for(int i=0; i<subs.length; i++)
+                                              TextButton(
+                                                  style: ButtonStyle(
+                                                      elevation: MaterialStateProperty.all(0),
+                                                      padding: MaterialStateProperty.all(
+                                                          const EdgeInsets.symmetric(
+                                                              horizontal: 20, vertical: 20)),
+                                                      textStyle:
+                                                      MaterialStateProperty.all(TextStyle(
+                                                        color: Colors.black,
+                                                      )),
+                                                      shape: MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius.circular(10.0),
+                                                          ))),
+                                                  child: Text(subs[i]["NAME"]),
+                                                  onPressed: () {}),
+                                            for (int i = subs.length; i < widget.SUBSTITUTE; i++)
+                                              Padding(
+                                                  padding: EdgeInsets.all(10.0),
+                                                  child: SubsplayerAdd(context, deviceWidth,
+                                                      i, widget.TOURNAMENT_ID)),
+                                            SizedBox(height: 10),
+                                            SizedBox(
+                                                height: 30,
+                                                width: 150,
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    finalTeam(context);
+                                                  },
+                                                  child: Text(
+                                                    "Submit",
+                                                  ),
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Color.fromARGB(
+                                                              255, 226, 64, 64)),
+                                                      foregroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                      shape: MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius.circular(10.0),
+                                                          ))),
+                                                )),
+                                            SizedBox(height: 20),
+                                          ],
+                                        ))),
                               ],
-                            ))),
-                          ],
-                        ),
-                      )
-                    ])))));
+                            ),
+                          )
+                        ])))));
   }
 }
