@@ -278,20 +278,30 @@ class _MyBookings extends State<MyBookings> {
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 var obtianedEmail = prefs.getString('email');
-                                var url =
-                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/ticket?TOURNAMENT_ID=${userdata[i].TOURNAMENT_ID}&USERID=$obtianedEmail";
-                                var response = await get(Uri.parse(url));
-                                var jsonData = jsonDecode(response.body);
-                                var url1 =
-                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/myBookings?USERID=$obtianedEmail";
-                                var response1 = await get(Uri.parse(url1));
-                                var jsonData1 = jsonDecode(response1.body);
-                                print("📌" + jsonData1.toString());
+    
+                                final cricketdetail = {
+                                  "TOURNAMENT_ID": userdata[i].TOURNAMENT_ID
+                                };
+                                var finaldetails = jsonEncode(cricketdetail);
+                                // print(finaldetails);
+                                var url2 =
+                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getCricketTourneyDetails";
+                                var response2 = await post(Uri.parse(url2),
+                                    body: finaldetails,
+                                    headers: {
+                                      "Content-Type": "application/json"
+                                    });
+                                var jsonData2 = jsonDecode(response2.body);
+                                print(jsonData2["TEAM_SIZE"]);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => CricketTeamDetails(
-                                          data: jsonData,
-                                          bookingDetails: jsonData1,
-                                        )));
+                                        id: jsonData2["_id"],
+                                        TOURNAMENT_ID:
+                                            jsonData2["TOURNAMENT_ID"],
+                                        TEAM_SIZE: jsonData2["TEAM_SIZE"],
+                                        SUBSTITUTE: jsonData2["SUBSTITUTE"],
+                                        OVERS: jsonData2["OVERS"],
+                                        BALL_TYPE: jsonData2["BALL_TYPE"])));
                               },
                               child: Center(
                                 child: Text("Edit Team Details",
