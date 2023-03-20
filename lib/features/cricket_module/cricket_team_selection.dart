@@ -10,6 +10,10 @@ import 'package:get/get.dart';
 
 bool showAdd = false;
 bool showPlayers = false;
+String? email = "";
+var players = [];
+var subs = [];
+String? teamName = "Add";
 
 class CricketTeamDetails extends StatefulWidget {
   final String id;
@@ -261,7 +265,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
     var playerDetails = {};
     showDialog(
         context: context,
-        builder: (BuildContext context) => SimpleDialog(
+        builder: (_) => SimpleDialog(
               contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
               title: Text("Add Player " + (i + 1).toString()),
               children: <Widget>[
@@ -383,6 +387,12 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     headers: {
                                       "Content-Type": "application/json"
                                     });
+                                setState(() {
+                                  players.add({
+                                    "USERID": playerDetails["USERID"],
+                                    "NAME": playerDetails["NAME"],
+                                  });
+                                });
                                 Fluttertoast.showToast(
                                     msg: "Successfully Added Player",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -398,13 +408,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                 });
 
                                 // Reload the page
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          super.widget),
-                                  (Route<dynamic> route) => false,
-                                );
+                                Navigator.pop(_);
                               },
                               child: const Text("Add"),
                               style: ButtonStyle(
@@ -551,6 +555,12 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     headers: {
                                       "Content-Type": "application/json"
                                     });
+                                setState((){
+                                  subs.add({
+                                    "USERID": playerDetails["USERID"],
+                                    "NAME": playerDetails["NAME"],
+                                  });
+                                });
                                 Fluttertoast.showToast(
                                     msg: "Successfully Added Player",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -566,13 +576,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                 });
 
                                 // Reload the page
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          super.widget),
-                                  (Route<dynamic> route) => false,
-                                );
+
                               },
                               child: const Text("Add"),
                               style: ButtonStyle(
@@ -593,10 +597,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
             ));
   }
 
-  String? email = "";
-  var players = [];
-  var subs = [];
-  String? teamName = "Add";
+
 
   void DetailsOfPlayer() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -743,18 +744,14 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                           "application/json"
                                                     });
                                                 print("All Players");
-                                                print(response.body);
+                                                // print(response.body);
 
                                                 // Reload the page
-                                                Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          super.widget),
-                                                  (Route<dynamic> route) =>
-                                                      false,
-                                                );
+                                                setState(() {
+                                                  print("👍🏻" );
+                                                  print(players);
+                                                  players.removeAt(i);
+                                                });
                                               },
                                               icon: const Icon(
                                                   Icons.delete_forever_rounded))
@@ -807,6 +804,9 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                               "CAPTAIN": email,
                                               "NAME": subs[i]["NAME"]
                                             });
+                                            setState(() {
+                                              subs.removeAt(i);
+                                            });
                                             var response = await post(
                                                 Uri.parse(url),
                                                 body: sendData,
@@ -816,14 +816,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                 });
 
                                             // Reload the page
-                                            Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          super.widget),
-                                              (Route<dynamic> route) => false,
-                                            );
+
                                           },
                                           icon: const Icon(
                                               Icons.delete_forever_rounded))
