@@ -576,6 +576,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                 });
 
                                 // Reload the page
+                                Navigator.pop(_);
 
                               },
                               child: const Text("Add"),
