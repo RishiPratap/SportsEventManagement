@@ -658,7 +658,7 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                     child: SingleChildScrollView(
                                         child: Column(
                                           children: <Widget>[
-                                            (teamName == "Add") ?
+                                            (teamName == "Add" || teamName == "") ?
                                             TextButton(
                                                 style: ButtonStyle(
                                                     elevation: MaterialStateProperty.all(0),
@@ -730,24 +730,43 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                                       widget.TOURNAMENT_ID)),
                                             const SizedBox(height: 15),
                                             for(int i=0; i<subs.length; i++)
-                                              TextButton(
-                                                  style: ButtonStyle(
-                                                      elevation: MaterialStateProperty.all(0),
-                                                      padding: MaterialStateProperty.all(
-                                                          const EdgeInsets.symmetric(
-                                                              horizontal: 20, vertical: 20)),
-                                                      textStyle:
-                                                      MaterialStateProperty.all(const TextStyle(
-                                                        color: Colors.black,
-                                                      )),
-                                                      shape: MaterialStateProperty.all<
-                                                          RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                            BorderRadius.circular(10.0),
-                                                          ))),
-                                                  child: Text(subs[i]["NAME"]),
-                                                  onPressed: () {}),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  TextButton(
+                                                      style: ButtonStyle(
+                                                          elevation: MaterialStateProperty.all(0),
+                                                          padding: MaterialStateProperty.all(
+                                                              const EdgeInsets.symmetric(
+                                                                  horizontal: 20, vertical: 20)),
+                                                          textStyle:
+                                                          MaterialStateProperty.all(const TextStyle(
+                                                            color: Colors.black,
+                                                          )),
+                                                          shape: MaterialStateProperty.all<
+                                                              RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                BorderRadius.circular(10.0),
+                                                              ))),
+                                                      child: Text(subs[i]["NAME"]),
+                                                      onPressed: () {}),
+                                                  IconButton(onPressed: () async{
+                                                    var url =
+                                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/removeSubstitue";
+                                                    print("😂" + url);
+                                                    var sendData = jsonEncode({
+                                                      "TOURNAMENT_ID" : widget.TOURNAMENT_ID,
+                                                      "CAPTAIN" : email,
+                                                      "NAME" : subs[i]["NAME"]
+                                                    });
+                                                    var response = await post(Uri.parse(url),
+                                                        body: sendData,
+                                                        headers: {"Content-Type": "application/json"});
+
+                                                  }, icon: const Icon(Icons.delete_forever_rounded))
+                                                ],
+                                              ),
                                             for (int i = subs.length; i < widget.SUBSTITUTE; i++)
                                               Padding(
                                                   padding: const EdgeInsets.all(10.0),
