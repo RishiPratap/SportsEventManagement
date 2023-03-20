@@ -280,10 +280,10 @@ class _MyBookings extends State<MyBookings> {
                                 var obtianedEmail = prefs.getString('email');
     
                                 final cricketdetail = {
-                                  "TOURNAMENT_ID": "CR179543-CR-NA"
+                                  "TOURNAMENT_ID": userdata[i].TOURNAMENT_ID
                                 };
                                 var finaldetails = jsonEncode(cricketdetail);
-                                print(finaldetails);
+                                // print(finaldetails);
                                 var url2 =
                                     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getCricketTourneyDetails";
                                 var response2 = await post(Uri.parse(url2),
