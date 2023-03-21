@@ -205,9 +205,15 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                const Image(
-                                  image: AssetImage(
-                                      "assets/AddPlayerBackground.png"),
+                                Container(
+                                  height: deviceHeight * 0.5,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  // child: const Image(
+                                  //   image: AssetImage(
+                                  //       "assets/AddPlayerBackground.png"),
+                                  // ),
                                 ),
                                 Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -229,7 +235,9 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                           const Text(
                                             "Add your partner",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                            ),
                                           ),
                                           const Text(""),
                                           const Text(""),
@@ -263,7 +271,8 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                                     .withOpacity(0.3),
                                               ),
                                             ),
-                                            hintText: "Enter Mobile/Username",
+                                            hintText:
+                                                "Enter Partner's Email ID",
                                             hintStyle: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w700),
@@ -625,7 +634,7 @@ class _BadmintonSpotSelectionState extends State<BadmintonSpotSelection> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(15),
-                                          color: const Color(0xff6bb8ff),
+                                          color: Colors.black.withOpacity(0.5),
                                         ),
                                         child: Center(
                                           child: InkWell(
