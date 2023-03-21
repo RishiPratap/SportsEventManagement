@@ -115,26 +115,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Row(
                           children: [
-                            Container(
-                              width: deviceWidth * 0.2,
-                              height: deviceHeight * 0.07,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/AARDENT_LOGO.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: deviceWidth * 0.2,
-                              height: deviceHeight * 0.08,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/Ardent_Sport_Text.png"),
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Image.asset("assets/AARDENT_LOGO.png"),
+                                Image.asset("assets/Ardent_Sport_Text.png"),
+                              ],
                             ),
                           ],
                         ),
@@ -144,14 +130,11 @@ class _HomePageState extends State<HomePage> {
                                   name: homePagedProvider!.mapUserInfo?['Name'],
                                 ));
                           },
-                          child: Container(
-                            width: deviceWidth * 0.1,
-                            height: deviceHeight * 0.02,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("assets/menu_bar.png"),
-                                fit: BoxFit.fitHeight,
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Icon(
+                              Icons.menu,
+                              size: 35,
                             ),
                           ),
                         ),
@@ -219,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                   EdgeInsets.only(bottom: deviceWidth * 0.028),
                               child: Text(
                                 "Level :$level",
-                                style: GoogleFonts.hennyPenny(fontSize: 15),
+                                style: GoogleFonts.rubik(fontSize: 15),
                               ),
                             ),
                             SizedBox(
@@ -236,10 +219,13 @@ class _HomePageState extends State<HomePage> {
                                       backgroundColor:
                                           Color.fromARGB(255, 55, 54, 54),
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.green),
+                                        Colors.green,
+                                      ),
                                     ),
                                   ),
-                                  Center(child: buildLinearProgressIndicator())
+                                  Center(
+                                    child: buildLinearProgressIndicator(),
+                                  )
                                 ],
                               ),
                             ),
