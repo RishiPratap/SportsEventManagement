@@ -44,12 +44,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                 height: deviceHeight * 0.1,
               ),
               InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                          pageBuilder: (a, b, c) => const HomePage()));
-                },
+                onTap: () {},
                 child: const Image(
                   alignment: Alignment.center,
                   image: AssetImage('assets/AARDENT.png'),

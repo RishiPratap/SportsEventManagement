@@ -78,13 +78,7 @@ class _loginState extends State<login> {
                 children: [
                   Center(
                     child: InkWell(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              PageRouteBuilder(
-                                  pageBuilder: (a, b, c) => const HomePage()));
-                        },
-                        child: Image.asset("assets/AARDENT.png")),
+                        onTap: () {}, child: Image.asset("assets/AARDENT.png")),
                   ),
                   loginFields(context),
                   singUP_button(context),

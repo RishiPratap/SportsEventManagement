@@ -49,12 +49,7 @@ class _SignUpPage extends State<SignUpPage> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                            pageBuilder: (a, b, c) => const HomePage()));
-                  },
+                  onTap: () {},
                   child: const Image(
                     alignment: Alignment.center,
                     image: AssetImage('assets/AARDENT.png'),
