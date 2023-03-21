@@ -34,26 +34,26 @@ class CricketPool extends StatefulWidget {
   final String BreakTime;
   final List<CategorieDetails> AllCategoryDetails;
 
-  const CricketPool(
-      {Key? key,
-      required this.SportName,
-      required this.EventManagerName,
-      required this.EventManagerMobileNo,
-      required this.EventType,
-      required this.EventName,
-      required this.StartDate,
-      required this.EndDate,
-      required this.StartTime,
-      required this.EndTime,
-      required this.City,
-      required this.Address,
-      required this.Category,
-      required this.AgeCategory,
-      required this.RegistrationCloses,
-      required this.NoofCourts,
-      required this.BreakTime,
-      required this.AllCategoryDetails})
-      : super(key: key);
+  const CricketPool({
+    Key? key,
+    required this.SportName,
+    required this.EventManagerName,
+    required this.EventManagerMobileNo,
+    required this.EventType,
+    required this.EventName,
+    required this.StartDate,
+    required this.EndDate,
+    required this.StartTime,
+    required this.EndTime,
+    required this.City,
+    required this.Address,
+    required this.Category,
+    required this.AgeCategory,
+    required this.RegistrationCloses,
+    required this.NoofCourts,
+    required this.BreakTime,
+    required this.AllCategoryDetails,
+  }) : super(key: key);
   @override
   State<CricketPool> createState() => _CricketPoolState();
 }
@@ -109,10 +109,12 @@ class _CricketPoolState extends State<CricketPool> {
 
     for (CategorieDetails details in widget.AllCategoryDetails) {
       var poolData = CricketDetailsDataClass();
-      pools.add(CricketDetailsItem(
-        details: details,
-        pooldata: poolData,
-      ));
+      pools.add(
+        CricketDetailsItem(
+          details: details,
+          pooldata: poolData,
+        ),
+      );
     }
   }
 
@@ -176,7 +178,7 @@ class _CricketPoolState extends State<CricketPool> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         var obtianedEmail = prefs.getString('email');
-                       String Category = "";
+                        String Category = "";
                         String AgeCategory = "";
                         for (int i = 0;
                             i < widget.AllCategoryDetails.length;
@@ -189,7 +191,7 @@ class _CricketPoolState extends State<CricketPool> {
                             AgeCategory += "-";
                           }
                         }
-                          final ChallengeDetails = CreateChallengeDetails(
+                        final ChallengeDetails = CreateChallengeDetails(
                             ORGANIZER_NAME: widget.EventManagerName,
                             ORGANIZER_ID: widget.EventManagerMobileNo,
                             USERID: obtianedEmail!.trim(),

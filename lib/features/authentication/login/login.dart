@@ -127,58 +127,63 @@ class _loginState extends State<login> {
           print("press material button ");
           Authentication.signInWithGoogle(context: context).then(
             (value) async {
-              EasyLoading.show(
-                  status: 'Loading...',
-                  indicator: const SpinKitThreeBounce(
-                    color: Color(0xFFE74545),
-                  ),
-                  maskType: EasyLoadingMaskType.black);
-              var parameter = {
-                'USERID': value!.email,
-              };
-              if (value.emailVerified) {
-                // user exist or not .
-                final json = jsonEncode(parameter);
-                print("findUserByIDApi : $findUserByIDApi, json : $json");
-                var response = await post(findUserByIDApi,
-                    headers: {
-                      "Accept": "application/json",
-                      "Content-Type": "application/json"
-                    },
-                    body: json,
-                    encoding: Encoding.getByName("utf-8"));
-                final jsonResponse = jsonDecode(response.body);
-                if (jsonResponse['EMAIL'] == value.email) {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  await prefs.setString('email', value.email!);
-                  Navigator.pushReplacement(
+              if (value == null) {
+                // nothing happen
+              } else {
+                print('value : ${value}');
+                EasyLoading.show(
+                    status: 'Loading...',
+                    indicator: const SpinKitThreeBounce(
+                      color: Color(0xFFE74545),
+                    ),
+                    maskType: EasyLoadingMaskType.black);
+                var parameter = {
+                  'USERID': value.email,
+                };
+                if (value.emailVerified) {
+                  // user exist or not .
+                  final json = jsonEncode(parameter);
+                  print("findUserByIDApi : $findUserByIDApi, json : $json");
+                  var response = await post(findUserByIDApi,
+                      headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                      },
+                      body: json,
+                      encoding: Encoding.getByName("utf-8"));
+                  final jsonResponse = jsonDecode(response.body);
+                  if (jsonResponse['EMAIL'] == value.email) {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.setString('email', value.email!);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Logged in successfully"),
+                      ),
+                    );
+                  }
+                  if (jsonResponse['Message'] == 'Failure') {
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomePage()));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Logged in successfully"),
-                    ),
-                  );
-                }
-                if (jsonResponse['Message'] == 'Failure') {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SubmitPage(
-                        email: value.email ?? '',
-                        password: '',
-                        fromGoogleSingIn: true,
-                        mobile: '',
-                        showMobileNumber: true,
+                        builder: (context) => SubmitPage(
+                          email: value.email ?? '',
+                          password: '',
+                          fromGoogleSingIn: true,
+                          mobile: '',
+                          showMobileNumber: true,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 }
+                EasyLoading.dismiss();
+                Authentication.signOut(context: context);
               }
-              EasyLoading.dismiss();
-              Authentication.signOut(context: context);
             },
           );
         },
