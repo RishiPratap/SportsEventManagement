@@ -267,7 +267,7 @@ class _MyBookings extends State<MyBookings> {
                     userdata[i].SPORT == "Cricket"
                         ? Container(
                             height: MediaQuery.of(context).size.height * 0.055,
-                            width: MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.2,
                             decoration: BoxDecoration(
                               color: const Color(0xffE74545),
                               borderRadius:
@@ -278,7 +278,7 @@ class _MyBookings extends State<MyBookings> {
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 var obtianedEmail = prefs.getString('email');
-    
+
                                 final cricketdetail = {
                                   "TOURNAMENT_ID": userdata[i].TOURNAMENT_ID
                                 };
@@ -304,7 +304,7 @@ class _MyBookings extends State<MyBookings> {
                                         BALL_TYPE: jsonData2["BALL_TYPE"])));
                               },
                               child: Center(
-                                child: Text("Edit Team Details",
+                                child: Text("Edit Team",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: deviceWidth * 0.035,
@@ -314,7 +314,7 @@ class _MyBookings extends State<MyBookings> {
                         : Text(""),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.055,
-                      width: MediaQuery.of(context).size.width * 0.45,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       decoration: BoxDecoration(
                         color: const Color(0xffE74545),
                         borderRadius: BorderRadius.circular(deviceWidth * 0.04),
@@ -347,7 +347,7 @@ class _MyBookings extends State<MyBookings> {
                             ),
                           );
                         },
-                        child: const Text("View Fixtures >",
+                        child: const Text("Fixtures >",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
