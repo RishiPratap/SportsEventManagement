@@ -55,12 +55,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                 height: deviceHeight * 0.1,
               ),
               InkWell(
-                onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                          pageBuilder: (a, b, c) => const HomePage()));
-                },
+                onTap: () {},
                 child: const Image(
                   alignment: Alignment.center,
                   image: AssetImage('assets/AARDENT.png'),
@@ -98,7 +93,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
-                  'Enter your email address we will send 4 digits code to your email.',
+                  'Please Enter your 6 digits OTP code here.',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
