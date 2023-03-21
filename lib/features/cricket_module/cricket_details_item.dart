@@ -36,8 +36,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
 
   @override
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
+
     return Container(
       margin: const EdgeInsets.only(left: 15, top: 15, right: 15, bottom: 15),
       child: Card(
@@ -108,11 +109,15 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                         value: value,
                       )).toList(),
                   onSaved: (val) => widget.pooldata.PoolSize = val.toString(),
-                  value: widget.pooldata.PoolSize,
+                  value: (widget.pooldata.PoolSize == '')
+                      ? null
+                      : widget.pooldata.PoolSize,
                   onChanged: (value) {
-                    setState(() {
-                      widget.pooldata.PoolSize = value as String;
-                    });
+                    setState(
+                      () {
+                        widget.pooldata.PoolSize = value as String;
+                      },
+                    );
                   },
                 ),
               ),
@@ -156,12 +161,17 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                         borderRadius: BorderRadius.circular(deviceWidth * 0.06),
                       )),
                   // value: widget.pooldata.PoolSize,
-                  items: TeamSizes.map((value) => DropdownMenuItem(
-                        child: Text(value),
-                        value: value,
-                      )).toList(),
+                  items: TeamSizes.map((value) {
+                    print('value ::: $value');
+                    return DropdownMenuItem(
+                      child: Text(value),
+                      value: value,
+                    );
+                  }).toList(),
                   onSaved: (val) => widget.pooldata.TeamSize = val.toString(),
-                  value: widget.pooldata.TeamSize,
+                  value: widget.pooldata.TeamSize == ''
+                      ? null
+                      : widget.pooldata.TeamSize,
                   onChanged: (value) {
                     setState(() {
                       widget.pooldata.TeamSize = value as String;
@@ -214,7 +224,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                         value: value,
                       )).toList(),
                   onSaved: (val) => widget.pooldata.Substitute = val.toString(),
-                  value: widget.pooldata.Substitute,
+                  value: widget.pooldata.Substitute == ''
+                      ? null
+                      : widget.pooldata.Substitute,
                   onChanged: (value) {
                     setState(() {
                       widget.pooldata.Substitute = value as String;
@@ -266,7 +278,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                         value: value,
                       )).toList(),
                   onSaved: (val) => widget.pooldata.BallType = val.toString(),
-                  value: widget.pooldata.BallType,
+                  value: widget.pooldata.BallType == ''
+                      ? null
+                      : widget.pooldata.BallType,
                   onChanged: (value) {
                     setState(() {
                       widget.pooldata.BallType = value as String;
@@ -319,7 +333,9 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                         value: value,
                       )).toList(),
                   onSaved: (val) => widget.pooldata.Overs = val.toString(),
-                  value: widget.pooldata.Overs,
+                  value: widget.pooldata.Overs == ''
+                      ? null
+                      : widget.pooldata.Overs,
                   onChanged: (value) {
                     setState(() {
                       widget.pooldata.Overs = value as String;
@@ -330,7 +346,6 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
               SizedBox(
                 height: deviceWidth * 0.02,
               ),
-
               // Entry Fee
               Container(
                 margin: EdgeInsets.all(deviceWidth * 0.04),
