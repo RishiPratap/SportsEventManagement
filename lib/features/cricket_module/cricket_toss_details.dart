@@ -32,6 +32,10 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
   var chose_to = "";
   var battingTeamName = "";
   var bowlingTeamName = "";
+  var firstTeamPlayers = <String>[];
+  var secondTeamPlayers = <String>[];
+  var battingTeamPlayers = <String>[];
+  var bowlingTeamPlayers = <String>[];
   @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
@@ -355,7 +359,24 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                       headers: {
                                         "Content-Type": "application/json"
                                       });
-                                  print("👌👌👌👌 Response : ${response.body}");
+                                  var allPlayersData = jsonDecode(response.body);
+                                  print("😒😒😒😒 Response : $allPlayersData");
+                                  // set the batting team and bowling team players
+                                  for(int i=0;i<allPlayersData['one'].length;i++){
+                                    firstTeamPlayers.add((allPlayersData['one'][i]['NAME']).toString());
+                                  }
+                                  for(int i=0;i<allPlayersData['two'].length;i++){
+                                    secondTeamPlayers.add((allPlayersData['two'][i]['NAME']).toString());
+                                  }
+                                  if(battingTeamName==widget.firstTeamName){
+                                    battingTeamPlayers = firstTeamPlayers;
+                                    bowlingTeamPlayers = secondTeamPlayers;
+                                  }
+                                  else if(battingTeamName==widget.secondTeamName){
+                                    battingTeamPlayers = secondTeamPlayers;
+                                    bowlingTeamPlayers = firstTeamPlayers;
+                                  }
+                                  print("Battting team players are $battingTeamPlayers and bowling team players are $bowlingTeamPlayers");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -363,7 +384,10 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                         CricketStrickerAndNonStrickerDetails(
                                             battingTeamName: battingTeamName,
                                             bowlingTeamName: bowlingTeamName,
-                                            tournamentId: widget.tournamentId
+                                            tournamentId: widget.tournamentId,
+                                            allPlayersData: allPlayersData,
+                                            battingTeamPlayers: battingTeamPlayers,
+                                            bowlingTeamPlayers: bowlingTeamPlayers,
                                         )),
                               );
                             },
