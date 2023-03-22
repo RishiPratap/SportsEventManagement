@@ -7,6 +7,7 @@ import 'Helper/constant.dart';
 import 'LiveMaintainerMatchSelection.dart';
 import 'features/home_page/home_page.dart';
 import 'features/menu/Menu.dart';
+import 'features/cricket_module/cricket_match_details_input.dart';
 
 class ScoreAChallenge extends StatefulWidget {
   final String? name;
@@ -372,11 +373,12 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                     }
                                   }
                                 } else if (sport_name == "Cricket") {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text("Yet To be implemented"),
-                                  ));
-                                } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CricketMatchDetailsInput()));
+                              } else {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
                                     content: Text("Please Select a sport"),
