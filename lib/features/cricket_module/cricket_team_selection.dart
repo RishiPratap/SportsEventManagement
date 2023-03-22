@@ -177,6 +177,9 @@ void addInput(context, tournamentId, email) {
                       "CAPTAIN": email,
                       "NAME": addteam.text,
                     });
+                    setState((){
+                      teamName = addteam.text
+                    })
                     print(sendData);
 
                     var url =
