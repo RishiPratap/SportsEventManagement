@@ -1,54 +1,25 @@
-// Lines of error => 197-208.
-// Reason: For some reason, battingTeamPlayers is being treates as a List<dynamic> instead of a List<String>.
-
 import 'package:flutter/material.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_score.dart';
 
-class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
-  final String tournamentId;
-  final String battingTeamName;
-  final String bowlingTeamName;
-  var allPlayersData;
-  var battingTeamPlayers;
-  var bowlingTeamPlayers;
-  CricketStrickerAndNonStrickerDetails({
+class MatchResult extends StatefulWidget {
+  MatchResult({
     Key? key,
-    required this.tournamentId,
-    required this.battingTeamName,
-    required this.bowlingTeamName,
-    required this.allPlayersData,
-    required this.battingTeamPlayers,
-    required this.bowlingTeamPlayers,
   }) : super(key: key);
   @override
-  State<CricketStrickerAndNonStrickerDetails> createState() =>
-      _CricketStrickerAndNonStrickerDetailsState();
+  State<MatchResult> createState() => _MatchResult();
 }
 
-class _CricketStrickerAndNonStrickerDetailsState
-    extends State<CricketStrickerAndNonStrickerDetails> {
+class _MatchResult extends State<MatchResult> {
   @override
   void initState() {
     super.initState();
-    print("😌😌" + widget.tournamentId);
-    print("😌😌" + widget.battingTeamName);
-    print("😌😌" + widget.bowlingTeamName);
-    print("😌😌" + widget.battingTeamPlayers.toString());
-    print("😌😌" + widget.bowlingTeamPlayers.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     // declaring the list of players
-    List<String> battingTeamPlayersList =
-        widget.battingTeamPlayers as List<String>;
-    List<String>? sliced = battingTeamPlayersList.sublist(0, 5);
-
-    List<String> bowlingTeamPlayersList =
-        widget.bowlingTeamPlayers as List<String>;
-    List<String>? sliced2 = bowlingTeamPlayersList.sublist(0, 5);
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -174,15 +145,10 @@ class _CricketStrickerAndNonStrickerDetailsState
                   color: Colors.white.withOpacity(0.2),
                   child: Column(
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: Center(
-                          child: Text(
-                            widget.battingTeamName,
-                            style: const TextStyle(
-                                color: Color(0xffE74545),
-                                fontWeight: FontWeight.w700),
-                          ),
+                          child: Text("Match Result"),
                         ),
                       ),
                       Expanded(
@@ -200,17 +166,31 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       deviceWidth * 0.02,
                                       0),
                                   // Select Striker
-                                  child: DropdownButtonFormField(
-                                    hint: const Text("Select Striker"),
-                                    items: sliced
-                                        .map((e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e.toString(),
-                                            ))
-                                        .toList(),
-                                    onChanged: (e) {
-                                      print(e.toString());
-                                    },
+                                  child: Container(
+                                    child: Row(children: const <Widget>[
+                                      Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "Team A",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "109/2 (10)",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
                                   ),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
@@ -234,17 +214,31 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0,
                                       deviceWidth * 0.02,
                                       0),
-                                  child: DropdownButtonFormField(
-                                    hint: const Text("Select Non Striker"),
-                                    items: sliced
-                                        .map((e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e.toString(),
-                                            ))
-                                        .toList(),
-                                    onChanged: (e) {
-                                      print(e.toString());
-                                    },
+                                  child: Container(
+                                    child: Row(children: const <Widget>[
+                                      Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "Team B",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "110/2 (9.2)",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
                                   ),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
@@ -254,15 +248,10 @@ class _CricketStrickerAndNonStrickerDetailsState
                           ],
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: Center(
-                          child: Text(
-                            widget.bowlingTeamName,
-                            style: const TextStyle(
-                                color: Color(0xffE74545),
-                                fontWeight: FontWeight.w700),
-                          ),
+                          child: Text("Team A won by 5 wickets"),
                         ),
                       ),
                       Expanded(
@@ -279,17 +268,31 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0,
                                       deviceWidth * 0.02,
                                       0),
-                                  child: DropdownButtonFormField(
-                                    hint: const Text("Select Bowler"),
-                                    items: sliced2
-                                        .map((e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e.toString(),
-                                            ))
-                                        .toList(),
-                                    onChanged: (e) {
-                                      print(e.toString());
-                                    },
+                                  child: Container(
+                                    child: Row(children: const <Widget>[
+                                      Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "Man of the Match",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "Rohit",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
                                   ),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
@@ -316,13 +319,9 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       deviceWidth * 0.04)),
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const CricketScore()),
-                              );
+                              Navigator.pop(context);
                             },
-                            child: const Text("Start Scoring"),
+                            child: const Text("Confirm"),
                           ),
                         ),
                       ),
@@ -335,61 +334,5 @@ class _CricketStrickerAndNonStrickerDetailsState
         ),
       ),
     );
-  }
-}
-
-class match_Details {
-  late String matchid;
-  late List<String> team_1;
-  late List<String> team_2;
-  late int team_1_score;
-  late int team_2_score;
-  late int team_1_wickets;
-  late int team_2_wickets;
-  late int team_1_target;
-  late int team_2_target;
-  late String winning_team;
-  late int no_of_overs;
-  late String ball_type;
-  late String city;
-  late int playing_team_size;
-  late String toss_won_by;
-  late String elected_to;
-  match_Details(
-      {required this.matchid,
-      required this.team_1,
-      required this.team_2,
-      required this.team_1_score,
-      required this.team_2_score,
-      required this.team_1_wickets,
-      required this.team_2_wickets,
-      required this.team_1_target,
-      required this.team_2_target,
-      required this.winning_team,
-      required this.no_of_overs,
-      required this.ball_type,
-      required this.city,
-      required this.playing_team_size,
-      required this.toss_won_by,
-      required this.elected_to});
-  Map<String, dynamic> toMap() {
-    return {
-      "matchid": matchid,
-      "team_1": team_1,
-      "team_2": team_2,
-      "team_1_score": team_1_score,
-      "team_2_score": team_2_score,
-      "team_1_wickets": team_1_wickets,
-      "team_2_wickets": team_2_wickets,
-      "team_1_target": team_1_target,
-      "team_2_target": team_2_target,
-      "winning_team": winning_team,
-      "no_of_overs": no_of_overs,
-      "ball_type": ball_type,
-      "city": city,
-      "playing_team_size": playing_team_size,
-      "toss_won_by": toss_won_by,
-      "elected_to": elected_to
-    };
   }
 }

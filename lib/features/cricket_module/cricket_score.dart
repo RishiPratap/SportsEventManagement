@@ -1,3 +1,4 @@
+import 'package:ardent_sports/features/cricket_module/MatchResult.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -22,6 +23,7 @@ double _currentBalleOver = 0.0;
 int _currentBowlingCount = 0;
 int _currentbowlingExtra = 0;
 bool allowLastmanPostion = true;
+List<String> bowlerList = ['Bowler 1', 'Bowler 2', 'Bowler 3', 'Bowler 4'];
 List<String> WicketsType = [
   'LBW',
   'Bowled',
@@ -86,11 +88,11 @@ class _CricketScoreState extends State<CricketScore> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent),
                 onPressed: () {
-                  print("Match Result pressed");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MatchResult()));
                 },
                 child: Text(
                   "Match Result >",
-                  // "Match Results >",
                   style: TextStyle(
                       fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
@@ -345,14 +347,40 @@ class _CricketScoreState extends State<CricketScore> {
                 image: const NetworkImage(
                     'https://cdn.iconscout.com/icon/premium/png-256-thumb/cricket-ball-2574544-2171281.png'),
               ),
-              Text(
-                "Jay Pokar",
-                style: TextStyle(
-                  fontSize: w * 0.04,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
+              InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                              title: Text("Choose Bowler"),
+                              content: Container(
+                                height: h * 0.3,
+                                width: w * 0.3,
+                                child: ListView.builder(
+                                  itemCount: bowlerList.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Text(bowlerList[index]),
+                                      onTap: () {
+                                        setState(() {
+                                          bowlerList[0] = bowlerList[index];
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ));
+                  },
+                  child: Text(
+                    bowlerList[0],
+                    style: TextStyle(
+                      fontSize: w * 0.04,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  )),
             ],
           ),
           Container(

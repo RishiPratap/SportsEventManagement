@@ -28,14 +28,15 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
     print("😌😌" + widget.firstTeamName);
     print("😌😌" + widget.secondTeamName);
   }
+
   var team_name = "";
   var chose_to = "";
   var battingTeamName = "";
   var bowlingTeamName = "";
   var firstTeamPlayers = <String>[];
   var secondTeamPlayers = <String>[];
-  var battingTeamPlayers = <String>[];
-  var bowlingTeamPlayers = <String>[];
+  var battingTeamPlayers = [];
+  var bowlingTeamPlayers = [];
   @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
@@ -264,13 +265,17 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                     child: TextButton(
                                       onPressed: () {
                                         chose_to = "bat";
-                                        if(team_name == widget.firstTeamName){
-                                          battingTeamName = widget.firstTeamName;
-                                          bowlingTeamName = widget.secondTeamName;
-                                        }
-                                        else if(team_name == widget.secondTeamName){
-                                          battingTeamName = widget.secondTeamName;
-                                          bowlingTeamName = widget.firstTeamName;
+                                        if (team_name == widget.firstTeamName) {
+                                          battingTeamName =
+                                              widget.firstTeamName;
+                                          bowlingTeamName =
+                                              widget.secondTeamName;
+                                        } else if (team_name ==
+                                            widget.secondTeamName) {
+                                          battingTeamName =
+                                              widget.secondTeamName;
+                                          bowlingTeamName =
+                                              widget.firstTeamName;
                                         }
                                       },
                                       child: const Text(
@@ -298,13 +303,17 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                     child: TextButton(
                                       onPressed: () {
                                         chose_to = "bowl";
-                                        if(team_name == widget.firstTeamName){
-                                          battingTeamName = widget.secondTeamName;
-                                          bowlingTeamName = widget.firstTeamName;
-                                        }
-                                        else if(team_name == widget.secondTeamName){
-                                          battingTeamName = widget.firstTeamName;
-                                          bowlingTeamName = widget.secondTeamName;
+                                        if (team_name == widget.firstTeamName) {
+                                          battingTeamName =
+                                              widget.secondTeamName;
+                                          bowlingTeamName =
+                                              widget.firstTeamName;
+                                        } else if (team_name ==
+                                            widget.secondTeamName) {
+                                          battingTeamName =
+                                              widget.firstTeamName;
+                                          bowlingTeamName =
+                                              widget.secondTeamName;
                                         }
                                       },
                                       child: const Text(
@@ -339,55 +348,71 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                       deviceWidth * 0.04)),
                             ),
                             onPressed: () async {
-                              print("team :$team_name won the toss and chose to $chose_to. The tournament id is ${widget.tournamentId}");
-                              print("Batting team is $battingTeamName and bowling team is $bowlingTeamName");
+                              print(
+                                  "team :$team_name won the toss and chose to $chose_to. The tournament id is ${widget.tournamentId}");
+                              print(
+                                  "Batting team is $battingTeamName and bowling team is $bowlingTeamName");
                               // api call
-                              var tossDetailsObj={
-                                "TOURNAMENT_ID":widget.tournamentId,
-                                "TEAM_FORMAT":[widget.firstTeamName,widget.secondTeamName],
-                                "CHOSEN_TO":chose_to,
-                                "TEAM_NAME":team_name
+                              var tossDetailsObj = {
+                                "TOURNAMENT_ID": widget.tournamentId,
+                                "TEAM_FORMAT": [
+                                  widget.firstTeamName,
+                                  widget.secondTeamName
+                                ],
+                                "CHOSEN_TO": chose_to,
+                                "TEAM_NAME": team_name
                               };
                               var sendTossDetailsObj =
-                                      jsonEncode(tossDetailsObj);
+                                  jsonEncode(tossDetailsObj);
                               print(
-                                      "👌 Object is : $tossDetailsObj and the json sent is $sendTossDetailsObj");
-                                  var url =
-                                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/updateToss";
-                                  var response = await post(Uri.parse(url),
-                                      body: sendTossDetailsObj,
-                                      headers: {
-                                        "Content-Type": "application/json"
-                                      });
-                                  var allPlayersData = jsonDecode(response.body);
-                                  print("😒😒😒😒 Response : $allPlayersData");
-                                  // set the batting team and bowling team players
-                                  for(int i=0;i<allPlayersData['one'].length;i++){
-                                    firstTeamPlayers.add((allPlayersData['one'][i]['NAME']).toString());
-                                  }
-                                  for(int i=0;i<allPlayersData['two'].length;i++){
-                                    secondTeamPlayers.add((allPlayersData['two'][i]['NAME']).toString());
-                                  }
-                                  if(battingTeamName==widget.firstTeamName){
-                                    battingTeamPlayers = firstTeamPlayers;
-                                    bowlingTeamPlayers = secondTeamPlayers;
-                                  }
-                                  else if(battingTeamName==widget.secondTeamName){
-                                    battingTeamPlayers = secondTeamPlayers;
-                                    bowlingTeamPlayers = firstTeamPlayers;
-                                  }
-                                  print("Battting team players are $battingTeamPlayers and bowling team players are $bowlingTeamPlayers");
+                                  "👌 Object is : $tossDetailsObj and the json sent is $sendTossDetailsObj");
+                              var url =
+                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/updateToss";
+                              var response = await post(Uri.parse(url),
+                                  body: sendTossDetailsObj,
+                                  headers: {
+                                    "Content-Type": "application/json"
+                                  });
+                              var allPlayersData = jsonDecode(response.body);
+                              print("😒😒😒😒 Response : $allPlayersData");
+                              // set the batting team and bowling team players
+                              for (int i = 0;
+                                  i < allPlayersData['one'].length;
+                                  i++) {
+                                firstTeamPlayers.add((allPlayersData['one'][i]
+                                        ['NAME'])
+                                    .toString());
+                              }
+                              for (int i = 0;
+                                  i < allPlayersData['two'].length;
+                                  i++) {
+                                secondTeamPlayers.add((allPlayersData['two'][i]
+                                        ['NAME'])
+                                    .toString());
+                              }
+                              if (battingTeamName == widget.firstTeamName) {
+                                battingTeamPlayers = firstTeamPlayers;
+                                bowlingTeamPlayers = secondTeamPlayers;
+                              } else if (battingTeamName ==
+                                  widget.secondTeamName) {
+                                battingTeamPlayers = secondTeamPlayers;
+                                bowlingTeamPlayers = firstTeamPlayers;
+                              }
+                              print(
+                                  "Battting team players are $battingTeamPlayers and bowling team players are $bowlingTeamPlayers");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         CricketStrickerAndNonStrickerDetails(
-                                            battingTeamName: battingTeamName,
-                                            bowlingTeamName: bowlingTeamName,
-                                            tournamentId: widget.tournamentId,
-                                            allPlayersData: allPlayersData,
-                                            battingTeamPlayers: battingTeamPlayers,
-                                            bowlingTeamPlayers: bowlingTeamPlayers,
+                                          battingTeamName: battingTeamName,
+                                          bowlingTeamName: bowlingTeamName,
+                                          tournamentId: widget.tournamentId,
+                                          allPlayersData: allPlayersData,
+                                          battingTeamPlayers:
+                                              battingTeamPlayers,
+                                          bowlingTeamPlayers:
+                                              bowlingTeamPlayers,
                                         )),
                               );
                             },
