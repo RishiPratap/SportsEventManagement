@@ -1,16 +1,37 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import '../../Helper/apis.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_stricker_and_non_stricker_details.dart';
 
 class CricketTossDetails extends StatefulWidget {
-  const CricketTossDetails({Key? key}) : super(key: key);
+  final String firstTeamName;
+  final String secondTeamName;
+  final String tournamentId;
+  const CricketTossDetails({
+    Key? key,
+    required this.firstTeamName,
+    required this.secondTeamName,
+    required this.tournamentId,
+  }) : super(key: key);
 
   @override
   State<CricketTossDetails> createState() => _CricketTossDetailsState();
 }
 
 class _CricketTossDetailsState extends State<CricketTossDetails> {
+  @override
+  void initState() {
+    super.initState();
+    print("😌😌" + widget.firstTeamName);
+    print("😌😌" + widget.secondTeamName);
+  }
+  var team_name = "";
+  var chose_to = "";
+  var battingTeamName = "";
+  var bowlingTeamName = "";
   @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
@@ -145,6 +166,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                             "Toss Won By",
                             style: TextStyle(
                                 color: Color(0xffE74545),
+                                fontSize: 20,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -165,9 +187,11 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                       0),
                                   child: Center(
                                     child: TextButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Team A",
+                                      onPressed: () {
+                                        team_name = widget.firstTeamName;
+                                      },
+                                      child: Text(
+                                        widget.firstTeamName,
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -189,9 +213,11 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                       0),
                                   child: Center(
                                     child: TextButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Team B",
+                                      onPressed: () {
+                                        team_name = widget.secondTeamName;
+                                      },
+                                      child: Text(
+                                        widget.secondTeamName,
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -211,6 +237,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                             "elected to",
                             style: TextStyle(
                                 color: Color(0xffE74545),
+                                fontSize: 20,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -231,7 +258,17 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                       0),
                                   child: Center(
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        chose_to = "bat";
+                                        if(team_name == widget.firstTeamName){
+                                          battingTeamName = widget.firstTeamName;
+                                          bowlingTeamName = widget.secondTeamName;
+                                        }
+                                        else if(team_name == widget.secondTeamName){
+                                          battingTeamName = widget.secondTeamName;
+                                          bowlingTeamName = widget.firstTeamName;
+                                        }
+                                      },
                                       child: const Text(
                                         "Bat",
                                         style: TextStyle(color: Colors.white),
@@ -255,7 +292,17 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                       0),
                                   child: Center(
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        chose_to = "bowl";
+                                        if(team_name == widget.firstTeamName){
+                                          battingTeamName = widget.secondTeamName;
+                                          bowlingTeamName = widget.firstTeamName;
+                                        }
+                                        else if(team_name == widget.secondTeamName){
+                                          battingTeamName = widget.firstTeamName;
+                                          bowlingTeamName = widget.secondTeamName;
+                                        }
+                                      },
                                       child: const Text(
                                         "Bowl",
                                         style: TextStyle(color: Colors.white),
@@ -287,12 +334,37 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   borderRadius: BorderRadius.circular(
                                       deviceWidth * 0.04)),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
+                              print("team :$team_name won the toss and chose to $chose_to. The tournament id is ${widget.tournamentId}");
+                              print("Batting team is $battingTeamName and bowling team is $bowlingTeamName");
+                              // api call
+                              var tossDetailsObj={
+                                "TOURNAMENT_ID":widget.tournamentId,
+                                "TEAM_FORMAT":[widget.firstTeamName,widget.secondTeamName],
+                                "CHOSEN_TO":chose_to,
+                                "TEAM_NAME":team_name
+                              };
+                              var sendTossDetailsObj =
+                                      jsonEncode(tossDetailsObj);
+                              print(
+                                      "👌 Object is : $tossDetailsObj and the json sent is $sendTossDetailsObj");
+                                  var url =
+                                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/updateToss";
+                                  var response = await post(Uri.parse(url),
+                                      body: sendTossDetailsObj,
+                                      headers: {
+                                        "Content-Type": "application/json"
+                                      });
+                                  print("👌👌👌👌 Response : ${response.body}");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const CricketStrickerAndNonStrickerDetails()),
+                                        CricketStrickerAndNonStrickerDetails(
+                                            battingTeamName: battingTeamName,
+                                            bowlingTeamName: bowlingTeamName,
+                                            tournamentId: widget.tournamentId
+                                        )),
                               );
                             },
                             child: const Text("Next"),

@@ -4,21 +4,15 @@ import '../home_page/home_page.dart';
 import 'cricket_toss_details.dart';
 
 class CricketTeamDetasilsInput extends StatefulWidget {
-  final String no_of_overs;
-  final String playing_team_size;
-  final String Substitutes;
-  final String ball_type;
-  final String city;
-  final String match_name;
-  const CricketTeamDetasilsInput(
-      {Key? key,
-      required this.no_of_overs,
-      required this.playing_team_size,
-      required this.Substitutes,
-      required this.ball_type,
-      required this.city,
-      required this.match_name})
-      : super(key: key);
+  final String firstTeamName;
+  final String secondTeamName;
+  final String tournamentId;
+  const CricketTeamDetasilsInput({
+    Key? key,
+    required this.firstTeamName,
+    required this.secondTeamName,
+    required this.tournamentId,
+  }) : super(key: key);
 
   @override
   State<CricketTeamDetasilsInput> createState() =>
@@ -26,6 +20,13 @@ class CricketTeamDetasilsInput extends StatefulWidget {
 }
 
 class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
+  @override
+  void initState() {
+    super.initState();
+    print("😌" + widget.firstTeamName);
+    print("😌" + widget.secondTeamName);
+  }
+
   List<String> teamA_Players = [];
   List<String> teamB_Players = [];
   List<Container> buildPlayers(int count, String team_nam) {
@@ -109,8 +110,8 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
 
   @override
   Widget build(BuildContext context) {
-     deviceWidth = MediaQuery.of(context).size.width;
-     deviceHeight = MediaQuery.of(context).size.height;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -128,7 +129,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                   Expanded(
                     flex: 1,
                     child: InkWell(
-                        onTap: () {
+                      onTap: () {
                         Navigator.pushReplacement(
                             context,
                             PageRouteBuilder(
@@ -251,37 +252,14 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                               color: Colors.black.withOpacity(0.4)),
                           child: Row(
                             children: [
-                              const Expanded(
+                              Expanded(
                                 flex: 1,
-                                child: Text("    Team A Name"),
+                                child: Text(widget.firstTeamName,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: deviceWidth * 0.05)),
                               ),
-                              Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: double.infinity,
-                                  )),
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  width: deviceWidth * 0.09,
-                                  height: deviceWidth * 0.07,
-                                  margin: EdgeInsets.fromLTRB(
-                                      deviceWidth * 0.08, 0, 0, 0),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              leaddialog(context, "Team A", 11,
-                                                  deviceWidth));
-                                    },
-                                    child: Image.asset(
-                                      "assets/edit_button.png",
-                                      fit: BoxFit.fitHeight,
-                                    ),
-                                  ),
-                                ),
-                              )
                             ],
                           ),
                         ),
@@ -289,7 +267,11 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                       const Expanded(
                         flex: 6,
                         child: Center(
-                          child: Text("Vs"),
+                          child: Text("Vs",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold)),
                         ),
                       ),
                       Expanded(
@@ -305,36 +287,12 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                               color: Colors.black.withOpacity(0.4)),
                           child: Row(
                             children: [
-                              const Expanded(
-                                flex: 1,
-                                child: Text("    Team B Name"),
-                              ),
                               Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: double.infinity,
-                                  )),
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  width: deviceWidth * 0.09,
-                                  height: deviceWidth * 0.07,
-                                  margin: EdgeInsets.fromLTRB(
-                                      deviceWidth * 0.08, 0, 0, 0),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              leaddialog(context, "Team B", 11,
-                                                  deviceWidth));
-                                    },
-                                    child: Image.asset(
-                                      "assets/edit_button.png",
-                                      fit: BoxFit.fitHeight,
-                                    ),
-                                  ),
-                                ),
+                                child: Text(widget.secondTeamName,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: deviceWidth * 0.05)),
                               )
                             ],
                           ),
@@ -356,8 +314,11 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CricketTossDetails()));
+                                    builder: (context) => CricketTossDetails(
+                                          firstTeamName: widget.firstTeamName,
+                                          secondTeamName: widget.secondTeamName,
+                                          tournamentId: widget.tournamentId,
+                                        )));
                           },
                           child: const Text("Next"),
                         ),
@@ -372,24 +333,4 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
       ),
     );
   }
-
-  Dialog leaddialog(BuildContext context, String team_name, int team_size,
-          double deviceWidth) =>
-      Dialog(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height -
-              MediaQuery.of(context).size.height / 6,
-          child: Card(
-            elevation: 10,
-            color: Colors.white.withOpacity(0.2),
-            child: SingleChildScrollView(
-              child: Column(
-                children: buildPlayers(
-                    int.parse(widget.playing_team_size), team_name),
-              ),
-            ),
-          ),
-        ),
-      );
 }

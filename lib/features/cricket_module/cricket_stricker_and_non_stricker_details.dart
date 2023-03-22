@@ -4,7 +4,14 @@ import '../home_page/home_page.dart';
 import 'cricket_score.dart';
 
 class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
-  const CricketStrickerAndNonStrickerDetails({Key? key}) : super(key: key);
+  final String tournamentId;
+  final String battingTeamName;
+  final String bowlingTeamName;
+  const CricketStrickerAndNonStrickerDetails({Key? key,
+    required this.tournamentId,
+    required this.battingTeamName,
+    required this.bowlingTeamName
+  }) : super(key: key);
 
   @override
   State<CricketStrickerAndNonStrickerDetails> createState() =>
@@ -13,6 +20,13 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
 
 class _CricketStrickerAndNonStrickerDetailsState
     extends State<CricketStrickerAndNonStrickerDetails> {
+        @override
+  void initState() {
+    super.initState();
+    print("😌😌" + widget.tournamentId);
+    print("😌😌" + widget.battingTeamName);
+    print("😌😌" + widget.bowlingTeamName);
+  }
   @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
@@ -140,12 +154,12 @@ class _CricketStrickerAndNonStrickerDetailsState
                   color: Colors.white.withOpacity(0.2),
                   child: Column(
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
-                            "Team A",
-                            style: TextStyle(
+                            widget.battingTeamName,
+                            style: const TextStyle(
                                 color: Color(0xffE74545),
                                 fontWeight: FontWeight.w700),
                           ),
@@ -209,12 +223,12 @@ class _CricketStrickerAndNonStrickerDetailsState
                           ],
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
-                            "Team B",
-                            style: TextStyle(
+                            widget.bowlingTeamName,
+                            style: const TextStyle(
                                 color: Color(0xffE74545),
                                 fontWeight: FontWeight.w700),
                           ),

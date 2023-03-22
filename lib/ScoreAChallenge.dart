@@ -7,7 +7,7 @@ import 'Helper/constant.dart';
 import 'LiveMaintainerMatchSelection.dart';
 import 'features/home_page/home_page.dart';
 import 'features/menu/Menu.dart';
-import 'features/cricket_module/cricket_match_details_input.dart';
+import 'features/cricket_module/cricket_team_details_input.dart';
 
 class ScoreAChallenge extends StatefulWidget {
   final String? name;
@@ -373,12 +373,41 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                     }
                                   }
                                 } else if (sport_name == "Cricket") {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const CricketMatchDetailsInput()));
-                              } else {
+                                  // api call
+                                  var tournamentIdObj = {
+                                    "TOURNAMENT_ID": challengeid.text
+                                  };
+                                  var sendTournamentIdObj =
+                                      jsonEncode(tournamentIdObj);
+                                  print(
+                                      "👌 Object is : $tournamentIdObj and the json sent is $sendTournamentIdObj");
+                                  var url =
+                                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/startScoringFlow";
+                                  var response = await post(Uri.parse(url),
+                                      body: sendTournamentIdObj,
+                                      headers: {
+                                        "Content-Type": "application/json"
+                                      });
+                                  print("👌👌👌👌 Response : ${response.body}");
+                                  var firstTeamName =
+                                      jsonDecode(response.body)[0];
+                                  var secondTeamName =
+                                      jsonDecode(response.body)[1];
+                                  print(
+                                      "👌👌👌👌 First Team Name : $firstTeamName");
+                                  print(
+                                      "👌👌👌👌 Second Team Name : $secondTeamName");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CricketTeamDetasilsInput(
+                                                firstTeamName: firstTeamName,
+                                                secondTeamName: secondTeamName,
+                                                tournamentId:
+                                                    challengeid.text,
+                                              )));
+                                } else {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
                                     content: Text("Please Select a sport"),

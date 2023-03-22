@@ -1,3 +1,5 @@
+// Currently, this file is not used in the project. 
+
 import 'package:flutter/material.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
@@ -334,14 +336,8 @@ class _CricketMatchDetailsInputState extends State<CricketMatchDetailsInput> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            CricketTeamDetasilsInput(
-                                          no_of_overs: SelectedOver!,
-                                          playing_team_size: Selectedteamsize!,
-                                          Substitutes: Selectedsubstitute!,
-                                          ball_type: Selectedballtype!,
-                                          city: city.text,
-                                          match_name: match_name.text,
-                                        ),
+                                            // CricketTeamDetasilsInput(),
+                                            CricketMatchDetailsInput(),
                                       ),
                                     );
                                   }
