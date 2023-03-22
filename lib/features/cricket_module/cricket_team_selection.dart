@@ -139,7 +139,10 @@ void addInput(context, tournamentId, email) {
       builder: (_) => SimpleDialog(
             contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
             title: const Text("Enter Team Name"),
-            children: [
+            children: <Widget>[
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                  return
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(children: [
@@ -168,7 +171,7 @@ void addInput(context, tournamentId, email) {
                   ),
                   SizedBox(height: 10),
                 ]),
-              ),
+              );
               TextButton(
                   onPressed: () async {
                     Navigator.pop(context);
@@ -178,8 +181,8 @@ void addInput(context, tournamentId, email) {
                       "NAME": addteam.text,
                     });
                     setState((){
-                      teamName = addteam.text
-                    })
+                      teamName = addteam.text;
+                    });
                     print(sendData);
 
                     var url =
@@ -189,9 +192,9 @@ void addInput(context, tournamentId, email) {
                         headers: {"Content-Type": "application/json"});
                     print(response.body);
                   },
-                  child: const Text("Submit"))
-            ],
-          ));
+                  child: const Text("Submit"));
+                    },
+          )]));
 }
 
 printdatalist(dynamic data, dynamic details) {
