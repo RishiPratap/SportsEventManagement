@@ -1,11 +1,27 @@
+// Lines of error => 197-208. 
+// Reason: For some reason, battingTeamPlayers is being treates as a List<dynamic> instead of a List<String>.
+
 import 'package:flutter/material.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_score.dart';
 
 class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
-  const CricketStrickerAndNonStrickerDetails({Key? key}) : super(key: key);
-
+  final String tournamentId;
+  final String battingTeamName;
+  final String bowlingTeamName;
+  final List allPlayersData;
+  final List<String> battingTeamPlayers;
+  final List<String> bowlingTeamPlayers;
+  const CricketStrickerAndNonStrickerDetails({
+    Key? key,
+    required this.tournamentId,
+    required this.battingTeamName,
+    required this.bowlingTeamName,
+    required this.allPlayersData,
+    required this.battingTeamPlayers,
+    required this.bowlingTeamPlayers,
+  }) : super(key: key);
   @override
   State<CricketStrickerAndNonStrickerDetails> createState() =>
       _CricketStrickerAndNonStrickerDetailsState();
@@ -14,7 +30,19 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
 class _CricketStrickerAndNonStrickerDetailsState
     extends State<CricketStrickerAndNonStrickerDetails> {
   @override
+  void initState() {
+    super.initState();
+    print("😌😌" + widget.tournamentId);
+    print("😌😌" + widget.battingTeamName);
+    print("😌😌" + widget.bowlingTeamName);
+    print("😌😌" + widget.battingTeamPlayers.toString());
+    print("😌😌" + widget.bowlingTeamPlayers.toString());
+  }
+  @override
   Widget build(BuildContext context) {
+    // declaring the list of players
+    List<String> battingTeamPlayersList = widget.battingTeamPlayers;
+    List<String> bowlingTeamPlayersList = widget.bowlingTeamPlayers;
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -140,12 +168,12 @@ class _CricketStrickerAndNonStrickerDetailsState
                   color: Colors.white.withOpacity(0.2),
                   child: Column(
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
-                            "Team A",
-                            style: TextStyle(
+                            widget.battingTeamName,
+                            style: const TextStyle(
                                 color: Color(0xffE74545),
                                 fontWeight: FontWeight.w700),
                           ),
@@ -165,12 +193,18 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0,
                                       deviceWidth * 0.02,
                                       0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: const Text(
-                                      "Select Striker",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                  // Select Striker
+                                  child: DropdownButtonFormField(
+                                    hint: Text("Select Striker"),
+                                    items: battingTeamPlayersList
+                                        .map((e) => DropdownMenuItem(
+                                              child: Text(e),
+                                              value: e,
+                                            ))
+                                        .toList(),
+                                    onChanged: (value) {
+                                      print(value);
+                                    },
                                   ),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
@@ -209,12 +243,12 @@ class _CricketStrickerAndNonStrickerDetailsState
                           ],
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 2,
                         child: Center(
                           child: Text(
-                            "Team B",
-                            style: TextStyle(
+                            widget.bowlingTeamName,
+                            style: const TextStyle(
                                 color: Color(0xffE74545),
                                 fontWeight: FontWeight.w700),
                           ),
