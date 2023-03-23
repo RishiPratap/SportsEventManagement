@@ -83,7 +83,7 @@ List<Card> getTournaments(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              userdata[i].TOURNAMENT_NAME.length > 30
+                              userdata[i].TOURNAMENT_NAME.length > 12
                                   ? userdata[i]
                                           .TOURNAMENT_NAME
                                           .substring(0, 30) +
@@ -91,9 +91,9 @@ List<Card> getTournaments(
                                   : userdata[i].TOURNAMENT_NAME,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black),
+                                  color: Color.fromARGB(255, 123, 81, 81)),
                             ),
                             SizedBox(
                               height: 05,
