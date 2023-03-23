@@ -1,6 +1,3 @@
-// Lines of error => 197-208.
-// Reason: For some reason, battingTeamPlayers is being treates as a List<dynamic> instead of a List<String>.
-
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +5,13 @@ import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_score.dart';
 
-
 int strikerIndex = -1;
 int non_strikerIndex = -1;
 int baller_index = -1;
 var selectedStriker;
 var selectedNonStriker;
 var selectedBaller;
+
 class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   final String tournamentId;
   final String battingTeamName;
@@ -22,6 +19,8 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   final int overs;
   final int wickets;
   final bool first;
+  final String tossWonBy;
+  final String tossWinnerChoseTo;
   var battingTeamPlayers;
   var bowlingTeamPlayers;
   CricketStrickerAndNonStrickerDetails({
@@ -33,7 +32,9 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
     required this.bowlingTeamPlayers,
     required this.first,
     required this.overs,
-    required this.wickets
+    required this.wickets,
+    required this.tossWonBy,
+    required this.tossWinnerChoseTo,
   }) : super(key: key);
   @override
   State<CricketStrickerAndNonStrickerDetails> createState() =>
@@ -45,24 +46,22 @@ class _CricketStrickerAndNonStrickerDetailsState
   @override
   void initState() {
     super.initState();
-    print("😌😌" + widget.tournamentId);
-    print("😌😌" + widget.battingTeamName);
-    print("😌😌" + widget.bowlingTeamName);
   }
-
 
   @override
   Widget build(BuildContext context) {
     // declaring the list of players
-    List<dynamic> sliced =
-        widget.battingTeamPlayers;
+    List<dynamic> sliced = widget.battingTeamPlayers;
+    List<dynamic> strikers = widget.battingTeamPlayers;
+    List<dynamic> nonStrikers = widget.battingTeamPlayers;
+    List<dynamic> ballers = widget.bowlingTeamPlayers;
     // List<String>? sliced = battingTeamPlayersList.sublist(0, 5);
 
-    List<dynamic> sliced2 =
-        widget.bowlingTeamPlayers;
+    List<dynamic> sliced2 = widget.bowlingTeamPlayers;
     // List<String>? sliced2 = bowlingTeamPlayersList.sublist(0, 5);
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
+    var i=0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -214,18 +213,20 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   // Select Striker
                                   child: DropdownButtonFormField(
                                     hint: const Text("Select Striker"),
-                                    items: sliced
+                                    items: strikers
                                         .map((e) => DropdownMenuItem(
                                               child: Text(e["NAME"]),
-                                              value: e["index"],
+                                              value: i++,
                                             ))
                                         .toList(),
                                     onChanged: (e) {
                                       print(e);
                                       setState(() {
                                         strikerIndex = e as int;
-                                        // sliced.removeAt(e as int);
-                                        selectedStriker = sliced[e as int];
+                                        print("e is $e");
+                                        nonStrikers.removeAt(strikerIndex);
+                                        print("Strikers list is: $strikers");
+                                        selectedStriker = strikers[e as int];
                                       });
                                       // print(e);
                                     },
@@ -254,18 +255,20 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0),
                                   child: DropdownButtonFormField(
                                     hint: const Text("Select Non Striker"),
-                                    items: sliced
+                                    items: nonStrikers
                                         .map((e) => DropdownMenuItem(
-                                      child: Text(e["NAME"]),
-                                      value: e["index"],
-                                    ))
+                                              child: Text(e["NAME"]),
+                                              value: e["index"],
+                                            ))
                                         .toList(),
                                     onChanged: (e) {
                                       print(e);
                                       setState(() {
                                         non_strikerIndex = e as int;
-                                        // sliced.removeAt(e as int);
-                                        selectedNonStriker = sliced[e as int];
+                                        print("value of e is $e");
+                                        strikers.removeAt(non_strikerIndex);
+                                        print("Non Strikers list is: $nonStrikers");
+                                        selectedNonStriker = nonStrikers[e as int];
                                       });
                                     },
                                   ),
@@ -306,15 +309,17 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     hint: const Text("Select Bowler"),
                                     items: sliced2
                                         .map((e) => DropdownMenuItem(
-                                      child: Text(e["NAME"]),
-                                      value: e["index"],
-                                    ))
+                                              child: Text(e["NAME"]),
+                                              value: e["index"],
+                                            ))
                                         .toList(),
                                     onChanged: (e) {
                                       print(e);
                                       setState(() {
                                         baller_index = e as int;
+                                        print("value of e is $e");
                                         // sliced2.removeAt(e as int);
+                                        print("Sliced2 is now $sliced2");
                                         selectedBaller = sliced2[e as int];
                                       });
                                     },
@@ -343,16 +348,14 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   borderRadius: BorderRadius.circular(
                                       deviceWidth * 0.04)),
                             ),
-                            onPressed: () async{
+                            onPressed: () async {
                               var requestJson = {
                                 "TOURNAMENT_ID": widget.tournamentId,
                                 "BATTING": {
                                   "STRIKER_INDEX": strikerIndex,
                                   "NON_STRIKER_INDEX": non_strikerIndex
                                 },
-                                "BOWLING": {
-                                  "BALLER_INDEX": baller_index
-                                }
+                                "BOWLING": {"BALLER_INDEX": baller_index}
                               };
                               var sendJson = jsonEncode(requestJson);
                               var url =
@@ -366,17 +369,24 @@ class _CricketStrickerAndNonStrickerDetailsState
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => CricketScore(
-                                      battingTeam : sliced,
-                                      ballingTeam : sliced2,
-                                      first : widget.first,
-                                      wickets : widget.wickets,
-                                      overs : widget.overs,
-                                        striker : selectedStriker,
-                                      non_striker : selectedNonStriker,
-                                      baller : selectedBaller
-
-                                        //SHARE TEAM WHO IS BATTING, TEAM WHO IS BALLING, TEAM WHO WON THE TOSS, WHAT TEAM ELECTED TO DO
-                                    )),
+                                          battingTeam: sliced,
+                                          ballingTeam: sliced2,
+                                          first: widget.first,
+                                          wickets: widget.wickets,
+                                          overs: widget.overs,
+                                          striker: selectedStriker,
+                                          non_striker: selectedNonStriker,
+                                          baller: selectedBaller,
+                                        )),
+                                        // Uncomment this later @SRIHARI
+                                          // battingTeamName:
+                                          //     widget.battingTeamName,
+                                          // bowlingTeamName:
+                                          //     widget.bowlingTeamName,
+                                          // tournamentId: widget.tournamentId,
+                                          // tossWonBy: widget.tossWonBy,
+                                          // tossWinnerChoseTo:
+                                          //     widget.tossWinnerChoseTo,
                               );
                             },
                             child: const Text("Start Scoring"),
