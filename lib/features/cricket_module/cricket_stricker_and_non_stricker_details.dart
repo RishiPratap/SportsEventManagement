@@ -44,7 +44,6 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
 
 class _CricketStrickerAndNonStrickerDetailsState
     extends State<CricketStrickerAndNonStrickerDetails> {
-
   @override
   void initState() {
     super.initState();
@@ -212,7 +211,10 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   // Select Striker
                                   child: DropdownButtonFormField(
                                     hint: const Text("Select Striker"),
-                                    items: sliced.where((element) => element != selectedNonStriker).toList()
+                                    items: sliced
+                                        .where((element) =>
+                                            element != selectedNonStriker)
+                                        .toList()
                                         .map((e) => DropdownMenuItem(
                                               child: Text(e["NAME"]),
                                               value: e["index"],
@@ -221,9 +223,11 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     onChanged: (e) {
                                       setState(() {
                                         strikerIndex = e as int;
-                                        selectedStriker = widget.battingTeamPlayers[e as int];
-                                        bat.remove(widget.battingTeamPlayers[e as int]);
-                                        if(strikerIndex != -1){
+                                        selectedStriker =
+                                            widget.battingTeamPlayers[e as int];
+                                        bat.remove(widget
+                                            .battingTeamPlayers[e as int]);
+                                        if (strikerIndex != -1) {
                                           bat.insert(e as int, selectedStriker);
                                         }
                                       });
@@ -253,17 +257,20 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0),
                                   child: DropdownButtonFormField(
                                     hint: const Text("Select Non Striker"),
-                                    items: sliced.where((element) => element != selectedStriker).toList()
+                                    items: sliced
+                                        .where((element) =>
+                                            element != selectedStriker)
+                                        .toList()
                                         .map((e) => DropdownMenuItem(
                                               child: Text(e["NAME"]),
                                               value: e["index"],
                                             ))
                                         .toList(),
                                     onChanged: (e) {
-
                                       setState(() {
                                         non_strikerIndex = e as int;
-                                        selectedNonStriker = widget.battingTeamPlayers[e as int];
+                                        selectedNonStriker =
+                                            widget.battingTeamPlayers[e as int];
                                       });
                                     },
                                   ),
@@ -312,7 +319,8 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     onChanged: (e) {
                                       setState(() {
                                         baller_index = e as int;
-                                        selectedBaller = widget.bowlingTeamPlayers[e as int];
+                                        selectedBaller =
+                                            widget.bowlingTeamPlayers[e as int];
                                       });
                                     },
                                   ),
@@ -357,16 +365,24 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   headers: {
                                     "Content-Type": "application/json"
                                   });
-                              bat = widget.battingTeamPlayers.where((element) => element!=selectedStriker && element!=selectedNonStriker).toList();
-                              ball = widget.bowlingTeamPlayers.where((element) => element!=selectedBaller).toList();
+                              bat = widget.battingTeamPlayers
+                                  .where((element) =>
+                                      element != selectedStriker &&
+                                      element != selectedNonStriker)
+                                  .toList();
+                              ball = widget.bowlingTeamPlayers
+                                  .where((element) => element != selectedBaller)
+                                  .toList();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => CricketScore(
                                           battingTeam: bat,
                                           ballingTeam: ball,
-                                          allBattingPlayers : widget.battingTeamPlayers,
-                                          allBallingPlayers : widget.bowlingTeamPlayers,
+                                          allBattingPlayers:
+                                              widget.battingTeamPlayers,
+                                          allBallingPlayers:
+                                              widget.bowlingTeamPlayers,
                                           first: widget.first,
                                           wickets: widget.wickets,
                                           overs: widget.overs,

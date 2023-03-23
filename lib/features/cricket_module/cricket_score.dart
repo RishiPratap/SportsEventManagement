@@ -1,3 +1,5 @@
+// line 1122 should fix the index out of bound error
+
 import 'dart:convert';
 
 import 'package:ardent_sports/features/cricket_module/MatchResult.dart';
@@ -5,6 +7,38 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:ardent_sports/features/cricket_module/cricket_stricker_and_non_stricker_details.dart';
+
+// var outURL =
+//     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
+// var outJson = {
+//   "TOURNAMENT_ID":
+//       widget.tournamentId,
+//   "index": widget
+//       .allBattingPlayers
+//       .where((element) =>
+//           element[
+//               "NAME"] ==
+//           widget.battingTeam[
+//                   e as int]
+//               ["NAME"])
+//       .toList()[0]["index"],
+//   "remarks": wickets,
+// };
+// print(
+//     "The json is $outJson");
+// var outJsonData =
+//     jsonEncode(outJson);
+// var outResponse =
+//     await post(
+//         Uri.parse(outURL),
+//         headers: {
+//           "Content-Type":
+//               "application/json"
+//         },
+//         body:
+//             outJsonData);
+// print(
+//     "The response for the out api is ${outResponse.body}");
 
 class CricketScore extends StatefulWidget {
   final int overs;
@@ -121,18 +155,19 @@ class _CricketScoreState extends State<CricketScore> {
         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/usualScore";
     var sendData = {
       "TOURNAMENT_ID": widget.tournamentId,
-      "score": score,
+      "score": score.toString(),
     };
     var jsonData = jsonEncode(sendData);
     var response = await post(Uri.parse(url),
         body: jsonData, headers: {"Content-Type": "application/json"});
-    print("😁😁response is : " + response.body);
+    String datalist = jsonDecode(response.body);
+    print({"😁😁response is : ", datalist.toString()});
     setState(() {
       scoringData = jsonDecode(response.body);
     });
   }
 
-  void bowler() {
+  void bowler() async {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     if ((_currentBalleOver).toInt() == widget.overs) {
@@ -180,10 +215,27 @@ class _CricketScoreState extends State<CricketScore> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: Text(bowlerList[index]),
-                        onTap: () {
+                        onTap: () async {
                           setState(() {
                             curr_bowler_name = bowlerList[index];
                           });
+                          // make api call to change over
+                          var url =
+                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeOverCricket";
+                          var Overjson = {
+                            "TOURNAMENT_ID": widget.tournamentId,
+                            "baller_index": widget.allBallingPlayers
+                                .where((element) =>
+                                    element["NAME"] == bowlerList[index])
+                                .toList()[0]["index"],
+                          };
+                          var jsonData = jsonEncode(Overjson);
+                          print("The json data is: " + Overjson.toString());
+                          var response = await post(Uri.parse(url),
+                              body: jsonData,
+                              headers: {"Content-Type": "application/json"});
+                          print("😁😁response For over change is : " +
+                              response.body);
                           Navigator.pop(context);
                         },
                       );
@@ -191,7 +243,6 @@ class _CricketScoreState extends State<CricketScore> {
                   ),
                 ),
               ));
-
       setState(() {
         _currentNonStriker = !_currentNonStriker;
         _currentStriker = !_currentStriker;
@@ -284,29 +335,40 @@ class _CricketScoreState extends State<CricketScore> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent),
-                onPressed: () {
-                  (matchInning)
-                      ?
-                      // Redirect to next innings page
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  CricketStrickerAndNonStrickerDetails(
-                                    tournamentId: widget.tournamentId,
-                                    battingTeamName: widget.bowlingTeamName,
-                                    bowlingTeamName: widget.battingTeamName,
-                                    overs: widget.overs,
-                                    wickets: widget.wickets,
-                                    first: !(widget.first),
-                                    tossWonBy: widget.tossWonBy,
-                                    tossWinnerChoseTo: widget.tossWinnerChoseTo,
-                                    battingTeamPlayers:
-                                        widget.allBallingPlayers,
-                                    bowlingTeamPlayers:
-                                        widget.allBattingPlayers,
-                                  )))
-                      : () {};
+                onPressed: () async {
+                  if (matchInning) {
+                    // call change innings api
+                    var url =
+                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
+                    var inningsJson = {
+                      "TOURNAMENT_ID": widget.tournamentId,
+                    };
+                    var inningsJsonData = jsonEncode(inningsJson);
+                    print("The json data is: " + inningsJson.toString());
+                    var response = await post(Uri.parse(url),
+                        body: inningsJsonData,
+                        headers: {"Content-Type": "application/json"});
+                    print("😌😌 response from innings change api is: " +
+                        response.body);
+                    // Redirect to next innings page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CricketStrickerAndNonStrickerDetails(
+                                  tournamentId: widget.tournamentId,
+                                  battingTeamName: widget.bowlingTeamName,
+                                  bowlingTeamName: widget.battingTeamName,
+                                  overs: widget.overs,
+                                  wickets: widget.wickets,
+                                  first: !(widget.first),
+                                  tossWonBy: widget.tossWonBy,
+                                  tossWinnerChoseTo: widget.tossWinnerChoseTo,
+                                  battingTeamPlayers: widget.allBallingPlayers,
+                                  bowlingTeamPlayers: widget.allBattingPlayers,
+                                )));
+                  } else {}
+                  ;
                 },
                 child: (matchInning)
                     ? const Text(
@@ -635,6 +697,7 @@ class _CricketScoreState extends State<CricketScore> {
                           _currentMatchScore += 0;
                           _currentBalleOver += 0.1;
                           _currentBowlingCount += 1;
+                          scoringkeyFunc(0);
                         });
                   if (_currentStriker) {
                     setState(() {
@@ -1055,8 +1118,41 @@ class _CricketScoreState extends State<CricketScore> {
                                                               value: e["index"],
                                                             ))
                                                         .toList(),
-                                                    onChanged: (e) {
+                                                    onChanged: (e) async {
                                                       print("The value is $e");
+
+                                                      // call api
+                                                      // var outURL =
+                                                      //     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
+                                                      // var outJson = {
+                                                      //   "TOURNAMENT_ID":
+                                                      //       widget.tournamentId,
+                                                      //   "index": widget
+                                                      //       .allBattingPlayers
+                                                      //       .where((element) =>
+                                                      //           element[
+                                                      //               "NAME"] ==
+                                                      //           widget.battingTeam[
+                                                      //                   e as int]
+                                                      //               ["NAME"])
+                                                      //       .toList()[0]["index"],
+                                                      //   "remarks": wickets,
+                                                      // };
+                                                      // print(
+                                                      //     "The json is $outJson");
+                                                      // var outJsonData =
+                                                      //     jsonEncode(outJson);
+                                                      // var outResponse =
+                                                      //     await post(
+                                                      //         Uri.parse(outURL),
+                                                      //         headers: {
+                                                      //           "Content-Type":
+                                                      //               "application/json"
+                                                      //         },
+                                                      //         body:
+                                                      //             outJsonData);
+                                                      // print(
+                                                      //     "The response for the out api is ${outResponse.body}");
                                                       setState(() {
                                                         if (wickets !=
                                                             "Non-Stricker Run Out") {
@@ -1111,6 +1207,38 @@ class _CricketScoreState extends State<CricketScore> {
                                                             0.1;
                                                         bowler();
                                                       });
+                                                      // call api here only..
+                                                      var outURL =
+                                                          "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
+                                                      var outJson = {
+                                                        "TOURNAMENT_ID":
+                                                            widget.tournamentId,
+                                                        "index": widget
+                                                            .allBattingPlayers
+                                                            .where((element) =>
+                                                                element[
+                                                                    "NAME"] ==
+                                                                widget.battingTeam[
+                                                                        e as int]
+                                                                    ["NAME"])
+                                                            .toList()[0]["index"],
+                                                        "remarks": wickets,
+                                                      };
+                                                      print(
+                                                          "The json is $outJson");
+                                                      var outJsonData =
+                                                          jsonEncode(outJson);
+                                                      var outResponse =
+                                                          await post(
+                                                              Uri.parse(outURL),
+                                                              headers: {
+                                                                "Content-Type":
+                                                                    "application/json"
+                                                              },
+                                                              body:
+                                                                  outJsonData);
+                                                      print(
+                                                          "The response for the out api is ${outResponse.body}");
                                                       Navigator.pop(context);
                                                     },
                                                   ),
@@ -1247,6 +1375,5 @@ class _CricketScoreState extends State<CricketScore> {
         ));
   }
 }
-
 
 //!CR179543-CR-NA
