@@ -195,7 +195,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.02),
-                                      color: Colors.black.withOpacity(0.4))),
+                                      color: firstTeamColor)),
                             ),
                             Expanded(
                               flex: 1,
@@ -227,7 +227,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.02),
-                                      color: Colors.black.withOpacity(0.4))),
+                                      color: secondTeamColor)),
                             ),
                           ],
                         ),
@@ -291,7 +291,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.02),
-                                      color: Colors.black.withOpacity(0.4))),
+                                      color: batColor)),
                             ),
                             Expanded(
                               flex: 1,
@@ -335,7 +335,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.02),
-                                      color: Colors.black.withOpacity(0.4))),
+                                      color: ballColor)),
                             ),
                           ],
                         ),
