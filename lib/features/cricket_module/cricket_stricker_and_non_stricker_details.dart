@@ -1,16 +1,27 @@
 // Lines of error => 197-208.
 // Reason: For some reason, battingTeamPlayers is being treates as a List<dynamic> instead of a List<String>.
 
+import 'dart:convert';
+import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_score.dart';
 
+
+int strikerIndex = -1;
+int non_strikerIndex = -1;
+int baller_index = -1;
+var selectedStriker;
+var selectedNonStriker;
+var selectedBaller;
 class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   final String tournamentId;
   final String battingTeamName;
   final String bowlingTeamName;
-  var allPlayersData;
+  final int overs;
+  final int wickets;
+  final bool first;
   var battingTeamPlayers;
   var bowlingTeamPlayers;
   CricketStrickerAndNonStrickerDetails({
@@ -18,9 +29,11 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
     required this.tournamentId,
     required this.battingTeamName,
     required this.bowlingTeamName,
-    required this.allPlayersData,
     required this.battingTeamPlayers,
     required this.bowlingTeamPlayers,
+    required this.first,
+    required this.overs,
+    required this.wickets
   }) : super(key: key);
   @override
   State<CricketStrickerAndNonStrickerDetails> createState() =>
@@ -36,6 +49,7 @@ class _CricketStrickerAndNonStrickerDetailsState
     print("😌😌" + widget.battingTeamName);
     print("😌😌" + widget.bowlingTeamName);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,17 +137,17 @@ class _CricketStrickerAndNonStrickerDetailsState
                       width: double.infinity,
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: deviceWidth * 0.08,
-                      height: deviceWidth * 0.08,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/money_bag.png"),
-                              fit: BoxFit.fitHeight)),
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Container(
+                  //     width: deviceWidth * 0.08,
+                  //     height: deviceWidth * 0.08,
+                  //     decoration: const BoxDecoration(
+                  //         image: DecorationImage(
+                  //             image: AssetImage("assets/money_bag.png"),
+                  //             fit: BoxFit.fitHeight)),
+                  //   ),
+                  // ),
                 ],
               ),
               Row(
@@ -207,8 +221,13 @@ class _CricketStrickerAndNonStrickerDetailsState
                                             ))
                                         .toList(),
                                     onChanged: (e) {
-                                      // print(e.toString());
                                       print(e);
+                                      setState(() {
+                                        strikerIndex = e as int;
+                                        // sliced.removeAt(e as int);
+                                        selectedStriker = sliced[e as int];
+                                      });
+                                      // print(e);
                                     },
                                   ),
                                   decoration: BoxDecoration(
@@ -242,7 +261,12 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     ))
                                         .toList(),
                                     onChanged: (e) {
-                                      print(e.toString());
+                                      print(e);
+                                      setState(() {
+                                        non_strikerIndex = e as int;
+                                        // sliced.removeAt(e as int);
+                                        selectedNonStriker = sliced[e as int];
+                                      });
                                     },
                                   ),
                                   decoration: BoxDecoration(
@@ -287,7 +311,12 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     ))
                                         .toList(),
                                     onChanged: (e) {
-                                      print(e.toString());
+                                      print(e);
+                                      setState(() {
+                                        baller_index = e as int;
+                                        // sliced2.removeAt(e as int);
+                                        selectedBaller = sliced2[e as int];
+                                      });
                                     },
                                   ),
                                   decoration: BoxDecoration(
@@ -314,11 +343,40 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   borderRadius: BorderRadius.circular(
                                       deviceWidth * 0.04)),
                             ),
-                            onPressed: () {
+                            onPressed: () async{
+                              var requestJson = {
+                                "TOURNAMENT_ID": widget.tournamentId,
+                                "BATTING": {
+                                  "STRIKER_INDEX": strikerIndex,
+                                  "NON_STRIKER_INDEX": non_strikerIndex
+                                },
+                                "BOWLING": {
+                                  "BALLER_INDEX": baller_index
+                                }
+                              };
+                              var sendJson = jsonEncode(requestJson);
+                              var url =
+                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/updatePlayers";
+                              var response = await post(Uri.parse(url),
+                                  body: sendJson,
+                                  headers: {
+                                    "Content-Type": "application/json"
+                                  });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const CricketScore()),
+                                    builder: (context) => CricketScore(
+                                      battingTeam : sliced,
+                                      ballingTeam : sliced2,
+                                      first : widget.first,
+                                      wickets : widget.wickets,
+                                      overs : widget.overs,
+                                        striker : selectedStriker,
+                                      non_striker : selectedNonStriker,
+                                      baller : selectedBaller
+
+                                        //SHARE TEAM WHO IS BATTING, TEAM WHO IS BALLING, TEAM WHO WON THE TOSS, WHAT TEAM ELECTED TO DO
+                                    )),
                               );
                             },
                             child: const Text("Start Scoring"),

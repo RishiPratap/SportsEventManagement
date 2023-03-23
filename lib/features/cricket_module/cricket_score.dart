@@ -2,8 +2,27 @@ import 'package:ardent_sports/features/cricket_module/MatchResult.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+
 class CricketScore extends StatefulWidget {
-  const CricketScore({Key? key}) : super(key: key);
+  final int overs;
+  final int wickets;
+  final bool first;
+  final List<dynamic> battingTeam;
+  final List<dynamic> ballingTeam;
+  final dynamic striker;
+  final dynamic non_striker;
+  final dynamic baller;
+  const CricketScore({
+    Key? key,
+    required this.overs,
+    required this.ballingTeam,
+    required this.battingTeam,
+    required this.first,
+    required this.wickets,
+    required this.striker,
+    required this.non_striker,
+    required this.baller
+  }) : super(key: key);
 
   get btnVal => "0";
   @override
@@ -23,7 +42,7 @@ double _currentBalleOver = 0.0;
 int _currentBowlingCount = 0;
 int _currentbowlingExtra = 0;
 bool allowLastmanPostion = true;
-List<String> bowlerList = ['Bowler 1', 'Bowler 2', 'Bowler 3', 'Bowler 4'];
+List<String> bowlerList = [];
 List<String> WicketsType = [
   'LBW',
   'Bowled',
@@ -33,8 +52,62 @@ List<String> WicketsType = [
   'Stumped',
   'Hit Wicket'
 ];
+var curr_bowler_name;
 
 class _CricketScoreState extends State<CricketScore> {
+
+  @override
+  void initState(){
+    super.initState();
+    List<String> b = [];
+    for(int i=0; i<widget.ballingTeam.length; i++){
+      b.add(widget.ballingTeam[i]["NAME"]);
+    }
+    setState(() {
+      bowlerList = b;
+      curr_bowler_name = widget.baller["NAME"];
+    });
+  }
+
+  void bowler(){
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    if (_currentBowlingCount == 6) {
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: Text("Choose Bowler"),
+            content: Container(
+              height: h * 0.3,
+              width: w * 0.3,
+              child: ListView.builder(
+                itemCount: bowlerList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(bowlerList[index]),
+                    onTap: () {
+                      setState(() {
+                        curr_bowler_name = bowlerList[index];
+                      });
+                      Navigator.pop(context);
+                    },
+                  );
+                },
+              ),
+            ),
+          ));
+
+      setState(() {
+        _currentNonStriker = !_currentNonStriker;
+        _currentStriker = !_currentStriker;
+        _currentOver = "";
+        double temp = _currentBalleOver;
+        _currentBalleOver = temp + 1.0 - 0.6;
+        _currentBowlingCount = 0;
+      });
+    }
+  }
+
   final TextEditingController _searchInputControllor = TextEditingController();
 
   void appendCharacters() {
@@ -106,6 +179,7 @@ class _CricketScoreState extends State<CricketScore> {
               top: h * 0.42,
               left: w * 0.11,
               child: Text(
+                //SRIHARI UPDATE DETAILS
                 "Team A won the toss and elected to bat first",
                 style: TextStyle(
                     fontSize: w * 0.04,
@@ -141,6 +215,7 @@ class _CricketScoreState extends State<CricketScore> {
             Padding(
               padding: EdgeInsets.all(w * 0.02),
               child: Text(
+                //SRIHARI UPDATE THIS, team who is batting
                 "Team A",
                 style: TextStyle(
                     fontSize: w * 0.03,
@@ -177,7 +252,7 @@ class _CricketScoreState extends State<CricketScore> {
             margin: EdgeInsets.only(top: w * 0.02),
             child: Padding(
               padding: EdgeInsets.all(w * 0.02),
-              child: Text("(${(_currentBalleOver).toStringAsFixed(1)})/8",
+              child: Text("(${(_currentBalleOver).toStringAsFixed(1)})/${widget.overs}",
                   style: TextStyle(
                       fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
@@ -229,7 +304,7 @@ class _CricketScoreState extends State<CricketScore> {
                       Center(
                           child: Column(children: <Widget>[
                         SizedBox(height: h * 0.01),
-                        Row(children: [Text("Hiren")]),
+                        Row(children: [Text(widget.striker["NAME"])]),
                         SizedBox(height: h * 0.01),
                         Row(children: [
                           Text(
@@ -280,7 +355,7 @@ class _CricketScoreState extends State<CricketScore> {
             Center(
                 child: Column(children: <Widget>[
               SizedBox(height: h * 0.01),
-              Row(children: [Text("Jay Pokar")]),
+              Row(children: [Text(widget.non_striker["NAME"])]),
               SizedBox(height: h * 0.01),
               Row(children: [
                 Text(
@@ -349,32 +424,11 @@ class _CricketScoreState extends State<CricketScore> {
               ),
               InkWell(
                   onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              title: Text("Choose Bowler"),
-                              content: Container(
-                                height: h * 0.3,
-                                width: w * 0.3,
-                                child: ListView.builder(
-                                  itemCount: bowlerList.length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      title: Text(bowlerList[index]),
-                                      onTap: () {
-                                        setState(() {
-                                          bowlerList[0] = bowlerList[index];
-                                        });
-                                        Navigator.pop(context);
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ));
+
                   },
+                  //parth
                   child: Text(
-                    bowlerList[0],
+                    curr_bowler_name,
                     style: TextStyle(
                       fontSize: w * 0.04,
                       fontWeight: FontWeight.w500,
@@ -420,7 +474,7 @@ class _CricketScoreState extends State<CricketScore> {
                     backgroundColor: Colors.red),
                 onPressed: () {
                   setState(() {
-                    _currentOver += "0";
+                    _currentOver += "0-";
                     _currentMatchScore += 0;
                     _currentBalleOver += 0.1;
                     _currentBowlingCount += 1;
@@ -439,16 +493,7 @@ class _CricketScoreState extends State<CricketScore> {
                   //#TODO: Change the striker and non striker
                   var ballsCount = _currentOver.length;
                   print(_currentBowlingCount);
-                  if (_currentBowlingCount == 6) {
-                    setState(() {
-                      _currentNonStriker = !_currentNonStriker;
-                      _currentStriker = !_currentStriker;
-                      _currentOver = "";
-                      double temp = _currentBalleOver;
-                      _currentBalleOver = temp + 1.0 - 0.6;
-                      _currentBowlingCount = 0;
-                    });
-                  }
+                  bowler();
                 })),
         SizedBox(
             width: w * 0.2,
@@ -463,7 +508,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "1";
+                  _currentOver += "1-";
                   _currentMatchScore += 1;
                   _currentBalleOver += 0.1;
                   _currentBowlingCount += 1;
@@ -483,16 +528,7 @@ class _CricketScoreState extends State<CricketScore> {
                 //#TODO: Change the striker and non striker
                 var ballsCount = _currentOver.length;
                 print(_currentBowlingCount);
-                if (_currentBowlingCount == 6) {
-                  setState(() {
-                    _currentStriker = !_currentStriker;
-                    _currentNonStriker = !_currentNonStriker;
-                    _currentOver = "";
-                    double temp = _currentBalleOver;
-                    _currentBalleOver = temp + 1.0 - 0.6;
-                    _currentBowlingCount = 0;
-                  });
-                }
+                bowler();
                 setState(() {
                   _currentStriker = !_currentStriker;
                   _currentNonStriker = !_currentNonStriker;
@@ -512,7 +548,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "2";
+                  _currentOver += "2-";
                   _currentMatchScore += 2;
                   _currentBalleOver += 0.1;
                   _currentBowlingCount += 1;
@@ -531,16 +567,7 @@ class _CricketScoreState extends State<CricketScore> {
                 //#TODO: Change the striker and non striker
                 var ballsCount = _currentOver.length;
                 print(_currentBowlingCount);
-                if (_currentBowlingCount == 6) {
-                  setState(() {
-                    _currentStriker = !_currentStriker;
-                    _currentNonStriker = !_currentNonStriker;
-                    _currentOver = "";
-                    double temp = _currentBalleOver;
-                    _currentBalleOver = temp + 1.0 - 0.6;
-                    _currentBowlingCount = 0;
-                  });
-                }
+                bowler();
               },
             )),
         SizedBox(
@@ -598,7 +625,7 @@ class _CricketScoreState extends State<CricketScore> {
                   backgroundColor: Colors.red),
               onPressed: () {
                 setState(() {
-                  _currentOver += "3";
+                  _currentOver += "3-";
                   _currentMatchScore += 3;
                   _currentBalleOver += 0.1;
                   _currentBowlingCount += 1;
@@ -617,16 +644,7 @@ class _CricketScoreState extends State<CricketScore> {
                 //#TODO: Change the striker and non striker
                 var ballsCount = _currentOver.length;
                 print(_currentBowlingCount);
-                if (_currentBowlingCount == 6) {
-                  setState(() {
-                    _currentStriker = !_currentStriker;
-                    _currentNonStriker = !_currentNonStriker;
-                    _currentOver = "";
-                    double temp = _currentBalleOver;
-                    _currentBalleOver = temp + 1.0 - 0.6;
-                    _currentBowlingCount = 0;
-                  });
-                }
+                bowler();
                 setState(() {
                   _currentNonStriker = !_currentNonStriker;
                   _currentStriker = !_currentStriker;
@@ -646,7 +664,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "4";
+                  _currentOver += "4-";
                   _currentMatchScore += 4;
                   _currentBalleOver += 0.1;
                   _currentBowlingCount += 1;
@@ -665,16 +683,7 @@ class _CricketScoreState extends State<CricketScore> {
                 //#TODO: Change the striker and non striker
                 var ballsCount = _currentOver.length;
                 print(_currentBowlingCount);
-                if (_currentBowlingCount == 6) {
-                  setState(() {
-                    _currentStriker = !_currentStriker;
-                    _currentNonStriker = !_currentNonStriker;
-                    _currentOver = "";
-                    double temp = _currentBalleOver;
-                    _currentBalleOver = temp + 1.0 - 0.6;
-                    _currentBowlingCount = 0;
-                  });
-                }
+                bowler();
               },
             )),
         SizedBox(
@@ -690,7 +699,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "6";
+                  _currentOver += "6-";
                   _currentMatchScore += 6;
                   _currentBalleOver += 0.1;
                   _currentBowlingCount += 1;
@@ -709,32 +718,26 @@ class _CricketScoreState extends State<CricketScore> {
                 //#TODO: Change the striker and non striker
                 var ballsCount = _currentOver.length;
                 print(_currentBowlingCount);
-                if (_currentBowlingCount == 6) {
-                  setState(() {
-                    _currentStriker = !_currentStriker;
-                    _currentNonStriker = !_currentNonStriker;
-                    _currentOver = "";
-                    double temp = _currentBalleOver;
-                    _currentBalleOver = temp + 1.0 - 0.6;
-                    _currentBowlingCount = 0;
-                  });
-                }
+                bowler();
               },
             )),
         SizedBox(
             width: w * 0.2,
             height: w * 0.15,
             child: ElevatedButton(
-              child: const Text("5/7"),
+              child: const Text("5"),
               style: ElevatedButton.styleFrom(
                   elevation: 5,
                   backgroundColor: Colors.red,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
+
+              //strike change nhi ho rha hai
+              //rishi
               onPressed: () => {
                 setState(() {
-                  _currentOver += "5";
+                  _currentOver += "5-";
                   _currentMatchScore += 5;
                   _currentBalleOver += 0.1;
                   _currentBowlingCount += 1;
@@ -755,49 +758,11 @@ class _CricketScoreState extends State<CricketScore> {
                   },
                 ballsCount = _currentOver.length,
                 print(_currentBowlingCount),
-                if (_currentBowlingCount == 6)
-                  {
-                    setState(() {
-                      _currentStriker = !_currentStriker;
-                      _currentNonStriker = !_currentNonStriker;
-                      _currentOver = "";
-                      double temp = _currentBalleOver;
-                      _currentBalleOver = temp + 1.0 - 0.6;
-                      _currentBowlingCount = 0;
-                    })
-                  }
-              },
-              onLongPress: () {
-                setState(() {
-                  _currentOver += "7";
-                  _currentMatchScore += 7;
-                  _currentBalleOver += 0.1;
-                  _currentBowlingCount += 1;
-                });
-                if (_currentStriker) {
-                  setState(() {
-                    _currentStrikerScore += 7;
-                    _currentStrickerBallcount += 1;
-                  });
-                } else {
-                  setState(() {
-                    _currentNonStrikerScore += 7;
-                    _currentNonStrickerBallcount += 1;
-                  });
-                }
-                //#TODO: Change the striker and non striker
-                var ballsCount = _currentOver.length;
-                print(_currentBowlingCount);
-                if (_currentBowlingCount == 6) {
-                  setState(() {
-                    _currentStriker = !_currentStriker;
-                    _currentNonStriker = !_currentNonStriker;
-                    _currentOver = "";
-                    double temp = _currentBalleOver;
-                    _currentBalleOver = temp + 1.0 - 0.6;
-                    _currentBowlingCount = 0;
-                  });
-                }
+                bowler(),
+              setState(() {
+              _currentStriker = !_currentStriker;
+              _currentNonStriker = !_currentNonStriker;
+              }),
               },
             )),
       ]),
@@ -824,7 +789,7 @@ class _CricketScoreState extends State<CricketScore> {
                   backgroundColor: Colors.red),
               onPressed: () {
                 setState(() {
-                  _currentOver += "WD";
+                  _currentOver += "WD-";
                   _currentMatchScore += 1;
                 });
               },
@@ -842,7 +807,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "NB";
+                  _currentOver += "NB-";
                   _currentMatchScore += 1;
                 });
               },
@@ -860,7 +825,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "BYE";
+                  _currentOver += "Bye-";
                 });
               },
             )),
@@ -880,7 +845,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "W";
+                  _currentOver += "O";
                   _currentWickets += 1;
                   _currentBowlingCount += 1;
                   _currentBalleOver += 0.1;
@@ -942,7 +907,7 @@ class _CricketScoreState extends State<CricketScore> {
                     ),
                   );
                 });
-                if (_currentWickets == 10) {
+                if (_currentWickets == widget.wickets - 1) {
                   showDialog(
                     context: context,
                     builder: (_) => SimpleDialog(
@@ -978,16 +943,7 @@ class _CricketScoreState extends State<CricketScore> {
                   _currentNonStrikerScore += 0;
                   _currentNonStrickerBallcount += 1;
                 }
-                if (_currentBowlingCount == 6) {
-                  setState(() {
-                    _currentNonStriker = !_currentNonStriker;
-                    _currentStriker = !_currentStriker;
-                    _currentOver = "";
-                    double temp = _currentBalleOver;
-                    _currentBalleOver = temp + 1.0 - 0.6;
-                    _currentBowlingCount = 0;
-                  });
-                }
+                bowler();
               },
             )),
       ]),
@@ -1017,8 +973,8 @@ class _CricketScoreState extends State<CricketScore> {
                 _currentNonStrikerScore = 0;
                 _currentStrickerBallcount = 0;
                 _currentNonStrickerBallcount = 0;
-                _currentStriker = true;
-                _currentNonStriker = false;
+                _currentStriker = false;
+                _currentNonStriker = true;
                 _currentBalleOver = 0.0;
                 _currentWickets = 0;
                 _currentBowlingCount = 0;

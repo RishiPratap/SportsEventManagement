@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import '../../Helper/apis.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_stricker_and_non_stricker_details.dart';
@@ -438,11 +437,13 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                           battingTeamName: battingTeamName,
                                           bowlingTeamName: bowlingTeamName,
                                           tournamentId: widget.tournamentId,
-                                          allPlayersData: allPlayersData,
                                           battingTeamPlayers:
                                               batTeam,
                                           bowlingTeamPlayers:
                                               ballTeam,
+                                          overs : allPlayersData["overs"],
+                                            wickets : allPlayersData["wickets"],
+                                            first : allPlayersData["first"]
                                         )),
                               );
                             },
