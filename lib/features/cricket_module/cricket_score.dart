@@ -17,6 +17,8 @@ class CricketScore extends StatefulWidget {
   final String tournamentId;
   final String tossWonBy;
   final String tossWinnerChoseTo;
+  final List<dynamic> allBattingPlayers;
+  final List<dynamic> allBallingPlayers;
   const CricketScore({
     Key? key,
     required this.overs,
@@ -32,6 +34,8 @@ class CricketScore extends StatefulWidget {
     required this.tournamentId,
     required this.tossWonBy,
     required this.tossWinnerChoseTo,
+    required this.allBattingPlayers,
+    required this.allBallingPlayers,
   }) : super(key: key);
 
   get btnVal => "0";
@@ -874,7 +878,8 @@ class _CricketScoreState extends State<CricketScore> {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (_) => SimpleDialog(
+                                builder: (_) =>
+                                    SimpleDialog(
                                     title: const Text('New Player'),
                                     children: <Widget>[
                                       Padding(
@@ -889,12 +894,12 @@ class _CricketScoreState extends State<CricketScore> {
                                               ))
                                                   .toList(),
                                               onChanged: (e) {
-                                                print(e);
                                                 setState(() {
                                                   if(wickets != "Non Stricker Run Out"){
-                                                  strikerName = widget.battingTeam[e as int]["NAME"];}
+                                                  strikerName = widget.allBattingPlayers[e as int]["NAME"];}
+
                                                   else {
-                                                    nonStrikerName = widget.battingTeam[e as int]["NAME"];
+                                                    nonStrikerName = widget.allBallingPlayers[e as int]["NAME"];
                                                   }
                                                   _currentOver += (ways[wickets]! + "-");
                                                   _currentWickets += 1;

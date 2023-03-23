@@ -224,7 +224,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                         selectedStriker = widget.battingTeamPlayers[e as int];
                                         bat.remove(widget.battingTeamPlayers[e as int]);
                                         if(strikerIndex != -1){
-                                          bat.add(selectedStriker);
+                                          bat.insert(e as int, selectedStriker);
                                         }
                                       });
                                     },
@@ -264,10 +264,6 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       setState(() {
                                         non_strikerIndex = e as int;
                                         selectedNonStriker = widget.battingTeamPlayers[e as int];
-                                        bat.remove(widget.battingTeamPlayers[e as int]);
-                                        if(non_strikerIndex != -1){
-                                          bat.add(selectedNonStriker);
-                                        }
                                       });
                                     },
                                   ),
@@ -317,10 +313,6 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       setState(() {
                                         baller_index = e as int;
                                         selectedBaller = widget.bowlingTeamPlayers[e as int];
-                                        ball.remove(widget.bowlingTeamPlayers[e as int]);
-                                        if(baller_index != -1){
-                                          ball.add(selectedBaller);
-                                        }
                                       });
                                     },
                                   ),
@@ -365,14 +357,16 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   headers: {
                                     "Content-Type": "application/json"
                                   });
-                              print(bat);
-                              print(ball);
+                              bat = widget.battingTeamPlayers.where((element) => element!=selectedStriker && element!=selectedNonStriker).toList();
+                              ball = widget.bowlingTeamPlayers.where((element) => element!=selectedBaller).toList();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => CricketScore(
                                           battingTeam: bat,
                                           ballingTeam: ball,
+                                          allBattingPlayers : widget.battingTeamPlayers,
+                                          allBallingPlayers : widget.bowlingTeamPlayers,
                                           first: widget.first,
                                           wickets: widget.wickets,
                                           overs: widget.overs,
