@@ -12,6 +12,11 @@ class CricketScore extends StatefulWidget {
   final dynamic striker;
   final dynamic non_striker;
   final dynamic baller;
+  final String battingTeamName;
+  final String bowlingTeamName;
+  final String tournamentId;
+  final String tossWonBy;
+  final String tossWinnerChoseTo;
   const CricketScore({
     Key? key,
     required this.overs,
@@ -21,7 +26,12 @@ class CricketScore extends StatefulWidget {
     required this.wickets,
     required this.striker,
     required this.non_striker,
-    required this.baller
+    required this.baller,
+    required this.battingTeamName,
+    required this.bowlingTeamName,
+    required this.tournamentId,
+    required this.tossWonBy,
+    required this.tossWinnerChoseTo,
   }) : super(key: key);
 
   get btnVal => "0";
@@ -192,8 +202,7 @@ class _CricketScoreState extends State<CricketScore> {
               top: h * 0.42,
               left: w * 0.11,
               child: Text(
-                //SRIHARI UPDATE DETAILS
-                "Team A won the toss and elected to bat first",
+                "${widget.tossWonBy} won the toss and elected to ${widget.tossWinnerChoseTo} first",
                 style: TextStyle(
                     fontSize: w * 0.04,
                     fontWeight: FontWeight.w600,
@@ -228,8 +237,7 @@ class _CricketScoreState extends State<CricketScore> {
             Padding(
               padding: EdgeInsets.all(w * 0.02),
               child: Text(
-                //SRIHARI UPDATE THIS, team who is batting
-                "Team A",
+                widget.battingTeamName,
                 style: TextStyle(
                     fontSize: w * 0.03,
                     fontWeight: FontWeight.w500,

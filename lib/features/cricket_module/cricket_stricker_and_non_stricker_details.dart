@@ -61,7 +61,7 @@ class _CricketStrickerAndNonStrickerDetailsState
     // List<String>? sliced2 = bowlingTeamPlayersList.sublist(0, 5);
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
-    var i=0;
+    var i = 0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -267,8 +267,10 @@ class _CricketStrickerAndNonStrickerDetailsState
                                         non_strikerIndex = e as int;
                                         print("value of e is $e");
                                         strikers.removeAt(non_strikerIndex);
-                                        print("Non Strikers list is: $nonStrikers");
-                                        selectedNonStriker = nonStrikers[e as int];
+                                        print(
+                                            "Non Strikers list is: $nonStrikers");
+                                        selectedNonStriker =
+                                            nonStrikers[e as int];
                                       });
                                     },
                                   ),
@@ -378,16 +380,15 @@ class _CricketStrickerAndNonStrickerDetailsState
                                           striker: selectedStriker,
                                           non_striker: selectedNonStriker,
                                           baller: selectedBaller,
+                                          battingTeamName:
+                                              widget.battingTeamName,
+                                          bowlingTeamName:
+                                              widget.bowlingTeamName,
+                                          tournamentId: widget.tournamentId,
+                                          tossWonBy: widget.tossWonBy,
+                                          tossWinnerChoseTo:
+                                              widget.tossWinnerChoseTo,
                                         )),
-                                        // Uncomment this later @SRIHARI
-                                          // battingTeamName:
-                                          //     widget.battingTeamName,
-                                          // bowlingTeamName:
-                                          //     widget.bowlingTeamName,
-                                          // tournamentId: widget.tournamentId,
-                                          // tossWonBy: widget.tossWonBy,
-                                          // tossWinnerChoseTo:
-                                          //     widget.tossWinnerChoseTo,
                               );
                             },
                             child: const Text("Start Scoring"),
