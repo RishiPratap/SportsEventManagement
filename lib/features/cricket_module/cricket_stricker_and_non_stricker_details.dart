@@ -264,11 +264,11 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     onChanged: (e) {
                                       print(e);
                                       setState(() {
-                                        baller_index = e as int;
+                                        non_strikerIndex = e as int;
                                         print("value of e is $e");
                                         // sliced.removeAt(e as int);
                                         print("Sliced is now $sliced");
-                                        selectedBaller = sliced2[e as int];
+                                        selectedNonStriker = sliced[e as int];
                                       });
                                     },
                                   ),
