@@ -221,8 +221,8 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     onChanged: (e) {
                                       setState(() {
                                         strikerIndex = e as int;
-                                        selectedStriker = sliced[e as int];
-                                        bat.remove(sliced[e as int]);
+                                        selectedStriker = widget.battingTeamPlayers[e as int];
+                                        bat.remove(widget.battingTeamPlayers[e as int]);
                                         if(strikerIndex != -1){
                                           bat.add(selectedStriker);
                                         }
@@ -263,8 +263,8 @@ class _CricketStrickerAndNonStrickerDetailsState
 
                                       setState(() {
                                         non_strikerIndex = e as int;
-                                        selectedNonStriker = sliced[e as int];
-                                        bat.remove(sliced[e as int]);
+                                        selectedNonStriker = widget.battingTeamPlayers[e as int];
+                                        bat.remove(widget.battingTeamPlayers[e as int]);
                                         if(non_strikerIndex != -1){
                                           bat.add(selectedNonStriker);
                                         }
@@ -316,8 +316,8 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     onChanged: (e) {
                                       setState(() {
                                         baller_index = e as int;
-                                        selectedBaller = sliced2[e as int];
-                                        ball.remove(sliced2[e as int]);
+                                        selectedBaller = widget.bowlingTeamPlayers[e as int];
+                                        ball.remove(widget.bowlingTeamPlayers[e as int]);
                                         if(baller_index != -1){
                                           ball.add(selectedBaller);
                                         }
@@ -365,6 +365,8 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   headers: {
                                     "Content-Type": "application/json"
                                   });
+                              print(bat);
+                              print(ball);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
