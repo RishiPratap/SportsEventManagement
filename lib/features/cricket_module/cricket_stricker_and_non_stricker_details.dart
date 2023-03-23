@@ -216,7 +216,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     items: strikers
                                         .map((e) => DropdownMenuItem(
                                               child: Text(e["NAME"]),
-                                              value: i++,
+                                              value: e["index"],
                                             ))
                                         .toList(),
                                     onChanged: (e) {
@@ -224,7 +224,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       setState(() {
                                         strikerIndex = e as int;
                                         print("e is $e");
-                                        nonStrikers.removeAt(strikerIndex);
+                                        //nonStrikers.removeAt(strikerIndex);
                                         print("Strikers list is: $strikers");
                                         selectedStriker = strikers[e as int];
                                       });
@@ -264,13 +264,11 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     onChanged: (e) {
                                       print(e);
                                       setState(() {
-                                        non_strikerIndex = e as int;
+                                        baller_index = e as int;
                                         print("value of e is $e");
-                                        strikers.removeAt(non_strikerIndex);
-                                        print(
-                                            "Non Strikers list is: $nonStrikers");
-                                        selectedNonStriker =
-                                            nonStrikers[e as int];
+                                        // sliced.removeAt(e as int);
+                                        print("Sliced is now $sliced");
+                                        selectedBaller = sliced2[e as int];
                                       });
                                     },
                                   ),
