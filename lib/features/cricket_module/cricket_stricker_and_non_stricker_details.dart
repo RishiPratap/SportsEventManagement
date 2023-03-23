@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import '../../Helper/constant.dart';
@@ -43,6 +44,7 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
 
 class _CricketStrickerAndNonStrickerDetailsState
     extends State<CricketStrickerAndNonStrickerDetails> {
+
   @override
   void initState() {
     super.initState();
@@ -50,15 +52,12 @@ class _CricketStrickerAndNonStrickerDetailsState
 
   @override
   Widget build(BuildContext context) {
-    // declaring the list of players
     List<dynamic> sliced = widget.battingTeamPlayers;
-    List<dynamic> strikers = widget.battingTeamPlayers;
-    List<dynamic> nonStrikers = widget.battingTeamPlayers;
-    List<dynamic> ballers = widget.bowlingTeamPlayers;
-    // List<String>? sliced = battingTeamPlayersList.sublist(0, 5);
-
     List<dynamic> sliced2 = widget.bowlingTeamPlayers;
-    // List<String>? sliced2 = bowlingTeamPlayersList.sublist(0, 5);
+
+    List<dynamic> bat = widget.battingTeamPlayers;
+    List<dynamic> ball = widget.bowlingTeamPlayers;
+
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
     var i = 0;
@@ -213,22 +212,21 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   // Select Striker
                                   child: DropdownButtonFormField(
                                     hint: const Text("Select Striker"),
-                                    items: strikers
+                                    items: sliced.where((element) => element != selectedNonStriker).toList()
                                         .map((e) => DropdownMenuItem(
                                               child: Text(e["NAME"]),
                                               value: e["index"],
                                             ))
                                         .toList(),
                                     onChanged: (e) {
-                                      print(e);
                                       setState(() {
                                         strikerIndex = e as int;
-                                        print("e is $e");
-                                        //nonStrikers.removeAt(strikerIndex);
-                                        print("Strikers list is: $strikers");
-                                        selectedStriker = strikers[e as int];
+                                        selectedStriker = sliced[e as int];
+                                        bat.remove(sliced[e as int]);
+                                        if(strikerIndex != -1){
+                                          bat.add(selectedStriker);
+                                        }
                                       });
-                                      // print(e);
                                     },
                                   ),
                                   decoration: BoxDecoration(
@@ -255,20 +253,21 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0),
                                   child: DropdownButtonFormField(
                                     hint: const Text("Select Non Striker"),
-                                    items: nonStrikers
+                                    items: sliced.where((element) => element != selectedStriker).toList()
                                         .map((e) => DropdownMenuItem(
                                               child: Text(e["NAME"]),
                                               value: e["index"],
                                             ))
                                         .toList(),
                                     onChanged: (e) {
-                                      print(e);
+
                                       setState(() {
                                         non_strikerIndex = e as int;
-                                        print("value of e is $e");
-                                        // sliced.removeAt(e as int);
-                                        print("Sliced is now $sliced");
                                         selectedNonStriker = sliced[e as int];
+                                        bat.remove(sliced[e as int]);
+                                        if(non_strikerIndex != -1){
+                                          bat.add(selectedNonStriker);
+                                        }
                                       });
                                     },
                                   ),
@@ -315,13 +314,13 @@ class _CricketStrickerAndNonStrickerDetailsState
                                             ))
                                         .toList(),
                                     onChanged: (e) {
-                                      print(e);
                                       setState(() {
                                         baller_index = e as int;
-                                        print("value of e is $e");
-                                        // sliced2.removeAt(e as int);
-                                        print("Sliced2 is now $sliced2");
                                         selectedBaller = sliced2[e as int];
+                                        ball.remove(sliced2[e as int]);
+                                        if(baller_index != -1){
+                                          ball.add(selectedBaller);
+                                        }
                                       });
                                     },
                                   ),
@@ -370,8 +369,8 @@ class _CricketStrickerAndNonStrickerDetailsState
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => CricketScore(
-                                          battingTeam: sliced,
-                                          ballingTeam: sliced2,
+                                          battingTeam: bat,
+                                          ballingTeam: ball,
                                           first: widget.first,
                                           wickets: widget.wickets,
                                           overs: widget.overs,
