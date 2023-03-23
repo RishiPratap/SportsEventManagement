@@ -896,10 +896,20 @@ class _CricketScoreState extends State<CricketScore> {
                                               onChanged: (e) {
                                                 setState(() {
                                                   if(wickets != "Non Stricker Run Out"){
-                                                  strikerName = widget.allBattingPlayers[e as int]["NAME"];}
+                                                    if(_currentStriker){
+                                                      strikerName = widget.allBattingPlayers[e as int]["NAME"];
+                                                    } else{
+                                                      nonStrikerName = widget.allBattingPlayers[e as int]["NAME"];
+                                                    }
+                                                  }
 
                                                   else {
-                                                    nonStrikerName = widget.allBallingPlayers[e as int]["NAME"];
+                                                    if(_currentStriker){
+                                                      nonStrikerName = widget.allBattingPlayers[e as int]["NAME"];
+                                                    }
+                                                    else{
+                                                      strikerName = widget.allBattingPlayers[e as int]["NAME"];
+                                                    }
                                                   }
                                                   _currentOver += (ways[wickets]! + "-");
                                                   _currentWickets += 1;
