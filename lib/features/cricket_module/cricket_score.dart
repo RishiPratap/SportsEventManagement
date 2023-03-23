@@ -29,6 +29,8 @@ class CricketScore extends StatefulWidget {
   State<CricketScore> createState() => _CricketScoreState();
 }
 
+String strikerName = "";
+String nonStrikerName = "";
 bool _currentStriker = true;
 bool _currentNonStriker = false;
 var _currentOver = "";
@@ -52,6 +54,15 @@ List<String> WicketsType = [
   'Stumped',
   'Hit Wicket'
 ];
+var ways = {
+  "LBW": "LBW",
+  "Bowled": "B",
+  "Catch Out": "C",
+  "Stricker Run Out": "RO",
+  "Non Stricker Run Out": "RO",
+  "Stumped": "ST",
+  "Hit Wicket": "HW",
+};
 var curr_bowler_name;
 
 class _CricketScoreState extends State<CricketScore> {
@@ -66,6 +77,8 @@ class _CricketScoreState extends State<CricketScore> {
     setState(() {
       bowlerList = b;
       curr_bowler_name = widget.baller["NAME"];
+      strikerName = widget.striker["NAME"];
+      nonStrikerName = widget.non_striker["NAME"];
     });
   }
 
@@ -304,7 +317,7 @@ class _CricketScoreState extends State<CricketScore> {
                       Center(
                           child: Column(children: <Widget>[
                         SizedBox(height: h * 0.01),
-                        Row(children: [Text(widget.striker["NAME"])]),
+                        Row(children: [Text(strikerName)]),
                         SizedBox(height: h * 0.01),
                         Row(children: [
                           Text(
@@ -355,7 +368,7 @@ class _CricketScoreState extends State<CricketScore> {
             Center(
                 child: Column(children: <Widget>[
               SizedBox(height: h * 0.01),
-              Row(children: [Text(widget.non_striker["NAME"])]),
+              Row(children: [Text(nonStrikerName)]),
               SizedBox(height: h * 0.01),
               Row(children: [
                 Text(
@@ -843,10 +856,6 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 setState(() {
-                  _currentOver += "O";
-                  _currentWickets += 1;
-                  _currentBowlingCount += 1;
-                  _currentBalleOver += 0.1;
                   showDialog(
                     context: context,
                     builder: (_) => SimpleDialog(
@@ -863,38 +872,37 @@ class _CricketScoreState extends State<CricketScore> {
                                       Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Column(children: [
-                                            const TextField(
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  labelText: 'PLAYER NAME'),
+                                            DropdownButtonFormField(
+                                              hint: Text((wickets != "Non Stricker Run Out") ? "Next Striker" : "Next Non-Striker"),
+                                              items: widget.battingTeam
+                                                  .map((e) => DropdownMenuItem(
+                                                child: Text(e["NAME"]),
+                                                value: e["index"],
+                                              ))
+                                                  .toList(),
+                                              onChanged: (e) {
+                                                print(e);
+                                                setState(() {
+                                                  if(wickets != "Non Stricker Run Out"){
+                                                  strikerName = widget.battingTeam[e as int]["NAME"];}
+                                                  else {
+                                                    nonStrikerName = widget.battingTeam[e as int]["NAME"];
+                                                  }
+                                                  _currentOver += (ways[wickets]! + "-");
+                                                  _currentWickets += 1;
+                                                  _currentBowlingCount += 1;
+                                                  _currentBalleOver += 0.1;
+                                                });
+                                                Navigator.pop(context);
+                                                Navigator.pop(context);
+                                              },
                                             ),
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            const TextField(
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  labelText: 'PLAYER ID'),
-                                            ),
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            SizedBox(
-                                                width: 100,
-                                                child: TextButton(
-                                                    style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all(Colors
-                                                                    .blue)),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text("Submit",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white))))
                                           ]))
                                     ]),
                               );

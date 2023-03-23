@@ -305,6 +305,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                       0,
                                       deviceWidth * 0.02,
                                       0),
+                                  //rishi
                                   child: DropdownButtonFormField(
                                     hint: const Text("Select Bowler"),
                                     items: sliced2
