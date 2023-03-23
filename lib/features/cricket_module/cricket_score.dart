@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:ardent_sports/features/cricket_module/MatchResult.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:ardent_sports/features/cricket_module/cricket_stricker_and_non_stricker_details.dart';
 
 class CricketScore extends StatefulWidget {
@@ -63,6 +66,7 @@ bool matchInning = false;
 int matchInningCount = 0;
 bool matchComplete = false;
 bool setButtonDisable = false;
+var scoringData;
 List<String> WicketsType = [
   'LBW',
   'Bowled',
@@ -112,7 +116,22 @@ class _CricketScoreState extends State<CricketScore> {
     _clear();
   }
 
-  void scoringkeyPad() {}
+  void scoringkeyFunc(int score) async {
+    var url =
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/usualScore";
+    var sendData = {
+      "TOURNAMENT_ID": widget.tournamentId,
+      "score": score,
+    };
+    var jsonData = jsonEncode(sendData);
+    var response = await post(Uri.parse(url),
+        body: jsonData, headers: {"Content-Type": "application/json"});
+    print("😁😁response is : " + response.body);
+    setState(() {
+      scoringData = jsonDecode(response.body);
+    });
+  }
+
   void bowler() {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
@@ -653,6 +672,7 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
                         print(_currentOver.length);
+                        scoringkeyFunc(1);
                       });
                 if (_currentStriker) {
                   setState(() {
@@ -694,6 +714,7 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 2;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
+                        scoringkeyFunc(2);
                       });
                 if (_currentStriker) {
                   setState(() {
@@ -773,6 +794,7 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 3;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
+                        scoringkeyFunc(3);
                       });
                 if (_currentStriker) {
                   setState(() {
@@ -814,6 +836,7 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 4;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
+                        scoringkeyFunc(4);
                       });
                 if (_currentStriker) {
                   setState(() {
@@ -851,6 +874,7 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 6;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
+                        scoringkeyFunc(6);
                       });
                 if (_currentStriker) {
                   setState(() {
@@ -888,6 +912,7 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 5;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
+                        scoringkeyFunc(5);
                       }),
                 if (_currentStriker)
                   {
