@@ -35,20 +35,18 @@ class _CricketStrickerAndNonStrickerDetailsState
     print("😌😌" + widget.tournamentId);
     print("😌😌" + widget.battingTeamName);
     print("😌😌" + widget.bowlingTeamName);
-    print("😌😌" + widget.battingTeamPlayers.toString());
-    print("😌😌" + widget.bowlingTeamPlayers.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     // declaring the list of players
-    List<String> battingTeamPlayersList =
-        widget.battingTeamPlayers as List<String>;
-    List<String>? sliced = battingTeamPlayersList.sublist(0, 5);
+    List<dynamic> sliced =
+        widget.battingTeamPlayers;
+    // List<String>? sliced = battingTeamPlayersList.sublist(0, 5);
 
-    List<String> bowlingTeamPlayersList =
-        widget.bowlingTeamPlayers as List<String>;
-    List<String>? sliced2 = bowlingTeamPlayersList.sublist(0, 5);
+    List<dynamic> sliced2 =
+        widget.bowlingTeamPlayers;
+    // List<String>? sliced2 = bowlingTeamPlayersList.sublist(0, 5);
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -153,13 +151,13 @@ class _CricketStrickerAndNonStrickerDetailsState
                       width: double.infinity,
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: const Text("₹15,000"),
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Container(
+                  //     margin: EdgeInsets.only(left: deviceWidth * 0.03),
+                  //     child: const Text("₹15,000"),
+                  //   ),
+                  // ),
                 ],
               ),
               Container(
@@ -204,12 +202,13 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     hint: const Text("Select Striker"),
                                     items: sliced
                                         .map((e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e.toString(),
+                                              child: Text(e["NAME"]),
+                                              value: e["index"],
                                             ))
                                         .toList(),
                                     onChanged: (e) {
-                                      print(e.toString());
+                                      // print(e.toString());
+                                      print(e);
                                     },
                                   ),
                                   decoration: BoxDecoration(
@@ -238,9 +237,9 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     hint: const Text("Select Non Striker"),
                                     items: sliced
                                         .map((e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e.toString(),
-                                            ))
+                                      child: Text(e["NAME"]),
+                                      value: e["index"],
+                                    ))
                                         .toList(),
                                     onChanged: (e) {
                                       print(e.toString());
@@ -283,9 +282,9 @@ class _CricketStrickerAndNonStrickerDetailsState
                                     hint: const Text("Select Bowler"),
                                     items: sliced2
                                         .map((e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e.toString(),
-                                            ))
+                                      child: Text(e["NAME"]),
+                                      value: e["index"],
+                                    ))
                                         .toList(),
                                     onChanged: (e) {
                                       print(e.toString());

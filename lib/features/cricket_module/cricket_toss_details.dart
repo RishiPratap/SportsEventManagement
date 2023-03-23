@@ -264,7 +264,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {
-                                        chose_to = "bat";
+                                        chose_to = "BAT";
                                         if (team_name == widget.firstTeamName) {
                                           battingTeamName =
                                               widget.firstTeamName;
@@ -279,7 +279,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                         }
                                       },
                                       child: const Text(
-                                        "Bat",
+                                        "BAT",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -302,7 +302,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   child: Center(
                                     child: TextButton(
                                       onPressed: () {
-                                        chose_to = "bowl";
+                                        chose_to = "BALL";
                                         if (team_name == widget.firstTeamName) {
                                           battingTeamName =
                                               widget.secondTeamName;
@@ -317,7 +317,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                         }
                                       },
                                       child: const Text(
-                                        "Bowl",
+                                        "BALL",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -376,30 +376,60 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                               var allPlayersData = jsonDecode(response.body);
                               print("😒😒😒😒 Response : $allPlayersData");
                               // set the batting team and bowling team players
-                              for (int i = 0;
-                                  i < allPlayersData['one'].length;
-                                  i++) {
-                                firstTeamPlayers.add((allPlayersData['one'][i]
-                                        ['NAME'])
-                                    .toString());
+
+                              var teamOne = allPlayersData['one'];
+                              var teamTwo = allPlayersData['two'];
+                              print("PARTH EDIT HERE  ");
+                              print(teamOne);
+                              print(teamTwo);
+
+                              var batTeam = [];
+                              var ballTeam = [];
+                              for(int i=0; i<teamOne.length; i++){
+                                batTeam.add({
+                                  "USERID" : teamOne[i]["USERID"],
+                                  "NAME" : teamOne[i]["NAME"],
+                                  "index" : i
+                                });
                               }
-                              for (int i = 0;
-                                  i < allPlayersData['two'].length;
-                                  i++) {
-                                secondTeamPlayers.add((allPlayersData['two'][i]
-                                        ['NAME'])
-                                    .toString());
+                              for(int i=0; i<teamTwo.length; i++){
+                                ballTeam.add({
+                                  "USERID" : teamTwo[i]["USERID"],
+                                  "NAME" : teamTwo[i]["NAME"],
+                                  "index" : i
+                                });
                               }
-                              if (battingTeamName == widget.firstTeamName) {
-                                battingTeamPlayers = firstTeamPlayers;
-                                bowlingTeamPlayers = secondTeamPlayers;
-                              } else if (battingTeamName ==
-                                  widget.secondTeamName) {
-                                battingTeamPlayers = secondTeamPlayers;
-                                bowlingTeamPlayers = firstTeamPlayers;
-                              }
-                              print(
-                                  "Battting team players are $battingTeamPlayers and bowling team players are $bowlingTeamPlayers");
+
+                              // for (int i = 0;
+                              //     i < allPlayersData['one'].length;
+                              //     i++) {
+                              //   firstTeamPlayers.add((allPlayersData['one'][i]
+                              //           ['NAME'])
+                              //       .toString());
+                              // }
+                              // for (int i = 0;
+                              //     i < allPlayersData['two'].length;
+                              //     i++) {
+                              //   secondTeamPlayers.add((allPlayersData['two'][i]
+                              //           ['NAME'])
+                              //       .toString());
+                              // }
+                              // if (battingTeamName == widget.firstTeamName) {
+                              //   battingTeamPlayers = firstTeamPlayers;
+                              //   bowlingTeamPlayers = secondTeamPlayers;
+                              // } else if (battingTeamName ==
+                              //     widget.secondTeamName) {
+                              //   battingTeamPlayers = secondTeamPlayers;
+                              //   bowlingTeamPlayers = firstTeamPlayers;
+                              // }
+                              // print(
+                              //     "Battting team players are $battingTeamPlayers and bowling team players are $bowlingTeamPlayers");
+
+                              print("New Edit Here");
+                              print(battingTeamName);
+                              print(bowlingTeamName);
+                              print(batTeam);
+                              print(ballTeam);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -410,9 +440,9 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                           tournamentId: widget.tournamentId,
                                           allPlayersData: allPlayersData,
                                           battingTeamPlayers:
-                                              battingTeamPlayers,
+                                              batTeam,
                                           bowlingTeamPlayers:
-                                              bowlingTeamPlayers,
+                                              ballTeam,
                                         )),
                               );
                             },
