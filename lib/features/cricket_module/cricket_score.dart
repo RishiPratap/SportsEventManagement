@@ -733,8 +733,6 @@ class _CricketScoreState extends State<CricketScore> {
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
 
-              //strike change nhi ho rha hai
-              //rishi
               onPressed: () => {
                 setState(() {
                   _currentOver += "5-";
@@ -908,6 +906,37 @@ class _CricketScoreState extends State<CricketScore> {
                   );
                 });
                 if (_currentWickets == widget.wickets - 1) {
+                  showDialog(
+                    context: context,
+                    builder: (_) => SimpleDialog(
+                      title: const Text('All Out Confirm'),
+                      children: <Widget>[
+                        SimpleDialogOption(
+                          onPressed: () {
+                            setState(() {
+                              _submit();
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: const Text('Declare All Out'),
+                        ),
+                        SimpleDialogOption(
+                          onPressed: () {
+                            setState(() {
+                              _currentStriker = !_currentStriker;
+                              allowLastmanPostion = !allowLastmanPostion;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Allow Last Man to Bat'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                //rishi
+                //end match
+                if (_currentWickets == widget.wickets) {
                   showDialog(
                     context: context,
                     builder: (_) => SimpleDialog(
