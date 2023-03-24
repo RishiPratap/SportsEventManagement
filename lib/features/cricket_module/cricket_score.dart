@@ -1007,6 +1007,9 @@ class _CricketScoreState extends State<CricketScore> {
   _keyBoard3() {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+    TextEditingController nbscore = TextEditingController();
     return Positioned(
       top: h * 0.83,
       left: w * 0.01,
@@ -1023,6 +1026,44 @@ class _CricketScoreState extends State<CricketScore> {
                   ),
                   backgroundColor: Colors.red),
               onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => SimpleDialog(
+                      title: const Text('Score'),
+                      children: <Widget>[
+                        Padding(
+                            padding:
+                            const EdgeInsets.all(8.0),
+                            child: Column(children: [
+                              TextField(
+                                keyboardType: TextInputType.number,
+                                controller: nbscore,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextButton(onPressed: () async{
+                                print(nbscore.text);
+                                var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
+                                var sendData = jsonEncode({
+                                  "TOURNAMENT_ID" : widget.tournamentId,
+                                  "score" : int.parse(nbscore.text),
+                                  "remarks" : "Wide Ball"
+                                });
+                                var resp =
+                                await post(Uri.parse(url),
+                                    headers: {
+                                      "Content-Type":
+                                      "application/json"
+                                    },
+                                    body:
+                                    sendData);
+                                print(resp.body);
+                                Navigator.pop(context);
+                              }, child: const Text("Ok"))
+                            ]))
+                      ]),
+                );
                 setButtonDisable
                     ? null
                     : setState(() {
@@ -1043,11 +1084,52 @@ class _CricketScoreState extends State<CricketScore> {
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
               onPressed: () {
+
+                showDialog(
+                  context: context,
+                  builder: (_) => SimpleDialog(
+                      title: const Text('Score'),
+                      children: <Widget>[
+                        Padding(
+                            padding:
+                            const EdgeInsets.all(8.0),
+                            child: Column(children: [
+                              TextField(
+                                keyboardType: TextInputType.number,
+                                  controller: nbscore,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextButton(onPressed: () async{
+                                print(nbscore.text);
+                                var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
+                                var sendData = jsonEncode({
+                                  "TOURNAMENT_ID" : widget.tournamentId,
+                                  "score" : int.parse(nbscore.text),
+                                  "remarks" : "No Ball"
+                                });
+                                var resp =
+                                await post(Uri.parse(url),
+                                headers: {
+                                "Content-Type":
+                                "application/json"
+                                },
+                                body:
+                                sendData);
+                                print(resp.body);
+                                Navigator.pop(context);
+                              }, child: const Text("Ok"))
+                            ]))
+                      ]),
+                );
+
                 setButtonDisable
                     ? null
                     : setState(() {
                         _currentOver += "NB-";
                         _currentMatchScore += 1;
+                        _currentMatchScore += int.parse(nbscore.text);
                       });
               },
             )),
@@ -1063,6 +1145,44 @@ class _CricketScoreState extends State<CricketScore> {
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
               onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => SimpleDialog(
+                      title: const Text('Score'),
+                      children: <Widget>[
+                        Padding(
+                            padding:
+                            const EdgeInsets.all(8.0),
+                            child: Column(children: [
+                              TextField(
+                                keyboardType: TextInputType.number,
+                                controller: nbscore,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextButton(onPressed: () async{
+                                print(nbscore.text);
+                                var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
+                                var sendData = jsonEncode({
+                                  "TOURNAMENT_ID" : widget.tournamentId,
+                                  "score" : int.parse(nbscore.text),
+                                  "remarks" : "Bye Ball"
+                                });
+                                var resp =
+                                await post(Uri.parse(url),
+                                    headers: {
+                                      "Content-Type":
+                                      "application/json"
+                                    },
+                                    body:
+                                    sendData);
+                                print(resp.body);
+                                Navigator.pop(context);
+                              }, child: const Text("Ok"))
+                            ]))
+                      ]),
+                );
                 setButtonDisable
                     ? null
                     : setState(() {
