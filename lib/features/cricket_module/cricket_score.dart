@@ -1069,6 +1069,16 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "WD-";
                         _currentMatchScore += 1;
+                        _currentMatchScore += int.parse(nbscore.text);
+                        if(_currentStriker){
+                          _currentStrikerScore = int.parse(nbscore.text);
+                        } else{
+                          _currentNonStrikerScore = int.parse(nbscore.text);
+                        }
+                        if(int.parse(nbscore.text) % 2 == 1){
+                          _currentNonStriker = !_currentNonStriker;
+                          _currentStriker = !_currentStriker;
+                        }
                       });
               },
             )),
@@ -1112,8 +1122,8 @@ class _CricketScoreState extends State<CricketScore> {
                                 var resp =
                                 await post(Uri.parse(url),
                                 headers: {
-                                "Content-Type":
-                                "application/json"
+                                  "Content-Type":
+                                    "application/json"
                                 },
                                 body:
                                 sendData);
@@ -1130,6 +1140,17 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentOver += "NB-";
                         _currentMatchScore += 1;
                         _currentMatchScore += int.parse(nbscore.text);
+
+                        if(_currentStriker){
+                          _currentStrikerScore = int.parse(nbscore.text);
+                        } else{
+                          _currentNonStrikerScore = int.parse(nbscore.text);
+                        }
+
+                        if(int.parse(nbscore.text) % 2 == 1){
+                          _currentNonStriker = !_currentNonStriker;
+                          _currentStriker = !_currentStriker;
+                        }
                       });
               },
             )),
@@ -1187,6 +1208,18 @@ class _CricketScoreState extends State<CricketScore> {
                     ? null
                     : setState(() {
                         _currentOver += "Bye-";
+                        _currentMatchScore += int.parse(nbscore.text);
+
+                        if(_currentStriker){
+                          _currentStrikerScore = int.parse(nbscore.text);
+                        } else{
+                          _currentNonStrikerScore = int.parse(nbscore.text);
+                        }
+
+                        if(int.parse(nbscore.text) % 2 == 1){
+                          _currentNonStriker = !_currentNonStriker;
+                          _currentStriker = !_currentStriker;
+                        }
                       });
               },
             )),
