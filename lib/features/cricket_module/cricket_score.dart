@@ -1083,27 +1083,28 @@ class _CricketScoreState extends State<CricketScore> {
                                     body:
                                     sendData);
                                 print(resp.body);
+                                setButtonDisable
+                                    ? null
+                                    : setState(() {
+                                  _currentOver += "WD-";
+                                  _currentMatchScore += 1;
+                                  _currentMatchScore += int.parse(nbscore.text);
+                                  if(_currentStriker){
+                                    _currentStrikerScore += int.parse(nbscore.text);
+                                  } else{
+                                    _currentNonStrikerScore += int.parse(nbscore.text);
+                                  }
+                                  if(int.parse(nbscore.text) % 2 == 1){
+                                    _currentNonStriker = !_currentNonStriker;
+                                    _currentStriker = !_currentStriker;
+                                  }
+                                });
                                 Navigator.pop(context);
                               }, child: const Text("Ok"))
                             ]))
                       ]),
                 );
-                setButtonDisable
-                    ? null
-                    : setState(() {
-                        _currentOver += "WD-";
-                        _currentMatchScore += 1;
-                        _currentMatchScore += int.parse(nbscore.text);
-                        if(_currentStriker){
-                          _currentStrikerScore = int.parse(nbscore.text);
-                        } else{
-                          _currentNonStrikerScore = int.parse(nbscore.text);
-                        }
-                        if(int.parse(nbscore.text) % 2 == 1){
-                          _currentNonStriker = !_currentNonStriker;
-                          _currentStriker = !_currentStriker;
-                        }
-                      });
+
               },
             )),
         SizedBox(
@@ -1152,30 +1153,29 @@ class _CricketScoreState extends State<CricketScore> {
                                 body:
                                 sendData);
                                 print(resp.body);
+                                setButtonDisable
+                                    ? null
+                                    : setState(() {
+                                  _currentOver += "NB-";
+                                  _currentMatchScore += 1;
+                                  _currentMatchScore += int.parse(nbscore.text);
+
+                                  if(_currentStriker){
+                                    _currentStrikerScore += int.parse(nbscore.text);
+                                  } else{
+                                    _currentNonStrikerScore += int.parse(nbscore.text);
+                                  }
+
+                                  if((int.parse(nbscore.text)) % 2 == 1){
+                                    _currentNonStriker = !_currentNonStriker;
+                                    _currentStriker = !_currentStriker;
+                                  }
+                                });
                                 Navigator.pop(context);
                               }, child: const Text("Ok"))
                             ]))
                       ]),
                 );
-
-                setButtonDisable
-                    ? null
-                    : setState(() {
-                        _currentOver += "NB-";
-                        _currentMatchScore += 1;
-                        _currentMatchScore += int.parse(nbscore.text);
-
-                        if(_currentStriker){
-                          _currentStrikerScore = int.parse(nbscore.text);
-                        } else{
-                          _currentNonStrikerScore = int.parse(nbscore.text);
-                        }
-
-                        if(int.parse(nbscore.text) % 2 == 1){
-                          _currentNonStriker = !_currentNonStriker;
-                          _currentStriker = !_currentStriker;
-                        }
-                      });
               },
             )),
         SizedBox(
@@ -1223,28 +1223,29 @@ class _CricketScoreState extends State<CricketScore> {
                                     body:
                                     sendData);
                                 print(resp.body);
+                                setButtonDisable
+                                    ? null
+                                    : setState(() {
+                                  _currentOver += "Bye-";
+                                  _currentMatchScore += int.parse(nbscore.text);
+
+                                  if(_currentStriker){
+                                    _currentStrikerScore += int.parse(nbscore.text);
+                                  } else{
+                                    _currentNonStrikerScore += int.parse(nbscore.text);
+                                  }
+
+                                  if(int.parse(nbscore.text) % 2 == 1){
+                                    _currentNonStriker = !_currentNonStriker;
+                                    _currentStriker = !_currentStriker;
+                                  }
+                                });
                                 Navigator.pop(context);
                               }, child: const Text("Ok"))
                             ]))
                       ]),
                 );
-                setButtonDisable
-                    ? null
-                    : setState(() {
-                        _currentOver += "Bye-";
-                        _currentMatchScore += int.parse(nbscore.text);
 
-                        if(_currentStriker){
-                          _currentStrikerScore = int.parse(nbscore.text);
-                        } else{
-                          _currentNonStrikerScore = int.parse(nbscore.text);
-                        }
-
-                        if(int.parse(nbscore.text) % 2 == 1){
-                          _currentNonStriker = !_currentNonStriker;
-                          _currentStriker = !_currentStriker;
-                        }
-                      });
               },
             )),
         SizedBox(
