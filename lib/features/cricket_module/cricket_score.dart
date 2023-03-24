@@ -8,38 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:ardent_sports/features/cricket_module/cricket_stricker_and_non_stricker_details.dart';
 
-// var outURL =
-//     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
-// var outJson = {
-//   "TOURNAMENT_ID":
-//       widget.tournamentId,
-//   "index": widget
-//       .allBattingPlayers
-//       .where((element) =>
-//           element[
-//               "NAME"] ==
-//           widget.battingTeam[
-//                   e as int]
-//               ["NAME"])
-//       .toList()[0]["index"],
-//   "remarks": wickets,
-// };
-// print(
-//     "The json is $outJson");
-// var outJsonData =
-//     jsonEncode(outJson);
-// var outResponse =
-//     await post(
-//         Uri.parse(outURL),
-//         headers: {
-//           "Content-Type":
-//               "application/json"
-//         },
-//         body:
-//             outJsonData);
-// print(
-//     "The response for the out api is ${outResponse.body}");
-
 class CricketScore extends StatefulWidget {
   final int overs;
   final int wickets;
@@ -80,6 +48,8 @@ class CricketScore extends StatefulWidget {
   State<CricketScore> createState() => _CricketScoreState();
 }
 
+
+bool first = false;
 String strikerName = "";
 String nonStrikerName = "";
 bool _currentStriker = true;
@@ -146,6 +116,7 @@ class _CricketScoreState extends State<CricketScore> {
       nowBaller = widget.baller;
       matchInning = false;
       setButtonDisable = false;
+      first = widget.first;
     });
     _clear();
   }
@@ -300,6 +271,18 @@ class _CricketScoreState extends State<CricketScore> {
     _searchInputControllor.value = newValue;
   }
 
+  Future<Widget> endMatch() async{
+    var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/endMatchCricket";
+    var jsonData = jsonEncode({"TOURNAMENT_ID" : widget.tournamentId});
+    var response = await post(Uri.parse(url),
+        body: jsonData,
+        headers: {"Content-Type": "application/json"});
+    print("😁😁response For End Match is : " +
+        response.body);
+
+    return Text(response.body + "won the match.");
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -328,7 +311,6 @@ class _CricketScoreState extends State<CricketScore> {
               ),
             ),
             _header(),
-            // _score(),
             Positioned(
               top: h * 0.23,
               left: w * 0.65,
@@ -1228,6 +1210,7 @@ class _CricketScoreState extends State<CricketScore> {
                                     : setState(() {
                                   _currentOver += "Bye-";
                                   _currentMatchScore += int.parse(nbscore.text);
+                                  _currentBalleOver += 0.1;
 
                                   if(_currentStriker){
                                     _currentStrikerScore += int.parse(nbscore.text);
