@@ -562,7 +562,19 @@ class _CricketScoreState extends State<CricketScore> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          onPressed: () {
+          onPressed: () async{
+            var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
+            var sendJSON = jsonEncode({"TOURNAMENT_ID" : widget.tournamentId});
+
+            var resp =
+            await post(Uri.parse(url),
+                headers: {
+                  "Content-Type":
+                  "application/json"
+                },
+                body:
+                sendJSON);
+            print(resp.body);
             setState(() {
               _currentNonStriker = !_currentNonStriker;
               _currentStriker = !_currentStriker;
@@ -612,7 +624,19 @@ class _CricketScoreState extends State<CricketScore> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          onPressed: () {
+          onPressed: () async{
+            var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
+            var sendJSON = jsonEncode({"TOURNAMENT_ID" : widget.tournamentId});
+
+            var resp =
+                await post(Uri.parse(url),
+                headers: {
+                  "Content-Type":
+                  "application/json"
+                },
+                body:
+                sendJSON);
+            print(resp.body);
             setState(() {
               _currentNonStriker = !_currentNonStriker;
               _currentStriker = !_currentStriker;
