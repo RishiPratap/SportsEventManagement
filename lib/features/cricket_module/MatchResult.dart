@@ -28,9 +28,8 @@ class _MatchResult extends State<MatchResult> {
   final String tournamentId = "";
 
   String Teamwinner = "TeamB";
-  @override
-  void initState() async{
-    super.initState();
+
+  void ChangeAll() async{
     var url = "";
     var data = jsonEncode({"TOURNAMENT_ID" : widget.TOURNAMENT_ID});
     var response = await post(Uri.parse(url),
@@ -38,6 +37,12 @@ class _MatchResult extends State<MatchResult> {
         headers: {"Content-Type": "application/json"});
     var allData = jsonDecode(response.body);
     print(allData);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    ChangeAll();
   }
 
   @override
