@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_score.dart';
 
 class MatchResult extends StatefulWidget {
+  final String TOURNAMENT_ID;
   MatchResult({
+    required this.TOURNAMENT_ID,
     Key? key,
   }) : super(key: key);
   @override
@@ -20,10 +25,19 @@ class _MatchResult extends State<MatchResult> {
   var TeamBMatchScore = 0;
   var TeamAWickets = 0;
   var TeamBWickets = 0;
+  final String tournamentId = "";
+
   String Teamwinner = "TeamB";
   @override
-  void initState() {
+  void initState() async{
     super.initState();
+    var url = "";
+    var data = jsonEncode({"TOURNAMENT_ID" : widget.TOURNAMENT_ID});
+    var response = await post(Uri.parse(url),
+        body: data,
+        headers: {"Content-Type": "application/json"});
+    var allData = jsonDecode(response.body);
+    print(allData);
   }
 
   @override

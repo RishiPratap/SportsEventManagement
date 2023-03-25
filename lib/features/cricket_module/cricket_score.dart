@@ -316,7 +316,9 @@ class _CricketScoreState extends State<CricketScore> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MatchResult()));
+                                    builder: (context) => MatchResult(
+                                      TOURNAMENT_ID : widget.tournamentId
+                                    )));
                           },
                           child: const Text("Ok"),
                         ),
