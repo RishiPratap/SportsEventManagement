@@ -304,7 +304,7 @@ class _CricketScoreState extends State<CricketScore> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text("Click on Result Match to see the result"),
+                      child: Text("Match Completed View Result"),
                     ),
                     ButtonBar(
                       children: [
@@ -312,13 +312,13 @@ class _CricketScoreState extends State<CricketScore> {
                           onPressed: () {
                             setState(() {
                               matchInning = true;
+                              matchInningCount = 0;
                             });
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MatchResult(
-                                      TOURNAMENT_ID : widget.tournamentId
-                                    )));
+                                        TOURNAMENT_ID: widget.tournamentId)));
                           },
                           child: const Text("Ok"),
                         ),
@@ -1476,6 +1476,7 @@ class _CricketScoreState extends State<CricketScore> {
                               matchInningCount += 1;
                               setButtonDisable = true;
                             });
+                            endMatch();
                             Navigator.pop(context);
                           },
                           child: const Text('Declare All Out'),

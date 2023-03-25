@@ -17,8 +17,8 @@ class MatchResult extends StatefulWidget {
 }
 
 class _MatchResult extends State<MatchResult> {
-  var TeamA = "TeamA";
-  var TeamB = "TeamB";
+  var TeamA = "";
+  var TeamB = "";
   var TeamAOver = 0;
   var TeamBOver = 0;
   var TeamAMatchScore = 0;
@@ -26,17 +26,34 @@ class _MatchResult extends State<MatchResult> {
   var TeamAWickets = 0;
   var TeamBWickets = 0;
   final String tournamentId = "";
+  String Teamwinner = "";
 
-  String Teamwinner = "TeamB";
-
-  void ChangeAll() async{
-    var url = "";
-    var data = jsonEncode({"TOURNAMENT_ID" : widget.TOURNAMENT_ID});
+  void ChangeAll() async {
+    var url =
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getScoreCard";
+    var data = jsonEncode({"TOURNAMENT_ID": widget.TOURNAMENT_ID});
     var response = await post(Uri.parse(url),
-        body: data,
-        headers: {"Content-Type": "application/json"});
+        body: data, headers: {"Content-Type": "application/json"});
     var allData = jsonDecode(response.body);
     print(allData);
+    print(allData["scoreCard"][0]);
+    print(allData["scoreCard"][1]);
+    print(allData["WinnerTeam"]);
+    var e = allData["scoreCard"][0];
+    var f = allData["scoreCard"][1];
+    setState(() {
+      Teamwinner = allData["WinnerTeam"];
+    });
+    setState(() {
+      TeamA = e["TeamName"];
+      TeamB = f["TeamName"];
+      TeamAOver = e["TeamOvers"];
+      TeamBOver = f["TeamOvers"];
+      TeamAMatchScore = e["TeamTotal"];
+      TeamBMatchScore = f["TeamTotal"];
+      TeamAWickets = e["TeamWickets"];
+      TeamBWickets = f["TeamWickets"];
+    });
   }
 
   @override
@@ -137,7 +154,7 @@ class _MatchResult extends State<MatchResult> {
                                         flex: 1,
                                         child: Center(
                                           child: Text(
-                                            "($TeamAMatchScore/$TeamAWickets ($TeamAOver))",
+                                            "$TeamAMatchScore/$TeamAWickets ($TeamAOver)",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15),
@@ -185,7 +202,7 @@ class _MatchResult extends State<MatchResult> {
                                         flex: 1,
                                         child: Center(
                                           child: Text(
-                                            "($TeamBMatchScore/$TeamBWickets ($TeamBOver))",
+                                            "$TeamBMatchScore/$TeamBWickets ($TeamBOver)",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15),
