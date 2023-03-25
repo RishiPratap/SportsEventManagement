@@ -12,6 +12,15 @@ class MatchResult extends StatefulWidget {
 }
 
 class _MatchResult extends State<MatchResult> {
+  var TeamA = "TeamA";
+  var TeamB = "TeamB";
+  var TeamAOver = 0;
+  var TeamBOver = 0;
+  var TeamAMatchScore = 0;
+  var TeamBMatchScore = 0;
+  var TeamAWickets = 0;
+  var TeamBWickets = 0;
+  String Teamwinner = "TeamB";
   @override
   void initState() {
     super.initState();
@@ -38,25 +47,6 @@ class _MatchResult extends State<MatchResult> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                                pageBuilder: (a, b, c) => const HomePage()));
-                      },
-                      child: Container(
-                        width: deviceWidth * 0.18,
-                        height: deviceWidth * 0.1,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/AARDENT_LOGO.png"),
-                                fit: BoxFit.cover)),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
                     child: Container(
                       width: deviceWidth * 0.26,
                       height: deviceWidth * 0.08,
@@ -77,68 +67,13 @@ class _MatchResult extends State<MatchResult> {
               const Divider(
                 color: Colors.white,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: deviceWidth * 0.08,
-                      height: deviceWidth * 0.08,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/Profile_Image.png"),
-                              fit: BoxFit.fitHeight)),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      width: double.infinity,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: deviceWidth * 0.08,
-                      height: deviceWidth * 0.08,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/money_bag.png"),
-                              fit: BoxFit.fitHeight)),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: const Text("Shubham"),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      width: double.infinity,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: const Text("₹15,000"),
-                    ),
-                  ),
-                ],
-              ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).size.height / 3,
                 margin: EdgeInsets.all(deviceWidth * 0.02),
-                child: Card(
+                child: Center(
+                    child: Card(
                   elevation: 10,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.03)),
@@ -167,13 +102,13 @@ class _MatchResult extends State<MatchResult> {
                                       0),
                                   // Select Striker
                                   child: Container(
-                                    child: Row(children: const <Widget>[
+                                    child: Row(children: <Widget>[
                                       Expanded(
                                         flex: 1,
                                         child: Center(
                                           child: Text(
-                                            "Team A",
-                                            style: TextStyle(
+                                            TeamA,
+                                            style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15),
                                           ),
@@ -183,7 +118,7 @@ class _MatchResult extends State<MatchResult> {
                                         flex: 1,
                                         child: Center(
                                           child: Text(
-                                            "109/2 (10)",
+                                            "($TeamAMatchScore/$TeamAWickets ($TeamAOver))",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15),
@@ -215,12 +150,12 @@ class _MatchResult extends State<MatchResult> {
                                       deviceWidth * 0.02,
                                       0),
                                   child: Container(
-                                    child: Row(children: const <Widget>[
+                                    child: Row(children: <Widget>[
                                       Expanded(
                                         flex: 1,
                                         child: Center(
                                           child: Text(
-                                            "Team B",
+                                            TeamB,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15),
@@ -231,7 +166,7 @@ class _MatchResult extends State<MatchResult> {
                                         flex: 1,
                                         child: Center(
                                           child: Text(
-                                            "110/2 (9.2)",
+                                            "($TeamBMatchScore/$TeamBWickets ($TeamBOver))",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15),
@@ -246,12 +181,6 @@ class _MatchResult extends State<MatchResult> {
                                       color: Colors.black.withOpacity(0.4))),
                             ),
                           ],
-                        ),
-                      ),
-                      const Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: Text("Team A won by 5 wickets"),
                         ),
                       ),
                       Expanded(
@@ -261,39 +190,20 @@ class _MatchResult extends State<MatchResult> {
                             Expanded(
                               flex: 1,
                               child: Container(
-                                  width: MediaQuery.of(context).size.width / 2,
                                   height: deviceWidth * 0.15,
                                   margin: EdgeInsets.fromLTRB(
                                       deviceWidth * 0.02,
                                       0,
                                       deviceWidth * 0.02,
                                       0),
-                                  child: Container(
-                                    child: Row(children: const <Widget>[
-                                      Expanded(
-                                        flex: 1,
-                                        child: Center(
-                                          child: Text(
-                                            "Man of the Match",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ),
+                                  child: Row(children: <Widget>[
+                                    Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                        child: Text("$Teamwinner won"),
                                       ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Center(
-                                          child: Text(
-                                            "Rohit",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
+                                    ),
+                                  ]),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           deviceWidth * 0.02),
@@ -303,12 +213,7 @@ class _MatchResult extends State<MatchResult> {
                         ),
                       ),
                       Expanded(
-                          flex: 4,
-                          child: Container(
-                            height: double.infinity,
-                          )),
-                      Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
@@ -319,15 +224,21 @@ class _MatchResult extends State<MatchResult> {
                                       deviceWidth * 0.04)),
                             ),
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const HomePage()));
                             },
                             child: const Text("Confirm"),
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: deviceWidth * 0.02,
+                      )
                     ],
                   ),
-                ),
+                )),
               )
             ],
           ),

@@ -48,8 +48,6 @@ class CricketScore extends StatefulWidget {
   State<CricketScore> createState() => _CricketScoreState();
 }
 
-
-bool first = false;
 String strikerName = "";
 String nonStrikerName = "";
 bool _currentStriker = true;
@@ -68,7 +66,6 @@ bool allowLastmanPostion = true;
 List<String> bowlerList = [];
 bool matchInning = false;
 int matchInningCount = 0;
-bool matchComplete = false;
 bool setButtonDisable = false;
 var scoringData;
 List<String> WicketsType = [
@@ -116,12 +113,12 @@ class _CricketScoreState extends State<CricketScore> {
       nowBaller = widget.baller;
       matchInning = false;
       setButtonDisable = false;
-      first = widget.first;
     });
     _clear();
+    print(matchInningCount);
   }
 
-  void scoringkeyFunc(int score) async {
+  Future<void> scoringkeyFunc(int score) async {
     var url =
         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/usualScore";
     var sendData = {
@@ -131,48 +128,12 @@ class _CricketScoreState extends State<CricketScore> {
     var jsonData = jsonEncode(sendData);
     var response = await post(Uri.parse(url),
         body: jsonData, headers: {"Content-Type": "application/json"});
-    String datalist = jsonDecode(response.body);
-    print({"😁😁response is : ", datalist.toString()});
-    setState(() {
-      scoringData = jsonDecode(response.body);
-    });
+    print(response.body);
   }
 
   void bowler() async {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
-    if ((_currentBalleOver).toInt() == widget.overs) {
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) =>
-            SimpleDialog(title: const Text('Match Over !'), children: <Widget>[
-          const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text("Innings Over! Change Innings")),
-          ButtonBar(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    setButtonDisable = true;
-                  });
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          ),
-        ]),
-      );
-      setState(() {
-        // redirect to "NeXT INNINGS"
-        print("An innings got over");
-        matchInning = true;
-        matchInningCount++;
-        print({"🌐", matchInningCount});
-      });
-    }
     if (_currentBowlingCount == 6) {
       showDialog(
           context: context,
@@ -223,33 +184,91 @@ class _CricketScoreState extends State<CricketScore> {
         _currentBowlingCount = 0;
       });
     }
-    // if (matchComplete) {
-    //   setState(() {
-    //     if (matchComplete) {
-    //       showDialog(
-    //           barrierDismissible: false,
-    //           context: context,
-    //           builder: (_) => SimpleDialog(
-    //                 title: const Text("Match Complete"),
-    //                 children: [
-    //                   const Padding(
-    //                       padding: EdgeInsets.all(10.0),
-    //                       child: Text("Match Complete")),
-    //                   Padding(
-    //                       padding: EdgeInsets.all(10.0),
-    //                       child: ElevatedButton(
-    //                           onPressed: () {
-    //                             Navigator.push(
-    //                                 context,
-    //                                 MaterialPageRoute(
-    //                                     builder: (context) => MatchResult()));
-    //                           },
-    //                           child: const Text("OK")))
-    //                 ],
-    //               ));
-    //     }
-    //   });
-    // }
+    print("🌐");
+    print(matchInningCount);
+    if ((_currentBalleOver).toInt() == widget.overs) {
+      setState(() {
+        matchInningCount += 1;
+      });
+      endMatch();
+      if (matchInningCount == 1) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (_) => SimpleDialog(
+              title: const Center(
+                  child: Text('Innings Over',
+                      style: TextStyle(color: Colors.red))),
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Match Result",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Score/Wickets: ($_currentMatchScore/$_currentWickets)",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Striker 🏏: $strikerName",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ])),
+                ButtonBar(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        var url =
+                            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
+                        var inningsJson = {
+                          "TOURNAMENT_ID": widget.tournamentId,
+                        };
+                        var inningsJsonData = jsonEncode(inningsJson);
+                        print("The json data is: " + inningsJson.toString());
+                        var response = await post(Uri.parse(url),
+                            body: inningsJsonData,
+                            headers: {"Content-Type": "application/json"});
+                        print("😌😌 response from innings change api is: " +
+                            response.body);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CricketStrickerAndNonStrickerDetails(
+                                      tournamentId: widget.tournamentId,
+                                      battingTeamName: widget.bowlingTeamName,
+                                      bowlingTeamName: widget.battingTeamName,
+                                      overs: widget.overs,
+                                      wickets: widget.wickets,
+                                      first: !(widget.first),
+                                      tossWonBy: widget.tossWonBy,
+                                      tossWinnerChoseTo:
+                                          widget.tossWinnerChoseTo,
+                                      battingTeamPlayers:
+                                          widget.allBallingPlayers,
+                                      bowlingTeamPlayers:
+                                          widget.allBattingPlayers,
+                                    )));
+                      },
+                      child: const Text("Change Innings"),
+                    ),
+                  ],
+                ),
+              ]),
+        );
+      }
+    }
   }
 
   void scoreRun(int run) {}
@@ -271,16 +290,50 @@ class _CricketScoreState extends State<CricketScore> {
     _searchInputControllor.value = newValue;
   }
 
-  Future<Widget> endMatch() async{
-    var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/endMatchCricket";
-    var jsonData = jsonEncode({"TOURNAMENT_ID" : widget.tournamentId});
-    var response = await post(Uri.parse(url),
-        body: jsonData,
-        headers: {"Content-Type": "application/json"});
-    print("😁😁response For End Match is : " +
-        response.body);
-
-    return Text(response.body + "won the match.");
+  void endMatch() async {
+    if (matchInningCount == 2) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (_) => SimpleDialog(
+                  title: const Center(
+                      child: Text(
+                    'Match Over',
+                    style: TextStyle(color: Colors.red),
+                  )),
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Click on Result Match to see the result"),
+                    ),
+                    ButtonBar(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              matchInning = true;
+                            });
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MatchResult()));
+                          },
+                          child: const Text("Ok"),
+                        ),
+                      ],
+                    )
+                  ]));
+      var jsonData = jsonEncode({
+        "TOURNAMENT_ID": widget.tournamentId,
+        "batting_team_name": widget.battingTeamName
+      });
+      print("The json data is: " + jsonData.toString());
+      var url =
+          "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/endMatchCricket";
+      var response = await post(Uri.parse(url),
+          body: jsonData, headers: {"Content-Type": "application/json"});
+      print("😁😁response For End Match is : " + response.body);
+    }
   }
 
   @override
@@ -311,56 +364,6 @@ class _CricketScoreState extends State<CricketScore> {
               ),
             ),
             _header(),
-            Positioned(
-              top: h * 0.23,
-              left: w * 0.65,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent),
-                onPressed: () async {
-                  if (matchInning) {
-                    // call change innings api
-                    var url =
-                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
-                    var inningsJson = {
-                      "TOURNAMENT_ID": widget.tournamentId,
-                    };
-                    var inningsJsonData = jsonEncode(inningsJson);
-                    print("The json data is: " + inningsJson.toString());
-                    var response = await post(Uri.parse(url),
-                        body: inningsJsonData,
-                        headers: {"Content-Type": "application/json"});
-                    print("😌😌 response from innings change api is: " +
-                        response.body);
-                    // Redirect to next innings page
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                CricketStrickerAndNonStrickerDetails(
-                                  tournamentId: widget.tournamentId,
-                                  battingTeamName: widget.bowlingTeamName,
-                                  bowlingTeamName: widget.battingTeamName,
-                                  overs: widget.overs,
-                                  wickets: widget.wickets,
-                                  first: !(widget.first),
-                                  tossWonBy: widget.tossWonBy,
-                                  tossWinnerChoseTo: widget.tossWinnerChoseTo,
-                                  battingTeamPlayers: widget.allBallingPlayers,
-                                  bowlingTeamPlayers: widget.allBattingPlayers,
-                                )));
-                  } else {}
-                  ;
-                },
-                child: (matchInning)
-                    ? const Text(
-                        "Change Innings",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, color: Colors.white),
-                      )
-                    : const Text(""),
-              ),
-            ),
             _batsmanScore(),
             _score(), //TODO ADD SCORING PART
             Positioned(
@@ -380,7 +383,7 @@ class _CricketScoreState extends State<CricketScore> {
             _keyBoard(),
             _keyBoard2(),
             _keyBoard3(),
-            _submit(),
+            // _submit(),
           ],
         ),
       )),
@@ -400,7 +403,6 @@ class _CricketScoreState extends State<CricketScore> {
       _currentBalleOver = 0.0;
       _currentWickets = 0;
       _currentBowlingCount = 0;
-      matchInning = false;
     });
   }
 
@@ -544,18 +546,13 @@ class _CricketScoreState extends State<CricketScore> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          onPressed: () async{
-            var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID" : widget.tournamentId});
+          onPressed: () async {
+            var url =
+                "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
+            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId});
 
-            var resp =
-            await post(Uri.parse(url),
-                headers: {
-                  "Content-Type":
-                  "application/json"
-                },
-                body:
-                sendJSON);
+            var resp = await post(Uri.parse(url),
+                headers: {"Content-Type": "application/json"}, body: sendJSON);
             print(resp.body);
             setState(() {
               _currentNonStriker = !_currentNonStriker;
@@ -606,18 +603,13 @@ class _CricketScoreState extends State<CricketScore> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(w * 0.02),
               )),
-          onPressed: () async{
-            var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID" : widget.tournamentId});
+          onPressed: () async {
+            var url =
+                "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
+            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId});
 
-            var resp =
-                await post(Uri.parse(url),
-                headers: {
-                  "Content-Type":
-                  "application/json"
-                },
-                body:
-                sendJSON);
+            var resp = await post(Uri.parse(url),
+                headers: {"Content-Type": "application/json"}, body: sendJSON);
             print(resp.body);
             setState(() {
               _currentNonStriker = !_currentNonStriker;
@@ -695,7 +687,7 @@ class _CricketScoreState extends State<CricketScore> {
                       borderRadius: BorderRadius.circular(w * 0.02),
                     ),
                     backgroundColor: Colors.red),
-                onPressed: () {
+                onPressed: () async {
                   setButtonDisable
                       ? null
                       : setState(() {
@@ -703,8 +695,10 @@ class _CricketScoreState extends State<CricketScore> {
                           _currentMatchScore += 0;
                           _currentBalleOver += 0.1;
                           _currentBowlingCount += 1;
-                          scoringkeyFunc(0);
                         });
+                  if (!setButtonDisable) {
+                    await scoringkeyFunc(0);
+                  }
                   if (_currentStriker) {
                     setState(() {
                       _currentStrikerScore += 0;
@@ -732,7 +726,7 @@ class _CricketScoreState extends State<CricketScore> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
-              onPressed: () {
+              onPressed: () async {
                 setButtonDisable
                     ? null
                     : setState(() {
@@ -741,8 +735,10 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
                         print(_currentOver.length);
-                        scoringkeyFunc(1);
                       });
+                if (!setButtonDisable) {
+                  await scoringkeyFunc(1);
+                }
                 if (_currentStriker) {
                   setState(() {
                     _currentStrikerScore += 1;
@@ -775,7 +771,7 @@ class _CricketScoreState extends State<CricketScore> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
-              onPressed: () {
+              onPressed: () async {
                 setButtonDisable
                     ? null
                     : setState(() {
@@ -783,8 +779,10 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 2;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
-                        scoringkeyFunc(2);
                       });
+                if (!setButtonDisable) {
+                  await scoringkeyFunc(2);
+                }
                 if (_currentStriker) {
                   setState(() {
                     _currentStrikerScore += 2;
@@ -805,33 +803,33 @@ class _CricketScoreState extends State<CricketScore> {
         SizedBox(
             width: w * 0.2,
             height: w * 0.15,
-            child: ElevatedButton(
-              child: const Text("Undo"),
-              style: ElevatedButton.styleFrom(
-                  elevation: 5,
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(w * 0.02),
-                  )),
-              onPressed: () {
-                setButtonDisable ? null : print(_currentOver.length);
-                if (_currentOver.length == 0) {
-                  Fluttertoast.showToast(
-                      msg: "No ball to undo",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Color.fromARGB(255, 11, 11, 11),
-                      textColor: Color.fromARGB(255, 33, 237, 6),
-                      fontSize: 16.0);
-                } else {
-                  setState(() {
-                    _currentOver =
-                        _currentOver.substring(0, _currentOver.length - 1);
-                  });
-                }
-              },
-            )),
+            child: Container()) //ElevatedButton(
+        //   child: const Text("Undo"),
+        //   style: ElevatedButton.styleFrom(
+        //       elevation: 5,
+        //       backgroundColor: Colors.red,
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(w * 0.02),
+        //       )),
+        //   onPressed: () {
+        //     setButtonDisable ? null : print(_currentOver.length);
+        //     if (_currentOver.length == 0) {
+        //       Fluttertoast.showToast(
+        //           msg: "No ball to undo",
+        //           toastLength: Toast.LENGTH_SHORT,
+        //           gravity: ToastGravity.BOTTOM,
+        //           timeInSecForIosWeb: 1,
+        //           backgroundColor: Color.fromARGB(255, 11, 11, 11),
+        //           textColor: Color.fromARGB(255, 33, 237, 6),
+        //           fontSize: 16.0);
+        //     } else {
+        //       setState(() {
+        //         _currentOver =
+        //             _currentOver.substring(0, _currentOver.length - 1);
+        //       });
+        //     }
+        //   },
+        // )),
       ]),
     );
   }
@@ -855,7 +853,7 @@ class _CricketScoreState extends State<CricketScore> {
                     borderRadius: BorderRadius.circular(w * 0.02),
                   ),
                   backgroundColor: Colors.red),
-              onPressed: () {
+              onPressed: () async {
                 setButtonDisable
                     ? null
                     : setState(() {
@@ -863,8 +861,10 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 3;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
-                        scoringkeyFunc(3);
                       });
+                if (!setButtonDisable) {
+                  await scoringkeyFunc(3);
+                }
                 if (_currentStriker) {
                   setState(() {
                     _currentStrikerScore += 3;
@@ -897,7 +897,7 @@ class _CricketScoreState extends State<CricketScore> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
-              onPressed: () {
+              onPressed: () async {
                 setButtonDisable
                     ? null
                     : setState(() {
@@ -905,8 +905,10 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 4;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
-                        scoringkeyFunc(4);
                       });
+                if (!setButtonDisable) {
+                  await scoringkeyFunc(4);
+                }
                 if (_currentStriker) {
                   setState(() {
                     _currentStrikerScore += 4;
@@ -935,7 +937,7 @@ class _CricketScoreState extends State<CricketScore> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
-              onPressed: () {
+              onPressed: () async {
                 setButtonDisable
                     ? null
                     : setState(() {
@@ -943,8 +945,10 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 6;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
-                        scoringkeyFunc(6);
                       });
+                if (!setButtonDisable) {
+                  await scoringkeyFunc(6);
+                }
                 if (_currentStriker) {
                   setState(() {
                     _currentStrikerScore += 6;
@@ -973,7 +977,7 @@ class _CricketScoreState extends State<CricketScore> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
-              onPressed: () => {
+              onPressed: () async => {
                 setButtonDisable
                     ? null
                     : setState(() {
@@ -981,8 +985,11 @@ class _CricketScoreState extends State<CricketScore> {
                         _currentMatchScore += 5;
                         _currentBalleOver += 0.1;
                         _currentBowlingCount += 1;
-                        scoringkeyFunc(5);
                       }),
+                if (!setButtonDisable)
+                  {
+                    await scoringkeyFunc(5),
+                  },
                 if (_currentStriker)
                   {
                     setState(() {
@@ -1038,8 +1045,7 @@ class _CricketScoreState extends State<CricketScore> {
                       title: const Text('Score'),
                       children: <Widget>[
                         Padding(
-                            padding:
-                            const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Column(children: [
                               TextField(
                                 keyboardType: TextInputType.number,
@@ -1048,45 +1054,50 @@ class _CricketScoreState extends State<CricketScore> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              TextButton(onPressed: () async{
-                                print(nbscore.text);
-                                var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
-                                var sendData = jsonEncode({
-                                  "TOURNAMENT_ID" : widget.tournamentId,
-                                  "score" : int.parse(nbscore.text),
-                                  "remarks" : "Wide Ball"
-                                });
-                                var resp =
-                                await post(Uri.parse(url),
-                                    headers: {
-                                      "Content-Type":
-                                      "application/json"
-                                    },
-                                    body:
-                                    sendData);
-                                print(resp.body);
-                                setButtonDisable
-                                    ? null
-                                    : setState(() {
-                                  _currentOver += "WD-";
-                                  _currentMatchScore += 1;
-                                  _currentMatchScore += int.parse(nbscore.text);
-                                  if(_currentStriker){
-                                    _currentStrikerScore += int.parse(nbscore.text);
-                                  } else{
-                                    _currentNonStrikerScore += int.parse(nbscore.text);
-                                  }
-                                  if(int.parse(nbscore.text) % 2 == 1){
-                                    _currentNonStriker = !_currentNonStriker;
-                                    _currentStriker = !_currentStriker;
-                                  }
-                                });
-                                Navigator.pop(context);
-                              }, child: const Text("Ok"))
+                              TextButton(
+                                  onPressed: () async {
+                                    print(nbscore.text);
+                                    var url =
+                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
+                                    var sendData = jsonEncode({
+                                      "TOURNAMENT_ID": widget.tournamentId,
+                                      "score": int.parse(nbscore.text),
+                                      "remarks": "Wide Ball"
+                                    });
+                                    var resp = await post(Uri.parse(url),
+                                        headers: {
+                                          "Content-Type": "application/json"
+                                        },
+                                        body: sendData);
+                                    print(resp.body);
+                                    setButtonDisable
+                                        ? null
+                                        : setState(() {
+                                            _currentOver += "WD-";
+                                            _currentMatchScore += 1;
+                                            _currentMatchScore +=
+                                                int.parse(nbscore.text);
+                                            if (_currentStriker) {
+                                              _currentStrikerScore +=
+                                                  int.parse(nbscore.text);
+                                            } else {
+                                              _currentNonStrikerScore +=
+                                                  int.parse(nbscore.text);
+                                            }
+                                            if (int.parse(nbscore.text) % 2 ==
+                                                1) {
+                                              _currentNonStriker =
+                                                  !_currentNonStriker;
+                                              _currentStriker =
+                                                  !_currentStriker;
+                                            }
+                                          });
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok"))
                             ]))
                       ]),
                 );
-
               },
             )),
         SizedBox(
@@ -1101,60 +1112,64 @@ class _CricketScoreState extends State<CricketScore> {
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
               onPressed: () {
-
                 showDialog(
                   context: context,
                   builder: (_) => SimpleDialog(
                       title: const Text('Score'),
                       children: <Widget>[
                         Padding(
-                            padding:
-                            const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Column(children: [
                               TextField(
                                 keyboardType: TextInputType.number,
-                                  controller: nbscore,
+                                controller: nbscore,
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              TextButton(onPressed: () async{
-                                print(nbscore.text);
-                                var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
-                                var sendData = jsonEncode({
-                                  "TOURNAMENT_ID" : widget.tournamentId,
-                                  "score" : int.parse(nbscore.text),
-                                  "remarks" : "No Ball"
-                                });
-                                var resp =
-                                await post(Uri.parse(url),
-                                headers: {
-                                  "Content-Type":
-                                    "application/json"
-                                },
-                                body:
-                                sendData);
-                                print(resp.body);
-                                setButtonDisable
-                                    ? null
-                                    : setState(() {
-                                  _currentOver += "NB-";
-                                  _currentMatchScore += 1;
-                                  _currentMatchScore += int.parse(nbscore.text);
+                              TextButton(
+                                  onPressed: () async {
+                                    print(nbscore.text);
+                                    var url =
+                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
+                                    var sendData = jsonEncode({
+                                      "TOURNAMENT_ID": widget.tournamentId,
+                                      "score": int.parse(nbscore.text),
+                                      "remarks": "No Ball"
+                                    });
+                                    var resp = await post(Uri.parse(url),
+                                        headers: {
+                                          "Content-Type": "application/json"
+                                        },
+                                        body: sendData);
+                                    print(resp.body);
+                                    setButtonDisable
+                                        ? null
+                                        : setState(() {
+                                            _currentOver += "NB-";
+                                            _currentMatchScore += 1;
+                                            _currentMatchScore +=
+                                                int.parse(nbscore.text);
 
-                                  if(_currentStriker){
-                                    _currentStrikerScore += int.parse(nbscore.text);
-                                  } else{
-                                    _currentNonStrikerScore += int.parse(nbscore.text);
-                                  }
+                                            if (_currentStriker) {
+                                              _currentStrikerScore +=
+                                                  int.parse(nbscore.text);
+                                            } else {
+                                              _currentNonStrikerScore +=
+                                                  int.parse(nbscore.text);
+                                            }
 
-                                  if((int.parse(nbscore.text)) % 2 == 1){
-                                    _currentNonStriker = !_currentNonStriker;
-                                    _currentStriker = !_currentStriker;
-                                  }
-                                });
-                                Navigator.pop(context);
-                              }, child: const Text("Ok"))
+                                            if ((int.parse(nbscore.text)) % 2 ==
+                                                1) {
+                                              _currentNonStriker =
+                                                  !_currentNonStriker;
+                                              _currentStriker =
+                                                  !_currentStriker;
+                                            }
+                                          });
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok"))
                             ]))
                       ]),
                 );
@@ -1178,8 +1193,7 @@ class _CricketScoreState extends State<CricketScore> {
                       title: const Text('Score'),
                       children: <Widget>[
                         Padding(
-                            padding:
-                            const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Column(children: [
                               TextField(
                                 keyboardType: TextInputType.number,
@@ -1188,47 +1202,52 @@ class _CricketScoreState extends State<CricketScore> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              TextButton(onPressed: () async{
-                                print(nbscore.text);
-                                var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
-                                var sendData = jsonEncode({
-                                  "TOURNAMENT_ID" : widget.tournamentId,
-                                  "score" : int.parse(nbscore.text),
-                                  "remarks" : "Bye Ball"
-                                });
-                                var resp =
-                                await post(Uri.parse(url),
-                                    headers: {
-                                      "Content-Type":
-                                      "application/json"
-                                    },
-                                    body:
-                                    sendData);
-                                print(resp.body);
-                                setButtonDisable
-                                    ? null
-                                    : setState(() {
-                                  _currentOver += "Bye-";
-                                  _currentMatchScore += int.parse(nbscore.text);
-                                  _currentBalleOver += 0.1;
+                              TextButton(
+                                  onPressed: () async {
+                                    print(nbscore.text);
+                                    var url =
+                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
+                                    var sendData = jsonEncode({
+                                      "TOURNAMENT_ID": widget.tournamentId,
+                                      "score": int.parse(nbscore.text),
+                                      "remarks": "Bye Ball"
+                                    });
+                                    var resp = await post(Uri.parse(url),
+                                        headers: {
+                                          "Content-Type": "application/json"
+                                        },
+                                        body: sendData);
+                                    print(resp.body);
+                                    setButtonDisable
+                                        ? null
+                                        : setState(() {
+                                            _currentOver += "Bye-";
+                                            _currentMatchScore +=
+                                                int.parse(nbscore.text);
+                                            _currentBalleOver += 0.1;
 
-                                  if(_currentStriker){
-                                    _currentStrikerScore += int.parse(nbscore.text);
-                                  } else{
-                                    _currentNonStrikerScore += int.parse(nbscore.text);
-                                  }
+                                            if (_currentStriker) {
+                                              _currentStrikerScore +=
+                                                  int.parse(nbscore.text);
+                                            } else {
+                                              _currentNonStrikerScore +=
+                                                  int.parse(nbscore.text);
+                                            }
 
-                                  if(int.parse(nbscore.text) % 2 == 1){
-                                    _currentNonStriker = !_currentNonStriker;
-                                    _currentStriker = !_currentStriker;
-                                  }
-                                });
-                                Navigator.pop(context);
-                              }, child: const Text("Ok"))
+                                            if (int.parse(nbscore.text) % 2 ==
+                                                1) {
+                                              _currentNonStriker =
+                                                  !_currentNonStriker;
+                                              _currentStriker =
+                                                  !_currentStriker;
+                                            }
+                                          });
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok"))
                             ]))
                       ]),
                 );
-
               },
             )),
         SizedBox(
