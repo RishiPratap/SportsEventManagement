@@ -336,6 +336,7 @@ class _MyBookings extends State<MyBookings> {
                           Map<String, dynamic> jsonData =
                               jsonDecode(response.body);
                           EasyLoading.dismiss();
+                          print(userdata[i].SPORT);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -343,6 +344,7 @@ class _MyBookings extends State<MyBookings> {
                                 userId: id,
                                 Tourney_id: userdata[i].TOURNAMENT_ID,
                                 SpotNo: jsonData["SPOT"].toString(),
+                                Sport: userdata[i].SPORT,
                               ),
                             ),
                           );

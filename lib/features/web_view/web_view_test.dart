@@ -7,11 +7,13 @@ class WebViewTest extends StatefulWidget {
   final String Tourney_id;
   final String? userId;
   final String SpotNo;
+  final String Sport;
   const WebViewTest(
       {Key? key,
       required this.Tourney_id,
       required this.userId,
-      required this.SpotNo})
+      required this.SpotNo,
+      required this.Sport})
       : super(key: key);
 
   @override
@@ -23,6 +25,7 @@ class _WebViewTestState extends State<WebViewTest> {
 
   @override
   Widget build(BuildContext context) {
+    print('Tourney_id: ${widget.Tourney_id}');
     return WillPopScope(
       onWillPop: () {
         Navigator.pop(context);
@@ -30,25 +33,27 @@ class _WebViewTestState extends State<WebViewTest> {
         return Future.value(false);
       },
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: const Text('Fixtures'),
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  Navigator.pushReplacement(context,
-                      PageRouteBuilder(pageBuilder: (a, b, c) => const HomePage()));
-                },
-                icon: const Icon(Icons.home)),
-          ],
-        ),
-        body: WebView(
-          initialUrl:
-              'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getBookingFixtures?TOURNAMENT_ID=${widget.Tourney_id}&USERID=${widget.userId}',
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) => _controller = controller,
-        ),
-      ),
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            title: const Text('Fixtures'),
+            actions: [
+              IconButton(
+                  onPressed: () async {
+                    Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                            pageBuilder: (a, b, c) => const HomePage()));
+                  },
+                  icon: const Icon(Icons.home)),
+            ],
+          ),
+          body: WebView(
+            initialUrl: (widget.Sport == 'Cricket')
+                ? 'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketFixtures?TOURNAMENT_ID=${widget.Tourney_id}}'
+                : 'http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getBookingFixtures?TOURNAMENT_ID=${widget.Tourney_id}&USERID=${widget.userId}',
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (controller) => _controller = controller,
+          )),
     );
   }
 }
