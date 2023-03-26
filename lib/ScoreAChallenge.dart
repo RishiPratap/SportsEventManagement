@@ -8,6 +8,7 @@ import 'LiveMaintainerMatchSelection.dart';
 import 'features/home_page/home_page.dart';
 import 'features/menu/Menu.dart';
 import 'features/cricket_module/cricket_team_details_input.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ScoreAChallenge extends StatefulWidget {
   final String? name;
@@ -389,24 +390,31 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                         "Content-Type": "application/json"
                                       });
                                   print("👌👌👌👌 Response : ${response.body}");
-                                  var firstTeamName =
-                                      jsonDecode(response.body)[0];
-                                  var secondTeamName =
-                                      jsonDecode(response.body)[1];
-                                  print(
-                                      "👌👌👌👌 First Team Name : $firstTeamName");
-                                  print(
-                                      "👌👌👌👌 Second Team Name : $secondTeamName");
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CricketTeamDetasilsInput(
-                                                firstTeamName: firstTeamName,
-                                                secondTeamName: secondTeamName,
-                                                tournamentId:
-                                                    challengeid.text,
-                                              )));
+                                  if(jsonDecode(response.body)["message"] == "All Matches Completed"){
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                        content: Text(jsonDecode(response.body)["message"])));
+                                  } else{
+                                    var firstTeamName =
+                                    jsonDecode(response.body)["team"][0];
+                                    var secondTeamName =
+                                    jsonDecode(response.body)["team"][1];
+                                    print(
+                                        "👌👌👌👌 First Team Name : $firstTeamName");
+                                    print(
+                                        "👌👌👌👌 Second Team Name : $secondTeamName");
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CricketTeamDetasilsInput(
+                                                  firstTeamName: firstTeamName,
+                                                  secondTeamName: secondTeamName,
+                                                  tournamentId:
+                                                  challengeid.text,
+                                                )));
+                                  }
+
                                 } else {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
