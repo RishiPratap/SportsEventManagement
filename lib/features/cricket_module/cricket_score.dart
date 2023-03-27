@@ -56,7 +56,6 @@ class CricketScore extends StatefulWidget {
   @override
   State<CricketScore> createState() => _CricketScoreState();
 }
-
 String? strikerName;
 String? nonStrikerName;
 bool _currentStriker = true;
@@ -97,6 +96,8 @@ var ways = {
 };
 
 class _CricketScoreState extends State<CricketScore> {
+
+
   var finalBattingTeam;
   var finalBallingTeam;
   var nowStriker;
@@ -110,8 +111,8 @@ class _CricketScoreState extends State<CricketScore> {
     for (int i = 0; i < widget.ballingTeam.length; i++) {
       b.add(widget.ballingTeam[i]["NAME"]);
     }
-    setState(() {
       bowlerList = b;
+      print(widget.striker["NAME"]);
       curr_bowler_name = widget.baller["NAME"];
       strikerName = widget.striker["NAME"];
       nonStrikerName = widget.non_striker["NAME"];
@@ -128,8 +129,11 @@ class _CricketScoreState extends State<CricketScore> {
       } else {
         matchInningCount = 0;
       }
+      print("pARTH");
+      // print(widget.score);
       _currentOver = widget.over_string;
       _currentMatchScore = widget.score;
+      print(_currentMatchScore);
       _currentStrikerScore = widget.striker["SCORE"];
       _currentNonStrikerScore = widget.non_striker["SCORE"];
       _currentWickets = widget.wickets;
@@ -138,7 +142,7 @@ class _CricketScoreState extends State<CricketScore> {
       _currentBalleOver = widget.overs_done;
       _currentBowlingCount = _currentBalleOver!.toInt();
       curr_bowler_name = widget.baller["NAME"];
-    });
+    // });
 
     //rishi
     //widget.overs_done;
@@ -152,7 +156,6 @@ class _CricketScoreState extends State<CricketScore> {
     //4 --> end match
     //3 --> Allow last player, end match
 
-    _clear();
     print(matchInningCount);
   }
 
@@ -387,6 +390,7 @@ class _CricketScoreState extends State<CricketScore> {
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -411,6 +415,7 @@ class _CricketScoreState extends State<CricketScore> {
               ),
             ),
             _header(),
+
             _batsmanScore(),
             _score(), //TODO ADD SCORING PART
             Positioned(
@@ -520,6 +525,7 @@ class _CricketScoreState extends State<CricketScore> {
   _batsmanScore() {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+    print(widget.score);
     return Positioned(
       top: h * 0.27,
       left: w * 0.3,
