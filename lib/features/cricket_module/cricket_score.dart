@@ -113,7 +113,7 @@ class _CricketScoreState extends State<CricketScore> {
       b.add(widget.ballingTeam[i]["NAME"]);
     }
       bowlerList = b;
-    print(widget.striker["NAME"]);
+      print(widget.striker["NAME"]);
       curr_bowler_name = widget.baller["NAME"];
       strikerName = widget.striker["NAME"];
       nonStrikerName = widget.non_striker["NAME"];
@@ -157,7 +157,6 @@ class _CricketScoreState extends State<CricketScore> {
     //4 --> end match
     //3 --> Allow last player, end match
 
-    _clear();
     print(matchInningCount);
   }
 
@@ -391,6 +390,7 @@ class _CricketScoreState extends State<CricketScore> {
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -415,6 +415,7 @@ class _CricketScoreState extends State<CricketScore> {
               ),
             ),
             _header(),
+
             _batsmanScore(),
             _score(), //TODO ADD SCORING PART
             Positioned(
@@ -524,6 +525,7 @@ class _CricketScoreState extends State<CricketScore> {
   _batsmanScore() {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+    print(widget.score);
     return Positioned(
       top: h * 0.27,
       left: w * 0.3,
