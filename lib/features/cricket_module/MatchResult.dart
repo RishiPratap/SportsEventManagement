@@ -33,7 +33,7 @@ class _MatchResult extends State<MatchResult> {
   void ChangeAll() async {
     var url =
         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getScoreCard";
-    var data = jsonEncode({"TOURNAMENT_ID": widget.TOURNAMENT_ID});
+    var data = jsonEncode({"TOURNAMENT_ID": widget.TOURNAMENT_ID, "MATCH_ID" : widget.MATCH_ID});
     var response = await post(Uri.parse(url),
         body: data, headers: {"Content-Type": "application/json"});
     var allData = jsonDecode(response.body);
