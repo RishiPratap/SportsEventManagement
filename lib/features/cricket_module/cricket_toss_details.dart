@@ -9,11 +9,13 @@ class CricketTossDetails extends StatefulWidget {
   final String firstTeamName;
   final String secondTeamName;
   final String tournamentId;
+  final int MATCH_ID;
   const CricketTossDetails({
     Key? key,
     required this.firstTeamName,
     required this.secondTeamName,
     required this.tournamentId,
+    required this.MATCH_ID
   }) : super(key: key);
 
   @override
@@ -370,7 +372,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   widget.secondTeamName
                                 ],
                                 "CHOSEN_TO": chose_to,
-                                "TEAM_NAME": toss_won_by
+                                "TEAM_NAME": toss_won_by,
+                                "MATCH_ID" : widget.MATCH_ID,
                               };
                               var sendTossDetailsObj =
                                   jsonEncode(tossDetailsObj);
@@ -429,6 +432,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                           first: allPlayersData["first"],
                                           tossWonBy: toss_won_by,
                                           tossWinnerChoseTo: chose_to,
+                                          MATCH_ID : widget.MATCH_ID,
                                         )),
                               );
                             },

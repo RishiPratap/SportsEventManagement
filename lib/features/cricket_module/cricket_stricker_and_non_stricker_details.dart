@@ -24,6 +24,7 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   final String tossWinnerChoseTo;
   var battingTeamPlayers;
   var bowlingTeamPlayers;
+  var MATCH_ID;
   CricketStrickerAndNonStrickerDetails({
     Key? key,
     required this.tournamentId,
@@ -36,6 +37,7 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
     required this.wickets,
     required this.tossWonBy,
     required this.tossWinnerChoseTo,
+    required this.MATCH_ID,
   }) : super(key: key);
   @override
   State<CricketStrickerAndNonStrickerDetails> createState() =>
@@ -355,7 +357,8 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   "STRIKER_INDEX": strikerIndex,
                                   "NON_STRIKER_INDEX": non_strikerIndex
                                 },
-                                "BOWLING": {"BALLER_INDEX": baller_index}
+                                "BOWLING": {"BALLER_INDEX": baller_index},
+                                "MATCH_ID" : widget.MATCH_ID
                               };
                               var sendJson = jsonEncode(requestJson);
                               var url =
@@ -397,6 +400,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                           tossWonBy: widget.tossWonBy,
                                           tossWinnerChoseTo:
                                               widget.tossWinnerChoseTo,
+                                          MATCH_ID : widget.MATCH_ID,
                                         )),
                               );
                             },

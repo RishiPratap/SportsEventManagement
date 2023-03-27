@@ -4,14 +4,12 @@ import '../home_page/home_page.dart';
 import 'cricket_toss_details.dart';
 
 class CricketTeamDetasilsInput extends StatefulWidget {
-  final String firstTeamName;
-  final String secondTeamName;
   final String tournamentId;
+  final dynamic allMatches;
   const CricketTeamDetasilsInput({
     Key? key,
-    required this.firstTeamName,
-    required this.secondTeamName,
     required this.tournamentId,
+    required this.allMatches,
   }) : super(key: key);
 
   @override
@@ -23,8 +21,6 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
   @override
   void initState() {
     super.initState();
-    print("😌" + widget.firstTeamName);
-    print("😌" + widget.secondTeamName);
   }
 
   List<String> teamA_Players = [];
@@ -214,119 +210,117 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                       width: double.infinity,
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(left: deviceWidth * 0.03),
-                      child: const Text("₹15,000"),
-                    ),
-                  ),
                 ],
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).size.height / 2.5,
-                margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
-                    deviceWidth * 0.1, deviceWidth * 0.02, deviceWidth * 0.02),
-                child: Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(deviceWidth * 0.03)),
-                  color: Colors.white.withOpacity(0.2),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: deviceWidth * 0.08,
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: deviceWidth * 0.1,
-                          margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
-                              deviceWidth * 0.02, deviceWidth * 0.02, 0),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.02),
-                              color: Colors.black.withOpacity(0.4)),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Text(widget.firstTeamName,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: deviceWidth * 0.05)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Expanded(
-                        flex: 6,
-                        child: Center(
-                          child: Text("Vs",
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).size.height / 2.5,
+              margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                  deviceWidth * 0.1, deviceWidth * 0.02, deviceWidth * 0.02),
+              child : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: widget.allMatches.map<Widget>((match) =>
+                    Expanded(
+            // elevation: 10,
+            // shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(deviceWidth * 0.03)),
+            // ,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: deviceWidth * 0.08,
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: deviceWidth * 0.5,
+                    margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                        deviceWidth * 0.02, deviceWidth * 0.02, 0),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(deviceWidth * 0.02),
+                        color: Colors.black.withOpacity(0.4)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(match["TEAM_NAMES"][0],
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold)),
+                                  color: Colors.white,
+                                  fontSize: deviceWidth * 0.05)),
                         ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: deviceWidth * 0.1,
-                          margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
-                              deviceWidth * 0.02, deviceWidth * 0.02, 0),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(deviceWidth * 0.02),
-                              color: Colors.black.withOpacity(0.4)),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(widget.secondTeamName,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: deviceWidth * 0.05)),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: deviceWidth * 0.16,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: deviceWidth * 0.15,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffD15858),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CricketTossDetails(
-                                          firstTeamName: widget.firstTeamName,
-                                          secondTeamName: widget.secondTeamName,
-                                          tournamentId: widget.tournamentId,
-                                        )));
-                          },
-                          child: const Text("Next"),
-                        ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              )
+                const Expanded(
+                  flex: 5,
+                  child: Center(
+                    child: Text("Vs",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: deviceWidth * 0.8,
+                    margin: EdgeInsets.fromLTRB(deviceWidth * 0.02,
+                        deviceWidth * 0.02, deviceWidth * 0.02, 0),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(deviceWidth * 0.02),
+                        color: Colors.black.withOpacity(0.4)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(match["TEAM_NAMES"][1],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: deviceWidth * 0.05)),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: deviceWidth * 0.16,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: deviceWidth * 0.15,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xffD15858),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CricketTossDetails(
+                                  firstTeamName: match["TEAM_NAMES"][0],
+                                  secondTeamName: match["TEAM_NAMES"][1],
+                                  tournamentId: widget.tournamentId,
+                                  MATCH_ID : int.parse(match["MATCH_ID"])
+                              )));
+                    },
+                    child: const Text("Next"),
+                  ),
+                )
+              ],
+            ),
+          )).toList(),
+              ),
+              )//here,
             ],
           ),
         ),

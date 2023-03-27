@@ -395,23 +395,16 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                         .showSnackBar(SnackBar(
                                         content: Text(jsonDecode(response.body)["message"])));
                                   } else{
-                                    var firstTeamName =
-                                    jsonDecode(response.body)["team"][0];
-                                    var secondTeamName =
-                                    jsonDecode(response.body)["team"][1];
-                                    print(
-                                        "👌👌👌👌 First Team Name : $firstTeamName");
-                                    print(
-                                        "👌👌👌👌 Second Team Name : $secondTeamName");
+
+                                    var allTeams = jsonDecode(response.body)["team"];
+                                    print(allTeams);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CricketTeamDetasilsInput(
-                                                  firstTeamName: firstTeamName,
-                                                  secondTeamName: secondTeamName,
-                                                  tournamentId:
-                                                  challengeid.text,
+                                                  tournamentId: challengeid.text,
+                                                  allMatches : allTeams
                                                 )));
                                   }
 

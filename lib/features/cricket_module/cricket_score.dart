@@ -24,6 +24,7 @@ class CricketScore extends StatefulWidget {
   final String tossWinnerChoseTo;
   final List<dynamic> allBattingPlayers;
   final List<dynamic> allBallingPlayers;
+  final int MATCH_ID;
   const CricketScore({
     Key? key,
     required this.overs,
@@ -41,6 +42,7 @@ class CricketScore extends StatefulWidget {
     required this.tossWinnerChoseTo,
     required this.allBattingPlayers,
     required this.allBallingPlayers,
+    required this.MATCH_ID,
   }) : super(key: key);
 
   get btnVal => "0";
@@ -124,6 +126,7 @@ class _CricketScoreState extends State<CricketScore> {
     var sendData = {
       "TOURNAMENT_ID": widget.tournamentId,
       "score": score.toString(),
+      "MATCH_ID" : widget.MATCH_ID
     };
     var jsonData = jsonEncode(sendData);
     var response = await post(Uri.parse(url),
@@ -160,6 +163,7 @@ class _CricketScoreState extends State<CricketScore> {
                                 .where((element) =>
                                     element["NAME"] == bowlerList[index])
                                 .toList()[0]["index"],
+                            "MATCH_ID" : widget.MATCH_ID
                           };
                           var jsonData = jsonEncode(Overjson);
                           print("The json data is: " + Overjson.toString());
@@ -233,6 +237,7 @@ class _CricketScoreState extends State<CricketScore> {
                             "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
                         var inningsJson = {
                           "TOURNAMENT_ID": widget.tournamentId,
+                          "MATCH_ID" : widget.MATCH_ID
                         };
                         var inningsJsonData = jsonEncode(inningsJson);
                         print("The json data is: " + inningsJson.toString());
@@ -259,6 +264,7 @@ class _CricketScoreState extends State<CricketScore> {
                                           widget.allBallingPlayers,
                                       bowlingTeamPlayers:
                                           widget.allBattingPlayers,
+                                      MATCH_ID: widget.MATCH_ID,
                                     )));
                       },
                       child: const Text("Change Innings"),
@@ -318,7 +324,9 @@ class _CricketScoreState extends State<CricketScore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MatchResult(
-                                        TOURNAMENT_ID: widget.tournamentId)));
+                                        TOURNAMENT_ID: widget.tournamentId,
+                                      MATCH_ID : widget.MATCH_ID
+                                    )));
                           },
                           child: const Text("Ok"),
                         ),
@@ -327,7 +335,8 @@ class _CricketScoreState extends State<CricketScore> {
                   ]));
       var jsonData = jsonEncode({
         "TOURNAMENT_ID": widget.tournamentId,
-        "batting_team_name": widget.battingTeamName
+        "batting_team_name": widget.battingTeamName,
+        "MATCH_ID" : widget.MATCH_ID
       });
       print("The json data is: " + jsonData.toString());
       var url =
@@ -551,7 +560,7 @@ class _CricketScoreState extends State<CricketScore> {
           onPressed: () async {
             var url =
                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId});
+            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID" : widget.MATCH_ID});
 
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
@@ -608,7 +617,7 @@ class _CricketScoreState extends State<CricketScore> {
           onPressed: () async {
             var url =
                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId});
+            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID" : widget.MATCH_ID});
 
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
@@ -1064,7 +1073,8 @@ class _CricketScoreState extends State<CricketScore> {
                                     var sendData = jsonEncode({
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
-                                      "remarks": "Wide Ball"
+                                      "remarks": "Wide Ball",
+                                      "MATCH_ID" : widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1137,7 +1147,8 @@ class _CricketScoreState extends State<CricketScore> {
                                     var sendData = jsonEncode({
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
-                                      "remarks": "No Ball"
+                                      "remarks": "No Ball",
+                                      "MATCH_ID" : widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1212,7 +1223,8 @@ class _CricketScoreState extends State<CricketScore> {
                                     var sendData = jsonEncode({
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
-                                      "remarks": "Bye Ball"
+                                      "remarks": "Bye Ball",
+                                      "MATCH_ID" : widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1302,39 +1314,6 @@ class _CricketScoreState extends State<CricketScore> {
                                                         .toList(),
                                                     onChanged: (e) async {
                                                       print("The value is $e");
-
-                                                      // call api
-                                                      // var outURL =
-                                                      //     "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
-                                                      // var outJson = {
-                                                      //   "TOURNAMENT_ID":
-                                                      //       widget.tournamentId,
-                                                      //   "index": widget
-                                                      //       .allBattingPlayers
-                                                      //       .where((element) =>
-                                                      //           element[
-                                                      //               "NAME"] ==
-                                                      //           widget.battingTeam[
-                                                      //                   e as int]
-                                                      //               ["NAME"])
-                                                      //       .toList()[0]["index"],
-                                                      //   "remarks": wickets,
-                                                      // };
-                                                      // print(
-                                                      //     "The json is $outJson");
-                                                      // var outJsonData =
-                                                      //     jsonEncode(outJson);
-                                                      // var outResponse =
-                                                      //     await post(
-                                                      //         Uri.parse(outURL),
-                                                      //         headers: {
-                                                      //           "Content-Type":
-                                                      //               "application/json"
-                                                      //         },
-                                                      //         body:
-                                                      //             outJsonData);
-                                                      // print(
-                                                      //     "The response for the out api is ${outResponse.body}");
                                                       setState(() {
                                                         if (wickets !=
                                                             "Non-Stricker Run Out") {
@@ -1405,6 +1384,7 @@ class _CricketScoreState extends State<CricketScore> {
                                                                     ["NAME"])
                                                             .toList()[0]["index"],
                                                         "remarks": wickets,
+                                                        "MATCH_ID" : widget.MATCH_ID
                                                       };
                                                       print(
                                                           "The json is $outJson");
@@ -1448,12 +1428,12 @@ class _CricketScoreState extends State<CricketScore> {
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "Done",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       style: ElevatedButton.styleFrom(
-                                          primary: Color.fromARGB(
+                                          primary: const Color.fromARGB(
                                               255, 54, 181, 244)),
                                     ),
                                   ))

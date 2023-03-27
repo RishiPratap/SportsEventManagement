@@ -8,8 +8,10 @@ import 'cricket_score.dart';
 
 class MatchResult extends StatefulWidget {
   final String TOURNAMENT_ID;
+  final int MATCH_ID;
   MatchResult({
     required this.TOURNAMENT_ID,
+    required this.MATCH_ID,
     Key? key,
   }) : super(key: key);
   @override
