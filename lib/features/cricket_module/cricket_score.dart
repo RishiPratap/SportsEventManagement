@@ -27,36 +27,35 @@ class CricketScore extends StatefulWidget {
   final String over_string;
   final int MATCH_ID;
   final int wickets_taken;
-  const CricketScore({
-    Key? key,
-    required this.overs,
-    required this.ballingTeam,
-    required this.battingTeam,
-    required this.first,
-    required this.wickets,
-    required this.striker,
-    required this.non_striker,
-    required this.baller,
-    required this.battingTeamName,
-    required this.bowlingTeamName,
-    required this.tournamentId,
-    required this.tossWonBy,
-    required this.tossWinnerChoseTo,
-    required this.allBattingPlayers,
-    required this.allBallingPlayers,
-    required this.MATCH_ID,
-    required this.over_string,
-    required this.overs_done,
-    required this.score,
-    required this.wickets_taken
-  }) : super(key: key);
+  const CricketScore(
+      {Key? key,
+      required this.overs,
+      required this.ballingTeam,
+      required this.battingTeam,
+      required this.first,
+      required this.wickets,
+      required this.striker,
+      required this.non_striker,
+      required this.baller,
+      required this.battingTeamName,
+      required this.bowlingTeamName,
+      required this.tournamentId,
+      required this.tossWonBy,
+      required this.tossWinnerChoseTo,
+      required this.allBattingPlayers,
+      required this.allBallingPlayers,
+      required this.MATCH_ID,
+      required this.over_string,
+      required this.overs_done,
+      required this.score,
+      required this.wickets_taken})
+      : super(key: key);
 
   //DO INIT STATE
   get btnVal => "0";
   @override
   State<CricketScore> createState() => _CricketScoreState();
 }
-
 String? strikerName;
 String? nonStrikerName;
 bool _currentStriker = true;
@@ -97,8 +96,9 @@ var ways = {
   "Hit Wicket": "HW",
 };
 
-
 class _CricketScoreState extends State<CricketScore> {
+
+
   var finalBattingTeam;
   var finalBallingTeam;
   var nowStriker;
@@ -112,8 +112,8 @@ class _CricketScoreState extends State<CricketScore> {
     for (int i = 0; i < widget.ballingTeam.length; i++) {
       b.add(widget.ballingTeam[i]["NAME"]);
     }
-    setState(() {
       bowlerList = b;
+    print(widget.striker["NAME"]);
       curr_bowler_name = widget.baller["NAME"];
       strikerName = widget.striker["NAME"];
       nonStrikerName = widget.non_striker["NAME"];
@@ -125,13 +125,16 @@ class _CricketScoreState extends State<CricketScore> {
       matchInning = widget.first;
       setButtonDisable = false;
 
-      if(widget.first){
+      if (widget.first) {
         matchInningCount = 1;
-      } else{
+      } else {
         matchInningCount = 0;
       }
+      print("pARTH");
+      // print(widget.score);
       _currentOver = widget.over_string;
       _currentMatchScore = widget.score;
+      print(_currentMatchScore);
       _currentStrikerScore = widget.striker["SCORE"];
       _currentNonStrikerScore = widget.non_striker["SCORE"];
       _currentWickets = widget.wickets;
@@ -140,7 +143,7 @@ class _CricketScoreState extends State<CricketScore> {
       _currentBalleOver = widget.overs_done;
       // _currentBowlingCount = //rishi
       curr_bowler_name = widget.baller["NAME"];
-    });
+    // });
 
     //rishi
     //widget.overs_done;
@@ -164,7 +167,7 @@ class _CricketScoreState extends State<CricketScore> {
     var sendData = {
       "TOURNAMENT_ID": widget.tournamentId,
       "score": score.toString(),
-      "MATCH_ID" : widget.MATCH_ID
+      "MATCH_ID": widget.MATCH_ID
     };
     var jsonData = jsonEncode(sendData);
     var response = await post(Uri.parse(url),
@@ -201,7 +204,7 @@ class _CricketScoreState extends State<CricketScore> {
                                 .where((element) =>
                                     element["NAME"] == bowlerList[index])
                                 .toList()[0]["index"],
-                            "MATCH_ID" : widget.MATCH_ID
+                            "MATCH_ID": widget.MATCH_ID
                           };
                           var jsonData = jsonEncode(Overjson);
                           print("The json data is: " + Overjson.toString());
@@ -221,7 +224,7 @@ class _CricketScoreState extends State<CricketScore> {
         _currentNonStriker = !_currentNonStriker;
         _currentStriker = !_currentStriker;
         _currentOver = "";
-        double temp = _currentBalleOver??0.0;
+        double temp = _currentBalleOver ?? 0.0;
         _currentBalleOver = temp + 1.0 - 0.6;
         _currentBowlingCount = 0;
       });
@@ -275,7 +278,7 @@ class _CricketScoreState extends State<CricketScore> {
                             "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
                         var inningsJson = {
                           "TOURNAMENT_ID": widget.tournamentId,
-                          "MATCH_ID" : widget.MATCH_ID
+                          "MATCH_ID": widget.MATCH_ID
                         };
                         var inningsJsonData = jsonEncode(inningsJson);
                         print("The json data is: " + inningsJson.toString());
@@ -363,8 +366,7 @@ class _CricketScoreState extends State<CricketScore> {
                                 MaterialPageRoute(
                                     builder: (context) => MatchResult(
                                         TOURNAMENT_ID: widget.tournamentId,
-                                      MATCH_ID : widget.MATCH_ID
-                                    )));
+                                        MATCH_ID: widget.MATCH_ID)));
                           },
                           child: const Text("Ok"),
                         ),
@@ -374,7 +376,7 @@ class _CricketScoreState extends State<CricketScore> {
       var jsonData = jsonEncode({
         "TOURNAMENT_ID": widget.tournamentId,
         "batting_team_name": widget.battingTeamName,
-        "MATCH_ID" : widget.MATCH_ID
+        "MATCH_ID": widget.MATCH_ID
       });
       print("The json data is: " + jsonData.toString());
       var url =
@@ -557,7 +559,7 @@ class _CricketScoreState extends State<CricketScore> {
             Center(
                 child: Column(children: <Widget>[
               SizedBox(height: h * 0.01),
-              Row(children: [Text(strikerName??"Striker Name")]),
+              Row(children: [Text(strikerName ?? "Striker Name")]),
               SizedBox(height: h * 0.01),
               Row(children: [
                 Text(
@@ -598,7 +600,10 @@ class _CricketScoreState extends State<CricketScore> {
           onPressed: () async {
             var url =
                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID" : widget.MATCH_ID});
+            var sendJSON = jsonEncode({
+              "TOURNAMENT_ID": widget.tournamentId,
+              "MATCH_ID": widget.MATCH_ID
+            });
 
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
@@ -614,7 +619,7 @@ class _CricketScoreState extends State<CricketScore> {
             Center(
                 child: Column(children: <Widget>[
               SizedBox(height: h * 0.01),
-              Row(children: [Text(nonStrikerName??"Non Striker")]),
+              Row(children: [Text(nonStrikerName ?? "Non Striker")]),
               SizedBox(height: h * 0.01),
               Row(children: [
                 Text(
@@ -655,7 +660,10 @@ class _CricketScoreState extends State<CricketScore> {
           onPressed: () async {
             var url =
                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID" : widget.MATCH_ID});
+            var sendJSON = jsonEncode({
+              "TOURNAMENT_ID": widget.tournamentId,
+              "MATCH_ID": widget.MATCH_ID
+            });
 
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
@@ -742,7 +750,7 @@ class _CricketScoreState extends State<CricketScore> {
                       : setState(() {
                           _currentOver += "0-";
                           _currentMatchScore += 0;
-                          _currentBalleOver = _currentBalleOver !+ 0.1;
+                          _currentBalleOver = _currentBalleOver! + 0.1;
                           _currentBowlingCount += 1;
                         });
                   if (!setButtonDisable) {
@@ -781,7 +789,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "1-";
                         _currentMatchScore += 1;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                         print(_currentOver.length);
                       });
@@ -826,7 +834,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "2-";
                         _currentMatchScore += 2;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -908,7 +916,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "3-";
                         _currentMatchScore += 3;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -952,7 +960,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "4-";
                         _currentMatchScore += 4;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -992,7 +1000,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "6-";
                         _currentMatchScore += 6;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -1032,7 +1040,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "5-";
                         _currentMatchScore += 5;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       }),
                 if (!setButtonDisable)
@@ -1112,7 +1120,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
                                       "remarks": "Wide Ball",
-                                      "MATCH_ID" : widget.MATCH_ID
+                                      "MATCH_ID": widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1186,7 +1194,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
                                       "remarks": "No Ball",
-                                      "MATCH_ID" : widget.MATCH_ID
+                                      "MATCH_ID": widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1262,7 +1270,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
                                       "remarks": "Bye Ball",
-                                      "MATCH_ID" : widget.MATCH_ID
+                                      "MATCH_ID": widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1276,7 +1284,8 @@ class _CricketScoreState extends State<CricketScore> {
                                             _currentOver += "Bye-";
                                             _currentMatchScore +=
                                                 int.parse(nbscore.text);
-                                            _currentBalleOver = _currentBalleOver !+ 0.1;
+                                            _currentBalleOver =
+                                                _currentBalleOver! + 0.1;
 
                                             if (_currentStriker) {
                                               _currentStrikerScore +=
@@ -1402,7 +1411,9 @@ class _CricketScoreState extends State<CricketScore> {
                                                         _currentWickets += 1;
                                                         _currentBowlingCount +=
                                                             1;
-                                                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                                                        _currentBalleOver =
+                                                            _currentBalleOver! +
+                                                                0.1;
                                                         bowler();
                                                       });
                                                       // call api here only..
@@ -1421,7 +1432,8 @@ class _CricketScoreState extends State<CricketScore> {
                                                                     ["NAME"])
                                                             .toList()[0]["index"],
                                                         "remarks": wickets,
-                                                        "MATCH_ID" : widget.MATCH_ID
+                                                        "MATCH_ID":
+                                                            widget.MATCH_ID
                                                       };
                                                       print(
                                                           "The json is $outJson");
