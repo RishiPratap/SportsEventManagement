@@ -376,6 +376,27 @@ class _CricketStrickerAndNonStrickerDetailsState
                               ball = widget.bowlingTeamPlayers
                                   .where((element) => element != selectedBaller)
                                   .toList();
+                              print({
+                                "first": widget.first,
+                                "wickets": widget.wickets,
+                                "overs": widget.overs, //no
+                                "striker": selectedStriker,
+                                "non_striker": selectedNonStriker,
+                                "baller": selectedBaller,
+                                "battingTeamName":
+                                widget.battingTeamName,
+                                "bowlingTeamName":
+                                widget.bowlingTeamName,
+                                "tournamentId": widget.tournamentId,
+                                "tossWonBy": widget.tossWonBy,
+                                "tossWinnerChoseTo":
+                                widget.tossWinnerChoseTo,
+                                "MATCH_ID": widget.MATCH_ID,
+                                "score": 0,
+                                "overs_done": 0.0,
+                                "over_string": "",
+                                "wickets_taken": 0,
+                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -388,7 +409,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                               widget.bowlingTeamPlayers,
                                           first: widget.first,
                                           wickets: widget.wickets,
-                                          overs: widget.overs,
+                                          overs: widget.overs, //no
                                           striker: selectedStriker,
                                           non_striker: selectedNonStriker,
                                           baller: selectedBaller,

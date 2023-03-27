@@ -402,14 +402,17 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                 batTeam.add({
                                   "USERID": teamOne[i]["USERID"],
                                   "NAME": teamOne[i]["NAME"],
-                                  "index": i
+                                  "index": i,
+                                  "SCORE": 0,
+                                  "BALLS" : 0,
                                 });
                               }
                               for (int i = 0; i < teamTwo.length; i++) {
                                 ballTeam.add({
                                   "USERID": teamTwo[i]["USERID"],
                                   "NAME": teamTwo[i]["NAME"],
-                                  "index": i
+                                  "index": i,
+                                  "BALLS" : 0
                                 });
                               }
                               print("New Edit Here");

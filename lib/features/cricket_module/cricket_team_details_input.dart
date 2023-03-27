@@ -342,8 +342,8 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                 allBallingPlayers:
                                 data["BALLING"]["PLAYERS"],
                                 first: data["first"],
-                                wickets: data["MATCH"]["WICKETS"],
-                                overs: data["MATCH"]["TOTAL_OVERS"],
+                                wickets: data["MATCH"]["WICKETS"], //no
+                                overs: data["MATCH"]["TOTAL_OVERS"], //no
                                 striker: data["BATTING"]["STRIKER"],
                                 non_striker: data["BATTING"]["NON_STRIKER"],
                                 baller: data["BALLING"]["BALLER"],
@@ -357,7 +357,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                 data["MATCH"]["TOSS"],
                                 MATCH_ID : int.parse(match["MATCH_ID"]),
                                 score : data["MATCH"]["SCORE"],
-                                overs_done : data["MATCH"]["OVERS"],
+                                overs_done :  data["MATCH"]["OVERS"].toDouble(),
                                 over_string : data["MATCH"]["CURR_OVERS"],
                                 wickets_taken: data["MATCH"]["WICKETS_TAKEN"],
                               )),
