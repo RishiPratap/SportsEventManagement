@@ -27,29 +27,29 @@ class CricketScore extends StatefulWidget {
   final String over_string;
   final int MATCH_ID;
   final int wickets_taken;
-  const CricketScore({
-    Key? key,
-    required this.overs,
-    required this.ballingTeam,
-    required this.battingTeam,
-    required this.first,
-    required this.wickets,
-    required this.striker,
-    required this.non_striker,
-    required this.baller,
-    required this.battingTeamName,
-    required this.bowlingTeamName,
-    required this.tournamentId,
-    required this.tossWonBy,
-    required this.tossWinnerChoseTo,
-    required this.allBattingPlayers,
-    required this.allBallingPlayers,
-    required this.MATCH_ID,
-    required this.over_string,
-    required this.overs_done,
-    required this.score,
-    required this.wickets_taken
-  }) : super(key: key);
+  const CricketScore(
+      {Key? key,
+      required this.overs,
+      required this.ballingTeam,
+      required this.battingTeam,
+      required this.first,
+      required this.wickets,
+      required this.striker,
+      required this.non_striker,
+      required this.baller,
+      required this.battingTeamName,
+      required this.bowlingTeamName,
+      required this.tournamentId,
+      required this.tossWonBy,
+      required this.tossWinnerChoseTo,
+      required this.allBattingPlayers,
+      required this.allBallingPlayers,
+      required this.MATCH_ID,
+      required this.over_string,
+      required this.overs_done,
+      required this.score,
+      required this.wickets_taken})
+      : super(key: key);
 
   //DO INIT STATE
   get btnVal => "0";
@@ -76,7 +76,6 @@ List<String> bowlerList = [];
 bool matchInning = false;
 int matchInningCount = 0;
 bool setButtonDisable = false;
-// var scoringData;
 var curr_bowler_name;
 List<String> WicketsType = [
   'LBW',
@@ -96,7 +95,6 @@ var ways = {
   "Stumped": "ST",
   "Hit Wicket": "HW",
 };
-
 
 class _CricketScoreState extends State<CricketScore> {
   var finalBattingTeam;
@@ -125,9 +123,9 @@ class _CricketScoreState extends State<CricketScore> {
       matchInning = widget.first;
       setButtonDisable = false;
 
-      if(widget.first){
+      if (widget.first) {
         matchInningCount = 1;
-      } else{
+      } else {
         matchInningCount = 0;
       }
       _currentOver = widget.over_string;
@@ -138,7 +136,7 @@ class _CricketScoreState extends State<CricketScore> {
       _currentStrickerBallcount = widget.striker["BALLS"];
       _currentNonStrickerBallcount = widget.non_striker["BALLS"];
       _currentBalleOver = widget.overs_done;
-      // _currentBowlingCount = //rishi
+      _currentBowlingCount = _currentBalleOver!.toInt();
       curr_bowler_name = widget.baller["NAME"];
     });
 
@@ -164,7 +162,7 @@ class _CricketScoreState extends State<CricketScore> {
     var sendData = {
       "TOURNAMENT_ID": widget.tournamentId,
       "score": score.toString(),
-      "MATCH_ID" : widget.MATCH_ID
+      "MATCH_ID": widget.MATCH_ID
     };
     var jsonData = jsonEncode(sendData);
     var response = await post(Uri.parse(url),
@@ -177,6 +175,7 @@ class _CricketScoreState extends State<CricketScore> {
     double w = MediaQuery.of(context).size.width;
     if (_currentBowlingCount == 6) {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (_) => AlertDialog(
                 title: Text("Choose Bowler"),
@@ -201,7 +200,7 @@ class _CricketScoreState extends State<CricketScore> {
                                 .where((element) =>
                                     element["NAME"] == bowlerList[index])
                                 .toList()[0]["index"],
-                            "MATCH_ID" : widget.MATCH_ID
+                            "MATCH_ID": widget.MATCH_ID
                           };
                           var jsonData = jsonEncode(Overjson);
                           print("The json data is: " + Overjson.toString());
@@ -221,7 +220,7 @@ class _CricketScoreState extends State<CricketScore> {
         _currentNonStriker = !_currentNonStriker;
         _currentStriker = !_currentStriker;
         _currentOver = "";
-        double temp = _currentBalleOver??0.0;
+        double temp = _currentBalleOver ?? 0.0;
         _currentBalleOver = temp + 1.0 - 0.6;
         _currentBowlingCount = 0;
       });
@@ -275,7 +274,7 @@ class _CricketScoreState extends State<CricketScore> {
                             "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
                         var inningsJson = {
                           "TOURNAMENT_ID": widget.tournamentId,
-                          "MATCH_ID" : widget.MATCH_ID
+                          "MATCH_ID": widget.MATCH_ID
                         };
                         var inningsJsonData = jsonEncode(inningsJson);
                         print("The json data is: " + inningsJson.toString());
@@ -363,8 +362,7 @@ class _CricketScoreState extends State<CricketScore> {
                                 MaterialPageRoute(
                                     builder: (context) => MatchResult(
                                         TOURNAMENT_ID: widget.tournamentId,
-                                      MATCH_ID : widget.MATCH_ID
-                                    )));
+                                        MATCH_ID: widget.MATCH_ID)));
                           },
                           child: const Text("Ok"),
                         ),
@@ -374,7 +372,7 @@ class _CricketScoreState extends State<CricketScore> {
       var jsonData = jsonEncode({
         "TOURNAMENT_ID": widget.tournamentId,
         "batting_team_name": widget.battingTeamName,
-        "MATCH_ID" : widget.MATCH_ID
+        "MATCH_ID": widget.MATCH_ID
       });
       print("The json data is: " + jsonData.toString());
       var url =
@@ -557,7 +555,7 @@ class _CricketScoreState extends State<CricketScore> {
             Center(
                 child: Column(children: <Widget>[
               SizedBox(height: h * 0.01),
-              Row(children: [Text(strikerName??"Striker Name")]),
+              Row(children: [Text(strikerName ?? "Striker Name")]),
               SizedBox(height: h * 0.01),
               Row(children: [
                 Text(
@@ -598,7 +596,10 @@ class _CricketScoreState extends State<CricketScore> {
           onPressed: () async {
             var url =
                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID" : widget.MATCH_ID});
+            var sendJSON = jsonEncode({
+              "TOURNAMENT_ID": widget.tournamentId,
+              "MATCH_ID": widget.MATCH_ID
+            });
 
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
@@ -614,7 +615,7 @@ class _CricketScoreState extends State<CricketScore> {
             Center(
                 child: Column(children: <Widget>[
               SizedBox(height: h * 0.01),
-              Row(children: [Text(nonStrikerName??"Non Striker")]),
+              Row(children: [Text(nonStrikerName ?? "Non Striker")]),
               SizedBox(height: h * 0.01),
               Row(children: [
                 Text(
@@ -655,7 +656,10 @@ class _CricketScoreState extends State<CricketScore> {
           onPressed: () async {
             var url =
                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeStrike";
-            var sendJSON = jsonEncode({"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID" : widget.MATCH_ID});
+            var sendJSON = jsonEncode({
+              "TOURNAMENT_ID": widget.tournamentId,
+              "MATCH_ID": widget.MATCH_ID
+            });
 
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
@@ -742,7 +746,7 @@ class _CricketScoreState extends State<CricketScore> {
                       : setState(() {
                           _currentOver += "0-";
                           _currentMatchScore += 0;
-                          _currentBalleOver = _currentBalleOver !+ 0.1;
+                          _currentBalleOver = _currentBalleOver! + 0.1;
                           _currentBowlingCount += 1;
                         });
                   if (!setButtonDisable) {
@@ -781,7 +785,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "1-";
                         _currentMatchScore += 1;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                         print(_currentOver.length);
                       });
@@ -826,7 +830,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "2-";
                         _currentMatchScore += 2;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -908,7 +912,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "3-";
                         _currentMatchScore += 3;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -952,7 +956,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "4-";
                         _currentMatchScore += 4;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -992,7 +996,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "6-";
                         _currentMatchScore += 6;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       });
                 if (!setButtonDisable) {
@@ -1032,7 +1036,7 @@ class _CricketScoreState extends State<CricketScore> {
                     : setState(() {
                         _currentOver += "5-";
                         _currentMatchScore += 5;
-                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                        _currentBalleOver = _currentBalleOver! + 0.1;
                         _currentBowlingCount += 1;
                       }),
                 if (!setButtonDisable)
@@ -1089,6 +1093,7 @@ class _CricketScoreState extends State<CricketScore> {
                   backgroundColor: Colors.red),
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (_) => SimpleDialog(
                       title: const Text('Score'),
@@ -1112,7 +1117,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
                                       "remarks": "Wide Ball",
-                                      "MATCH_ID" : widget.MATCH_ID
+                                      "MATCH_ID": widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1163,6 +1168,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (_) => SimpleDialog(
                       title: const Text('Score'),
@@ -1186,7 +1192,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
                                       "remarks": "No Ball",
-                                      "MATCH_ID" : widget.MATCH_ID
+                                      "MATCH_ID": widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1239,6 +1245,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (_) => SimpleDialog(
                       title: const Text('Score'),
@@ -1262,7 +1269,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
                                       "remarks": "Bye Ball",
-                                      "MATCH_ID" : widget.MATCH_ID
+                                      "MATCH_ID": widget.MATCH_ID
                                     });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
@@ -1276,7 +1283,8 @@ class _CricketScoreState extends State<CricketScore> {
                                             _currentOver += "Bye-";
                                             _currentMatchScore +=
                                                 int.parse(nbscore.text);
-                                            _currentBalleOver = _currentBalleOver !+ 0.1;
+                                            _currentBalleOver =
+                                                _currentBalleOver! + 0.1;
 
                                             if (_currentStriker) {
                                               _currentStrikerScore +=
@@ -1321,6 +1329,7 @@ class _CricketScoreState extends State<CricketScore> {
                     ? null
                     : setState(() {
                         showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (_) => SimpleDialog(
                             title: const Text('Wicket Type'),
@@ -1329,6 +1338,7 @@ class _CricketScoreState extends State<CricketScore> {
                                 SimpleDialogOption(
                                   onPressed: () {
                                     showDialog(
+                                      barrierDismissible: false,
                                       context: context,
                                       builder: (_) => SimpleDialog(
                                           title: const Text('New Player'),
@@ -1402,8 +1412,11 @@ class _CricketScoreState extends State<CricketScore> {
                                                         _currentWickets += 1;
                                                         _currentBowlingCount +=
                                                             1;
-                                                        _currentBalleOver = _currentBalleOver !+ 0.1;
+                                                        _currentBalleOver =
+                                                            _currentBalleOver! +
+                                                                0.1;
                                                         bowler();
+                                                        Navigator.pop(context);
                                                       });
                                                       // call api here only..
                                                       var outURL =
@@ -1421,7 +1434,8 @@ class _CricketScoreState extends State<CricketScore> {
                                                                     ["NAME"])
                                                             .toList()[0]["index"],
                                                         "remarks": wickets,
-                                                        "MATCH_ID" : widget.MATCH_ID
+                                                        "MATCH_ID":
+                                                            widget.MATCH_ID
                                                       };
                                                       print(
                                                           "The json is $outJson");
@@ -1481,32 +1495,167 @@ class _CricketScoreState extends State<CricketScore> {
                 //rishi
                 //end match
                 if (_currentWickets == widget.wickets) {
+                  setState(() {
+                    matchInningCount += 1;
+                  });
                   showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (_) => SimpleDialog(
                       title: const Text('All Out Confirm'),
                       children: <Widget>[
-                        SimpleDialogOption(
-                          onPressed: () {
-                            setState(() {
-                              matchInning = true;
-                              matchInningCount += 1;
-                              setButtonDisable = true;
-                            });
-                            endMatch();
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Declare All Out'),
+                        ButtonBar(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  matchInning = true;
+                                  setButtonDisable = true;
+                                });
+                                endMatch();
+                                if (matchInningCount == 1) {
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (_) => SimpleDialog(
+                                        title: const Center(
+                                            child: Text('Innings Over',
+                                                style: TextStyle(
+                                                    color: Colors.red))),
+                                        children: <Widget>[
+                                          Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Column(children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Match Result",
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Score/Wickets: ($_currentMatchScore/$_currentWickets)",
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Striker 🏏: $strikerName",
+                                                    style: const TextStyle(
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ])),
+                                          ButtonBar(
+                                            children: [
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    primary:
+                                                        const Color.fromARGB(
+                                                            255, 54, 181, 244)),
+                                                onPressed: () async {
+                                                  var url =
+                                                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
+                                                  var inningsJson = {
+                                                    "TOURNAMENT_ID":
+                                                        widget.tournamentId,
+                                                    "MATCH_ID": widget.MATCH_ID
+                                                  };
+                                                  var inningsJsonData =
+                                                      jsonEncode(inningsJson);
+                                                  print("The json data is: " +
+                                                      inningsJson.toString());
+                                                  var response = await post(
+                                                      Uri.parse(url),
+                                                      body: inningsJsonData,
+                                                      headers: {
+                                                        "Content-Type":
+                                                            "application/json"
+                                                      });
+                                                  print(
+                                                      "😌😌 response from innings change api is: " +
+                                                          response.body);
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              CricketStrickerAndNonStrickerDetails(
+                                                                tournamentId: widget
+                                                                    .tournamentId,
+                                                                battingTeamName:
+                                                                    widget
+                                                                        .bowlingTeamName,
+                                                                bowlingTeamName:
+                                                                    widget
+                                                                        .battingTeamName,
+                                                                overs: widget
+                                                                    .overs,
+                                                                wickets: widget
+                                                                    .wickets,
+                                                                first: !(widget
+                                                                    .first),
+                                                                tossWonBy: widget
+                                                                    .tossWonBy,
+                                                                tossWinnerChoseTo:
+                                                                    widget
+                                                                        .tossWinnerChoseTo,
+                                                                battingTeamPlayers:
+                                                                    widget
+                                                                        .allBallingPlayers,
+                                                                bowlingTeamPlayers:
+                                                                    widget
+                                                                        .allBattingPlayers,
+                                                                MATCH_ID: widget
+                                                                    .MATCH_ID,
+                                                              )));
+                                                },
+                                                child: const Text(
+                                                    "Change Innings"),
+                                              ),
+                                            ],
+                                          ),
+                                        ]),
+                                  );
+                                }
+                              },
+                              child: const Text("Yes"),
+                            ),
+                          ],
                         ),
-                        SimpleDialogOption(
-                          onPressed: () {
-                            setState(() {
-                              _currentNonStriker = _currentStriker;
-                            });
-                            bowler();
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Allow Last Man to Bat'),
+                      ],
+                    ),
+                  );
+                  bowler();
+                }
+                if (_currentWickets == widget.wickets - 1) {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (_) => SimpleDialog(
+                      title: const Text('Allow Last Man !'),
+                      children: <Widget>[
+                        ButtonBar(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _currentNonStriker = !_currentNonStriker;
+                                  _currentStriker = !_currentStriker;
+                                  _currentWickets += 1;
+                                  _currentBowlingCount += 1;
+                                  _currentBalleOver = _currentBalleOver! + 0.1;
+                                });
+                                bowler();
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Yes Allow"),
+                            ),
+                          ],
                         ),
                       ],
                     ),
