@@ -1,7 +1,10 @@
+import 'dart:convert';
+import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import '../../Helper/constant.dart';
 import '../home_page/home_page.dart';
 import 'cricket_toss_details.dart';
+import 'cricket_score.dart';
 
 class CricketTeamDetasilsInput extends StatefulWidget {
   final String tournamentId;
@@ -302,16 +305,74 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async{
+                      print("On pressed Clicked");
+                      var url = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hasScoringStarted";
+                      var sendData = jsonEncode({
+                        "TOURNAMENT_ID" : widget.tournamentId,
+                        "MATCH_ID" : int.parse(match["MATCH_ID"])
+                      });
+                      var response = await post(Uri.parse(url),
+                          body: sendData,
+                          headers: {
+                            "Content-Type": "application/json"
+                          });
+                      print("👍🏻👍🏻👍🏻" + response.body);
+                      if(response.body == "true"){
+                        var url2 = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/resumeScoring";
+                        var sendDataForResuming = jsonEncode({
+                          "TOURNAMENT_ID" : widget.tournamentId,
+                          "MATCH_ID" : int.parse(match["MATCH_ID"])
+                        });
+                        var response = await post(Uri.parse(url2),
+                            body: sendDataForResuming,
+                            headers: {
+                              "Content-Type": "application/json"
+                            });
+                        print( "😂😂😂" + response.body);
+                        var data = jsonDecode(response.body);
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CricketTossDetails(
-                                  firstTeamName: match["TEAM_NAMES"][0],
-                                  secondTeamName: match["TEAM_NAMES"][1],
-                                  tournamentId: widget.tournamentId,
-                                  MATCH_ID : int.parse(match["MATCH_ID"])
-                              )));
+                              builder: (context) => CricketScore(
+                                battingTeam: data["BATTING"]["LEFT"],
+                                ballingTeam: data["BALLING"]["PLAYERS"],
+                                allBattingPlayers:
+                                data["BATTING"]["PLAYERS"],
+                                allBallingPlayers:
+                                data["BALLING"]["PLAYERS"],
+                                first: data["first"],
+                                wickets: data["MATCH"]["WICKETS"],
+                                overs: data["MATCH"]["TOTAL_OVERS"],
+                                striker: data["BATTING"]["STRIKER"],
+                                non_striker: data["BATTING"]["NON_STRIKER"],
+                                baller: data["BALLING"]["BALLER"],
+                                battingTeamName:
+                                data["BATTING"]["TEAM_NAME"],
+                                bowlingTeamName:
+                                data["BALLING"]["TEAM_NAME"],
+                                tournamentId: widget.tournamentId,
+                                tossWonBy: data["MATCH"]["TOSS_WINNER"],
+                                tossWinnerChoseTo:
+                                data["MATCH"]["TOSS"],
+                                MATCH_ID : int.parse(match["MATCH_ID"]),
+                                score : data["MATCH"]["SCORE"],
+                                overs_done : data["MATCH"]["OVERS"],
+                                over_string : data["MATCH"]["CURR_OVERS"],
+                                wickets_taken: data["MATCH"]["WICKETS_TAKEN"],
+                              )),
+                        );
+                      } else{
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CricketTossDetails(
+                                    firstTeamName: match["TEAM_NAMES"][0],
+                                    secondTeamName: match["TEAM_NAMES"][1],
+                                    tournamentId: widget.tournamentId,
+                                    MATCH_ID : int.parse(match["MATCH_ID"])
+                                )));
+                      }
                     },
                     child: const Text("Next"),
                   ),

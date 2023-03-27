@@ -1,10 +1,8 @@
 // line 1122 should fix the index out of bound error
 
 import 'dart:convert';
-
 import 'package:ardent_sports/features/cricket_module/MatchResult.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:ardent_sports/features/cricket_module/cricket_stricker_and_non_stricker_details.dart';
 
@@ -24,7 +22,11 @@ class CricketScore extends StatefulWidget {
   final String tossWinnerChoseTo;
   final List<dynamic> allBattingPlayers;
   final List<dynamic> allBallingPlayers;
+  final int score;
+  final double overs_done;
+  final String over_string;
   final int MATCH_ID;
+  final int wickets_taken;
   const CricketScore({
     Key? key,
     required this.overs,
@@ -43,8 +45,13 @@ class CricketScore extends StatefulWidget {
     required this.allBattingPlayers,
     required this.allBallingPlayers,
     required this.MATCH_ID,
+    required this.over_string,
+    required this.overs_done,
+    required this.score,
+    required this.wickets_taken
   }) : super(key: key);
 
+  //DO INIT STATE
   get btnVal => "0";
   @override
   State<CricketScore> createState() => _CricketScoreState();
@@ -69,7 +76,8 @@ List<String> bowlerList = [];
 bool matchInning = false;
 int matchInningCount = 0;
 bool setButtonDisable = false;
-var scoringData;
+// var scoringData;
+var curr_bowler_name;
 List<String> WicketsType = [
   'LBW',
   'Bowled',
@@ -88,7 +96,7 @@ var ways = {
   "Stumped": "ST",
   "Hit Wicket": "HW",
 };
-var curr_bowler_name;
+
 
 class _CricketScoreState extends State<CricketScore> {
   var finalBattingTeam;
@@ -113,9 +121,38 @@ class _CricketScoreState extends State<CricketScore> {
       nowStriker = widget.striker;
       nowNonStriker = widget.non_striker;
       nowBaller = widget.baller;
-      matchInning = false;
+      matchInning = widget.first;
       setButtonDisable = false;
+
+      if(widget.first){
+        matchInningCount = 1;
+      } else{
+        matchInningCount = 0;
+      }
+      _currentOver = widget.over_string;
+      _currentMatchScore = widget.score;
+      _currentStrikerScore = widget.striker["SCORE"];
+      _currentNonStrikerScore = widget.non_striker["SCORE"];
+      _currentWickets = widget.wickets;
+      _currentStrickerBallcount = widget.striker["BALLS"];
+      _currentNonStrickerBallcount = widget.non_striker["BALLS"];
+      _currentBalleOver = widget.overs_done;
+      // _currentBowlingCount = //rishi
+      curr_bowler_name = widget.baller["NAME"];
     });
+
+    //rishi
+    //widget.overs_done;
+    // 1.2 -- > 2
+    //1.3 -- > 3
+    //2.0 --> 0
+    //3.4 --> 4
+
+    // 4 --> widget.wickets
+    //out --> ball_count + 1
+    //4 --> end match
+    //3 --> Allow last player, end match
+
     _clear();
     print(matchInningCount);
   }

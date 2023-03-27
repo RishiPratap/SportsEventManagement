@@ -358,7 +358,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                   "NON_STRIKER_INDEX": non_strikerIndex
                                 },
                                 "BOWLING": {"BALLER_INDEX": baller_index},
-                                "MATCH_ID" : widget.MATCH_ID
+                                "MATCH_ID": widget.MATCH_ID
                               };
                               var sendJson = jsonEncode(requestJson);
                               var url =
@@ -400,7 +400,11 @@ class _CricketStrickerAndNonStrickerDetailsState
                                           tossWonBy: widget.tossWonBy,
                                           tossWinnerChoseTo:
                                               widget.tossWinnerChoseTo,
-                                          MATCH_ID : widget.MATCH_ID,
+                                          MATCH_ID: widget.MATCH_ID,
+                                          score: 0,
+                                          overs_done: 0.0,
+                                          over_string: "",
+                                        wickets_taken: 0,
                                         )),
                               );
                             },
