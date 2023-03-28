@@ -5,6 +5,7 @@ import 'package:ardent_sports/features/cricket_module/MatchResult.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:ardent_sports/features/cricket_module/cricket_stricker_and_non_stricker_details.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class CricketScore extends StatefulWidget {
   final int overs;
@@ -104,9 +105,25 @@ class _CricketScoreState extends State<CricketScore> {
   var nowStriker;
   var nowNonStriker;
   var nowBaller;
+  late Socket socket;
+  
   @override
   void initState() {
     super.initState();
+    socket = io(
+        "http://ceb3-2401-4900-2351-73b1-f4f0-c44e-63f7-38bf.ngrok.io",
+        <String, dynamic>{
+          "transports": ["websocket"],
+          "autoConnect": false,
+          "forceNew": true,
+        });
+    socket.connect();
+    socket.onConnect((data) => print("Connected"));
+    var sendData = {
+      "TOURNAMENT_ID" : widget.tournamentId,
+      "MATCH_ID" : widget.MATCH_ID
+    };
+    socket.emit('join-scoring-live', sendData);
     _currentBalleOver = 0.0;
     List<String> b = [];
     for (int i = 0; i < widget.ballingTeam.length; i++) {
@@ -137,7 +154,7 @@ class _CricketScoreState extends State<CricketScore> {
       print(_currentMatchScore);
       _currentStrikerScore = widget.striker["SCORE"];
       _currentNonStrikerScore = widget.non_striker["SCORE"];
-      _currentWickets = widget.wickets;
+      // _currentWickets = widget.wickets;
       _currentStrickerBallcount = widget.striker["BALLS"];
       _currentNonStrickerBallcount = widget.non_striker["BALLS"];
       _currentBalleOver = widget.overs_done;
@@ -161,6 +178,12 @@ class _CricketScoreState extends State<CricketScore> {
   }
 
   Future<void> scoringkeyFunc(int score) async {
+    var sendData1 = {
+      "TOURNAMENT_ID": widget.tournamentId,
+      "SCORE": score,
+      "MATCH_ID": widget.MATCH_ID
+    };
+    socket.emit('update-usual-score', sendData1);
     var url =
         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/usualScore";
     var sendData = {
