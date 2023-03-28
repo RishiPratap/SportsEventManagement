@@ -407,7 +407,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                               widget.battingTeamPlayers,
                                           allBallingPlayers:
                                               widget.bowlingTeamPlayers,
-                                          first: widget.first,
+                                          first: false,
                                           wickets: widget.wickets,
                                           overs: widget.overs, //no
                                           striker: selectedStriker,

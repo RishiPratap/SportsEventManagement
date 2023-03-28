@@ -412,7 +412,8 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                   "USERID": teamTwo[i]["USERID"],
                                   "NAME": teamTwo[i]["NAME"],
                                   "index": i,
-                                  "BALLS" : 0
+                                  "BALLS" : 0,
+                                  "SCORE" : 0
                                 });
                               }
                               print("New Edit Here");

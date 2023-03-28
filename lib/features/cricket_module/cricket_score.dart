@@ -59,12 +59,12 @@ class CricketScore extends StatefulWidget {
 }
 String? strikerName;
 String? nonStrikerName;
-bool _currentStriker = true;
-bool _currentNonStriker = false;
+bool _currentStriker = false;
+bool _currentNonStriker = true;
 var _currentOver;
 var _currentMatchScore;
 var _currentStrikerScore;
-var _currentWickets;
+var _currentWickets = 0;
 var _currentNonStrikerScore;
 var _currentStrickerBallcount;
 var _currentNonStrickerBallcount;
@@ -109,26 +109,15 @@ class _CricketScoreState extends State<CricketScore> {
   @override
   void initState() {
     super.initState();
-    socket = io(
-        "http://ceb3-2401-4900-2351-73b1-f4f0-c44e-63f7-38bf.ngrok.io",
-        <String, dynamic>{
-          "transports": ["websocket"],
-          "autoConnect": false,
-          "forceNew": true,
-        });
-    socket.connect();
-    socket.onConnect((data) => print("Connected"));
-    var sendData = {
-      "TOURNAMENT_ID" : widget.tournamentId,
-      "MATCH_ID" : widget.MATCH_ID
-    };
-    socket.emit('join-scoring-live', sendData);
     _currentBalleOver = 0.0;
     List<String> b = [];
     for (int i = 0; i < widget.ballingTeam.length; i++) {
       b.add(widget.ballingTeam[i]["NAME"]);
     }
+    print(widget.allBallingPlayers);
       bowlerList = b;
+    _currentStriker = true;
+    _currentNonStriker = false;
       print(widget.striker["NAME"]);
       curr_bowler_name = widget.baller["NAME"];
       strikerName = widget.striker["NAME"];
@@ -153,12 +142,18 @@ class _CricketScoreState extends State<CricketScore> {
       print(_currentMatchScore);
       _currentStrikerScore = widget.striker["SCORE"];
       _currentNonStrikerScore = widget.non_striker["SCORE"];
-      // _currentWickets = widget.wickets;
+      _currentWickets = widget.wickets_taken;
       _currentStrickerBallcount = widget.striker["BALLS"];
       _currentNonStrickerBallcount = widget.non_striker["BALLS"];
+
       _currentBalleOver = widget.overs_done;
-      _currentBowlingCount = _currentBalleOver!.toInt();
+      print(_currentBalleOver);
+      print(widget.overs_done);
+      print(_currentBalleOver! - _currentBalleOver!.toInt());
+      _currentBowlingCount = (((_currentBalleOver! - _currentBalleOver!.toInt())*10).ceil()).toInt();
       curr_bowler_name = widget.baller["NAME"];
+      print("Jod Jod");
+      print(_currentBowlingCount);
     // });
 
     //rishi
@@ -172,6 +167,26 @@ class _CricketScoreState extends State<CricketScore> {
     //out --> ball_count + 1
     //4 --> end match
     //3 --> Allow last player, end match
+
+    socket = io(
+        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000",
+        <String, dynamic>{
+          "transports": ["websocket"],
+          "autoConnect": false,
+          "forceNew": true,
+        });
+    socket.connect();
+    socket.onConnect((data) => print("Connected"));
+    var sendData = {
+      "TOURNAMENT_ID" : widget.tournamentId,
+      "MATCH_ID" : widget.MATCH_ID
+    };
+    socket.emit('join-scoring-live', sendData);
+    
+    if(widget.first){
+      print(widget.first);
+      socket.emit('update-change-inning', {'TOURNAMENT_ID' : widget.tournamentId, 'MATCH_ID' : widget.MATCH_ID});
+    }
 
     print(matchInningCount);
   }
@@ -217,17 +232,20 @@ class _CricketScoreState extends State<CricketScore> {
                           setState(() {
                             curr_bowler_name = bowlerList[index];
                           });
-                          // make api call to change over
-                          var url =
-                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeOverCricket";
                           var Overjson = {
                             "TOURNAMENT_ID": widget.tournamentId,
                             "baller_index": widget.allBallingPlayers
                                 .where((element) =>
-                                    element["NAME"] == bowlerList[index])
+                            element["NAME"] == bowlerList[index])
                                 .toList()[0]["index"],
                             "MATCH_ID": widget.MATCH_ID
                           };
+                          print(Overjson);
+                          socket.emit("update-over-changed", Overjson);
+                          // make api call to change over
+                          var url =
+                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeOverCricket";
+
                           var jsonData = jsonEncode(Overjson);
                           print("The json data is: " + Overjson.toString());
                           var response = await post(Uri.parse(url),
@@ -629,6 +647,11 @@ class _CricketScoreState extends State<CricketScore> {
               "TOURNAMENT_ID": widget.tournamentId,
               "MATCH_ID": widget.MATCH_ID
             });
+            socket.emit('update-change-strike', {
+              "TOURNAMENT_ID": widget.tournamentId,
+              "MATCH_ID": widget.MATCH_ID
+            });
+            print("Socket Called for Strike Change");
 
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
@@ -689,7 +712,11 @@ class _CricketScoreState extends State<CricketScore> {
               "TOURNAMENT_ID": widget.tournamentId,
               "MATCH_ID": widget.MATCH_ID
             });
-
+            socket.emit('update-change-strike', {
+              "TOURNAMENT_ID": widget.tournamentId,
+              "MATCH_ID": widget.MATCH_ID
+            });
+            print("Socket Called for Strike Change");
             var resp = await post(Uri.parse(url),
                 headers: {"Content-Type": "application/json"}, body: sendJSON);
             print(resp.body);
