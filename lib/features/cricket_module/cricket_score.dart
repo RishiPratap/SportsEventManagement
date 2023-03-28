@@ -76,7 +76,6 @@ List<String> bowlerList = [];
 bool matchInning = false;
 int matchInningCount = 0;
 bool setButtonDisable = false;
-// var scoringData;
 var curr_bowler_name;
 List<String> WicketsType = [
   'LBW',
@@ -158,7 +157,7 @@ class _CricketScoreState extends State<CricketScore> {
       _currentStrickerBallcount = widget.striker["BALLS"];
       _currentNonStrickerBallcount = widget.non_striker["BALLS"];
       _currentBalleOver = widget.overs_done;
-      // _currentBowlingCount = //rishi
+      _currentBowlingCount = _currentBalleOver!.toInt();
       curr_bowler_name = widget.baller["NAME"];
     // });
 
@@ -202,6 +201,7 @@ class _CricketScoreState extends State<CricketScore> {
     double w = MediaQuery.of(context).size.width;
     if (_currentBowlingCount == 6) {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (_) => AlertDialog(
                 title: Text("Choose Bowler"),
@@ -1122,6 +1122,7 @@ class _CricketScoreState extends State<CricketScore> {
                   backgroundColor: Colors.red),
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (_) => SimpleDialog(
                       title: const Text('Score'),
@@ -1196,6 +1197,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (_) => SimpleDialog(
                       title: const Text('Score'),
@@ -1272,6 +1274,7 @@ class _CricketScoreState extends State<CricketScore> {
                   )),
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (_) => SimpleDialog(
                       title: const Text('Score'),
@@ -1355,6 +1358,7 @@ class _CricketScoreState extends State<CricketScore> {
                     ? null
                     : setState(() {
                         showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (_) => SimpleDialog(
                             title: const Text('Wicket Type'),
@@ -1363,6 +1367,7 @@ class _CricketScoreState extends State<CricketScore> {
                                 SimpleDialogOption(
                                   onPressed: () {
                                     showDialog(
+                                      barrierDismissible: false,
                                       context: context,
                                       builder: (_) => SimpleDialog(
                                           title: const Text('New Player'),
@@ -1440,6 +1445,7 @@ class _CricketScoreState extends State<CricketScore> {
                                                             _currentBalleOver! +
                                                                 0.1;
                                                         bowler();
+                                                        Navigator.pop(context);
                                                       });
                                                       // call api here only..
                                                       var outURL =
@@ -1518,32 +1524,167 @@ class _CricketScoreState extends State<CricketScore> {
                 //rishi
                 //end match
                 if (_currentWickets == widget.wickets) {
+                  setState(() {
+                    matchInningCount += 1;
+                  });
                   showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (_) => SimpleDialog(
                       title: const Text('All Out Confirm'),
                       children: <Widget>[
-                        SimpleDialogOption(
-                          onPressed: () {
-                            setState(() {
-                              matchInning = true;
-                              matchInningCount += 1;
-                              setButtonDisable = true;
-                            });
-                            endMatch();
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Declare All Out'),
+                        ButtonBar(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  matchInning = true;
+                                  setButtonDisable = true;
+                                });
+                                endMatch();
+                                if (matchInningCount == 1) {
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (_) => SimpleDialog(
+                                        title: const Center(
+                                            child: Text('Innings Over',
+                                                style: TextStyle(
+                                                    color: Colors.red))),
+                                        children: <Widget>[
+                                          Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Column(children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Match Result",
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Score/Wickets: ($_currentMatchScore/$_currentWickets)",
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Striker 🏏: $strikerName",
+                                                    style: const TextStyle(
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ])),
+                                          ButtonBar(
+                                            children: [
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    primary:
+                                                        const Color.fromARGB(
+                                                            255, 54, 181, 244)),
+                                                onPressed: () async {
+                                                  var url =
+                                                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
+                                                  var inningsJson = {
+                                                    "TOURNAMENT_ID":
+                                                        widget.tournamentId,
+                                                    "MATCH_ID": widget.MATCH_ID
+                                                  };
+                                                  var inningsJsonData =
+                                                      jsonEncode(inningsJson);
+                                                  print("The json data is: " +
+                                                      inningsJson.toString());
+                                                  var response = await post(
+                                                      Uri.parse(url),
+                                                      body: inningsJsonData,
+                                                      headers: {
+                                                        "Content-Type":
+                                                            "application/json"
+                                                      });
+                                                  print(
+                                                      "😌😌 response from innings change api is: " +
+                                                          response.body);
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              CricketStrickerAndNonStrickerDetails(
+                                                                tournamentId: widget
+                                                                    .tournamentId,
+                                                                battingTeamName:
+                                                                    widget
+                                                                        .bowlingTeamName,
+                                                                bowlingTeamName:
+                                                                    widget
+                                                                        .battingTeamName,
+                                                                overs: widget
+                                                                    .overs,
+                                                                wickets: widget
+                                                                    .wickets,
+                                                                first: !(widget
+                                                                    .first),
+                                                                tossWonBy: widget
+                                                                    .tossWonBy,
+                                                                tossWinnerChoseTo:
+                                                                    widget
+                                                                        .tossWinnerChoseTo,
+                                                                battingTeamPlayers:
+                                                                    widget
+                                                                        .allBallingPlayers,
+                                                                bowlingTeamPlayers:
+                                                                    widget
+                                                                        .allBattingPlayers,
+                                                                MATCH_ID: widget
+                                                                    .MATCH_ID,
+                                                              )));
+                                                },
+                                                child: const Text(
+                                                    "Change Innings"),
+                                              ),
+                                            ],
+                                          ),
+                                        ]),
+                                  );
+                                }
+                              },
+                              child: const Text("Yes"),
+                            ),
+                          ],
                         ),
-                        SimpleDialogOption(
-                          onPressed: () {
-                            setState(() {
-                              _currentNonStriker = _currentStriker;
-                            });
-                            bowler();
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Allow Last Man to Bat'),
+                      ],
+                    ),
+                  );
+                  bowler();
+                }
+                if (_currentWickets == widget.wickets - 1) {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (_) => SimpleDialog(
+                      title: const Text('Allow Last Man !'),
+                      children: <Widget>[
+                        ButtonBar(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _currentNonStriker = !_currentNonStriker;
+                                  _currentStriker = !_currentStriker;
+                                  _currentWickets += 1;
+                                  _currentBowlingCount += 1;
+                                  _currentBalleOver = _currentBalleOver! + 0.1;
+                                });
+                                bowler();
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Yes Allow"),
+                            ),
+                          ],
                         ),
                       ],
                     ),
