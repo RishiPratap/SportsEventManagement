@@ -1175,6 +1175,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       "remarks": "Wide Ball",
                                       "MATCH_ID": widget.MATCH_ID
                                     });
+                                    print("Emitting Socket");
                                     socket.emit('update-special-runs', {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
@@ -1256,6 +1257,13 @@ class _CricketScoreState extends State<CricketScore> {
                                       "remarks": "No Ball",
                                       "MATCH_ID": widget.MATCH_ID
                                     });
+                                    print("Emitting Socket");
+                                    socket.emit('update-special-runs', {
+                                      "TOURNAMENT_ID": widget.tournamentId,
+                                      "score": int.parse(nbscore.text),
+                                      "remarks": "No Ball",
+                                      "MATCH_ID": widget.MATCH_ID
+                                    });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
                                           "Content-Type": "application/json"
@@ -1328,6 +1336,13 @@ class _CricketScoreState extends State<CricketScore> {
                                     var url =
                                         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/specialRuns";
                                     var sendData = jsonEncode({
+                                      "TOURNAMENT_ID": widget.tournamentId,
+                                      "score": int.parse(nbscore.text),
+                                      "remarks": "Bye Ball",
+                                      "MATCH_ID": widget.MATCH_ID
+                                    });
+                                    print("Emitting Socket");
+                                    socket.emit('update-special-runs', {
                                       "TOURNAMENT_ID": widget.tournamentId,
                                       "score": int.parse(nbscore.text),
                                       "remarks": "Bye Ball",
@@ -1470,32 +1485,28 @@ class _CricketScoreState extends State<CricketScore> {
                                                           }
                                                         }
                                                         _currentOver +=
-                                                            ("${ways[wickets]}  -");
+                                                            ("${ways[wickets]}r-");
                                                         _currentWickets += 1;
                                                         _currentBowlingCount +=
                                                             1;
                                                         _currentBalleOver =
                                                             _currentBalleOver! +
                                                                 0.1;
-                                                        bowler();
-                                                        Navigator.pop(context);
-                                                        Navigator.pop(context); //parth
+
+                                                        Navigator.pop(context);//parth
                                                       });
+                                                      bowler();
                                                       // call api here only..
+                                                      print(e);
+                                                      print(widget.allBattingPlayers[e as int]);
                                                       var outURL =
                                                           "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
                                                       var outJson = {
                                                         "TOURNAMENT_ID":
                                                             widget.tournamentId,
                                                         "index": widget
-                                                            .allBattingPlayers
-                                                            .where((element) =>
-                                                                element[
-                                                                    "NAME"] ==
-                                                                widget.battingTeam[
-                                                                        e as int]
-                                                                    ["NAME"])
-                                                            .toList()[0]["index"],
+                                                            .allBattingPlayers[
+                                                        e as int]["index"],
                                                         "remarks": wickets,
                                                         "MATCH_ID":
                                                             widget.MATCH_ID
