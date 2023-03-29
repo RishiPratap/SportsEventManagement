@@ -45,8 +45,6 @@ class _MatchResult extends State<MatchResult> {
     var f = allData["scoreCard"][1];
     setState(() {
       Teamwinner = allData["WinnerTeam"];
-    });
-    setState(() {
       TeamA = e["TeamName"];
       TeamB = f["TeamName"];
       TeamAOver = e["TeamOvers"];
