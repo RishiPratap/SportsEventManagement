@@ -1479,6 +1479,7 @@ class _CricketScoreState extends State<CricketScore> {
                                                                 0.1;
                                                         bowler();
                                                         Navigator.pop(context);
+                                                        Navigator.pop(context); //parth
                                                       });
                                                       // call api here only..
                                                       var outURL =
