@@ -137,64 +137,67 @@ void addInput(context, tournamentId, email) {
   showDialog(
       context: context,
       builder: (_) => SimpleDialog(
-            contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
-            title: const Text("Enter Team Name"),
-            children: <Widget>[
+              contentPadding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
+              title: const Text("Enter Team Name"),
+              children: <Widget>[
                 StatefulBuilder(
-                    builder: (BuildContext context, StateSetter setState) {
-                  return
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(children: [
-                  TextField(
-                    controller: addteam,
-                    decoration: InputDecoration(
-                      labelText: 'Enter Team name',
-                      hintText: "Enter Team name",
-                      prefixIcon: Icon(Icons.star),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.grey, width: 2),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        gapPadding: 0.0,
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.red, width: 1.5),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                ]),
-              );
-              TextButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                    var sendData = jsonEncode({
-                      "TOURNAMENT_ID": tournamentId,
-                      "CAPTAIN": email,
-                      "NAME": addteam.text,
-                    });
-                    setState((){
-                      teamName = addteam.text;
-                    });
-                    print(sendData);
+                  builder: (BuildContext context, StateSetter setState) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(children: [
+                        TextField(
+                          controller: addteam,
+                          decoration: InputDecoration(
+                            labelText: 'Enter Team name',
+                            hintText: "Enter Team name",
+                            prefixIcon: Icon(Icons.star),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 1.5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              gapPadding: 0.0,
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 1.5),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                      ]),
+                    );
+                    TextButton(
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          var sendData = jsonEncode({
+                            "TOURNAMENT_ID": tournamentId,
+                            "CAPTAIN": email,
+                            "NAME": addteam.text,
+                          });
+                          setState(() {
+                            teamName = addteam.text;
+                          });
+                          print(sendData);
 
-                    var url =
-                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketTeamName";
-                    var response = await post(Uri.parse(url),
-                        body: sendData,
-                        headers: {"Content-Type": "application/json"});
-                    print(response.body);
+                          var url =
+                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketTeamName";
+                          var response = await post(Uri.parse(url),
+                              body: sendData,
+                              headers: {"Content-Type": "application/json"});
+                          print(response.body);
+                        },
+                        child: const Text("Submit"));
                   },
-                  child: const Text("Submit"));
-                    },
-          )]));
+                )
+              ]));
 }
 
 printdatalist(dynamic data, dynamic details) {
@@ -337,8 +340,8 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.white24,
-                                textColor: Color.fromARGB(255, 33, 237, 6),
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
                                 fontSize: 16.0);
 
                             playerDetails = details;
@@ -511,8 +514,8 @@ class _CricketTeamDetails extends State<CricketTeamDetails> {
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Color.fromARGB(255, 33, 237, 6),
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
                                 fontSize: 16.0);
 
                             playerDetails = details;

@@ -137,7 +137,7 @@ class _CricketScoreState extends State<CricketScore> {
         });
     socket.connect();
     socket.onConnect((data) => print("Connected"));
-    print("First" );
+    print("First");
     print(widget.first);
     if (widget.first == true) {
       setState(() {
@@ -187,7 +187,6 @@ class _CricketScoreState extends State<CricketScore> {
     //out --> ball_count + 1
     //4 --> end match
     //3 --> Allow last player, end match
-
 
     var sendData = {
       "TOURNAMENT_ID": widget.tournamentId,
@@ -434,7 +433,8 @@ class _CricketScoreState extends State<CricketScore> {
       print("The json data is: " + jsonData.toString());
       var url =
           "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/endMatchCricket";
-      socket.emit('end-match', {"TOURNAMENT_ID" : widget.tournamentId, "MATCH_ID" : widget.MATCH_ID});
+      socket.emit('end-match',
+          {"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID": widget.MATCH_ID});
       var response = await post(Uri.parse(url),
           body: jsonData, headers: {"Content-Type": "application/json"});
       print("😁😁response For End Match is : " + response.body);
@@ -490,7 +490,7 @@ class _CricketScoreState extends State<CricketScore> {
             _keyBoard(),
             _keyBoard2(),
             _keyBoard3(),
-            // _submit(),
+            _submit(),
           ],
         ),
       )),
@@ -1415,8 +1415,7 @@ class _CricketScoreState extends State<CricketScore> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w * 0.02),
                   )),
-              onPressed: () async{
-
+              onPressed: () async {
                 setState(() {
                   if (_currentStriker) {
                     _currentStrikerScore += 0;
@@ -1432,16 +1431,12 @@ class _CricketScoreState extends State<CricketScore> {
                 if (_currentWickets == widget.wickets - 2) {
                   if (matchInningCount == 1) {
                     //end match
+                    //!To be updated
                     setState(() {
-                      matchInningCount = 2;
+                      matchInningCount += 1;
                     });
-
                     endMatch();
-                  }
-                  else {
-                    setState(() {
-                      matchInningCount++;
-                    });
+                  } else {
                     //change inning
                     showDialog(
                       barrierDismissible: false,
@@ -1480,6 +1475,10 @@ class _CricketScoreState extends State<CricketScore> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
+                                    setState(() {
+                                      matchInningCount++;
+                                    });
+                                    endMatch();
                                     var url =
                                         "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
                                     var inningsJson = {
@@ -1529,8 +1528,7 @@ class _CricketScoreState extends State<CricketScore> {
                           ]),
                     );
                   }
-                }
-                else {
+                } else {
                   setButtonDisable
                       ? null
                       : setState(() {
@@ -1913,7 +1911,6 @@ class _CricketScoreState extends State<CricketScore> {
                 _currentBalleOver = 0.0;
                 _currentWickets = 0;
                 _currentBowlingCount = 0;
-                matchInningCount = 0;
               });
             },
             child: SizedBox(
