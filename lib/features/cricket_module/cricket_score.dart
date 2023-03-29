@@ -1175,6 +1175,12 @@ class _CricketScoreState extends State<CricketScore> {
                                       "remarks": "Wide Ball",
                                       "MATCH_ID": widget.MATCH_ID
                                     });
+                                    socket.emit('update-special-runs', {
+                                      "TOURNAMENT_ID": widget.tournamentId,
+                                      "score": int.parse(nbscore.text),
+                                      "remarks": "Wide Ball",
+                                      "MATCH_ID": widget.MATCH_ID
+                                    });
                                     var resp = await post(Uri.parse(url),
                                         headers: {
                                           "Content-Type": "application/json"
@@ -1493,6 +1499,7 @@ class _CricketScoreState extends State<CricketScore> {
                                                         "MATCH_ID":
                                                             widget.MATCH_ID
                                                       };
+                                                      socket.emit('update-out', outJson);
                                                       print(
                                                           "The json is $outJson");
                                                       var outJsonData =
