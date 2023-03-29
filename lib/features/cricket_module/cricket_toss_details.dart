@@ -182,7 +182,22 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                       style: TextButton.styleFrom(
                                           backgroundColor: firstTeamColor),
                                       onPressed: () {
+                                        print("😌😌 chose_to::::" + chose_to);
                                         toss_won_by = widget.firstTeamName;
+                                        if(chose_to=="BAT"){
+                                          battingTeamName = widget.firstTeamName;
+                                          bowlingTeamName = widget.secondTeamName;
+                                          battingTeamPlayers = firstTeamPlayers;
+                                          bowlingTeamPlayers = secondTeamPlayers;
+                                          print("😌😌 battingTeamPlayers::::" + battingTeamPlayers.toString());
+                                          print("😌😌 bowlingTeamPlayers::::" + bowlingTeamPlayers.toString());
+                                        }
+                                        else{
+                                          battingTeamName = widget.secondTeamName;
+                                          bowlingTeamName = widget.firstTeamName;
+                                          battingTeamPlayers = secondTeamPlayers;
+                                          bowlingTeamPlayers = firstTeamPlayers;
+                                        }
                                         setState(() {
                                           firstTeamColor = Colors.red;
                                           secondTeamColor = Colors.black;
@@ -215,6 +230,20 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                           backgroundColor: secondTeamColor),
                                       onPressed: () {
                                         toss_won_by = widget.secondTeamName;
+                                        print("😌😌 toss::::" + toss_won_by);
+                                        print("😌😌 chose_to::::" + chose_to);
+                                        if(chose_to=="BAT"){
+                                          battingTeamName = widget.secondTeamName;
+                                          bowlingTeamName = widget.firstTeamName;
+                                          battingTeamPlayers = secondTeamPlayers;
+                                          bowlingTeamPlayers = firstTeamPlayers;
+                                        }
+                                        else{
+                                          battingTeamName = widget.firstTeamName;
+                                          bowlingTeamName = widget.secondTeamName;
+                                          battingTeamPlayers = firstTeamPlayers;
+                                          bowlingTeamPlayers = secondTeamPlayers;
+                                        }
                                         setState(() {
                                           secondTeamColor = Colors.red;
                                           firstTeamColor = Colors.black;
@@ -282,6 +311,9 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                               widget.secondTeamName;
                                           bowlingTeamName =
                                               widget.firstTeamName;
+                                        }
+                                        else{
+                                          print("Toss winner not selected yet");
                                         }
                                       },
                                       child: const Text(
