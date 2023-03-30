@@ -161,6 +161,7 @@ class _CricketScoreState extends State<CricketScore> {
     _currentNonStrickerBallcount = widget.non_striker["BALLS"];
 
     _currentBalleOver = widget.overs_done;
+    _currentBalleOver = double.tryParse(_currentBalleOver?.toStringAsFixed(1)??"0.0");
     print(_currentBalleOver);
     print(widget.overs_done);
     print(_currentBalleOver! - _currentBalleOver!.toInt());
@@ -334,15 +335,25 @@ class _CricketScoreState extends State<CricketScore> {
     Future<void> change_over() async{
       double h = MediaQuery.of(context).size.height;
       double w = MediaQuery.of(context).size.width;
+      print("Over Change was called : ");
+      print("But balling count is : ");
+      print(_currentBowlingCount);
       if (_currentBowlingCount == 6) {
         //increment overs count
+        print("So over change : ");
         setState(() {
           _currentNonStriker = !_currentNonStriker;
           _currentStriker = !_currentStriker;
           _currentOver = "";
-          _currentBalleOver = _currentBalleOver !+ 0.4;
+          _currentBalleOver = (_currentBalleOver !+ 0.4).toDouble();
+          _currentBalleOver = double.tryParse(_currentBalleOver?.toStringAsFixed(1)??"0.0");
           _currentBowlingCount = 0;
         });
+
+        print("After over change set state : ");
+        print(_currentOver);
+        print(_currentBalleOver);
+        print(_currentBowlingCount);
         if(_currentBalleOver?.toInt() == widget.overs){
           await changeInning();
         }
@@ -421,6 +432,7 @@ class _CricketScoreState extends State<CricketScore> {
         _currentOver += run.toString() + "-";
         _currentMatchScore += run;
         _currentBalleOver = _currentBalleOver! + 0.1;
+        _currentBalleOver = double.tryParse(_currentBalleOver?.toStringAsFixed(1)??"0.0");
         _currentBowlingCount += 1;
       });
       if (_currentStriker) {
@@ -472,7 +484,9 @@ class _CricketScoreState extends State<CricketScore> {
         if(reason!="Bye Ball"){
           _currentMatchScore += 1;
         } else{
+          _currentBowlingCount += 1;
           _currentBalleOver = _currentBalleOver !+ 0.1;
+          _currentBalleOver = double.tryParse(_currentBalleOver?.toStringAsFixed(1)??"0.0");
         }
         if (_currentStriker) {
           _currentStrikerScore += run;
@@ -1215,6 +1229,7 @@ class _CricketScoreState extends State<CricketScore> {
                                                       _currentBalleOver =
                                                           _currentBalleOver! +
                                                               0.1;
+                                                      _currentBalleOver = double.tryParse(_currentBalleOver?.toStringAsFixed(1)??"0.0");
                                                       Navigator.pop(
                                                           context); //parth
                                                     });
@@ -1304,53 +1319,40 @@ class _CricketScoreState extends State<CricketScore> {
       );
     }
 
-    _submit() {
-      var h = MediaQuery.of(context).size.height;
-      var w = MediaQuery.of(context).size.width;
-
-      return Positioned(
-          top: h * 0.92,
-          left: w * 0.2,
-          child: Center(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  elevation: 5,
-                  backgroundColor: const Color(0xFFD15858),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(w * 0.02),
-                  )),
-              onPressed: () {
-                setState(() {
-                  _currentOver = "";
-                  _currentMatchScore = 0;
-                  _currentStrikerScore = 0;
-                  _currentNonStrikerScore = 0;
-                  _currentStrickerBallcount = 0;
-                  _currentNonStrickerBallcount = 0;
-                  _currentStriker = true;
-                  _currentNonStriker = false;
-                  _currentBalleOver = 0.0;
-                  _currentWickets = 0;
-                  _currentBowlingCount = 0;
-                });
-              },
-              child: SizedBox(
-                  width: w * 0.442,
-                  height: w * 0.14,
-                  child: Padding(
-                    padding: EdgeInsets.all(w * 0.03),
-                    child: Text(
-                      "Clear",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: w * 0.05,
-                      ),
-                    ),
-                  )),
-            ),
-          ));
-    }
+    // _submit() {
+    //   var h = MediaQuery.of(context).size.height;
+    //   var w = MediaQuery.of(context).size.width;
+    //
+    //   return Positioned(
+    //       top: h * 0.92,
+    //       left: w * 0.2,
+    //       child: Center(
+    //         child: ElevatedButton(
+    //           style: ElevatedButton.styleFrom(
+    //               elevation: 5,
+    //               backgroundColor: const Color(0xFFD15858),
+    //               shape: RoundedRectangleBorder(
+    //                 borderRadius: BorderRadius.circular(w * 0.02),
+    //               )),
+    //           onPressed: () {
+    //             setState(() {
+    //               _currentOver = "";
+    //               _currentMatchScore = 0;
+    //               _currentStrikerScore = 0;
+    //               _currentNonStrikerScore = 0;
+    //               _currentStrickerBallcount = 0;
+    //               _currentNonStrickerBallcount = 0;
+    //               _currentStriker = true;
+    //               _currentNonStriker = false;
+    //               _currentBalleOver = 0.0;
+    //               _currentBalleOver = double.tryParse(_currentBalleOver?.toStringAsFixed(1)??"0.0");
+    //               _currentWickets = 0;
+    //               _currentBowlingCount = 0;
+    //             });
+    //           },
+    //         ),
+    //       ));
+    // }
 
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
@@ -1399,7 +1401,7 @@ class _CricketScoreState extends State<CricketScore> {
             _keyBoard(),
             _keyBoard2(),
             _keyBoard3(),
-            _submit(),
+            // _submit(),
           ],
         ),
       )),
