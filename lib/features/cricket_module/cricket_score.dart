@@ -349,7 +349,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       bowlingTeamName: widget.battingTeamName,
                                       overs: widget.overs,
                                       wickets: widget.wickets,
-                                      first: true,
+                                      first: !widget.first,
                                       tossWonBy: widget.tossWonBy,
                                       tossWinnerChoseTo:
                                           widget.tossWinnerChoseTo,
@@ -390,7 +390,7 @@ class _CricketScoreState extends State<CricketScore> {
   }
 
   void endMatch() async {
-    if (matchInningCount == 2) {
+    if (matchInningCount >= 2) {
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -876,11 +876,11 @@ class _CricketScoreState extends State<CricketScore> {
                 //#TODO: Change the striker and non striker
                 var ballsCount = _currentOver.length;
                 print(_currentBowlingCount);
-                bowler();
                 setState(() {
                   _currentStriker = !_currentStriker;
                   _currentNonStriker = !_currentNonStriker;
                 });
+                bowler();
               },
             )),
         SizedBox(
@@ -1002,11 +1002,11 @@ class _CricketScoreState extends State<CricketScore> {
                 //#TODO: Change the striker and non striker
                 var ballsCount = _currentOver.length;
                 print(_currentBowlingCount);
-                bowler();
                 setState(() {
                   _currentNonStriker = !_currentNonStriker;
                   _currentStriker = !_currentStriker;
                 });
+                bowler();
               },
             )),
         SizedBox(
@@ -1129,11 +1129,11 @@ class _CricketScoreState extends State<CricketScore> {
                   },
                 ballsCount = _currentOver.length,
                 print(_currentBowlingCount),
-                bowler(),
                 setState(() {
                   _currentStriker = !_currentStriker;
                   _currentNonStriker = !_currentNonStriker;
                 }),
+                bowler(),
               },
             )),
       ]),
@@ -1224,6 +1224,8 @@ class _CricketScoreState extends State<CricketScore> {
                                                   !_currentStriker;
                                             }
                                           });
+                                    endMatch();
+                                    bowler();
                                     Navigator.pop(context);
                                   },
                                   child: const Text("Ok"))
@@ -1308,6 +1310,8 @@ class _CricketScoreState extends State<CricketScore> {
                                                   !_currentStriker;
                                             }
                                           });
+                                    bowler();
+                                    endMatch();
                                     Navigator.pop(context);
                                   },
                                   child: const Text("Ok"))
@@ -1393,6 +1397,8 @@ class _CricketScoreState extends State<CricketScore> {
                                                   !_currentStriker;
                                             }
                                           });
+                                    endMatch();
+                                    bowler();
                                     Navigator.pop(context);
                                   },
                                   child: const Text("Ok"))
@@ -1623,11 +1629,9 @@ class _CricketScoreState extends State<CricketScore> {
                                                           _currentBalleOver =
                                                               _currentBalleOver! +
                                                                   0.1;
-
                                                           Navigator.pop(
                                                               context); //parth
                                                         });
-                                                        await bowler();
                                                         // call api here only..
                                                         print(e);
                                                         print(widget
@@ -1665,6 +1669,7 @@ class _CricketScoreState extends State<CricketScore> {
                                                                     outJsonData);
                                                         print(
                                                             "The response for the out api is ${outResponse.body}");
+                                                        await bowler();
                                                         Navigator.pop(context);
                                                       },
                                                     ),
