@@ -71,7 +71,6 @@ var _currentStrickerBallcount;
 var _currentNonStrickerBallcount;
 double? _currentBalleOver;
 int _currentBowlingCount = 0;
-int _currentbowlingExtra = 0;
 bool allowLastmanPostion = true;
 List<String> bowlerList = [];
 bool matchInning = false;
@@ -797,7 +796,6 @@ class _CricketScoreState extends State<CricketScore> {
     _keyBoard2() {
       double h = MediaQuery.of(context).size.height;
       double w = MediaQuery.of(context).size.width;
-      int ballsCount;
       return Positioned(
         top: h * 0.74,
         left: w * 0.01,
@@ -997,313 +995,311 @@ class _CricketScoreState extends State<CricketScore> {
                 },
               )),
           //Before OUT everything is checked to be working
-          // SizedBox(
-          //     width: w * 0.2,
-          //     height: w * 0.15,
-          //     child: ElevatedButton(
-          //       child: const Text(
-          //         "Out",
-          //         style: TextStyle(color: Colors.red),
-          //       ),
-          //       style: ElevatedButton.styleFrom(
-          //           elevation: 5,
-          //           backgroundColor: Colors.white,
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(w * 0.02),
-          //           )),
-          //       onPressed: () async {
-          //         setState(() {
-          //           if (_currentStriker) {
-          //             _currentStrikerScore += 0;
-          //             _currentStrickerBallcount += 1;
-          //           } else {
-          //             _currentNonStrikerScore += 0;
-          //             _currentNonStrickerBallcount += 1;
-          //           }
-          //         });
-          //
-          //         await bowler();
-          //
-          //         if (_currentWickets == widget.wickets - 2) {
-          //           if (matchInningCount == 1) {
-          //             //end match
-          //             //!To be updated
-          //             setState(() {
-          //               matchInningCount += 1;
-          //             });
-          //             endMatch();
-          //           } else {
-          //             //change inning
-          //             showDialog(
-          //               barrierDismissible: false,
-          //               context: context,
-          //               builder: (_) => SimpleDialog(
-          //                   title: const Center(
-          //                       child: Text('Innings Over',
-          //                           style: TextStyle(color: Colors.red))),
-          //                   children: <Widget>[
-          //                     Padding(
-          //                         padding: EdgeInsets.all(8.0),
-          //                         child: Column(children: [
-          //                           const Padding(
-          //                             padding: EdgeInsets.all(8.0),
-          //                             child: Text(
-          //                               "Match Result",
-          //                               style: TextStyle(fontSize: 20),
-          //                             ),
-          //                           ),
-          //                           Padding(
-          //                             padding: EdgeInsets.all(8.0),
-          //                             child: Text(
-          //                               "Score/Wickets: ($_currentMatchScore/$_currentWickets)",
-          //                               style: TextStyle(fontSize: 20),
-          //                             ),
-          //                           ),
-          //                           Padding(
-          //                             padding: EdgeInsets.all(8.0),
-          //                             child: Text(
-          //                               "Striker 🏏: $strikerName",
-          //                               style: const TextStyle(fontSize: 20),
-          //                             ),
-          //                           ),
-          //                         ])),
-          //                     ButtonBar(
-          //                       children: [
-          //                         ElevatedButton(
-          //                           onPressed: () async {
-          //                             setState(() {
-          //                               matchInningCount++;
-          //                             });
-          //                             endMatch();
-          //                             var url =
-          //                                 "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
-          //                             var inningsJson = {
-          //                               "TOURNAMENT_ID": widget.tournamentId,
-          //                               "MATCH_ID": widget.MATCH_ID
-          //                             };
-          //                             var inningsJsonData =
-          //                             jsonEncode(inningsJson);
-          //                             print("The json data is: " +
-          //                                 inningsJson.toString());
-          //                             var response = await post(Uri.parse(url),
-          //                                 body: inningsJsonData,
-          //                                 headers: {
-          //                                   "Content-Type": "application/json"
-          //                                 });
-          //                             print(
-          //                                 "😌😌 response from innings change api is: " +
-          //                                     response.body);
-          //                             Navigator.push(
-          //                                 context,
-          //                                 MaterialPageRoute(
-          //                                     builder: (context) =>
-          //                                         CricketStrickerAndNonStrickerDetails(
-          //                                           tournamentId:
-          //                                           widget.tournamentId,
-          //                                           battingTeamName:
-          //                                           widget.bowlingTeamName,
-          //                                           bowlingTeamName:
-          //                                           widget.battingTeamName,
-          //                                           overs: widget.overs,
-          //                                           wickets: widget.wickets,
-          //                                           first: !(widget.first),
-          //                                           tossWonBy: widget.tossWonBy,
-          //                                           tossWinnerChoseTo:
-          //                                           widget.tossWinnerChoseTo,
-          //                                           battingTeamPlayers:
-          //                                           widget.allBallingPlayers,
-          //                                           bowlingTeamPlayers:
-          //                                           widget.allBattingPlayers,
-          //                                           MATCH_ID: widget.MATCH_ID,
-          //                                         )));
-          //                           },
-          //                           child: const Text("Change Innings"),
-          //                         ),
-          //                       ],
-          //                     ),
-          //                   ]),
-          //             );
-          //           }
-          //         } else {
-          //           setButtonDisable
-          //               ? null
-          //               : setState(() {
-          //             showDialog(
-          //               barrierDismissible: false,
-          //               context: context,
-          //               builder: (_) => SimpleDialog(
-          //                 title: const Text('Wicket Type'),
-          //                 children: <Widget>[
-          //                   for (String wickets in WicketsType)
-          //                     SimpleDialogOption(
-          //                       onPressed: () {
-          //                         showDialog(
-          //                           barrierDismissible: false,
-          //                           context: context,
-          //                           builder: (_) => SimpleDialog(
-          //                               title: const Text('New Player'),
-          //                               children: <Widget>[
-          //                                 Padding(
-          //                                     padding:
-          //                                     const EdgeInsets.all(8.0),
-          //                                     child: Column(children: [
-          //                                       DropdownButtonFormField(
-          //                                         hint: Text((wickets ==
-          //                                             "Non-Stricker Run Out")
-          //                                             ? "Next Non-Striker"
-          //                                             : "Next Striker"),
-          //                                         items: widget.battingTeam
-          //                                             .map((e) =>
-          //                                             DropdownMenuItem(
-          //                                               child: Text(
-          //                                                   e["NAME"]),
-          //                                               value:
-          //                                               e["index"],
-          //                                             ))
-          //                                             .toList(),
-          //                                         onChanged: (e) async {
-          //                                           print(
-          //                                               "The value is $e");
-          //                                           setState(() {
-          //                                             if (wickets !=
-          //                                                 "Non-Stricker Run Out") {
-          //                                               if (_currentStriker) {
-          //                                                 strikerName =
-          //                                                 widget.allBattingPlayers[e
-          //                                                 as int]
-          //                                                 ["NAME"];
-          //                                                 // reset the striker score and ball count
-          //                                                 _currentStrikerScore =
-          //                                                 0;
-          //                                                 _currentStrickerBallcount =
-          //                                                 0;
-          //                                               } else {
-          //                                                 nonStrikerName =
-          //                                                 widget.allBattingPlayers[e
-          //                                                 as int]
-          //                                                 ["NAME"];
-          //                                                 // reset the non striker score and ball count
-          //                                                 _currentNonStrikerScore =
-          //                                                 0;
-          //                                                 _currentNonStrickerBallcount =
-          //                                                 0;
-          //                                               }
-          //                                             } else {
-          //                                               if (_currentStriker) {
-          //                                                 nonStrikerName =
-          //                                                 widget.allBattingPlayers[e
-          //                                                 as int]
-          //                                                 ["NAME"];
-          //                                                 // reset the non striker score and ball count
-          //                                                 _currentNonStrikerScore =
-          //                                                 0;
-          //                                                 _currentNonStrickerBallcount =
-          //                                                 0;
-          //                                               } else {
-          //                                                 strikerName =
-          //                                                 widget.allBattingPlayers[e
-          //                                                 as int]
-          //                                                 ["NAME"];
-          //                                                 // reset the striker score and ball count
-          //                                                 _currentStrikerScore =
-          //                                                 0;
-          //                                                 _currentStrickerBallcount =
-          //                                                 0;
-          //                                               }
-          //                                             }
-          //                                             _currentOver +=
-          //                                             ("${ways[wickets]}r-");
-          //                                             _currentWickets += 1;
-          //                                             _currentBowlingCount +=
-          //                                             1;
-          //                                             _currentBalleOver =
-          //                                                 _currentBalleOver! +
-          //                                                     0.1;
-          //                                             Navigator.pop(
-          //                                                 context); //parth
-          //                                           });
-          //                                           // call api here only..
-          //                                           print(e);
-          //                                           print(widget
-          //                                               .allBattingPlayers[
-          //                                           e as int]);
-          //                                           var outURL =
-          //                                               "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
-          //                                           var outJson = {
-          //                                             "TOURNAMENT_ID":
-          //                                             widget
-          //                                                 .tournamentId,
-          //                                             "index": widget
-          //                                                 .allBattingPlayers[
-          //                                             e as int]["index"],
-          //                                             "remarks": wickets,
-          //                                             "MATCH_ID":
-          //                                             widget.MATCH_ID
-          //                                           };
-          //                                           socket.emit(
-          //                                               'update-out',
-          //                                               outJson);
-          //                                           print(
-          //                                               "The json is $outJson");
-          //                                           var outJsonData =
-          //                                           jsonEncode(outJson);
-          //                                           var outResponse =
-          //                                           await post(
-          //                                               Uri.parse(
-          //                                                   outURL),
-          //                                               headers: {
-          //                                                 "Content-Type":
-          //                                                 "application/json"
-          //                                               },
-          //                                               body:
-          //                                               outJsonData);
-          //                                           print(
-          //                                               "The response for the out api is ${outResponse.body}");
-          //                                           await bowler();
-          //                                           Navigator.pop(context);
-          //                                         },
-          //                                       ),
-          //                                       const SizedBox(
-          //                                         height: 10,
-          //                                       ),
-          //                                       const SizedBox(
-          //                                         height: 10,
-          //                                       ),
-          //                                     ]))
-          //                               ]),
-          //                         );
-          //                         bowler();
-          //                       },
-          //                       child: Text(wickets),
-          //                     ),
-          //                   SizedBox(
-          //                     height: 10,
-          //                   ),
-          //                   Padding(
-          //                       padding: const EdgeInsets.all(8.0),
-          //                       child: SizedBox(
-          //                         height: 30,
-          //                         width: 50,
-          //                         child: ElevatedButton(
-          //                           onPressed: () {
-          //                             Navigator.pop(context);
-          //                           },
-          //                           child: const Text(
-          //                             "Done",
-          //                             style: TextStyle(color: Colors.white),
-          //                           ),
-          //                           style: ElevatedButton.styleFrom(
-          //                               primary: const Color.fromARGB(
-          //                                   255, 54, 181, 244)),
-          //                         ),
-          //                       ))
-          //                 ],
-          //               ),
-          //             );
-          //           });
-          //         }
-          //       },
-          //     )),
+          SizedBox(
+              width: w * 0.2,
+              height: w * 0.15,
+              child: ElevatedButton(
+                child: const Text(
+                  "Out",
+                  style: TextStyle(color: Colors.red),
+                ),
+                style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(w * 0.02),
+                    )),
+                onPressed: () async {
+                  setState(() {
+                    if (_currentStriker) {
+                      _currentStrikerScore += 0;
+                      _currentStrickerBallcount += 1;
+                    } else {
+                      _currentNonStrikerScore += 0;
+                      _currentNonStrickerBallcount += 1;
+                    }
+                  });
+
+                  await change_over();
+
+                  if (_currentWickets == widget.wickets - 2) {
+                    if (matchInningCount == 1) {
+                      //end match
+                      //!To be updated
+                      setState(() {
+                        matchInningCount += 1;
+                      });
+                      endMatch();
+                    } else {
+                      //change inning
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) => SimpleDialog(
+                            title: const Center(
+                                child: Text('Innings Over',
+                                    style: TextStyle(color: Colors.red))),
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(children: [
+                                    const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Match Result",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Score/Wickets: ($_currentMatchScore/$_currentWickets)",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Striker 🏏: $strikerName",
+                                        style: const TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ])),
+                              ButtonBar(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        matchInningCount++;
+                                      });
+                                      endMatch();
+                                      var url =
+                                          "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/changeInningCricket";
+                                      var inningsJson = {
+                                        "TOURNAMENT_ID": widget.tournamentId,
+                                        "MATCH_ID": widget.MATCH_ID
+                                      };
+                                      var inningsJsonData =
+                                      jsonEncode(inningsJson);
+                                      print("The json data is: " +
+                                          inningsJson.toString());
+                                      var response = await post(Uri.parse(url),
+                                          body: inningsJsonData,
+                                          headers: {
+                                            "Content-Type": "application/json"
+                                          });
+                                      print(
+                                          "😌😌 response from innings change api is: " +
+                                              response.body);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CricketStrickerAndNonStrickerDetails(
+                                                    tournamentId:
+                                                    widget.tournamentId,
+                                                    battingTeamName:
+                                                    widget.bowlingTeamName,
+                                                    bowlingTeamName:
+                                                    widget.battingTeamName,
+                                                    overs: widget.overs,
+                                                    wickets: widget.wickets,
+                                                    first: !(widget.first),
+                                                    tossWonBy: widget.tossWonBy,
+                                                    tossWinnerChoseTo:
+                                                    widget.tossWinnerChoseTo,
+                                                    battingTeamPlayers:
+                                                    widget.allBallingPlayers,
+                                                    bowlingTeamPlayers:
+                                                    widget.allBattingPlayers,
+                                                    MATCH_ID: widget.MATCH_ID,
+                                                  )));
+                                    },
+                                    child: const Text("Change Innings"),
+                                  ),
+                                ],
+                              ),
+                            ]),
+                      );
+                    }
+                  } else {
+                    setState(() {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) => SimpleDialog(
+                          title: const Text('Wicket Type'),
+                          children: <Widget>[
+                            for (String wickets in WicketsType)
+                              SimpleDialogOption(
+                                onPressed: () async {
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (_) => SimpleDialog(
+                                        title: const Text('New Player'),
+                                        children: <Widget>[
+                                          Padding(
+                                              padding:
+                                              const EdgeInsets.all(8.0),
+                                              child: Column(children: [
+                                                DropdownButtonFormField(
+                                                  hint: Text((wickets ==
+                                                      "Non-Stricker Run Out")
+                                                      ? "Next Non-Striker"
+                                                      : "Next Striker"),
+                                                  items: widget.battingTeam
+                                                      .map((e) =>
+                                                      DropdownMenuItem(
+                                                        child: Text(
+                                                            e["NAME"]),
+                                                        value:
+                                                        e["index"],
+                                                      ))
+                                                      .toList(),
+                                                  onChanged: (e) async {
+                                                    print(
+                                                        "The value is $e");
+                                                    setState(() {
+                                                      if (wickets !=
+                                                          "Non-Stricker Run Out") {
+                                                        if (_currentStriker) {
+                                                          strikerName =
+                                                          widget.allBattingPlayers[e
+                                                          as int]
+                                                          ["NAME"];
+                                                          // reset the striker score and ball count
+                                                          _currentStrikerScore =
+                                                          0;
+                                                          _currentStrickerBallcount =
+                                                          0;
+                                                        } else {
+                                                          nonStrikerName =
+                                                          widget.allBattingPlayers[e
+                                                          as int]
+                                                          ["NAME"];
+                                                          // reset the non striker score and ball count
+                                                          _currentNonStrikerScore =
+                                                          0;
+                                                          _currentNonStrickerBallcount =
+                                                          0;
+                                                        }
+                                                      } else {
+                                                        if (_currentStriker) {
+                                                          nonStrikerName =
+                                                          widget.allBattingPlayers[e
+                                                          as int]
+                                                          ["NAME"];
+                                                          // reset the non striker score and ball count
+                                                          _currentNonStrikerScore =
+                                                          0;
+                                                          _currentNonStrickerBallcount =
+                                                          0;
+                                                        } else {
+                                                          strikerName =
+                                                          widget.allBattingPlayers[e
+                                                          as int]
+                                                          ["NAME"];
+                                                          // reset the striker score and ball count
+                                                          _currentStrikerScore =
+                                                          0;
+                                                          _currentStrickerBallcount =
+                                                          0;
+                                                        }
+                                                      }
+                                                      _currentOver +=
+                                                      ("${ways[wickets]}r-");
+                                                      _currentWickets += 1;
+                                                      _currentBowlingCount +=
+                                                      1;
+                                                      _currentBalleOver =
+                                                          _currentBalleOver! +
+                                                              0.1;
+                                                      Navigator.pop(
+                                                          context); //parth
+                                                    });
+                                                    // call api here only..
+                                                    print(e);
+                                                    print(widget
+                                                        .allBattingPlayers[
+                                                    e as int]);
+                                                    var outURL =
+                                                        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
+                                                    var outJson = {
+                                                      "TOURNAMENT_ID":
+                                                      widget
+                                                          .tournamentId,
+                                                      "index": widget
+                                                          .allBattingPlayers[
+                                                      e as int]["index"],
+                                                      "remarks": wickets,
+                                                      "MATCH_ID":
+                                                      widget.MATCH_ID
+                                                    };
+                                                    socket.emit(
+                                                        'update-out',
+                                                        outJson);
+                                                    print(
+                                                        "The json is $outJson");
+                                                    var outJsonData =
+                                                    jsonEncode(outJson);
+                                                    var outResponse =
+                                                    await post(
+                                                        Uri.parse(
+                                                            outURL),
+                                                        headers: {
+                                                          "Content-Type":
+                                                          "application/json"
+                                                        },
+                                                        body:
+                                                        outJsonData);
+                                                    print(
+                                                        "The response for the out api is ${outResponse.body}");
+                                                    await change_over();
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                              ]))
+                                        ]),
+                                  );
+                                  await change_over();
+                                },
+                                child: Text(wickets),
+                              ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height: 30,
+                                  width: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text(
+                                      "Done",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                        primary: const Color.fromARGB(
+                                            255, 54, 181, 244)),
+                                  ),
+                                ))
+                          ],
+                        ),
+                      );
+                    });
+                  }
+                },
+              )),
         ]),
       );
     }
