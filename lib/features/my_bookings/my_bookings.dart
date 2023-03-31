@@ -275,33 +275,41 @@ class _MyBookings extends State<MyBookings> {
                             ),
                             child: TextButton(
                               onPressed: () async {
-                                final SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                var obtianedEmail = prefs.getString('email');
+                                var url3 = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hasTourneyStarted?TOURNAMENT_ID=${userdata[i]
+                                    .TOURNAMENT_ID}";
+                                var resp = await get(Uri.parse(url3));
+                                print(resp.body);
 
-                                final cricketdetail = {
-                                  "TOURNAMENT_ID": userdata[i].TOURNAMENT_ID
-                                };
-                                var finaldetails = jsonEncode(cricketdetail);
-                                // print(finaldetails);
-                                var url2 =
-                                    "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getCricketTourneyDetails";
-                                var response2 = await post(Uri.parse(url2),
-                                    body: finaldetails,
-                                    headers: {
-                                      "Content-Type": "application/json"
-                                    });
-                                var jsonData2 = jsonDecode(response2.body);
-                                print(jsonData2["TEAM_SIZE"]);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CricketTeamDetails(
-                                        id: jsonData2["_id"],
-                                        TOURNAMENT_ID:
-                                            jsonData2["TOURNAMENT_ID"],
-                                        TEAM_SIZE: jsonData2["TEAM_SIZE"],
-                                        SUBSTITUTE: jsonData2["SUBSTITUTE"],
-                                        OVERS: jsonData2["OVERS"],
-                                        BALL_TYPE: jsonData2["BALL_TYPE"])));
+                                if (resp.body == "false") {
+                                  final cricketdetail = {
+                                    "TOURNAMENT_ID": userdata[i].TOURNAMENT_ID
+                                  };
+                                  var finaldetails = jsonEncode(cricketdetail);
+                                  // print(finaldetails);
+                                  var url2 =
+                                      "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getCricketTourneyDetails";
+                                  var response2 = await post(Uri.parse(url2),
+                                      body: finaldetails,
+                                      headers: {
+                                        "Content-Type": "application/json"
+                                      });
+                                  var jsonData2 = jsonDecode(response2.body);
+                                  print(jsonData2["TEAM_SIZE"]);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          CricketTeamDetails(
+                                              id: jsonData2["_id"],
+                                              TOURNAMENT_ID:
+                                              jsonData2["TOURNAMENT_ID"],
+                                              TEAM_SIZE: jsonData2["TEAM_SIZE"],
+                                              SUBSTITUTE: jsonData2["SUBSTITUTE"],
+                                              OVERS: jsonData2["OVERS"],
+                                              BALL_TYPE: jsonData2["BALL_TYPE"])));
+                                } else{
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                      content: Text(jsonDecode(resp.body)["message"])));
+                                }
                               },
                               child: Center(
                                 child: Text("Edit Team",
@@ -311,7 +319,7 @@ class _MyBookings extends State<MyBookings> {
                                         fontWeight: FontWeight.bold)),
                               ),
                             ))
-                        : Text(""),
+                        : const Text(""),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.055,
                       width: MediaQuery.of(context).size.width * 0.3,
