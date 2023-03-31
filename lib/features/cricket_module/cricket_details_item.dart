@@ -24,7 +24,6 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
   List<String> PoolSizes = ['4', '8', '16', '32', '64'];
   List<String> TeamSizes = ['5', '6', '7', '8', '9', '10', '11', '12'];
   List<String> SubstitueSizes = ['2', '3', '4', '5'];
-  List<String> Overs = ['5', '6', '7', '8', '9', '10', '11', '12'];
   List<String> BallType = ["Hard Tennis", "Soft Tennis", "Leather", "Other"];
 
   String? SelectedPoolSize;
@@ -297,50 +296,33 @@ class _CricketDetailsItemState extends State<CricketDetailsItem> {
                 margin: EdgeInsets.all(deviceWidth * 0.04),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.black.withOpacity(0.3),
                 ),
-                child: DropdownButtonFormField(
-                  hint: Text(
-                    "Overs",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontSize: deviceWidth * 0.04,
-                    ),
-                  ),
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.red,
-                  ),
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
-                        borderSide: const BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(deviceWidth * 0.06),
-                      )),
-                  items: Overs.map((value) => DropdownMenuItem(
-                        child: Text(value),
-                        value: value,
-                      )).toList(),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  initialValue: widget.pooldata.Overs,
                   onSaved: (val) => widget.pooldata.Overs = val.toString(),
-                  value: widget.pooldata.Overs == ''
-                      ? null
-                      : widget.pooldata.Overs,
                   onChanged: (value) {
                     setState(() {
-                      widget.pooldata.Overs = value as String;
+                      widget.pooldata.Overs = value;
                     });
                   },
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.04),
+                        borderSide: BorderSide(
+                          color: Colors.white.withOpacity(0.4),
+                        ),
+                      ),
+                      hintText: "Overs",
+                      hintStyle: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w200),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(deviceWidth * 0.02),
+                      )),
                 ),
               ),
               SizedBox(
