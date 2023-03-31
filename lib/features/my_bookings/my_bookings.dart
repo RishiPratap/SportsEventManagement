@@ -345,17 +345,49 @@ class _MyBookings extends State<MyBookings> {
                               jsonDecode(response.body);
                           EasyLoading.dismiss();
                           print(userdata[i].SPORT);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WebViewTest(
-                                userId: id,
-                                Tourney_id: userdata[i].TOURNAMENT_ID,
-                                SpotNo: jsonData["SPOT"].toString(),
-                                Sport: userdata[i].SPORT,
+                          if(userdata[i].SPORT == 'Cricket'){
+                            var url3 = "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/hasTourneyStarted?TOURNAMENT_ID=${userdata[i]
+                                .TOURNAMENT_ID}";
+                            var resp = await get(Uri.parse(url3));
+                            print(resp.body);
+                            if(resp.body == "false"){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WebViewTest(
+                                    userId: id,
+                                    Tourney_id: userdata[i].TOURNAMENT_ID,
+                                    SpotNo: jsonData["SPOT"].toString(),
+                                    Sport: userdata[i].SPORT,
+                                  ),
+                                ),
+                              );
+                            } else{
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WebViewTest(
+                                    userId: id,
+                                    Tourney_id: userdata[i].TOURNAMENT_ID,
+                                    SpotNo: jsonData["SPOT"].toString(),
+                                    Sport: 'cricket',
+                                  ),
+                                ),
+                              );
+                            }
+                          } else{
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => WebViewTest(
+                                  userId: id,
+                                  Tourney_id: userdata[i].TOURNAMENT_ID,
+                                  SpotNo: jsonData["SPOT"].toString(),
+                                  Sport: userdata[i].SPORT,
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         },
                         child: const Text("Fixtures >",
                             style: TextStyle(
