@@ -64,11 +64,11 @@ bool _currentStriker = false;
 bool _currentNonStriker = true;
 var _currentOver;
 var _currentMatchScore;
-var _currentStrikerScore;
+var _currentStrikerScore = 0;
 var _currentWickets = 0;
-var _currentNonStrikerScore;
-var _currentStrickerBallcount;
-var _currentNonStrickerBallcount;
+var _currentNonStrikerScore = 0;
+var _currentStrickerBallcount = 0;
+var _currentNonStrickerBallcount = 0;
 double? _currentBalleOver;
 int _currentBowlingCount = 0;
 bool allowLastmanPostion = true;
@@ -509,22 +509,6 @@ class _CricketScoreState extends State<CricketScore> {
     Future<void> out_manage(String wickets, int e) async {
 
       if(_currentWickets <= widget.wickets - 2){
-        print("New batsman is : ");
-        print(widget.allBattingPlayers[e]);
-        var outURL =
-            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
-        var outJson = {
-          "TOURNAMENT_ID": widget.tournamentId,
-          "index": widget.allBattingPlayers[e]["index"],
-          "remarks": wickets,
-          "MATCH_ID": widget.MATCH_ID
-        };
-        socket.emit('update-out', outJson);
-        print("The json is $outJson");
-        var outJsonData = jsonEncode(outJson);
-        var outResponse = await post(Uri.parse(outURL),
-            headers: {"Content-Type": "application/json"}, body: outJsonData);
-        print("The response for the out api is ${outResponse.body}");
         setState(() {
           _currentBowlingCount += 1;
           _currentBalleOver = _currentBalleOver! + 0.1;
@@ -559,6 +543,23 @@ class _CricketScoreState extends State<CricketScore> {
           }
         });
         await change_over();
+        print("New batsman is : ");
+        print(widget.allBattingPlayers[e]);
+        var outURL =
+            "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/outScore";
+        var outJson = {
+          "TOURNAMENT_ID": widget.tournamentId,
+          "index": widget.allBattingPlayers[e]["index"],
+          "remarks": wickets,
+          "MATCH_ID": widget.MATCH_ID
+        };
+        socket.emit('update-out', outJson);
+        print("The json is $outJson");
+        var outJsonData = jsonEncode(outJson);
+        var outResponse = await post(Uri.parse(outURL),
+            headers: {"Content-Type": "application/json"}, body: outJsonData);
+        print("The response for the out api is ${outResponse.body}");
+
       } else{
         await changeInning();
       }
