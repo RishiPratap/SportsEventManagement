@@ -306,9 +306,10 @@ class _MyBookings extends State<MyBookings> {
                                               OVERS: jsonData2["OVERS"],
                                               BALL_TYPE: jsonData2["BALL_TYPE"])));
                                 } else{
+                                  print("In else before error : ");
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                      content: Text(jsonDecode(resp.body)["message"])));
+                                      content: Text(resp.body)));
                                 }
                               },
                               child: Center(
