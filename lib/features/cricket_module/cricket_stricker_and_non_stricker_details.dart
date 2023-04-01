@@ -376,6 +376,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                               ball = widget.bowlingTeamPlayers
                                   .where((element) => element != selectedBaller)
                                   .toList();
+                              print("Changing Innings, so widget.first in stnstpage is ${widget.first}");
                               print({
                                 "first": widget.first,
                                 "wickets": widget.wickets,
@@ -407,7 +408,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                               widget.battingTeamPlayers,
                                           allBallingPlayers:
                                               widget.bowlingTeamPlayers,
-                                          first: false,
+                                          first: widget.first,
                                           wickets: widget.wickets,
                                           overs: widget.overs, //no
                                           striker: selectedStriker,

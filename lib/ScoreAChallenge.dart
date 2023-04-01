@@ -394,7 +394,12 @@ class _ScoreAChallengeState extends State<ScoreAChallenge> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                         content: Text(jsonDecode(response.body)["message"])));
-                                  } else{
+                                  } else if(jsonDecode(response.body)["message"] == "Not All teams are full "){
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                        content: Text(jsonDecode(response.body)["message"])));
+                                  }
+                                  else{
 
                                     var allTeams = jsonDecode(response.body)["team"];
                                     print(allTeams);
