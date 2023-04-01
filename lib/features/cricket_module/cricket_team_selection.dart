@@ -171,30 +171,32 @@ void addInput(context, tournamentId, email) {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
+                        TextButton(
+                            onPressed: () async {
+                              Navigator.pop(context);
+                              var sendData = jsonEncode({
+                                "TOURNAMENT_ID": tournamentId,
+                                "CAPTAIN": email,
+                                "NAME": addteam.text,
+                              });
+                              setState(() {
+                                teamName = addteam.text;
+                              });
+                              print(sendData);
+
+                              var url =
+                                  "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketTeamName";
+                              var response = await post(Uri.parse(url),
+                                  body: sendData,
+                                  headers: {
+                                    "Content-Type": "application/json"
+                                  });
+                              print(response.body);
+                            },
+                            child: const Text("Submit"))
                       ]),
                     );
-                    TextButton(
-                        onPressed: () async {
-                          Navigator.pop(context);
-                          var sendData = jsonEncode({
-                            "TOURNAMENT_ID": tournamentId,
-                            "CAPTAIN": email,
-                            "NAME": addteam.text,
-                          });
-                          setState(() {
-                            teamName = addteam.text;
-                          });
-                          print(sendData);
-
-                          var url =
-                              "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/cricketTeamName";
-                          var response = await post(Uri.parse(url),
-                              body: sendData,
-                              headers: {"Content-Type": "application/json"});
-                          print(response.body);
-                        },
-                        child: const Text("Submit"));
                   },
                 )
               ]));
