@@ -172,8 +172,6 @@ void addInput(context, tournamentId, email) {
                           ),
                         ),
                         SizedBox(height: 10),
-                      ]),
-                    );
                     TextButton(
                         onPressed: () async {
                           Navigator.pop(context);
@@ -194,7 +192,8 @@ void addInput(context, tournamentId, email) {
                               headers: {"Content-Type": "application/json"});
                           print(response.body);
                         },
-                        child: const Text("Submit"));
+                        child: const Text("Submit"))]),
+                    );
                   },
                 )
               ]));
