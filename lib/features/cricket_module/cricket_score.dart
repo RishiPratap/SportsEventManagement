@@ -272,6 +272,7 @@ class _CricketScoreState extends State<CricketScore> {
         setState(() {
           matchInningCount += 1;
         });
+        print("Now match Inning is $matchInningCount");
         showDialog(
           barrierDismissible: false,
           context: context,
