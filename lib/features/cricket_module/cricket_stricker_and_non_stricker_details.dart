@@ -25,6 +25,7 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
   var battingTeamPlayers;
   var bowlingTeamPlayers;
   var MATCH_ID;
+  final int score_to_beat;
   CricketStrickerAndNonStrickerDetails({
     Key? key,
     required this.tournamentId,
@@ -38,6 +39,7 @@ class CricketStrickerAndNonStrickerDetails extends StatefulWidget {
     required this.tossWonBy,
     required this.tossWinnerChoseTo,
     required this.MATCH_ID,
+    required this.score_to_beat,
   }) : super(key: key);
   @override
   State<CricketStrickerAndNonStrickerDetails> createState() =>
@@ -427,6 +429,7 @@ class _CricketStrickerAndNonStrickerDetailsState
                                           overs_done: 0.0,
                                           over_string: "",
                                         wickets_taken: 0,
+                                      score_to_beat : widget.score_to_beat,
                                         )),
                               );
                             },

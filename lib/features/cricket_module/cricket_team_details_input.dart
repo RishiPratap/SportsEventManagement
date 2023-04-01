@@ -266,6 +266,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                         });
                                     print("😂😂😂" + response.body);
                                     var data = jsonDecode(response.body);
+
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -309,6 +310,7 @@ class _CricketTeamDetasilsInputState extends State<CricketTeamDetasilsInput> {
                                                     ["CURR_OVERS"],
                                                 wickets_taken: data["MATCH"]
                                                     ["WICKETS_TAKEN"],
+                                            score_to_beat: data["score_to_beat"],
                                               )),
                                     );
                                   } else {

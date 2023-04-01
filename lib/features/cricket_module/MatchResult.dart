@@ -9,9 +9,11 @@ import 'cricket_score.dart';
 class MatchResult extends StatefulWidget {
   final String TOURNAMENT_ID;
   final int MATCH_ID;
+  final dynamic allData;
   MatchResult({
     required this.TOURNAMENT_ID,
     required this.MATCH_ID,
+    required this.allData,
     Key? key,
   }) : super(key: key);
   @override
@@ -31,21 +33,15 @@ class _MatchResult extends State<MatchResult> {
   String Teamwinner = "";
 
   void ChangeAll() async {
-    var url =
-        "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getScoreCard";
-    var data = jsonEncode(
-        {"TOURNAMENT_ID": widget.TOURNAMENT_ID, "MATCH_ID": widget.MATCH_ID});
-    var response = await post(Uri.parse(url),
-        body: data, headers: {"Content-Type": "application/json"});
-    var allData = jsonDecode(response.body);
-    print(allData);
-    print(allData["scoreCard"][0]);
-    print(allData["scoreCard"][1]);
-    print(allData["WinnerTeam"]);
-    var e = allData["scoreCard"][0];
-    var f = allData["scoreCard"][1];
+
+    print(widget.allData);
+    print(widget.allData["scoreCard"][0]);
+    print(widget.allData["scoreCard"][1]);
+    print(widget.allData["WinnerTeam"]);
+    var e = widget.allData["scoreCard"][0];
+    var f = widget.allData["scoreCard"][1];
     setState(() {
-      Teamwinner = allData["WinnerTeam"];
+      Teamwinner = widget.allData["WinnerTeam"];
       TeamA = e["TeamName"];
       TeamB = f["TeamName"];
       TeamAOver = e["TeamOvers"];

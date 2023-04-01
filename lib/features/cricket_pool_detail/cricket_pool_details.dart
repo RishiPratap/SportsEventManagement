@@ -76,7 +76,7 @@ class _CricketPoolState extends State<CricketPool> {
   List<CricketDetailsItem> pools = [];
 
   //make this false parth
-  bool isPaymentDone = false;
+  bool isPaymentDone = true;
 
   final EntryFeeController = TextEditingController();
   // final PrizePoolController = TextEditingController();

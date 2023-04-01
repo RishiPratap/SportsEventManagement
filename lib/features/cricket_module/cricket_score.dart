@@ -28,6 +28,7 @@ class CricketScore extends StatefulWidget {
   final String over_string;
   final int MATCH_ID;
   final int wickets_taken;
+  final int score_to_beat;
   const CricketScore(
       {Key? key,
       required this.overs,
@@ -49,7 +50,9 @@ class CricketScore extends StatefulWidget {
       required this.over_string,
       required this.overs_done,
       required this.score,
-      required this.wickets_taken})
+      required this.wickets_taken,
+        required this.score_to_beat
+      })
       : super(key: key);
 
   //DO INIT STATE
@@ -110,6 +113,7 @@ class _CricketScoreState extends State<CricketScore> {
   @override
   void initState() {
     super.initState();
+    print("Total score to beat ${widget.score_to_beat}");
     _currentBalleOver = 0.0;
     List<String> b = [];
     for (int i = 0; i < widget.ballingTeam.length; i++) {
@@ -252,13 +256,24 @@ class _CricketScoreState extends State<CricketScore> {
                     ButtonBar(
                       children: [
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async{
+
+                            var url =
+                                "http://ec2-52-66-209-218.ap-south-1.compute.amazonaws.com:3000/getScoreCard";
+                            var data = jsonEncode(
+                                {"TOURNAMENT_ID": widget.tournamentId, "MATCH_ID": widget.MATCH_ID});
+                            var response = await post(Uri.parse(url),
+                                body: data, headers: {"Content-Type": "application/json"});
+                            var allData = jsonDecode(response.body);
+
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MatchResult(
                                         TOURNAMENT_ID: widget.tournamentId,
-                                        MATCH_ID: widget.MATCH_ID)));
+                                        MATCH_ID: widget.MATCH_ID,
+                                        allData : allData
+                                    )));
                           },
                           child: const Text("Ok"),
                         ),
@@ -317,6 +332,7 @@ class _CricketScoreState extends State<CricketScore> {
                                       bowlingTeamPlayers:
                                           widget.allBattingPlayers,
                                       MATCH_ID: widget.MATCH_ID,
+                                      score_to_beat : _currentMatchScore,
                                     )));
                       },
                       child: const Text("Change Innings"),
@@ -456,6 +472,9 @@ class _CricketScoreState extends State<CricketScore> {
         });
       }
       change_over();
+      if(_currentMatchScore > widget.score_to_beat){
+        await changeInning();
+      }
     }
 
     Future<void> specialRuns(int run, String reason) async {
@@ -505,6 +524,9 @@ class _CricketScoreState extends State<CricketScore> {
       print("Current Bowling Count ");
       print(_currentBowlingCount);
       await change_over();
+      if(_currentMatchScore > widget.score_to_beat){
+        await changeInning();
+      }
     }
 
     Future<void> out_manage(String wickets, int e) async {

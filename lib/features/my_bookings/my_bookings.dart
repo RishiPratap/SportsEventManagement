@@ -359,7 +359,7 @@ class _MyBookings extends State<MyBookings> {
                                     userId: id,
                                     Tourney_id: userdata[i].TOURNAMENT_ID,
                                     SpotNo: jsonData["SPOT"].toString(),
-                                    Sport: userdata[i].SPORT,
+                                    Sport: 'cricket',
                                   ),
                                 ),
                               );
@@ -371,7 +371,7 @@ class _MyBookings extends State<MyBookings> {
                                     userId: id,
                                     Tourney_id: userdata[i].TOURNAMENT_ID,
                                     SpotNo: jsonData["SPOT"].toString(),
-                                    Sport: 'cricket',
+                                    Sport: userdata[i].SPORT,
                                   ),
                                 ),
                               );

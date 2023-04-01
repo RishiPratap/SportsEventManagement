@@ -469,6 +469,7 @@ class _CricketTossDetailsState extends State<CricketTossDetails> {
                                           tossWonBy: toss_won_by,
                                           tossWinnerChoseTo: chose_to,
                                           MATCH_ID : widget.MATCH_ID,
+                                          score_to_beat: 10000,
                                         )),
                               );
                             },
