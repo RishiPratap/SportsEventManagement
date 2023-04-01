@@ -150,8 +150,8 @@ class _CricketScoreState extends State<CricketScore> {
     _currentOver = widget.over_string;
     _currentMatchScore = widget.score;
     print(_currentMatchScore);
-    _currentStrikerScore = widget.striker["SCORE"];
-    _currentNonStrikerScore = widget.non_striker["SCORE"];
+    _currentStrikerScore = widget.striker["SCORE"] ?? 0;
+    _currentNonStrikerScore = widget.non_striker["SCORE"] ?? 0;
     _currentWickets = widget.wickets_taken;
     _currentStrickerBallcount = widget.striker["BALLS"];
     _currentNonStrickerBallcount = widget.non_striker["BALLS"];
