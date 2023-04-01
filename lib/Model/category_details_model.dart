@@ -5,10 +5,9 @@ class CategorieDetails {
   CategorieDetails(this.CategoryName, this.AgeCategory);
 }
 
-
 class AgeCategoryDataClass {
-  String? Category;
-  String? AgeCategory;
+  String Category;
+  String AgeCategory;
   AgeCategoryDataClass({
     required this.Category,
     required this.AgeCategory,

@@ -97,7 +97,6 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                         value: value,
                       )).toList(),
                   onSaved: (val) => widget.pooldata.PoolSize = val.toString(),
-                  value: widget.pooldata.PoolSize,
                   onChanged: (value) {
                     setState(() {
                       widget.pooldata.PoolSize = value as String;
@@ -299,7 +298,7 @@ class _PoolDetailsItemState extends State<PoolDetailsItem> {
                         child: Text(value),
                         value: value,
                       )).toList(),
-                  value: SelectedPointSystem,
+                  // value: SelectedPointSystem,
                   onChanged: (value) {
                     setState(() {
                       String x = value.toString();

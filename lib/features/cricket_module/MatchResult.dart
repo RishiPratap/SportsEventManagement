@@ -19,14 +19,14 @@ class MatchResult extends StatefulWidget {
 }
 
 class _MatchResult extends State<MatchResult> {
-  var TeamA = "";
-  var TeamB = "";
-  var TeamAOver = 0;
-  var TeamBOver = 0;
-  var TeamAMatchScore = 0;
-  var TeamBMatchScore = 0;
-  var TeamAWickets = 0;
-  var TeamBWickets = 0;
+  var TeamA;
+  var TeamB;
+  var TeamAOver;
+  var TeamBOver;
+  var TeamAMatchScore;
+  var TeamBMatchScore;
+  var TeamAWickets;
+  var TeamBWickets;
   final String tournamentId = "";
   String Teamwinner = "";
 

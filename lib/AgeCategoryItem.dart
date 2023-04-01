@@ -23,11 +23,11 @@ class AgeCategoryItem extends StatelessWidget {
               const Text("  "),
               const Image(image: AssetImage("assets/Menu.png")),
               Text(
-                "   ${data.AgeCategory!} ",
+                "   ${data.AgeCategory} ",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
-                " ${data.Category!}",
+                " ${data.Category}",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],

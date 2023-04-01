@@ -36,7 +36,7 @@ class _EventDetailsState extends State<EventDetails> {
     "Boys Doubles",
     "Girls Doubles"
   ];
-  String? SelectedCategory;
+  late String SelectedCategory;
   Map<Map<String, String>, int> check = {};
 
   List<String> AgeCategory = [
@@ -63,9 +63,9 @@ class _EventDetailsState extends State<EventDetails> {
     '7',
     '8',
   ];
-  String? SelectedAge;
-  String? RegClosesHrs;
-  String? Courts;
+  late String SelectedAge;
+  late String RegClosesHrs;
+  late String Courts;
 
   @override
   TextEditingController EventName = TextEditingController();
@@ -475,7 +475,7 @@ class _EventDetailsState extends State<EventDetails> {
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.06),
                             )),
-                        value: SelectedCategory,
+                        // value: SelectedCategory,
                         items: Categories.map((value) => DropdownMenuItem(
                               child: Text(value),
                               value: value,
@@ -526,7 +526,7 @@ class _EventDetailsState extends State<EventDetails> {
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.06),
                             )),
-                        value: SelectedAge,
+                        // value: SelectedAge,
                         items: AgeCategory.map((value) => DropdownMenuItem(
                               child: Text(value),
                               value: value,
@@ -563,7 +563,7 @@ class _EventDetailsState extends State<EventDetails> {
                           }
                         }
                         if (!isCategoryAdded) {
-                          _addAgeCategoryItem(SelectedCategory!, SelectedAge!);
+                          _addAgeCategoryItem(SelectedCategory, SelectedAge);
                         }
                       },
                       child: const Text(
@@ -617,7 +617,7 @@ class _EventDetailsState extends State<EventDetails> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(deviceWidth * 0.06),
                     )),
-                value: RegClosesHrs,
+                // value: RegClosesHrs,
                 items: RegCloses.map((value) => DropdownMenuItem(
                       child: Text(value),
                       value: value,
@@ -667,7 +667,7 @@ class _EventDetailsState extends State<EventDetails> {
                               borderRadius:
                                   BorderRadius.circular(deviceWidth * 0.02),
                             )),
-                        value: Courts,
+                        // value: Courts,
                         items: NoOfCourts.map((value) => DropdownMenuItem(
                               child: Text(value),
                               value: value,
@@ -719,14 +719,14 @@ class _EventDetailsState extends State<EventDetails> {
                           EventName: EventName.text,
                           StartDate: startdateinput.text,
                           EndDate: enddateinput.text,
-                          RegistrationCloses: RegClosesHrs![0],
+                          RegistrationCloses: RegClosesHrs[0],
                           StartTime: starttime.text,
                           EndTime: endtime.text,
                           City: city.text,
                           Address: Address.text,
                           Category: SelectedCategory,
                           AgeCategory: SelectedAge,
-                          NoofCourts: Courts!,
+                          NoofCourts: Courts,
                           BreakTime: breaktime.text,
                           AllCategoryDetails: AllCategories,
                         ),
